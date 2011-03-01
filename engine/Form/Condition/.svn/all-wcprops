@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/6/trunk/gears/Form/Condition
+END
+Abstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/6/trunk/gears/Form/Condition/Abstract.php
+END
+Config.php
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/6/trunk/gears/Form/Condition/Config.php
+END
+Object.php
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/6/trunk/gears/Form/Condition/Object.php
+END
+Request.php
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/6/trunk/gears/Form/Condition/Request.php
+END
