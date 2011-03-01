@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>File Source for AnchorLayout.php</title>
+	<link rel="stylesheet" type="text/css" href="../media/style.css">
+	<link rel="stylesheet" type="text/css" href="../media/php-ext.css">
+	<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+</head>
+<body>
+
+<div id="header">
+	<h1><img src="../media/php-ext2.png" alt="PHP-Ext Logo" title="PHP-Ext" width="110" height="34" /></h1>
+	<div>
+		<div id="legend">The Web 2.0 PHP Widget Library using Ext JS</div>
+
+
+		<!-- <div class="banner-title">PhpExt</div> -->
+
+		<ul id="menu">
+			<li><a href="../../../" target="_top">Home</a></li>
+			<li><a href="../../../?id=docs" target="_top">Docs</a></li>
+			<li><a href="../../../examples" target="_top">Samples</a></li>
+			<li><a href="http://php-ext.quimera-solutions.com/blog">Blog</a></li>
+			<li><a href="http://php-ext.quimera-solutions.com/?id=download" target="_top">Download</a></li>
+		</ul>
+		</div>
+		<div id="topbanner">
+		<script type="text/javascript"><!--
+		google_ad_client = "pub-1364424610077556";
+		/* PHP-Ext TopBanner */
+		google_ad_slot = "0256386108";
+		google_ad_width = 468;
+		google_ad_height = 60;
+		//-->
+		</script>
+		<script type="text/javascript"
+		src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+		</script>
+		</div> 
+	</div>
+    <div class="header-menu">
+	  <div>
+	  <span class="package">PhpExt</span> : <span class="subpackage">Layout</span>
+      
+                        
+                                                  		[ <a href="../classtrees_PhpExt.html" class="menu">class tree</a> ]
+		[ <a href="../elementindex_PhpExt.html" class="menu">index</a> ]
+            [ <a href="../elementindex.html" class="menu">all elements</a> ]
+	  </div>
+    </div>
+</table>
+
+</div>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="left-menu">
+  <tr valign="top">
+    <td width="195" class="menu">
+		<div class="package-title">PhpExt</div>
+  <div class="package">
+	<div id="todolist">
+			<p><a href="../todolist.html">Todo List</a></p>
+	</div>
+	</div>
+      <b>Packages:</b><br />
+  <div class="package">
+              <a href="../li_PhpExt.html">PhpExt</a><br />
+              <a href="../li_PhpExtUx.html">PhpExtUx</a><br />
+              <a href="../li_Services_JSON.html">Services_JSON</a><br />
+      	</div>
+      <br />
+                        <br />
+                      </td>
+    <td>
+	  <div class="docs-content"></div>
+      <table cellpadding="10" cellspacing="0" width="100%" border="0"><tr><td valign="top">
+		
+<h1 align="center">Source for file AnchorLayout.php</h1>
+<p>Documentation is available at <a href="../PhpExt/Layout/_PhpExt---Layout---AnchorLayout.php.html">AnchorLayout.php</a></p>
+<div class="src-code"><span class="php">
+<ol><li><div class="src-line"><a name="a1"></a><span class="src-php">&lt;?php</span></div></li>
+<li><div class="src-line"><a name="a2"></a><span class="src-doc">/**</span></div></li>
+<li><div class="src-line"><a name="a3"></a><span class="src-doc">&nbsp;*&nbsp;PHP-Ext&nbsp;Library</span></div></li>
+<li><div class="src-line"><a name="a4"></a><span class="src-doc">&nbsp;*&nbsp;http://php-ext.googlecode.com</span></div></li>
+<li><div class="src-line"><a name="a5"></a><span class="src-doc">&nbsp;*&nbsp;</span><span class="src-doc-coretag">@author</span><span class="src-doc">&nbsp;Sergei&nbsp;Walter&nbsp;&lt;sergeiw[at]gmail[dot]com&gt;</span></div></li>
+<li><div class="src-line"><a name="a6"></a><span class="src-doc">&nbsp;*&nbsp;</span><span class="src-doc-coretag">@copyright</span><span class="src-doc">&nbsp;2008&nbsp;Sergei&nbsp;Walter</span></div></li>
+<li><div class="src-line"><a name="a7"></a><span class="src-doc">&nbsp;*&nbsp;</span><span class="src-doc-coretag">@license</span><span class="src-doc">&nbsp;http://www.gnu.org/licenses/lgpl.html</span></div></li>
+<li><div class="src-line"><a name="a8"></a><span class="src-doc">&nbsp;*&nbsp;</span><span class="src-doc-coretag">@link</span><span class="src-doc">&nbsp;http://php-ext.googlecode.com</span></div></li>
+<li><div class="src-line"><a name="a9"></a><span class="src-doc">&nbsp;*&nbsp;</span></div></li>
+<li><div class="src-line"><a name="a10"></a><span class="src-doc">&nbsp;*&nbsp;&nbsp;Reference&nbsp;for&nbsp;Ext&nbsp;JS:&nbsp;http://extjs.com</span></div></li>
+<li><div class="src-line"><a name="a11"></a><span class="src-doc">&nbsp;*&nbsp;</span></div></li>
+<li><div class="src-line"><a name="a12"></a><span class="src-doc">&nbsp;*/</span></div></li>
+<li><div class="src-line"><a name="a13"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a14"></a><span class="src-doc">/**</span></div></li>
+<li><div class="src-line"><a name="a15"></a><span class="src-doc">&nbsp;*&nbsp;&nbsp;</span><span class="src-doc-coretag">@see</span><span class="src-doc">&nbsp;PhpExt_Layout_ContainerLayout</span></div></li>
+<li><div class="src-line"><a name="a16"></a><span class="src-doc">&nbsp;*/</span></div></li>
+<li><div class="src-line"><a name="a17"></a><span class="src-inc">include_once&nbsp;</span><span class="src-str">'PhpExt/Layout/ContainerLayout.php'</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a18"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a19"></a><span class="src-doc">/**</span></div></li>
+<li><div class="src-line"><a name="a20"></a><span class="src-doc">&nbsp;*&nbsp;This&nbsp;is&nbsp;a&nbsp;layout&nbsp;that&nbsp;enables&nbsp;anchoring&nbsp;of&nbsp;contained&nbsp;elements&nbsp;relative&nbsp;to&nbsp;the&nbsp;container's&nbsp;dimensions.&nbsp;If&nbsp;the&nbsp;container&nbsp;is&nbsp;resized,&nbsp;all&nbsp;anchored&nbsp;items&nbsp;are&nbsp;automatically&nbsp;rerendered&nbsp;according&nbsp;to&nbsp;their&nbsp;anchor&nbsp;rules.</span></div></li>
+<li><div class="src-line"><a name="a21"></a><span class="src-doc">&nbsp;*&nbsp;</span></div></li>
+<li><div class="src-line"><a name="a22"></a><span class="src-doc">&nbsp;*&nbsp;AnchorLayout&nbsp;does&nbsp;not&nbsp;have&nbsp;any&nbsp;direct&nbsp;config&nbsp;options&nbsp;(other&nbsp;than&nbsp;inherited&nbsp;ones).&nbsp;However,&nbsp;the&nbsp;container&nbsp;using&nbsp;the&nbsp;AnchorLayout&nbsp;can&nbsp;supply&nbsp;an&nbsp;anchoring-specific&nbsp;config&nbsp;property&nbsp;of&nbsp;&lt;b&gt;anchorSize&lt;/b&gt;.&nbsp;By&nbsp;default,&nbsp;AnchorLayout&nbsp;will&nbsp;calculate&nbsp;anchor&nbsp;measurements&nbsp;based&nbsp;on&nbsp;the&nbsp;size&nbsp;of&nbsp;the&nbsp;container&nbsp;itself.&nbsp;However,&nbsp;if&nbsp;anchorSize&nbsp;is&nbsp;specifed,&nbsp;the&nbsp;layout&nbsp;will&nbsp;use&nbsp;it&nbsp;as&nbsp;a&nbsp;virtual&nbsp;container&nbsp;for&nbsp;the&nbsp;purposes&nbsp;of&nbsp;calculating&nbsp;anchor&nbsp;measurements&nbsp;based&nbsp;on&nbsp;it&nbsp;instead,&nbsp;allowing&nbsp;the&nbsp;container&nbsp;to&nbsp;be&nbsp;sized&nbsp;independently&nbsp;of&nbsp;the&nbsp;anchoring&nbsp;logic&nbsp;if&nbsp;necessary.</span></div></li>
+<li><div class="src-line"><a name="a23"></a><span class="src-doc">&nbsp;*&nbsp;</span></div></li>
+<li><div class="src-line"><a name="a24"></a><span class="src-doc">&nbsp;*&nbsp;The&nbsp;items&nbsp;added&nbsp;to&nbsp;an&nbsp;AnchorLayout&nbsp;can&nbsp;also&nbsp;supply&nbsp;an&nbsp;anchoring-specific&nbsp;config&nbsp;property&nbsp;of&nbsp;&lt;b&gt;anchor&lt;/b&gt;&nbsp;which&nbsp;is&nbsp;a&nbsp;string&nbsp;containing&nbsp;two&nbsp;values:&nbsp;the&nbsp;horizontal&nbsp;anchor&nbsp;value&nbsp;and&nbsp;the&nbsp;vertical&nbsp;anchor&nbsp;value&nbsp;(for&nbsp;example,&nbsp;'100%&nbsp;50%').&nbsp;This&nbsp;value&nbsp;is&nbsp;what&nbsp;tells&nbsp;the&nbsp;layout&nbsp;how&nbsp;the&nbsp;item&nbsp;should&nbsp;be&nbsp;anchored&nbsp;to&nbsp;the&nbsp;container.&nbsp;The&nbsp;following&nbsp;types&nbsp;of&nbsp;anchor&nbsp;values&nbsp;are&nbsp;supported:</span></div></li>
+<li><div class="src-line"><a name="a25"></a><span class="src-doc">&nbsp;*</span></div></li>
+<li><div class="src-line"><a name="a26"></a><span class="src-doc">&nbsp;*&nbsp;&nbsp;&nbsp;-&nbsp;&lt;b&gt;Percentage:&lt;/b&gt;&nbsp;Any&nbsp;value&nbsp;between&nbsp;1&nbsp;and&nbsp;100,&nbsp;expressed&nbsp;as&nbsp;a&nbsp;percentage.&nbsp;The&nbsp;first&nbsp;anchor&nbsp;is&nbsp;the&nbsp;percentage&nbsp;width&nbsp;that&nbsp;the&nbsp;item&nbsp;should&nbsp;take&nbsp;up&nbsp;within&nbsp;the&nbsp;container,&nbsp;and&nbsp;the&nbsp;second&nbsp;is&nbsp;the&nbsp;percentage&nbsp;height.&nbsp;Example:&nbsp;'100%&nbsp;50%'&nbsp;would&nbsp;render&nbsp;an&nbsp;item&nbsp;the&nbsp;complete&nbsp;width&nbsp;of&nbsp;the&nbsp;container&nbsp;and&nbsp;1/2&nbsp;its&nbsp;height.&nbsp;If&nbsp;only&nbsp;one&nbsp;anchor&nbsp;value&nbsp;is&nbsp;supplied&nbsp;it&nbsp;is&nbsp;assumed&nbsp;to&nbsp;be&nbsp;the&nbsp;width&nbsp;value&nbsp;and&nbsp;the&nbsp;height&nbsp;will&nbsp;default&nbsp;to&nbsp;auto.</span></div></li>
+<li><div class="src-line"><a name="a27"></a><span class="src-doc">&nbsp;*&nbsp;&nbsp;&nbsp;-&nbsp;&lt;b&gt;Offsets:&lt;/b&gt;&nbsp;Any&nbsp;positive&nbsp;or&nbsp;negative&nbsp;integer&nbsp;value.&nbsp;The&nbsp;first&nbsp;anchor&nbsp;is&nbsp;the&nbsp;offset&nbsp;from&nbsp;the&nbsp;right&nbsp;edge&nbsp;of&nbsp;the&nbsp;container,&nbsp;and&nbsp;the&nbsp;second&nbsp;is&nbsp;the&nbsp;offset&nbsp;from&nbsp;the&nbsp;bottom&nbsp;edge.&nbsp;Example:&nbsp;'-50&nbsp;-100'&nbsp;would&nbsp;render&nbsp;an&nbsp;item&nbsp;the&nbsp;complete&nbsp;width&nbsp;of&nbsp;the&nbsp;container&nbsp;minus&nbsp;50&nbsp;pixels&nbsp;and&nbsp;the&nbsp;complete&nbsp;height&nbsp;minus&nbsp;100&nbsp;pixels.&nbsp;If&nbsp;only&nbsp;one&nbsp;anchor&nbsp;value&nbsp;is&nbsp;supplied&nbsp;it&nbsp;is&nbsp;assumed&nbsp;to&nbsp;be&nbsp;the&nbsp;right&nbsp;offset&nbsp;value&nbsp;and&nbsp;the&nbsp;bottom&nbsp;offset&nbsp;will&nbsp;default&nbsp;to&nbsp;0.</span></div></li>
+<li><div class="src-line"><a name="a28"></a><span class="src-doc">&nbsp;*&nbsp;&nbsp;&nbsp;-&nbsp;&lt;b&gt;Sides:&lt;/b&gt;&nbsp;Valid&nbsp;values&nbsp;are&nbsp;'right'&nbsp;(or&nbsp;'r')&nbsp;and&nbsp;'bottom'&nbsp;(or&nbsp;'b').&nbsp;Either&nbsp;the&nbsp;container&nbsp;must&nbsp;have&nbsp;a&nbsp;fixed&nbsp;size&nbsp;or&nbsp;an&nbsp;anchorSize&nbsp;config&nbsp;value&nbsp;defined&nbsp;at&nbsp;render&nbsp;time&nbsp;in&nbsp;order&nbsp;for&nbsp;these&nbsp;to&nbsp;have&nbsp;any&nbsp;effect.</span></div></li>
+<li><div class="src-line"><a name="a29"></a><span class="src-doc">&nbsp;*</span></div></li>
+<li><div class="src-line"><a name="a30"></a><span class="src-doc">&nbsp;*&nbsp;Anchor&nbsp;values&nbsp;can&nbsp;also&nbsp;be&nbsp;mixed&nbsp;as&nbsp;needed.&nbsp;For&nbsp;example,&nbsp;'-50&nbsp;75%'&nbsp;would&nbsp;render&nbsp;the&nbsp;width&nbsp;offset&nbsp;from&nbsp;the&nbsp;container&nbsp;right&nbsp;edge&nbsp;by&nbsp;50&nbsp;pixels&nbsp;and&nbsp;75%&nbsp;of&nbsp;the&nbsp;container's&nbsp;height.</span></div></li>
+<li><div class="src-line"><a name="a31"></a><span class="src-doc">&nbsp;*&nbsp;</span></div></li>
+<li><div class="src-line"><a name="a32"></a><span class="src-doc">&nbsp;*&nbsp;</span><span class="src-doc-coretag">@see</span><span class="src-doc">&nbsp;PhpExt_Layout_AnchorLayoutData</span></div></li>
+<li><div class="src-line"><a name="a33"></a><span class="src-doc">&nbsp;*&nbsp;</span><span class="src-doc-coretag">@package</span><span class="src-doc">&nbsp;PhpExt</span></div></li>
+<li><div class="src-line"><a name="a34"></a><span class="src-doc">&nbsp;*&nbsp;</span><span class="src-doc-coretag">@subpackage</span><span class="src-doc">&nbsp;Layout</span></div></li>
+<li><div class="src-line"><a name="a35"></a><span class="src-doc">&nbsp;*/</span></div></li>
+<li><div class="src-line"><a name="a36"></a><span class="src-key">class&nbsp;</span><a href="../PhpExt/Layout/PhpExt_Layout_AnchorLayout.html">PhpExt_Layout_AnchorLayout</a>&nbsp;<span class="src-key">extends&nbsp;</span><a href="../PhpExt/Layout/PhpExt_Layout_ContainerLayout.html">PhpExt_Layout_ContainerLayout</a>&nbsp;&nbsp;<span class="src-sym">{</span></div></li>
+<li><div class="src-line"><a name="a37"></a>&nbsp;&nbsp;&nbsp;&nbsp;</div></li>
+<li><div class="src-line"><a name="a38"></a>&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-doc">/**</span></div></li>
+<li><div class="src-line"><a name="a39"></a><span class="src-doc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Returns&nbsp;the&nbsp;internal&nbsp;config&nbsp;string&nbsp;for&nbsp;the&nbsp;layout.</span></div></li>
+<li><div class="src-line"><a name="a40"></a><span class="src-doc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</span></div></li>
+<li><div class="src-line"><a name="a41"></a><span class="src-doc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</span><span class="src-doc-coretag">@see</span><span class="src-doc">&nbsp;PhpExt_Layout_ContainerLayout::LAYOUT_ANCHOR;</span></div></li>
+<li><div class="src-line"><a name="a42"></a><span class="src-doc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</span><span class="src-doc-coretag">@return&nbsp;</span><span class="src-doc-type">string&nbsp;</span></div></li>
+<li><div class="src-line"><a name="a43"></a><span class="src-doc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span></div></li>
+<li><div class="src-line"><a name="a44"></a>&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-key">public&nbsp;</span><span class="src-key">function&nbsp;</span><a href="../PhpExt/Layout/PhpExt_Layout_AnchorLayout.html#methodgetLayoutKey">getLayoutKey</a><span class="src-sym">(</span><span class="src-sym">)&nbsp;</span><span class="src-sym">{</span></div></li>
+<li><div class="src-line"><a name="a45"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-key">return&nbsp;</span><span class="src-id"><a href="../PhpExt/Layout/PhpExt_Layout_ContainerLayout.html">PhpExt_Layout_ContainerLayout</a></span><span class="src-sym">::</span><span class="src-id">LAYOUT_ANCHOR</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a46"></a>&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">}</span></div></li>
+<li><div class="src-line"><a name="a47"></a>&nbsp;&nbsp;&nbsp;&nbsp;</div></li>
+<li><div class="src-line"><a name="a48"></a>&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-key">public&nbsp;</span><span class="src-key">function&nbsp;</span><a href="../PhpExt/Layout/PhpExt_Layout_AnchorLayout.html#method__construct">__construct</a><span class="src-sym">(</span><span class="src-sym">)&nbsp;</span><span class="src-sym">{</span></div></li>
+<li><div class="src-line"><a name="a49"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-id">parent</span><span class="src-sym">::</span><a href="../PhpExt/Layout/PhpExt_Layout_ContainerLayout.html#method__construct">__construct</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a50"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../PhpExt/PhpExt_Object.html#methodsetExtClassInfo">setExtClassInfo</a><span class="src-sym">(</span><span class="src-str">&quot;Ext.layout.AnchorLayout&quot;</span><span class="src-sym">,&nbsp;</span><span class="src-id">null</span><span class="src-sym">)</span><span class="src-sym">;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div></li>
+<li><div class="src-line"><a name="a51"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a52"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$validLayoutProps&nbsp;</span>=&nbsp;<span class="src-key">array</span><span class="src-sym">(</span></div></li>
+<li><div class="src-line"><a name="a53"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a54"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../PhpExt/Layout/PhpExt_Layout_ContainerLayout.html#methodaddValidLayoutProperties">addValidLayoutProperties</a><span class="src-sym">(</span><span class="src-var">$validLayoutProps</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a55"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div></li>
+<li><div class="src-line"><a name="a56"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../PhpExt/Layout/PhpExt_Layout_ContainerLayout.html#methodaddValidLayoutDataClassName">addValidLayoutDataClassName</a><span class="src-sym">(</span><span class="src-str">&quot;PhpExt_Layout_AnchorLayoutData&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a57"></a>&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">}</span></div></li>
+<li><div class="src-line"><a name="a58"></a>&nbsp;&nbsp;&nbsp;&nbsp;</div></li>
+<li><div class="src-line"><a name="a59"></a>&nbsp;&nbsp;&nbsp;&nbsp;</div></li>
+<li><div class="src-line"><a name="a60"></a><span class="src-sym">}</span></div></li>
+</ol>
+</span></div>
+        <div class="credit">
+		    <hr class="separator" />
+		    Documentation generated on Thu, 07 Aug 2008 21:11:10 -0500 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.0</a>
+	      </div>
+      </td></tr></table>
+    </td>
+  </tr>
+  <tr>
+	<td><div class="docs-content"></div></td>
+  </tr>
+</table>
+
+<br style="clear:both;" />
+<div id="footer">
+PHP-Ext Open Source Project | <a href="http://php-ext.googlecode.com">http://php-ext.googlecode.com</a> | <a href="http://php-ext.quimera-solutions.com">http://php-ext.quimera-solutions.com</a> |
+sergeiw at gmail.com
+</div>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-1324828-4");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
+
+
+</body>
+</html>

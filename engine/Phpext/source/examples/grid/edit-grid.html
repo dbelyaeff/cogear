@@ -1,0 +1,21 @@
+    <script type="text/javascript" src="resources/extjs-ux/grid/CheckColumn.js"></script>
+    <script type="text/javascript" src="examples/grid/edit-grid.php"></script>
+    <link rel="stylesheet" type="text/css" href="examples/grid/grid-examples.css" />
+
+<h1>Editor Grid Example</h1>
+<p>This example shows how to create a grid with inline editing.</p>
+
+<p>The data in the grid is loaded from <a href="examples/grid/plants.xml">plants.xml</a>.</p>
+
+<!-- you must define the select box here, as the custom editor for the 'Light' column will require it -->
+<select name="light" id="light" style="display: none;">
+	<option value="Shade">Shade</option>
+	<option value="Mostly Shady">Mostly Shady</option>
+	<option value="Sun or Shade">Sun or Shade</option>
+
+	<option value="Mostly Sunny">Mostly Sunny</option>
+
+	<option value="Sunny">Sunny</option>
+</select>
+
+<div id="editor-grid"></div>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>File Source for ColumnLayout.php</title>
+	<link rel="stylesheet" type="text/css" href="../media/style.css">
+	<link rel="stylesheet" type="text/css" href="../media/php-ext.css">
+	<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+</head>
+<body>
+
+<div id="header">
+	<h1><img src="../media/php-ext2.png" alt="PHP-Ext Logo" title="PHP-Ext" width="110" height="34" /></h1>
+	<div>
+		<div id="legend">The Web 2.0 PHP Widget Library using Ext JS</div>
+
+
+		<!-- <div class="banner-title">PhpExt</div> -->
+
+		<ul id="menu">
+			<li><a href="../../../" target="_top">Home</a></li>
+			<li><a href="../../../?id=docs" target="_top">Docs</a></li>
+			<li><a href="../../../examples" target="_top">Samples</a></li>
+			<li><a href="http://php-ext.quimera-solutions.com/blog">Blog</a></li>
+			<li><a href="http://php-ext.quimera-solutions.com/?id=download" target="_top">Download</a></li>
+		</ul>
+		</div>
+		<div id="topbanner">
+		<script type="text/javascript"><!--
+		google_ad_client = "pub-1364424610077556";
+		/* PHP-Ext TopBanner */
+		google_ad_slot = "0256386108";
+		google_ad_width = 468;
+		google_ad_height = 60;
+		//-->
+		</script>
+		<script type="text/javascript"
+		src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+		</script>
+		</div> 
+	</div>
+    <div class="header-menu">
+	  <div>
+	  <span class="package">PhpExt</span> : <span class="subpackage">Layout</span>
+      
+                        
+                                                  		[ <a href="../classtrees_PhpExt.html" class="menu">class tree</a> ]
+		[ <a href="../elementindex_PhpExt.html" class="menu">index</a> ]
+            [ <a href="../elementindex.html" class="menu">all elements</a> ]
+	  </div>
+    </div>
+</table>
+
+</div>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="left-menu">
+  <tr valign="top">
+    <td width="195" class="menu">
+		<div class="package-title">PhpExt</div>
+  <div class="package">
+	<div id="todolist">
+			<p><a href="../todolist.html">Todo List</a></p>
+	</div>
+	</div>
+      <b>Packages:</b><br />
+  <div class="package">
+              <a href="../li_PhpExt.html">PhpExt</a><br />
+              <a href="../li_PhpExtUx.html">PhpExtUx</a><br />
+              <a href="../li_Services_JSON.html">Services_JSON</a><br />
+      	</div>
+      <br />
+                        <br />
+                      </td>
+    <td>
+	  <div class="docs-content"></div>
+      <table cellpadding="10" cellspacing="0" width="100%" border="0"><tr><td valign="top">
+		
+<h1 align="center">Source for file ColumnLayout.php</h1>
+<p>Documentation is available at <a href="../PhpExt/Layout/_PhpExt---Layout---ColumnLayout.php.html">ColumnLayout.php</a></p>
+<div class="src-code"><span class="php">
+<ol><li><div class="src-line"><a name="a1"></a><span class="src-php">&lt;?php</span></div></li>
+<li><div class="src-line"><a name="a2"></a><span class="src-doc">/**</span></div></li>
+<li><div class="src-line"><a name="a3"></a><span class="src-doc">&nbsp;*&nbsp;PHP-Ext&nbsp;Library</span></div></li>
+<li><div class="src-line"><a name="a4"></a><span class="src-doc">&nbsp;*&nbsp;http://php-ext.googlecode.com</span></div></li>
+<li><div class="src-line"><a name="a5"></a><span class="src-doc">&nbsp;*&nbsp;</span><span class="src-doc-coretag">@author</span><span class="src-doc">&nbsp;Sergei&nbsp;Walter&nbsp;&lt;sergeiw[at]gmail[dot]com&gt;</span></div></li>
+<li><div class="src-line"><a name="a6"></a><span class="src-doc">&nbsp;*&nbsp;</span><span class="src-doc-coretag">@copyright</span><span class="src-doc">&nbsp;2008&nbsp;Sergei&nbsp;Walter</span></div></li>
+<li><div class="src-line"><a name="a7"></a><span class="src-doc">&nbsp;*&nbsp;</span><span class="src-doc-coretag">@license</span><span class="src-doc">&nbsp;http://www.gnu.org/licenses/lgpl.html</span></div></li>
+<li><div class="src-line"><a name="a8"></a><span class="src-doc">&nbsp;*&nbsp;</span><span class="src-doc-coretag">@link</span><span class="src-doc">&nbsp;http://php-ext.googlecode.com</span></div></li>
+<li><div class="src-line"><a name="a9"></a><span class="src-doc">&nbsp;*&nbsp;</span></div></li>
+<li><div class="src-line"><a name="a10"></a><span class="src-doc">&nbsp;*&nbsp;&nbsp;Reference&nbsp;for&nbsp;Ext&nbsp;JS:&nbsp;http://extjs.com</span></div></li>
+<li><div class="src-line"><a name="a11"></a><span class="src-doc">&nbsp;*&nbsp;</span></div></li>
+<li><div class="src-line"><a name="a12"></a><span class="src-doc">&nbsp;*/</span></div></li>
+<li><div class="src-line"><a name="a13"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a14"></a><span class="src-doc">/**</span></div></li>
+<li><div class="src-line"><a name="a15"></a><span class="src-doc">&nbsp;*&nbsp;&nbsp;</span><span class="src-doc-coretag">@see</span><span class="src-doc">&nbsp;PhpExt_Layout_ContainerLayout</span></div></li>
+<li><div class="src-line"><a name="a16"></a><span class="src-doc">&nbsp;*/</span></div></li>
+<li><div class="src-line"><a name="a17"></a><span class="src-inc">include_once&nbsp;</span><span class="src-str">'PhpExt/Layout/ContainerLayout.php'</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a18"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a19"></a><span class="src-doc">/**</span></div></li>
+<li><div class="src-line"><a name="a20"></a><span class="src-doc">&nbsp;*&nbsp;This&nbsp;is&nbsp;the&nbsp;layout&nbsp;style&nbsp;of&nbsp;choice&nbsp;for&nbsp;creating&nbsp;structural&nbsp;layouts&nbsp;in&nbsp;a&nbsp;multi-column&nbsp;format&nbsp;where&nbsp;the&nbsp;width&nbsp;of&nbsp;each&nbsp;column&nbsp;can&nbsp;be&nbsp;specified&nbsp;as&nbsp;a&nbsp;percentage&nbsp;or&nbsp;fixed&nbsp;width,&nbsp;but&nbsp;the&nbsp;height&nbsp;is&nbsp;allowed&nbsp;to&nbsp;vary&nbsp;based&nbsp;on&nbsp;the&nbsp;content.</span></div></li>
+<li><div class="src-line"><a name="a21"></a><span class="src-doc">&nbsp;*</span></div></li>
+<li><div class="src-line"><a name="a22"></a><span class="src-doc">&nbsp;*&nbsp;ColumnLayout&nbsp;does&nbsp;not&nbsp;have&nbsp;any&nbsp;direct&nbsp;config&nbsp;options&nbsp;(other&nbsp;than&nbsp;inherited&nbsp;ones),&nbsp;but&nbsp;it&nbsp;does&nbsp;support&nbsp;a&nbsp;specific&nbsp;config&nbsp;property&nbsp;of&nbsp;columnWidth&nbsp;that&nbsp;can&nbsp;be&nbsp;included&nbsp;in&nbsp;the&nbsp;config&nbsp;of&nbsp;any&nbsp;panel&nbsp;added&nbsp;to&nbsp;it.&nbsp;The&nbsp;layout&nbsp;will&nbsp;use&nbsp;the&nbsp;width&nbsp;(if&nbsp;pixels)&nbsp;or&nbsp;columnWidth&nbsp;(if&nbsp;percent)&nbsp;of&nbsp;each&nbsp;panel&nbsp;during&nbsp;layout&nbsp;to&nbsp;determine&nbsp;how&nbsp;to&nbsp;size&nbsp;each&nbsp;panel.&nbsp;If&nbsp;width&nbsp;or&nbsp;columnWidth&nbsp;is&nbsp;not&nbsp;specified&nbsp;for&nbsp;a&nbsp;given&nbsp;panel,&nbsp;its&nbsp;width&nbsp;will&nbsp;default&nbsp;to&nbsp;the&nbsp;panel's&nbsp;width&nbsp;(or&nbsp;auto).</span></div></li>
+<li><div class="src-line"><a name="a23"></a><span class="src-doc">&nbsp;*</span></div></li>
+<li><div class="src-line"><a name="a24"></a><span class="src-doc">&nbsp;*&nbsp;The&nbsp;width&nbsp;property&nbsp;is&nbsp;always&nbsp;evaluated&nbsp;as&nbsp;pixels,&nbsp;and&nbsp;must&nbsp;be&nbsp;a&nbsp;number&nbsp;greater&nbsp;than&nbsp;or&nbsp;equal&nbsp;to&nbsp;1.&nbsp;The&nbsp;columnWidth&nbsp;property&nbsp;is&nbsp;always&nbsp;evaluated&nbsp;as&nbsp;a&nbsp;percentage,&nbsp;and&nbsp;must&nbsp;be&nbsp;a&nbsp;decimal&nbsp;value&nbsp;greater&nbsp;than&nbsp;0&nbsp;and&nbsp;less&nbsp;than&nbsp;1&nbsp;(e.g.,&nbsp;.25).</span></div></li>
+<li><div class="src-line"><a name="a25"></a><span class="src-doc">&nbsp;*&nbsp;</span></div></li>
+<li><div class="src-line"><a name="a26"></a><span class="src-doc">&nbsp;*&nbsp;The&nbsp;basic&nbsp;rules&nbsp;for&nbsp;specifying&nbsp;column&nbsp;widths&nbsp;are&nbsp;pretty&nbsp;simple.&nbsp;The&nbsp;logic&nbsp;makes&nbsp;two&nbsp;passes&nbsp;through&nbsp;the&nbsp;set&nbsp;of&nbsp;contained&nbsp;panels.&nbsp;During&nbsp;the&nbsp;first&nbsp;layout&nbsp;pass,&nbsp;all&nbsp;panels&nbsp;that&nbsp;either&nbsp;have&nbsp;a&nbsp;fixed&nbsp;width&nbsp;or&nbsp;none&nbsp;specified&nbsp;(auto)&nbsp;are&nbsp;skipped,&nbsp;but&nbsp;their&nbsp;widths&nbsp;are&nbsp;subtracted&nbsp;from&nbsp;the&nbsp;overall&nbsp;container&nbsp;width.&nbsp;During&nbsp;the&nbsp;second&nbsp;pass,&nbsp;all&nbsp;panels&nbsp;with&nbsp;columnWidths&nbsp;are&nbsp;assigned&nbsp;pixel&nbsp;widths&nbsp;in&nbsp;proportion&nbsp;to&nbsp;their&nbsp;percentages&nbsp;based&nbsp;on&nbsp;the&nbsp;total&nbsp;remaining&nbsp;container&nbsp;width.&nbsp;In&nbsp;other&nbsp;words,&nbsp;percentage&nbsp;width&nbsp;panels&nbsp;are&nbsp;designed&nbsp;to&nbsp;fill&nbsp;the&nbsp;space&nbsp;left&nbsp;over&nbsp;by&nbsp;all&nbsp;the&nbsp;fixed-width&nbsp;or&nbsp;auto-width&nbsp;panels.&nbsp;Because&nbsp;of&nbsp;this,&nbsp;while&nbsp;you&nbsp;can&nbsp;specify&nbsp;any&nbsp;number&nbsp;of&nbsp;columns&nbsp;with&nbsp;different&nbsp;percentages,&nbsp;the&nbsp;columnWidths&nbsp;must&nbsp;always&nbsp;add&nbsp;up&nbsp;to&nbsp;1&nbsp;(or&nbsp;100%)&nbsp;when&nbsp;added&nbsp;together,&nbsp;otherwise&nbsp;your&nbsp;layout&nbsp;may&nbsp;not&nbsp;render&nbsp;as&nbsp;expected.</span></div></li>
+<li><div class="src-line"><a name="a27"></a><span class="src-doc">&nbsp;*&nbsp;</span></div></li>
+<li><div class="src-line"><a name="a28"></a><span class="src-doc">&nbsp;*&nbsp;</span><span class="src-doc-coretag">@see</span><span class="src-doc">&nbsp;PhpExt_Layout_ColumnLayoutData</span></div></li>
+<li><div class="src-line"><a name="a29"></a><span class="src-doc">&nbsp;*&nbsp;</span><span class="src-doc-coretag">@package</span><span class="src-doc">&nbsp;PhpExt</span></div></li>
+<li><div class="src-line"><a name="a30"></a><span class="src-doc">&nbsp;*&nbsp;</span><span class="src-doc-coretag">@subpackage</span><span class="src-doc">&nbsp;Layout</span></div></li>
+<li><div class="src-line"><a name="a31"></a><span class="src-doc">&nbsp;*/</span></div></li>
+<li><div class="src-line"><a name="a32"></a><span class="src-key">class&nbsp;</span><a href="../PhpExt/Layout/PhpExt_Layout_ColumnLayout.html">PhpExt_Layout_ColumnLayout</a>&nbsp;<span class="src-key">extends&nbsp;</span><a href="../PhpExt/Layout/PhpExt_Layout_ContainerLayout.html">PhpExt_Layout_ContainerLayout</a>&nbsp;&nbsp;<span class="src-sym">{</span></div></li>
+<li><div class="src-line"><a name="a33"></a>&nbsp;&nbsp;&nbsp;&nbsp;</div></li>
+<li><div class="src-line"><a name="a34"></a>&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-doc">/**</span></div></li>
+<li><div class="src-line"><a name="a35"></a><span class="src-doc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Returns&nbsp;the&nbsp;internal&nbsp;config&nbsp;string&nbsp;for&nbsp;the&nbsp;layout.</span></div></li>
+<li><div class="src-line"><a name="a36"></a><span class="src-doc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</span></div></li>
+<li><div class="src-line"><a name="a37"></a><span class="src-doc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</span><span class="src-doc-coretag">@see</span><span class="src-doc">&nbsp;PhpExt_Layout_ContainerLayout::LAYOUT_COLUMN;</span></div></li>
+<li><div class="src-line"><a name="a38"></a><span class="src-doc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</span><span class="src-doc-coretag">@return&nbsp;</span><span class="src-doc-type">string&nbsp;</span></div></li>
+<li><div class="src-line"><a name="a39"></a><span class="src-doc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span></div></li>
+<li><div class="src-line"><a name="a40"></a>&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-key">public&nbsp;</span><span class="src-key">function&nbsp;</span><a href="../PhpExt/Layout/PhpExt_Layout_ColumnLayout.html#methodgetLayoutKey">getLayoutKey</a><span class="src-sym">(</span><span class="src-sym">)&nbsp;</span><span class="src-sym">{</span></div></li>
+<li><div class="src-line"><a name="a41"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-key">return&nbsp;</span><span class="src-id"><a href="../PhpExt/Layout/PhpExt_Layout_ContainerLayout.html">PhpExt_Layout_ContainerLayout</a></span><span class="src-sym">::</span><span class="src-id">LAYOUT_COLUMN</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a42"></a>&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">}</span></div></li>
+<li><div class="src-line"><a name="a43"></a>&nbsp;&nbsp;&nbsp;&nbsp;</div></li>
+<li><div class="src-line"><a name="a44"></a>&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-key">public&nbsp;</span><span class="src-key">function&nbsp;</span><a href="../PhpExt/Layout/PhpExt_Layout_ColumnLayout.html#method__construct">__construct</a><span class="src-sym">(</span><span class="src-sym">)&nbsp;</span><span class="src-sym">{</span></div></li>
+<li><div class="src-line"><a name="a45"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-id">parent</span><span class="src-sym">::</span><a href="../PhpExt/Layout/PhpExt_Layout_ContainerLayout.html#method__construct">__construct</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a46"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../PhpExt/PhpExt_Object.html#methodsetExtClassInfo">setExtClassInfo</a><span class="src-sym">(</span><span class="src-str">&quot;Ext.layout.ColumnLayout&quot;</span><span class="src-sym">,&nbsp;</span><span class="src-id">null</span><span class="src-sym">)</span><span class="src-sym">;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div></li>
+<li><div class="src-line"><a name="a47"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div></li>
+<li><div class="src-line"><a name="a48"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../PhpExt/Layout/PhpExt_Layout_ContainerLayout.html#methodaddValidLayoutDataClassName">addValidLayoutDataClassName</a><span class="src-sym">(</span><span class="src-str">&quot;PhpExt_Layout_ColumnLayoutData&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a49"></a>&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">}</span></div></li>
+<li><div class="src-line"><a name="a50"></a>&nbsp;&nbsp;&nbsp;&nbsp;</div></li>
+<li><div class="src-line"><a name="a51"></a>&nbsp;&nbsp;&nbsp;&nbsp;</div></li>
+<li><div class="src-line"><a name="a52"></a><span class="src-sym">}</span></div></li>
+</ol>
+</span></div>
+        <div class="credit">
+		    <hr class="separator" />
+		    Documentation generated on Thu, 07 Aug 2008 21:12:40 -0500 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.0</a>
+	      </div>
+      </td></tr></table>
+    </td>
+  </tr>
+  <tr>
+	<td><div class="docs-content"></div></td>
+  </tr>
+</table>
+
+<br style="clear:both;" />
+<div id="footer">
+PHP-Ext Open Source Project | <a href="http://php-ext.googlecode.com">http://php-ext.googlecode.com</a> | <a href="http://php-ext.quimera-solutions.com">http://php-ext.quimera-solutions.com</a> |
+sergeiw at gmail.com
+</div>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-1324828-4");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
+
+
+</body>
+</html>

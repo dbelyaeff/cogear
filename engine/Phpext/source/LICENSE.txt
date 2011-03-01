@@ -1,0 +1,22 @@
+PHP-Ext Open Source Project
+http://php-ext.googlecode.com
+Sergei Walter <sergeiw[at]gmail[dot]com>
+Copyright 2008 Sergei Walter
+http://www.gnu.org/licenses/lgpl.html
+
+Open Source License
+------------------------------------------------------------------------------------------
+PHP-Ext is licensed under the terms of the Open Source LGPL 3.0 license. You may use 
+our open source license if you:
+ * Want to use PHP-Ext in an open source project that precludes using non-open source software
+ * Plan to use PHP-Ext in a personal, educational or non-profit manner
+ * Are using PHP-Ext in a commercial application that is not a software development library 
+or toolkit, you will meet LGPL requirements and you do not wish to support the project
+
+http://www.gnu.org/licenses/lgpl.html
+
+
+Third Party Software
+------------------------------------------------------------------------------------------
+This software relies on Ext JS Library, which has various license modes, including LGPL.
+See http://extjs.com/license for more information.

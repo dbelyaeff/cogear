@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Docs for page json.php</title>
+	<link rel="stylesheet" type="text/css" href="../media/style.css">
+	<link rel="stylesheet" type="text/css" href="../media/php-ext.css">
+	<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+</head>
+<body>
+
+<div id="header">
+	<h1><img src="../media/php-ext2.png" alt="PHP-Ext Logo" title="PHP-Ext" width="110" height="34" /></h1>
+	<div>
+		<div id="legend">The Web 2.0 PHP Widget Library using Ext JS</div>
+
+
+		<!-- <div class="banner-title">Services_JSON</div> -->
+
+		<ul id="menu">
+			<li><a href="../../../" target="_top">Home</a></li>
+			<li><a href="../../../?id=docs" target="_top">Docs</a></li>
+			<li><a href="../../../examples" target="_top">Samples</a></li>
+			<li><a href="http://php-ext.quimera-solutions.com/blog">Blog</a></li>
+			<li><a href="http://php-ext.quimera-solutions.com/?id=download" target="_top">Download</a></li>
+		</ul>
+		</div>
+		<div id="topbanner">
+		<script type="text/javascript"><!--
+		google_ad_client = "pub-1364424610077556";
+		/* PHP-Ext TopBanner */
+		google_ad_slot = "0256386108";
+		google_ad_width = 468;
+		google_ad_height = 60;
+		//-->
+		</script>
+		<script type="text/javascript"
+		src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+		</script>
+		</div> 
+	</div>
+    <div class="header-menu">
+	  <div>
+	  <span class="package">Services_JSON</span> : <span class="subpackage"></span>
+      
+                                                    
+                      		[ <a href="../classtrees_Services_JSON.html" class="menu">class tree</a> ]
+		[ <a href="../elementindex_Services_JSON.html" class="menu">index</a> ]
+            [ <a href="../elementindex.html" class="menu">all elements</a> ]
+	  </div>
+    </div>
+</table>
+
+</div>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="left-menu">
+  <tr valign="top">
+    <td width="195" class="menu">
+		<div class="package-title">Services_JSON</div>
+  <div class="package">
+	<div id="todolist">
+			<p><a href="../todolist.html">Todo List</a></p>
+	</div>
+	</div>
+      <b>Packages:</b><br />
+  <div class="package">
+              <a href="../li_PhpExt.html">PhpExt</a><br />
+              <a href="../li_PhpExtUx.html">PhpExtUx</a><br />
+              <a href="../li_Services_JSON.html">Services_JSON</a><br />
+      	</div>
+      <br />
+                        <b>Files:</b><br />
+        <div class="package">
+				<span style="padding-left: 1em;"><a href="../Services_JSON/_PhpExt---Lib---json.php.html">json.php</a></span><br />
+	  </div>
+            <br />
+                  <b>Classes:</b><br />
+        <div class="package">
+		    		<a href="../Services_JSON/Services_JSON.html">Services_JSON</a>    	 <br />
+	    		<a href="../Services_JSON/Services_JSON_Error.html">Services_JSON_Error</a>    	 <br />
+	  </div>
+                </td>
+    <td>
+	  <div class="docs-content"></div>
+      <table cellpadding="10" cellspacing="0" width="100%" border="0"><tr><td valign="top">
+		
+<h1>Procedural File: json.php</h1>
+Source Location: /PhpExt/Lib/json.php<br /><br />
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Page Details</div>
+	<div class="nav-bar">
+					<span class="disabled">Page Details</span> |
+							<a href="#sec-classes">Classes</a>
+			|									<a href="#sec-constants">Constants</a>
+										</div>
+	<div class="info-box-body">
+		<p align="center" class="short-description"><strong>Converts to and from JSON format.
+</strong></p>
+<span class="description"><p>JSON (JavaScript Object Notation) is a lightweight data-interchange  format. It is easy for humans to read and write. It is easy for machines  to parse and generate. It is based on a subset of the JavaScript  Programming Language, Standard ECMA-262 3rd Edition - December 1999.  This feature can also be found in  Python. JSON is a text format that is  completely language independent but uses conventions that are familiar  to programmers of the C-family of languages, including C, C++, C#, Java,  JavaScript, Perl, TCL, and many others. These properties make JSON an  ideal data-interchange language.</p><p>This package provides a simple encoder and decoder for JSON notation. It  is intended for use with client-side Javascript applications that make  use of HTTPRequest to perform server communication functions - data can  be encoded into JSON notation for use in a client-side javascript, or  decoded from incoming Javascript requests. JSON format is native to  Javascript, and can be directly eval()'ed with no further parsing  overhead</p><p>All strings should be in ASCII or UTF-8 format!</p><p>LICENSE: Redistribution and use in source and binary forms, with or  without modification, are permitted provided that the following  conditions are met: Redistributions of source code must retain the  above copyright notice, this list of conditions and the following  disclaimer. Redistributions in binary form must reproduce the above  copyright notice, this list of conditions and the following disclaimer  in the documentation and/or other materials provided with the  distribution.</p><p>THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN  NO EVENT SHALL CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,  BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS  OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND  ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR  TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE  USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH  DAMAGE.</p></span>		<table border="0" cellspacing="0" cellpadding="0">
+			<tr><td><strong>Author:</strong>&nbsp;&nbsp;</td><td>Brett Stimmerman &lt;<a href="mailto:brettstimmerman[at]gmail[dot]com">brettstimmerman[at]gmail[dot]com</a>&gt;</td></tr>
+			<tr><td><strong>Author:</strong>&nbsp;&nbsp;</td><td>Michal Migurski &lt;<a href="mailto:mike-json@teczno.com">mike-json@teczno.com</a>&gt;</td></tr>
+			<tr><td><strong>Author:</strong>&nbsp;&nbsp;</td><td>Matt Knapp &lt;<a href="mailto:mdknapp[at]gmail[dot]com">mdknapp[at]gmail[dot]com</a>&gt;</td></tr>
+			<tr><td><strong>Version:</strong>&nbsp;&nbsp;</td><td>CVS: $Id: JSON.php,v 1.31 2006/06/28 05:54:17 migurski Exp $</td></tr>
+			<tr><td><strong>Copyright:</strong>&nbsp;&nbsp;</td><td>2005 Michal Migurski</td></tr>
+			<tr><td><strong>Link:</strong>&nbsp;&nbsp;</td><td><a href="http://pear.php.net/pepr/pepr-proposal-show.php?id=198">http://pear.php.net/pepr/pepr-proposal-show.php?id=198</a></td></tr>
+			<tr><td><strong>Filesource:</strong>&nbsp;&nbsp;</td><td><a href="../__filesource/fsource_Services_JSON__PhpExtLibjson.php.html">Source Code for this file</a></td></tr>
+			<tr><td><strong>License:</strong>&nbsp;&nbsp;</td><td><a href="http://www.opensource.org/licenses/bsd-license.php">http://www.opensource.org/licenses/bsd-license.php</a></td></tr>
+	</table>
+
+			</div>
+</div>
+
+	<a name="sec-classes"></a>
+	<div class="info-box">
+		<div class="info-box-title">Classes</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Page Details</a> |
+			<span class="disabled">Classes</span>
+			|										<a href="#sec-constants">Constants</a>
+															</div>
+		<div class="info-box-body">
+			<table cellpadding="2" cellspacing="0" class="class-table">
+				<tr>
+					<th class="class-table-header">Class</th>
+					<th class="class-table-header">Description</th>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em; vertical-align: top">
+						<a href="../Services_JSON/Services_JSON.html">Services_JSON</a>
+					</td>
+					<td>
+											Converts to and from JSON format.
+										</td>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em; vertical-align: top">
+						<a href="../Services_JSON/Services_JSON_Error.html">Services_JSON_Error</a>
+					</td>
+					<td>
+											
+										</td>
+				</tr>
+							</table>
+		</div>
+	</div>
+
+
+	<a name="sec-constants"></a>
+	<div class="info-box">
+		<div class="info-box-title">Constants</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Page Details</a> |
+							<a href="#sec-classes">Classes</a>
+				|									<span class="disabled">Constants</span>
+											</div>
+		<div class="info-box-body">
+			<a name="defineSERVICES_JSON_IN_ARR"><!-- --></a>
+<div class="oddrow">
+
+	<div>
+		<span class="const-title">
+			<span class="const-name">SERVICES_JSON_IN_ARR</span>&nbsp;&nbsp;<span class="smalllinenumber">[line <a href="../__filesource/fsource_Services_JSON__PhpExtLibjson.php.html#a72">72</a>]</span>
+		</span>
+	</div>
+<br />
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code-border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>SERVICES_JSON_IN_ARR = 3</code>
+    </td></tr></table>
+    </td></tr></table>
+
+    <p align="center" class="short-description"><strong>Marker constant for Services_JSON::decode(), used to flag stack state
+</strong></p>
+    
+	<br />
+
+		<div class="top">[ <a href="#top">Top</a> ]</div>
+	<br />
+</div>
+<a name="defineSERVICES_JSON_IN_CMT"><!-- --></a>
+<div class="evenrow">
+
+	<div>
+		<span class="const-title">
+			<span class="const-name">SERVICES_JSON_IN_CMT</span>&nbsp;&nbsp;<span class="smalllinenumber">[line <a href="../__filesource/fsource_Services_JSON__PhpExtLibjson.php.html#a82">82</a>]</span>
+		</span>
+	</div>
+<br />
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code-border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>SERVICES_JSON_IN_CMT = 5</code>
+    </td></tr></table>
+    </td></tr></table>
+
+    <p align="center" class="short-description"><strong>Marker constant for Services_JSON::decode(), used to flag stack state
+</strong></p>
+    
+	<br />
+
+		<div class="top">[ <a href="#top">Top</a> ]</div>
+	<br />
+</div>
+<a name="defineSERVICES_JSON_IN_OBJ"><!-- --></a>
+<div class="oddrow">
+
+	<div>
+		<span class="const-title">
+			<span class="const-name">SERVICES_JSON_IN_OBJ</span>&nbsp;&nbsp;<span class="smalllinenumber">[line <a href="../__filesource/fsource_Services_JSON__PhpExtLibjson.php.html#a77">77</a>]</span>
+		</span>
+	</div>
+<br />
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code-border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>SERVICES_JSON_IN_OBJ = 4</code>
+    </td></tr></table>
+    </td></tr></table>
+
+    <p align="center" class="short-description"><strong>Marker constant for Services_JSON::decode(), used to flag stack state
+</strong></p>
+    
+	<br />
+
+		<div class="top">[ <a href="#top">Top</a> ]</div>
+	<br />
+</div>
+<a name="defineSERVICES_JSON_IN_STR"><!-- --></a>
+<div class="evenrow">
+
+	<div>
+		<span class="const-title">
+			<span class="const-name">SERVICES_JSON_IN_STR</span>&nbsp;&nbsp;<span class="smalllinenumber">[line <a href="../__filesource/fsource_Services_JSON__PhpExtLibjson.php.html#a67">67</a>]</span>
+		</span>
+	</div>
+<br />
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code-border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>SERVICES_JSON_IN_STR = 2</code>
+    </td></tr></table>
+    </td></tr></table>
+
+    <p align="center" class="short-description"><strong>Marker constant for Services_JSON::decode(), used to flag stack state
+</strong></p>
+    
+	<br />
+
+		<div class="top">[ <a href="#top">Top</a> ]</div>
+	<br />
+</div>
+<a name="defineSERVICES_JSON_LOOSE_TYPE"><!-- --></a>
+<div class="oddrow">
+
+	<div>
+		<span class="const-title">
+			<span class="const-name">SERVICES_JSON_LOOSE_TYPE</span>&nbsp;&nbsp;<span class="smalllinenumber">[line <a href="../__filesource/fsource_Services_JSON__PhpExtLibjson.php.html#a87">87</a>]</span>
+		</span>
+	</div>
+<br />
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code-border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>SERVICES_JSON_LOOSE_TYPE = 16</code>
+    </td></tr></table>
+    </td></tr></table>
+
+    <p align="center" class="short-description"><strong>Behavior switch for Services_JSON::decode()
+</strong></p>
+    
+	<br />
+
+		<div class="top">[ <a href="#top">Top</a> ]</div>
+	<br />
+</div>
+<a name="defineSERVICES_JSON_SLICE"><!-- --></a>
+<div class="evenrow">
+
+	<div>
+		<span class="const-title">
+			<span class="const-name">SERVICES_JSON_SLICE</span>&nbsp;&nbsp;<span class="smalllinenumber">[line <a href="../__filesource/fsource_Services_JSON__PhpExtLibjson.php.html#a62">62</a>]</span>
+		</span>
+	</div>
+<br />
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code-border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>SERVICES_JSON_SLICE = 1</code>
+    </td></tr></table>
+    </td></tr></table>
+
+    <p align="center" class="short-description"><strong>Marker constant for Services_JSON::decode(), used to flag stack state
+</strong></p>
+    
+	<br />
+
+		<div class="top">[ <a href="#top">Top</a> ]</div>
+	<br />
+</div>
+<a name="defineSERVICES_JSON_SUPPRESS_ERRORS"><!-- --></a>
+<div class="oddrow">
+
+	<div>
+		<span class="const-title">
+			<span class="const-name">SERVICES_JSON_SUPPRESS_ERRORS</span>&nbsp;&nbsp;<span class="smalllinenumber">[line <a href="../__filesource/fsource_Services_JSON__PhpExtLibjson.php.html#a92">92</a>]</span>
+		</span>
+	</div>
+<br />
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code-border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>SERVICES_JSON_SUPPRESS_ERRORS = 32</code>
+    </td></tr></table>
+    </td></tr></table>
+
+    <p align="center" class="short-description"><strong>Behavior switch for Services_JSON::decode()
+</strong></p>
+    
+	<br />
+
+		<div class="top">[ <a href="#top">Top</a> ]</div>
+	<br />
+</div>
+		</div>
+	</div><br />
+
+
+
+        <div class="credit">
+		    <hr class="separator" />
+		    Documentation generated on Thu, 07 Aug 2008 21:15:59 -0500 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.0</a>
+	      </div>
+      </td></tr></table>
+    </td>
+  </tr>
+  <tr>
+	<td><div class="docs-content"></div></td>
+  </tr>
+</table>
+
+<br style="clear:both;" />
+<div id="footer">
+PHP-Ext Open Source Project | <a href="http://php-ext.googlecode.com">http://php-ext.googlecode.com</a> | <a href="http://php-ext.quimera-solutions.com">http://php-ext.quimera-solutions.com</a> |
+sergeiw at gmail.com
+</div>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-1324828-4");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
+
+
+</body>
+</html>

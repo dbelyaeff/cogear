@@ -1,0 +1,103 @@
+=CHANGELOG= 
+
+==0.8.3==
+2008-10-08
+---------------------------------------
+- Code to parse changelog file fixed by initializing log variable
+- Updating changelog for version 0.83
+- Adding website images
+- Updating api documentation.  Documentation redesigned (no frames) to help search engines
+- site update for version 0.83. Info Sections where added to the home page
+- Connection object added on Data namespace to fix the HttpProxy constructor.
+- custom icon example css fixed
+- Examples added: JSON Grid, JSON Grouping Grid, Accordion Layout
+- Samples added: Edit Grid, Grid Grouping, XML Grid, Tree Reordering, MessageBox, Complex Layout
+- View Source: Sources tab modified to be plain and without border.
+- Tree Reordering sample added.
+- MessageBox examples added
+- Complex Layout example added
+- Grid examples added: Edit Grid, Grouping, XML Grid
+- ext-searchfield.js and ext-xmlerrorreader.js were moved to corresponding folders according to the namespace of the PHP-Ext User Extension Classes.  The form/custom and form/xml-form examples were updated accordingly
+- Grid's CheckColumn added
+- MessageBox added
+- ProgressBar added
+- Element class added for useful operations over DOM elements
+- TreePanel and TreeEditor support, includes nodes and selection models.
+- Node and Tree data classes added to support TreePanel.
+- Added PropertyGrid support with PropertyRecord
+- GridEditor and GridEditorCollection added to enable EditorGridPanel proper use.
+- Editor Component added to enable Grid Editors and Tree Editor
+- adding Viewport support
+- PhpExt_Container: autoDestroy property added
+- PhpExt_Component: layout use fixed on getConfigParams to allow proper use and override of default layout.
+- PhpExt_Component: Element (El) property added to support lazy rendering when using an existing element as base html.
+- BoxComponent changed from abstract class to public since it can be used as a generic component which can be related to an element.
+- AutoLoadConfigObject @subpackage on phpdoc was removed since it is not used.
+- TabLayout added.  TabLayoutData added to support closable property. TabPanel was changed to support TabLayout as default layout.
+- interfaces IColumn and IColumnCollection added to allow the implementation of plugins which can be used as grid columns too.  ColumnModel was changed to use this interfaces instead of ColumnConfigObjectCollection.  CheckboxSelectionModel, ColumnConfigObject and RowNumberer where changed to implement IColumn interface.  CheckboxSelectionModel and RowNumberer where fixed to work properly.
+- Card Layout added
+- BorderLayoutData: getters and setters fixed to use setLayoutProperty
+- Javascript: code added to check if value is a javascript statement
+- Javascript: json lib changed to use DIRECTORY_SEPARATOR constant to locate json library when native json_encode not available
+- Class name fixed from PassworField to PasswordField
+- JsonStore: Data getter fixed
+- JsonStore: Total property getter fixed
+- Toolbar_Separator: Wrong getting of Ext class name fixed
+- BorderLayoutData: Add the region constants and helper functions to easy create a border layout data object. The inherited properties from SplitBar where added to.
+- JsonStore: JsonReader properties added.  The reason for this is that according to Ext JS documentation, JsonStore inherits all config properties from JsonReader for an easier configuration.
+- An AbstractCollection was created to let ObjectCollection to receive any kind  of PhpExt_Objects.  Every other collection now inherits from AbstractCollection instead of ObjectCollection as before.
+- GroupingView: GroupTextTemplate property fixed.  The ext propertty name was wrong.
+- ColumnModel: getJavascript function fixed to store variable name in case it is rendered to a variable and reused on another object later.
+- ColumnConfigObject: Renderer property changed to allow objects as well as javascript statements as valid types.  The reason for this is the use of plugins and custom objects which may inherit from PhpExt_Object.
+- AnchorLayout and FormLayoutData objects fixed to use the corresponding properties
+- Finished implementation for TableLayout
+- Finished implementation for BorderLayout
+- GridPanel: PhpDoc fixed for property View.  Wrong property type.
+- NumberField: Changed parent class from Field to TextField.
+- FormPanel: standardSubmit, onSubmit properties added to allow non-ajax form submit.  Missing waitMsgTarget valid property added.
+- XmlReader: fixed totalRecords config option.  Changed from total to totalRecords
+- Record: Fixed to work with a FieldConfigObjectCollection.  The static function Create was added.
+- Field: Now implements IToolbarItem so it can be used as Toolbar Item
+- FieldConfigObject: boolean type constant fixed
+- DataReader: Property RecordType add so it can be configured with either a field collection or a record directly
+- Component: A preliminary support for plugins was added through and ObjectCollection.
+- An AbstractCollection was created to let ObjectCollection to receive any kind  of PhpExt_Objects.  Every other collection now inherits from AbstractCollection instead of ObjectCollection as before.
+- Samples: Fixed the include_path separator.  Changed from ";" to php constant PATH_SEPARATOR.
+- Samples: Fixed the include_path separator.  Changed from ";" to php constant PATH_SEPARATOR.
+- Adding the Accordiong layout objects to the layout namespace
+- ToolConfigObject: Changed parameter type on phpdoc for property Handler.  It is now PhpExt_Javascript.  This was done since the handler function must have 3 parameters which can not be specified with a handler object.  Must fix the handler object too.
+- Panel: Fixed the bug when rendering a single tool.  ForceArray property set to true for the ToolsCollection.
+- Panel: fixing check on mustRender over topToolbar
+- Radio: inputValue parameter added do createRadio to ease the creation of radio buttons and comply with function createCheckbox
+- Radio: The constructor was not completely updated when doing the refactor.  It is not supposed to receive any parameters and should not send parameters to the parent constructor.  This caused the program to show a Warning about Missing paremeters on constructor when using the helper function createRadio
+- JsonReader: Wrong include for linux like systems.  Filename was in lowercase it should be PascalCase.
+- Panel: Solving Issue 5: Setting topToolbar doesn't work.  It wasn't assigning the object to the corresponding tuple
+
+==0.8.2== 
+2008-04-08
+---------------------------------------
+- No more support for PHP4
+- Complete refactor to comply with Zend Framework PHP Coding Standard 
+  (http://framework.zend.com/manual/en/coding-standard.html) 
+	- Class naming: i.e.: class renamed from ExtJsonStore to PhpExt_Data_JsonStore. 
+	  See API documentation.
+	- Scopes.  Methods like getConfigParams are no longer publicly visible.
+	- Constructors.  Should not affected library usage except for user extensions;
+	- Class Constants: Constants declared with define() where moved to class contants.  
+	  See API documentation.     
+- Strict Standard compliant.
+- Complete PHPDoc for classes, getters and setters
+- Panel, TabPanel and Window where moved from PhpExt/Panels to PhpExt/ to reflect the namespace
+- Strong typed collections added: ComponentCollection, ListenerCollection, ButtonCollection, 
+  ToolConfigObjectCollection, FieldObjectCollection, ColumnConfigObjectCollection, 
+  BaseItemCollection (Menu), IToolbarCollection. See API Documentation.  
+- Layouts changed to use strong typed objects for layout config and layout data for the items 
+  of the container.
+- Panel tools support
+- SplitButton added
+- Examples updated to comply with the new coding standard
+
+==0.8.1== 
+2008-03-04
+---------------------------------------
+Initial version

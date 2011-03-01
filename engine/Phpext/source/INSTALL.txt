@@ -1,0 +1,43 @@
+==============================================
+PHP-Ext Open Source Project
+==============================================
+
+INSTALLATION INSTRUCTIONS
+----------------------------------------------
+-   Decompress the zipped file to a PHP enabled web server
+-   Install Ext JS
+	-  Download Ext JS 2.0.2 (http://extjs.com/deploy/ext-2.0.2.zip)
+	-  Decompress the zipped file under {install-dir}/resources.
+-   Install Codepress
+    - If you wish to have code highlighting in the samples source you must download codepress
+    - Download Codepress (http://codepress.org/download/codepress-v.0.9.6.zip)
+    - Decompress the zipped file under {install-dir}/resources
+    
+   
+DIRECTORY STRUCTURE
+----------------------------------------------
+- php-ext
+  | 
+   - docs          'API Documentation'
+  |
+   - examples      'Featured Samples'
+  | 
+   - library       'PHP-Ext Library'
+  |   |
+  |    - PhpExt     'PHP-Ext Source' 
+  |   |
+  |    - PHPExtUx   'PHP-Ext User Extensions'
+  |
+   - resources     'Third party libraries and resources'
+     |
+      - codepress  'Codepress Library Must be downloaded'
+     |
+      - ext-2.0.2  'Ext JS Library Must be downloaded'
+     |
+      - extjs-ux   ' User extensions (javascript)'
+  
+  
+LICENSE 
+----------------------------------------------
+These project is licensed under LGPL.
+see LICENCE.txt for information regarding LGPL and third party software

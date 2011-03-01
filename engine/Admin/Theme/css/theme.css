@@ -1,0 +1,15 @@
+body
+{
+    background: #FEFEFE url(../images/background.jpg) repeat-x;
+}
+#header {
+    height: 145px;
+}
+#wrapper{
+    background: #FFF;
+    border: 2px solid #CCC;
+    -moz-border-radius: 10px;
+}
+#content{
+    min-height: 300px;
+}

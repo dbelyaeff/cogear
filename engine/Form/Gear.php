@@ -1,0 +1,32 @@
+<?php
+/**
+ * Form
+ *
+ * @author		Dmitriy Belyaev <admin@cogear.ru>
+ * @copyright		Copyright (c) 2010, Dmitriy Belyaev
+ * @license		http://cogear.ru/license.html
+ * @link		http://cogear.ru
+ * @package		Core
+ * @subpackage
+ * @version		$Id$
+ */
+class Form_Gear extends Gear {
+    protected $name = 'Form';
+    protected $desciption = 'Handle forms';
+    protected $order = 0;
+    protected $handler;
+
+    /**
+     * Constructor
+     */
+    public function  __construct() {
+        parent::__construct();
+//        Template::bindGlobal('form',$this->handler);
+    }
+    /**
+     * Initialize
+     */
+    public function init(){
+        parent::init();
+    }
+}
