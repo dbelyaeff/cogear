@@ -11,7 +11,7 @@
  * @subpackage          Menu
  * @version		$Id$
  */
-class Menu_Object extends Recursive_ArrayObject {
+class Menu_Object extends Core_ArrayObject{
 
     /**
      * Menu
@@ -25,13 +25,6 @@ class Menu_Object extends Recursive_ArrayObject {
      * @var string 
      */
     protected $template = 'Menu.menu';
-    /**
-     * Menu elements
-     * 
-     * @var Core_ArrayObject
-     */
-    public $elements;
-
     /**
      * Constructor
      * 
@@ -50,9 +43,6 @@ class Menu_Object extends Recursive_ArrayObject {
      * @return string|Core_ArrayObject
      */
     public function __get($name) {
-        if (!$this->offsetExists($name)) {
-            $this->offsetSet($name, new Menu_Element());
-        }
         return $this->offsetGet($name);
     }
 
@@ -63,9 +53,18 @@ class Menu_Object extends Recursive_ArrayObject {
      * @param string $value 
      */
     public function __set($name, $value) {
-        $this->offsetSet($name,new Menu_Element($value));
+        $this->offsetSet($name, new Menu_Element($name,$value));
     }
-
+    /**
+     * Set active element name
+     * 
+     * @param string $name 
+     */
+    public function setActive($name){
+         foreach($this as $key=>&$element){
+             $key == $name && $element->setActive();
+         }
+    }
     /**
      * Render menu
      * 
@@ -78,21 +77,23 @@ class Menu_Object extends Recursive_ArrayObject {
     }
 
     /**
-     *
+     * Transform array to menu
      * 
-     * @param type $ul
-     * @param type $li
-     * @return string 
+     * $data = array(
+     *  'level_one_element' => array(
+     *          'value' => 'level_one_element_value',
+     *          'children' => array(
+     *              'level_two_element' => 'level_one_element_value',
+     *              …
+     *          )
+     *      )
+     * );
+     * 
+     * @param array $data 
      */
-    public function output($ul = 'ul', $li = 'li') {
-        $it = new Menu_Iterator($this->getIterator(),$ul,$li);
-        while ($it->valid()){
-            $it->result .= str_repeat("\t",$it->getDepth()+1).'<'.$li.'>'.$it->current()."\n";
-            $it->next();
+    public function adopt($data) {
+        foreach($data as $key=>$value){
+            $this->$key = $value;
         }
-//        debug(htmlspecialchars($it->getResult()));
-//        die();
-        return $it->getResult();
     }
-
 }

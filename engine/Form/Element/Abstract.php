@@ -139,13 +139,13 @@ class Form_Element_Abstract extends Options {
      * @return
      */
     public function result() {
-        if(isset($this->form->request[$this->name])){
-            $this->value = $this->form->request[$this->name];
+        //if(isset($this->form->request[$this->name])){
+            $this->value = isset($this->form->request[$this->name]) ? $this->form->request[$this->name] : NULL;
             $this->is_fetched = TRUE;
             $this->filter();
             return $this->validate() ? $this->value : FALSE;
-        }
-        return NULL;
+        //}
+        //return NULL;
     }
 
     /**

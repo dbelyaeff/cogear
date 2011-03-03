@@ -26,12 +26,11 @@ class Menu_Object extends Recursive_ArrayObject {
      */
     protected $template = 'Menu.menu';
     /**
-     * Menu elements
+     * Name of active element
      * 
-     * @var Core_ArrayObject
+     * @var string
      */
-    public $elements;
-
+    protected $active;
     /**
      * Constructor
      * 
@@ -50,9 +49,9 @@ class Menu_Object extends Recursive_ArrayObject {
      * @return string|Core_ArrayObject
      */
     public function __get($name) {
-        if (!$this->offsetExists($name)) {
-            $this->offsetSet($name, new Menu_Element());
-        }
+//        if (!$this->offsetExists($name)) {
+           // $this->offsetSet($name, new Menu_Element($name));
+//        }
         return $this->offsetGet($name);
     }
 
@@ -63,9 +62,26 @@ class Menu_Object extends Recursive_ArrayObject {
      * @param string $value 
      */
     public function __set($name, $value) {
-        $this->offsetSet($name,new Menu_Element($value));
+        $this->offsetSet($name, new Menu_Element($name,$value));
     }
-
+    /**
+     * Set active element name
+     * 
+     * @param string $name 
+     */
+    public function setActive($name){
+        $it = new RecursiveIteratorIterator($this->getIterator());
+        $name = (array) $name;
+        $current = array_shift($name);
+        while ($it->valid()){
+            if(is_object($it->current()) && $it->current()->getName() == $name){
+                $it->current()->setActive();
+                if(!$name) break;
+                $current = array_shift($name);
+            }
+            $it->next();
+        }
+    }
     /**
      * Render menu
      * 
@@ -78,20 +94,51 @@ class Menu_Object extends Recursive_ArrayObject {
     }
 
     /**
-     *
+     * Transform array to menu
+     * 
+     * $data = array(
+     *  'level_one_element' => array(
+     *          'value' => 'level_one_element_value',
+     *          'children' => array(
+     *              'level_two_element' => 'level_one_element_value',
+     *              …
+     *          )
+     *      )
+     * );
+     * 
+     * @param array $data 
+     */
+    public function adopt($data, &$leaf = NULL) {
+        $leaf OR $leaf = $this;
+        if (is_array($data)) {
+            foreach ($data as $name => $element) {
+                if (is_array($element) && isset($element['value'])) {
+                    $leaf->$name = $element['value'];
+                    if (isset($element['children'])) {
+                        $this->adopt($element['children'],$leaf->$name);
+                    }
+                } elseif (is_string($element)) {
+                    $leaf->$name = $element;
+                }
+            }
+        } else {
+            $leaf = $data;
+        }
+    }
+
+    /**
+     * Output menu
      * 
      * @param type $ul
      * @param type $li
      * @return string 
      */
     public function output($ul = 'ul', $li = 'li') {
-        $it = new Menu_Iterator($this->getIterator(),$ul,$li);
-        while ($it->valid()){
-            $it->result .= str_repeat("\t",$it->getDepth()+1).'<'.$li.'>'.$it->current()."\n";
+        $it = new Menu_Iterator($this->getIterator(), $ul, $li);
+        while ($it->valid()) {
+            $it->result .= str_repeat("\t", $it->getDepth() + 1) . '<' . $li .(is_object($it->current()) && $it->current()->isActive() ? ' class="active"' : ''). '>' . $it->current() . "\n";
             $it->next();
         }
-//        debug(htmlspecialchars($it->getResult()));
-//        die();
         return $it->getResult();
     }
 

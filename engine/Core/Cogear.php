@@ -58,14 +58,6 @@ final class Cogear implements Interface_Singleton {
      * @var object
      */
     public $theme;
-    /**
-     * Theme autoload
-     * 
-     * If you want to  load and init your theme by yourself, turn it off
-     * 
-     * @booolean
-     */
-    public static $theme_autoload = TRUE;
     const GEAR = 'Gear';
     /**
      * Delimiter for string callbacks
@@ -265,13 +257,28 @@ final class Cogear implements Interface_Singleton {
         }
         $this->sortGears();
         foreach ($this->gears as $name => $gear) {
-            if($gear->reflection->isSubclassOf('Theme') && !self::$theme_autoload){
+            if($gear->reflection->isSubclassOf('Theme')){
                 continue;
             }
             $gear->init();
         }
         Template::bindGlobal('cogear',$this);
-        $this->getTheme();
+    }
+    /**
+     * Get all avialable gears
+     * 
+     * @return array 
+     */
+    public function getAllGears(){
+        return $this->all_gears;
+    }
+    /**
+     * Get only active gears
+     * 
+     * @return array
+     */
+    public function getActiveGears(){
+        return $this->active_gears;
     }
     /**
      * Get all Themes
@@ -298,16 +305,27 @@ final class Cogear implements Interface_Singleton {
                 return $this->gears->$gear;
             }
         }
-        return $this->setTheme();
-
+        return $this->activateTheme('Theme_Default');
     }
     /**
      * Set theme
      *
      * @param   string  $name
+     * @return  object|NULL Theme or NULL.
      */
     public function setTheme($name = 'Theme_Default'){
         if($this->theme) return;
+        $class = $name.'_'.self::GEAR;
+        if(!class_exists($class) OR $this->gears->$name) return NULL;
+        $this->gears->$name = new $class;
+        return $this->theme = $this->gears->$name;
+    }
+    /**
+     * Make theme active
+     * 
+     * @param string $name
+     */
+    public function activateTheme($name,$activate = TRUE){
         foreach($this->active_gears as $gear=>$class){
             if(strpos($gear,'Theme') !== FALSE){
                 if($gear == $name){
@@ -318,13 +336,11 @@ final class Cogear implements Interface_Singleton {
                 }
             }  
         }
-        if(isset($found)) return;
-        $class = $name.'_'.self::GEAR;
+         if(isset($found)) return;
+         $class = $name.'_'.self::GEAR;
         if(!class_exists($class) OR $this->gears->$name) return NULL;
-        $this->activate($name);
-        $this->gears->$name = new $class;
-        $this->gears->$name->init();
-        return $this->theme = $this->gears->$name;
+        $activate && $this->activate($name);
+        return $this->setTheme($name);
     }
     /**
      * Install gear
@@ -357,6 +373,17 @@ final class Cogear implements Interface_Singleton {
     }
 
     /**
+     * Update gear
+     * @param string $gear
+     */
+    public function update($gear) {
+        if (isset($this->all_gears[$gear]) && class_exists($this->all_gears[$gear])) {
+            $object = new $this->all_gears[$gear];
+            $object->update();
+        }
+        return $this;
+    }
+    /**
      * Activate gear
      * @param string $gear
      */
@@ -366,7 +393,7 @@ final class Cogear implements Interface_Singleton {
                 $this->install($gear);
             }
             $object = new $this->all_gears[$gear];
-            $object->activate();
+            $object instanceof Theme ? $this->activateTheme($object->gear,FALSE) : $object->activate();
             $this->active_gears[$gear] = $this->all_gears[$gear];
             $this->write_gears = TRUE;
         }

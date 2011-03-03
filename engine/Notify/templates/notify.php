@@ -1,4 +1,4 @@
 <div class="<?=$class?>">
-<h1><?php echo $title;?></h1>
+<h1><span><?php echo $title;?></span></h1>
 <p><?php echo $description;?></p>
 </div>

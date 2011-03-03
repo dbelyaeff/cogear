@@ -33,6 +33,18 @@ class Router {
      */
     private $segments = array();
     /**
+     * Arguments — filtered segments
+     * 
+     * @var array
+     */
+    private $args = array();
+    /**
+     * Flag indicates if router has run
+     * 
+     * @var boolean 
+     */
+    private $has_run;
+    /**
      * Route expression transformation variables
      *
      * @array
@@ -107,6 +119,22 @@ class Router {
         }
     }
     /**
+     * Get uri
+     * 
+     * @return string
+     */
+    public function getUri(){
+        return $this->uri;
+    }
+    /**
+     * Get arguments
+     * 
+     * @return array
+     */
+    public function getArgs(){
+        return $this->args;
+    }
+    /**
      * Get segments
      *
      * @param   int     $num
@@ -119,6 +147,7 @@ class Router {
      * Run dispatched request
      */
     public function run() {
+        if($this->has_run) return;
         $cogear = getInstance();
         foreach ($this->routes as $route => $callback) {
             $route = str_replace(
@@ -141,18 +170,29 @@ class Router {
                 }
                 $root = substr($clean_route,0,strpos($clean_route,'('));
                 $exclude = strpos($root,self::DELIM) ? preg_split(self::DELIM, $root, -1, PREG_SPLIT_NO_EMPTY) : (array) $root;
-                $args = array_merge($args,array_diff_assoc($this->segments,$exclude));
+                $this->args = array_merge($args,array_diff_assoc($this->segments,$exclude));
                 // We have a nice method in hooks to prepare callback
                 if($callback = Cogear::prepareCallback($callback)){
                     method_exists($callback[0],'request') && call_user_func(array($callback[0],'request'));
-                    call_user_func_array($callback,$args);
+                    call_user_func_array($callback,$this->args);
+                    $this->has_run = TRUE;
                     return;
                 }
             }
         }
-        $callback = array($cogear->errors,'_404');
-        is_callable($callback) && call_user_func_array($callback,array());
+        $this->exec(array($cogear->errors,'_404'));
         return;
+    }
+    /**
+     * Execute callback
+     * 
+     */
+    public function exec($callback,$args = array()){
+        if(is_callable($callback) && $result = call_user_func_array($callback,$args)){
+            $this->has_run = TRUE;
+            return $result;
+        }
+        return NULL;
     }
 
 }

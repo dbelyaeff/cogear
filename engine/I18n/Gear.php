@@ -17,10 +17,9 @@ class I18n_Gear extends Gear {
     protected $name = 'Internacionalization';
     protected $description = 'Translate site interface to different languages.';
     protected $type = Gear::CORE;
-    protected $package = 'Core';
-    protected $version = '1.0';
     protected $author = 'Dmitriy Belyaev';
     protected $order = -1000;
+    protected $domains = array();
     /**
      * Locale
      * 
@@ -64,7 +63,22 @@ class I18n_Gear extends Gear {
      * @return string
      */
     public function translate($text,$domain = ''){
+        $domain OR $this->domains && $domain = reset($this->domains);
         return $text;
+    }
+    
+    /**
+     * Set domain
+     * 
+     * @param   string  $domain If empty — return to previous domain
+     */
+    public function setDomain($domain = ''){
+        if($domain){
+            array_push($this->domains,$domain);
+        }
+        else {
+            array_pop($this->domains);
+        }
     }
 
 }
@@ -99,8 +113,15 @@ function t($text, $domain = '') {
     }
     return $result;
 }
-
-
+/**
+ * Set domain
+ * 
+ * @param string $domain 
+ */
+function d($domain = ''){
+    $cogear = getInstance();
+    $cogear->I18n->setDomain($domain);
+}
 /**
  * Plural forms for words
  *

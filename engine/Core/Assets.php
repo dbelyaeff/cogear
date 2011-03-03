@@ -27,8 +27,7 @@ class Assets{
      * Constructor
      */
     public function __construct(){
-        $this->scripts = new Core_ArrayObject();
-        $this->styles = new Core_ArrayObject();
+        $this->clear();
         Template::bindGlobal('scripts',$this->scripts);
         Template::bindGlobal('styles',$this->styles);
     }
@@ -118,5 +117,12 @@ class Assets{
      */
     public function getAssets(){
         return $this->getScripts()."\n".$this->getStyles()."\n";
+    }
+    /**
+     * Reset styles and scripts
+     */
+    public function clear(){
+        $this->scripts = new Core_ArrayObject();
+        $this->styles = new Core_ArrayObject();
     }
 }

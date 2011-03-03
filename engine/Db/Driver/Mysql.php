@@ -91,7 +91,7 @@ class Db_Driver_Mysql extends Db_Driver_Abstract {
         } elseif ($delete) {
             $query[] = 'DELETE FROM ' . $this->prepareTableName($from);
         } else {
-            $select = sizeof($select) < 1 ? '*' : $this->prepareValues($select);
+            $select = sizeof($select) < 1 ? '*' : implode(', ',$select);
             $query[] = 'SELECT ' . $select;
             $query[] = ' FROM ' . $this->prepareTableName($from);
         }

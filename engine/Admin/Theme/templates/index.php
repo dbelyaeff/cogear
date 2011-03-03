@@ -14,11 +14,18 @@
         <div class="container_16">
             <!-- HEADER -->
             <div id="header" class="grid_16">
-                <img src="<?= $theme->folder ?>/img/logo.png" class="header_logo" alt="COGEAR" />
-                <div><?=HTML::a(Url::link('http://'.SITE_URL),$cogear->get('site.name',SITE_URL));?></div>
-                <div class="header_auth">
-                    <?= t('Welcome, ', 'User'); ?> <a href="#" class="user_link"><?= $cogear->user->login; ?></a>
-			| <a href="<?= Url::link('/user/logout/'); ?>"><?= t('Logout', 'User'); ?></a>
+                <div class="grid_4 alpha">
+                    <a href="<?= Url::link('/admin')?>"><img src="<?= $theme->folder ?>/img/logo.png" class="header_logo" alt="COGEAR" /></a>
+                </div>
+                <div id="site_name" class="grid_3">
+                    <?=HTML::a(Url::link('http://'.SITE_URL),$cogear->get('site.name',SITE_URL));?>
+                </div>
+                <div id="header_auth" class="grid_3 prefix_6 omega">
+                    <div class="box"><p>
+                    <?= t('Welcome, ', 'User'); ?> <a href="<?= Url::gear('user',$cogear->user->login)?>" class="user_link"><?= $cogear->user->login; ?></a>
+			| <a href="<?= Url::gear('user','logout'); ?>"><?= t('Logout', 'User'); ?></a>
+                        </p>
+                    </div>
                 </div>
             </div>
             <!-- /HEADER -->
@@ -30,8 +37,10 @@
             </div>
             <!-- /SIDEBAR -->
 
-            <div id="content" class="grid_14 omega">
+            <div id="content" class="grid_14 omega box">
+                <div>
                 <?= $content?>
+                </div>
             </div>
             
             </div>
@@ -39,10 +48,12 @@
 
             <!-- FOOTER -->
             <div id="footer" class="grid_16">
-                <div class="footer_gear"> </div>
-                <a href="http://cogear.ru" class="footer_logo_text">cogear <span>v.2.01</span></a>
-                <div class="footer_stat">
+                <div id="footer_gear" class="grid_12 alpha"> <p>
+                </div>
+                <div id="footer_stat" class="grid_4 omega box">
+                    <div class="padding-10">
                     <?= $footer ?>
+                    </div>
                 </div>
             </div>
             <!-- /FOOTER -->

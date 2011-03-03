@@ -14,12 +14,9 @@
                 <?= $header ?>
             </div>
             <div class="clear"></div>
-            <div class="grid_12" id="topmenu">
-                <?= $topmenu ?>
-            </div>
             <div class="clear"></div>
-            <div class="grid_12" id="leftbar">
-                <?= $leftbar ?>
+            <div class="grid_12" id="sidebar">
+                <?= $sidebar ?>
             </div>
             <div class="grid_12" id="content">
                 <?= $content ?>

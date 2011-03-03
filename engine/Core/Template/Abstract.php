@@ -162,6 +162,13 @@ class Template_Abstract extends Options {
     public static function getGlobal($name = '') {
         return $name ? (isset(self::$global_vars[$name]) ? self::$global_vars[$name] : NULL) : self::$global_vars;
     }
+    
+    /**
+     * Clear global vars
+     */
+    public static function clear(){
+        self::$global_vars = array();
+    }
 
     /**
      * Render template

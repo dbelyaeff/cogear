@@ -17,6 +17,7 @@ class Pages_Gear extends Gear {
     protected $description = 'Manage pages';
     protected $pages = array();
     protected $type = Gear::MODULE;
+    protected $package = 'Pages';
     protected $sorted_pages = array();
     protected static $globalWidgets = array();
     /**
@@ -31,7 +32,7 @@ class Pages_Gear extends Gear {
      */
     public function init() {
         parent::init();
-        $this->setRoutes();
+//        $this->setRoutes();
         $this->getPages();
     }
     /**

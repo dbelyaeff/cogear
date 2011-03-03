@@ -15,4 +15,9 @@
 class Theme_Default_Gear extends Theme{
     protected $name = 'Default Theme';
     protected $description = 'Default engine theme.';
+    /**
+     * Admin page
+     */
+    public function admin(){
+    }
 }

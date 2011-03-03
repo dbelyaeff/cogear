@@ -17,6 +17,7 @@ abstract class Theme extends Gear {
     protected $description = 'Theme for cogear.';
     protected $type = Gear::THEME;
     protected $order = 100;
+    protected $package = 'Themes';
     private static $is_rendered = FALSE;
     public $template;
     public $layout = 'index';
@@ -33,7 +34,7 @@ abstract class Theme extends Gear {
         parent::__construct();
         $this->regions = Core_ArrayObject::transform($this->regions);
         foreach($this->regions as $name=>&$region){
-            Template::bindGlobal($name,$region);
+            Template::getGlobal($name) OR Template::bindGlobal($name,$region);
         }
     }
     /**

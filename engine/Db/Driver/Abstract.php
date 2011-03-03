@@ -215,7 +215,7 @@ abstract class Db_Driver_Abstract {
      * @param   boolean      $escape
      * @return object   Self intsance.
      */
-    public function select($fields, $escape = TRUE) {
+    public function select($fields, $escape = FALSE) {
         $this->fields OR $this->fields = $this->getFields($table);
         $this->addQuery('select', $fields, $escape);
         return $this;
@@ -374,7 +374,17 @@ abstract class Db_Driver_Abstract {
         $this->get($table, $limit, $offset);
         return $this;
     }
-
+    /**
+     * Count rows
+     * 
+     * @param   string  $table
+     * @param   string  $field
+     */
+    public function count($table,$field = '*'){
+        $this->select('COUNT('.$field.') as count');
+        $row = $this->get($table)->row();
+        return $row->count;
+    }
     /**
      * INSERT statement
      *

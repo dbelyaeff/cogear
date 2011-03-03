@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Menu Element
  *
@@ -12,12 +11,15 @@
  * @version		$Id$
  */
 class Menu_Element extends Recursive_ArrayObject{
+    protected $name;
+    protected $active;
     /**
      * Constructor
      *
      * @param string $value 
      */
-    public function __construct($value = '') {
+    public function __construct($name,$value = '') {
+        $this->name = $name;
         $this->offsetSet('value',$value);
     }
     /**
@@ -37,7 +39,29 @@ class Menu_Element extends Recursive_ArrayObject{
      * @param string $value 
      */
     public function __set($name, $value) {
-        $this->offsetSet($name, new self($value));
+        $this->offsetSet($name, new self($name,$value));
+    }
+    /**
+     * Set active
+     */
+    public function setActive(){
+        $this->active = TRUE;
+    }
+    /**
+     * Get element name
+     * 
+     * @return string 
+     */
+    public function getName(){
+        return $this->name;
+    }
+    /**
+     * Check if element is active
+     * 
+     * @return boolean|NULL
+     */
+    public function isActive(){
+        return $this->active;
     }
     
     /**

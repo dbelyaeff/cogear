@@ -51,6 +51,12 @@ abstract class Gear {
      */
     protected $type = Gear::CORE;
     /**
+     * Package
+     * 
+     * @var string 
+     */
+    protected $package = 'Core';
+    /**
      * Gear authors name
      *
      * @var string
@@ -63,6 +69,12 @@ abstract class Gear {
      * @var string
      */
     protected $email = 'admin@cogear.ru';
+    /**
+     * Gear website
+     *  
+     * @var string
+     */
+    protected $site = 'http://cogear.ru';
     /**
      * Path to class file
      *
@@ -116,12 +128,18 @@ abstract class Gear {
      * 
      * @var Core_ArrayObject
      */
-    protected $settings;
+    protected $settings = array();
     /**
      * If gear is requested by router
      * @var boolean 
      */
     protected $is_requested;
+    /**
+     * Flag indicates if gear is active
+     * 
+     * @var boolean
+     */
+    public $active;
     /**
      * Required gears [version is optoinal]
      *
@@ -230,6 +248,12 @@ abstract class Gear {
     public function deactivate() {
 
     }
+    /**
+     * Update gear
+     */
+    public function update(){
+        
+    }
 
     /**
      * Get Gear Path
@@ -283,6 +307,7 @@ abstract class Gear {
      * Get gear options
      */
     protected function getSettings(){
+        $this->settings = new Core_ArrayObject($this->settings);
         if($config = Config::read(find(basename($this->dir).DS.'settings'.EXT))){
             return $this->settings ? $this->settings->mix($config) : $this->settings = $config;
         }
@@ -297,10 +322,9 @@ abstract class Gear {
      */
     public function setTheme($theme = ''){
         $theme OR $theme = $this->settings->theme;
-        if(!$theme OR !class_exists($theme)) return;
+        if(!$theme) return NULL;
         $cogear = getInstance();
-        $cogear->theme = new $theme();
-        $cogear->theme->init();
+        $cogear->setTheme($theme) && $cogear->theme->init();
     }
     /**
      * Normalize relative path
@@ -378,10 +402,17 @@ abstract class Gear {
     public function request(){
         $this->is_requested = TRUE;
         $cogear = getInstance();
-        if(!$cogear->theme && $this->settings->theme && class_exists($this->settings->theme)){
-            $cogear->theme = new $this->settings->theme;
+        if(!page_access(strtolower($this->gear))){
+            return;
+        }
+        if($this->settings->theme && $cogear->setTheme($this->settings->theme)){
             $cogear->theme->init();
         }
+        else {
+            $cogear->theme = $cogear->getTheme();
+            $cogear->theme->init();
+        }
+        event('request.'.strtolower($this->gear));
     }
 
 }

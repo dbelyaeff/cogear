@@ -13,20 +13,24 @@
 class User_Object extends Db_ORM {
     /**
      * Constructor
+     * 
+     * @param   boolean $autoinit
      */
-    public function __construct(){
+    public function __construct($autoinit = TRUE){
         parent::__construct('users');
-        if($this->autologin()){
-            $cogear = getInstance();
-            $cogear->event('user.autologin',$this);
-        }
-        // Set data for guest
-        else {
-            $this->object(array(
-                'id' => 0,
-                'user_group' => 0,
-            ));
-            $this->store();
+        if($autoinit){
+            if($this->autologin()){
+                $cogear = getInstance();
+                $cogear->event('user.autologin',$this);
+            }
+            // Set data for guest
+            else {
+                $this->object(array(
+                    'id' => 0,
+                    'user_group' => 0,
+                ));
+                $this->store();
+            }
         }
     }
     /**

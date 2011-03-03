@@ -145,7 +145,6 @@ $cogear->session = Session::factory('session', $options);
 // Load other gears
 
 $cogear->loadGears();
-$cogear->setTheme('Theme_960');
 $cogear->event('ignite');
 $cogear->event('done');
 $cogear->response->send();

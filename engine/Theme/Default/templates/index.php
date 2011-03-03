@@ -9,7 +9,9 @@
     <?php echo $styles; ?>
     </head>
     <body>
-
+        <?= $sidebar?>
+        <?= $content?>
+        <?= $footer?>
         <?php if(isset($debug)) echo $debug;?>
     </body>
 </html>

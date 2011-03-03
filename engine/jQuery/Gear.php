@@ -13,5 +13,6 @@
 class jQuery_Gear extends Gear{
     protected $name = 'jQuery';
     protected $description = 'Add jQuery suppor to Cogear';
+    protected $package = 'jQuery';
     protected $order = -100;
 }

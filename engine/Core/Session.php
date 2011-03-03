@@ -272,7 +272,7 @@ class Session extends Options implements Interface_Factory {
      * @return  string|NULL
      */
     public function history($page = 0,$default = NULL){
-        $current = sizeof($_SESSION['history'])-1;
+        $current = sizeof($_SESSION['history']);
         $needle = $current+$page;
         return isset($_SESSION['history'][$needle]) ? $_SESSION['history'][$needle] : ($default ? $default : NULL);
     }

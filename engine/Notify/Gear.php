@@ -15,7 +15,26 @@ class Notify_Gear extends Gear {
 
     protected $name = 'Notify';
     protected $description = 'Notify user about events';
-
+    
+    public function init(){
+        parent::init();
+        hook('done',array($this,'showFlash'));
+    }
+    
+    public function showFlash(){
+        $cogear = getInstance();
+        if($cogear->session->messages){
+            foreach($cogear->session->messages as $message){
+                self::show($message['text'],$message['title'],$message['class']);
+            }
+            $cogear->session->messages = NULL;
+        }
+    }
+    public static function flash($text,$title = '',$class='info'){
+        $cogear = getInstance();
+        $cogear->session->messages OR $cogear->session->messages = new Core_ArrayObject();
+        $cogear->session->messages->append(array('text'=>$text,'title'=>$title,'class'=>$class));
+    }
     
     public static function show($text, $title = '',$class='info') {
         self::render('Notify.notify', array('title' => $title ? $title : t('Info', 'Notify'), 'description' => $text, 'class' => $class));
@@ -27,12 +46,32 @@ class Notify_Gear extends Gear {
         $cogear = getInstance();
         prepend('content', $template->render());
     }
-
+    
+    public static function overlay($text,$title='',$class='info'){
+        $cogear = getInstance();
+        $theme = $cogear->get('errors.theme','Theme_Splash');
+        if($cogear->setTheme($theme)){
+            $cogear->assets->clear();
+            $cogear->theme->init();
+            self::show($text,$title,$class);
+            $cogear->theme->render();
+            $cogear->response->send();
+            die();
+        }
+    }
 }
-
+function overlay($text, $title = ''){
+    Notify_Gear::overlay($text,$title ? $title : t('Error','Errors'),'error');
+}
+function flash_error($text, $title='') {
+    Notify_Gear::flash($text,$title ? $title : t('Error','Errors'),'error');
+}
 function error($text, $title='') {
     Notify_Gear::show($text,$title ? $title : t('Error','Errors'),'error');
 }
-function info($text, $title='') {
+function flash_info($text, $title=''){
+    Notify_Gear::flash($text,$title);
+}
+function info($text, $title=''){
     Notify_Gear::show($text,$title);
 }

@@ -101,13 +101,15 @@ class Form_Manager extends Options {
         $this->request = $this->method == 'POST' ? $_POST : $_GET;
         $result = array();
         $is_valid = TRUE;
-        foreach($this->elements as $name=>$element){
-           if($value = $element->result()){
-               $result[$name] = $value;
-           }
-           elseif(FALSE === $value) {
-               $is_valid = FALSE;
-           }
+        if(sizeof($this->request) > 0){
+            foreach($this->elements as $name=>$element){
+               if($value = $element->result()){
+                   $result[$name] = $value;
+               }
+               elseif(FALSE === $value) {
+                   $is_valid = FALSE;
+               }
+            }
         }
         return $is_valid && $result ? Core_ArrayObject::transform($result) : FALSE;
     }
