@@ -33,7 +33,7 @@ class Db_Gear extends Gear {
             }
             if(!isset($config['host'])) $config['host']= 'localhost';
             if(!isset($config['user'])) $config['user'] = 'root';
-            if(!isset($config['password'])) $config['password'] = '';
+            if(!isset($config['pass'])) $config['pass'] = '';
             if(!isset($config['prefox'])) $config['prefox'] = $cogear->get('database.default_prefix','cogear_');
             $config['database'] = trim($config['path'],'/');
             $driver = 'Db_Driver_'.  ucfirst($config['scheme']);
