@@ -76,7 +76,7 @@ abstract class Db_Driver_Abstract {
         'host' => 'localhost',
         'port' => 3306,
         'user' => 'root',
-        'pass' => '',
+ //       'pass' => '', if we define it here we always have a empty pass
         'database' => 'cogear',
         'prefix' => '',
         'socket' => NULL,
