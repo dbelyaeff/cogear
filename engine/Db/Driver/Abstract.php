@@ -76,7 +76,7 @@ abstract class Db_Driver_Abstract {
         'host' => 'localhost',
         'port' => 3306,
         'user' => 'root',
-        'pass' => '',
+        'pass' => NULL,
         'database' => 'cogear',
         'prefix' => '',
         'socket' => NULL,
@@ -94,7 +94,7 @@ abstract class Db_Driver_Abstract {
      * @param array $config
      */
     public function __construct(array $config) {
-        $this->config += $config;
+        $this->config = array_merge($this->config,$config);
         try {
             $this->open();
         } catch (Db_Exception $e) {

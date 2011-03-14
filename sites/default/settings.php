@@ -1,7 +1,9 @@
 <?php
 
 return array(
-    'database' => 'mysql://root@localhost/cogear',
+    'database' => array(
+      'dsn'=> 'mysql://root@localhost/cogear'
+      ),
     'cache' => array(
         'adapter' => Cache::FILE,
         'enabled' => TRUE,
