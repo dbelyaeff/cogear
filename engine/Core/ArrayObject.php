@@ -111,13 +111,15 @@ class Core_ArrayObject extends ArrayObject {
         array_unshift($temp_array, $value);
         $this->exchangeArray($temp_array);
     }
+
     /**
      * Reverse data
      */
-    public function reverse(){
+    public function reverse() {
         $this->exchangeArray(array_reverse($this->toArray()));
         return $this;
     }
+
     /**
      * Inject value at special position or before key
      * 
@@ -125,26 +127,31 @@ class Core_ArrayObject extends ArrayObject {
      * @param   int|string     $position
      * @param   int $order
      */
-    public function inject($value, $position=0, $order = self::BEFORE) {
+    public function inject($value, $position=0, $order = self::BEFORE,$key = NULL) {
         $result = array();
-        for ($i = 0; $this->next(); $i++) {
+        $it = $this->getIterator();
+        $i = 0;
+        while ($it->valid()) {
             if (is_numeric($position)) {
                 if ($order == self::BEFORE && $position == $i) {
                     $result[] = $value;
                 }
-                $result[] = $this->current();
+                $result[] = $it->current();
                 if ($order == self::AFTER && $position == $i) {
                     $result[] = $value;
                 }
             } elseif (is_string($position)) {
-                if ($order == self::BEFORE && $position == $this->key()) {
-                    $result[$position] = $value;
+                $key OR $key = $position;
+                if ($order == self::BEFORE && $position == $it->key()) {
+                    $result[$key] = $value;
                 }
-                $result[$this->key()] = $value;
-                if ($order == self::AFTER && $position == $this->key()) {
-                    $result[$position] = $value;
+                $result[$it->key()] = $it->current();
+                if ($order == self::AFTER && $position == $it->key()) {
+                    $result[$key] = $value;
                 }
             }
+            $it->next();
+            $i++;
         }
         $this->exchangeArray($result);
     }

@@ -19,7 +19,8 @@ return array (
     'Menu' => 'Menu_Gear',
     'jQueryGrid' => 'jQueryGrid_Gear',
     'jQueryUI' => 'jQueryUI_Gear',
-    'Theme_Fluid960' => 'Theme_Fluid960_Gear',
+    'Pages' => 'Pages_Gear',
+    'Theme_Default' => 'Theme_Default_Gear',
   ),
   'ttl' => NULL,
 );

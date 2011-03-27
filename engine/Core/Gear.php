@@ -117,6 +117,12 @@ abstract class Gear {
      */
     protected $gear;
     /**
+     * Info about gear file
+     * 
+     * @var SplFileInfo 
+     */
+    protected $file;
+    /**
      * Simple uri name
      * It can be set in configuration, but if empty — will be default gear_name
      * 
@@ -168,6 +174,7 @@ abstract class Gear {
         $this->getGear();
         $this->getBase();
         $this->getSettings();
+        $this->file = new SplFileInfo($this->path);
     }
 
     /**
@@ -409,7 +416,7 @@ abstract class Gear {
             $cogear->theme->init();
         }
         else {
-            $cogear->theme = $cogear->getTheme();
+            $cogear->getTheme();
             $cogear->theme->init();
         }
         event('request.'.strtolower($this->gear));

@@ -26,11 +26,11 @@
         <tr class="controls<? if($gear->active):?> active<?endif;?>">
             <th></th>
             <td class="actions">
-                    <?php if($gear->type != Gear::CORE):?>
+                    <?php if($gear->type != Gear::CORE && $gear->package != 'Core'):?>
                     <?= $gear->active ? HTML::a($link.'?action=deactivate&gears[]='.$gear->gear,t('Deactivate')) : HTML::a($link.'?action=activate&gears[]='.$gear->gear,t('Activate'))?><?// HTML::a($link.'?action=delete&gears[]='.$gear->gear,t('Delete'))?>
                     <?php endif;?>                        
             </td>
-            <td class="info"><?= t('Version: ').$gear->version?> | <?=t('Author: ').HTML::a('mailto:'.$gear->email, $gear->author)?> <?php if($gear->site):?>
+            <td class="info"><?= t('Version: ').$gear->version?> | <?=t('Author: ').HTML::a('mailto:'.$gear->email, $gear->author)?> | <?= t('Last update: ').df($gear->file->getMTime())?> <?php if($gear->site):?>
 | <?= HTML::a($gear->site,t('Visit product website'))?><?endif;?></td>
         </tr>
     <? endforeach; ?>

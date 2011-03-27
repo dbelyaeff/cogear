@@ -1,0 +1,25 @@
+#user_cp{
+    background: #f9f9f9;
+    width: 1000px;
+    height: 35px;
+    position: relative;
+    top: -5px;
+    left: 50%;
+    margin-left: -500px;
+    border: 2px solid #bababa;
+    -moz-border-radius: 5px;
+}
+#user_cp ul{
+    margin: 0px 0 0 10px;
+    float: left;
+}
+#user_cp ul li{
+    float: left;
+    padding: 5px 7px 5px 0px;
+    margin: 0px;
+    list-style: none;  
+    height: 20px;
+}
+#user_cp ul li a, #user_cp ul li img{
+    vertical-align: middle;
+}

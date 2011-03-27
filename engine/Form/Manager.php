@@ -77,6 +77,9 @@ class Form_Manager extends Options {
             $config->type OR $config->type = 'input';
             $config->name = $name;
             $config->form = $this;
+            if(isset($config['access']) && !$config['access']){
+                continue;
+            }
             if(isset(self::$types[$config->type]) && class_exists(self::$types[$config->type])){
                 $elements[$name] = new self::$types[$config->type]($config);
             }
@@ -91,7 +94,16 @@ class Form_Manager extends Options {
             }
         }
     }
-
+    /**
+     * Set values for fields
+     * 
+     * @param array $data 
+     */
+    public function setValues($data){
+        foreach($data as $key=>$value){
+            $this->elements->$key && $this->elements->$key->setValue($value);
+        }
+    }
     /**
      * Result
      *

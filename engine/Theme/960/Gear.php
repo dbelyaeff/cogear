@@ -12,7 +12,7 @@
  * @subpackage  	Default
  * @version		$Id$
  */
-class Theme_960_Gear extends Theme_Default_Gear{
+class Theme_960_Gear extends Theme{
     protected $name = '960.gs Theme';
     protected $description = 'Theme based on 960 grid system.';
     protected $version = '1.0';

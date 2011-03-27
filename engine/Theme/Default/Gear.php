@@ -12,7 +12,7 @@
  * @subpackage  	Default
  * @version		$Id$
  */
-class Theme_Default_Gear extends Theme{
+class Theme_Default_Gear extends Theme_960_Gear{
     protected $name = 'Default Theme';
     protected $description = 'Default engine theme.';
     /**

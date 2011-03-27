@@ -18,6 +18,12 @@ class Template extends Adapter{
      */
     public static $handler;
     /**
+     * Name
+     * 
+     * @var string
+     */
+    public $name;
+    /**
      * Constants
      */
     const FILE = 0;
@@ -33,14 +39,16 @@ class Template extends Adapter{
             $cogear = getInstance();
             self::$handler = $cogear->get('template.handler',self::FILE);
         }
+        $this->name = $name;
+        event('template.'.$name,$this);
         $handler OR $handler = self::$handler;
         switch($handler){
             case self::DB:
-                $this->adapter = new Template_Db($name);
+                $this->adapter = new Template_Db($this->name);
                 break;
             case self::FILE:
             default:
-                $this->adapter = new Template_File($name);
+                $this->adapter = new Template_File($this->name);
         }
     }
 

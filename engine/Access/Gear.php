@@ -50,7 +50,7 @@ class Access_Gear extends Gear {
         }
         if ($cogear->user->id == 1)
             return TRUE;
-        return !($cogear->session->access && $cogear->session->access->{$rule});
+        return!($cogear->session->access && $cogear->session->access->{$rule});
     }
 
     /**
@@ -73,11 +73,12 @@ class Access_Gear extends Gear {
     public function setRules() {
         $cogear = getInstance();
         if (!$this->rules = $cogear->system_cache->read('access/rules')) {
-            $rules = $cogear->db->order('rule')->get('access_rules')->result();
-            foreach ($rules as $rule) {
-                $this->rules[$rule->id] = $rule->rule;
+            if ($rules = $cogear->db->order('rule')->get('access_rules')->result()) {
+                foreach ($rules as $rule) {
+                    $this->rules[$rule->id] = $rule->rule;
+                }
+                $cogear->system_cache->write('access/rules', $this->rules, array('access'));
             }
-            $cogear->system_cache->write('access/rules', $this->rules, array('access'));
         }
     }
 
@@ -137,14 +138,16 @@ class Access_Gear extends Gear {
         $cogear = getInstance();
         $cogear->system_cache->removeTags('access');
     }
+
     /**
      * 
      */
-    public function _403(){
+    public function _403() {
         $cogear = getInstance();
         $cogear->response->header('Status', '403 ' . Response::$codes[403]);
-        overlay(t('You don\'t have enought permissions to access this page.'),t('Access denied'));
+        overlay(t('You don\'t have enought permissions to access this page.'), t('Access denied'));
     }
+
 }
 
 function access($rule) {
@@ -163,5 +166,5 @@ function page_access($rule) {
 
 function _403() {
     $cogear = getInstance();
-    $cogear->router->exec(array($cogear->access,'_403'));
+    $cogear->router->exec(array($cogear->access, '_403'));
 }

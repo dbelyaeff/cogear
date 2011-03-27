@@ -20,6 +20,7 @@ class I18n_Gear extends Gear {
     protected $author = 'Dmitriy Belyaev';
     protected $order = -1000;
     protected $domains = array();
+    protected $date_format;
     /**
      * Locale
      * 
@@ -33,6 +34,7 @@ class I18n_Gear extends Gear {
     public function __construct(){
         $cogear = getInstance();
         $this->locale = $cogear->get('site.locale','en');
+        $this->date_format = $cogear->get('site.date_format','Y-m-d H:i');
         parent::__construct();
     }
     /**
@@ -66,7 +68,17 @@ class I18n_Gear extends Gear {
         $domain OR $this->domains && $domain = reset($this->domains);
         return $text;
     }
-    
+    /**
+     * Format date
+     * 
+     * @param int $time
+     * @param string $format
+     * @return string 
+     */
+    public function date($time,$format = NULL){
+        $format OR $format = $this->date_format;
+        return date($format,$time);
+    }
     /**
      * Set domain
      * 
@@ -165,4 +177,15 @@ function transliterate_ru($text){
 		$text = str_replace($Caps,$Small,$text);
 		$text = str_replace($LettersFrom,$LettersTo,$text);
 		$text = strtr( $text, $BiLetters );
+}
+/**
+ * Format date
+ * 
+ * @param   int $time
+ * @param   string  $format
+ * @return  string
+ */
+function df($time,$format = NULL){
+    $cogear = getInstance();
+    return $cogear->i18n->date($time,$format);
 }

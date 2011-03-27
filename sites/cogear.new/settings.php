@@ -1,7 +1,9 @@
 <?php
 
 return array(
-    'database' => 'mysql://root@localhost/cogear',
+    'database' => array(
+        'dsn' => 'mysql://root@localhost/cogear',
+    ),
     'cache' => array(
         'adapter' => Cache::FILE,
         'enabled' => TRUE,
@@ -10,5 +12,8 @@ return array(
     // Secret key
     'key' => 'asdlmk1;2u3192y23uhsdhhabgkjahsdgkjghasd',
     'development' => TRUE,
+    'site' => array(
+        'name' => 'cogear',
+    )
 );
 

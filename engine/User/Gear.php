@@ -12,12 +12,10 @@
  * @version		$Id$
  */
 class User_Gear extends Gear {
-
     protected $name = 'User';
     protected $description = 'Manage users.';
     protected $order = -10;
     protected $current;
-
     /**
      * Init
      */
@@ -25,8 +23,24 @@ class User_Gear extends Gear {
         parent::init();
         $cogear = getInstance();
         $this->current = new User_Object();
+        hook('menu.Admin_Menu.menu',array($this,'adminMenuLink'));
+        $user_cp = new User_CP();
+        hook('theme.body.before',array($user_cp,'output'));
+        hook('user_cp.render.before',array($this,'hookControlPanel'));
     }
-
+    /**
+     * Hook to add admin menu element
+     * 
+     * @param type $structure 
+     */
+    public function adminMenuLink(&$structure){
+            $root = Url::gear('admin');
+            $structure->inject(array(
+                '#value' => array('link'=>$root.'user','text'=>t('Users','Admin')),
+                'index' => array('link'=>$root.'user','text'=>t('List','Admin')),
+                'add' => array('link'=>$root.'user/add','text'=>t('Add new','Admin')),
+            ),'site',  Core_ArrayObject::BEFORE,'user');
+    }
     /**
      * Magic __get method
      *
@@ -62,7 +76,7 @@ class User_Gear extends Gear {
      * Dispatcher
      * @param string $action
      */
-    public function index($action) {
+    public function index($action,$subaction=NULL) {
         switch ($action) {
             case 'login':
                 $this->login_action();
@@ -77,10 +91,57 @@ class User_Gear extends Gear {
                 $this->register_action();
                 break;
             default:
-                $this->show_action($action);
+                switch($subaction){
+                    case 'edit':
+                        $this->edit_action($action);
+                        break;
+                    default:
+                        $this->show_action($action);
+                }
         }
     }
-
+    
+    /**
+     * Show user profile
+     * 
+     * @param string $login
+     */
+    public function show_action($login){
+        $user = new User_Object(FALSE);
+        $user->where('login',$login);
+        if(!$user->find()){
+            return _404();
+        }
+        $tpl = new Template('User.profile');
+        $tpl->user = $user;
+        append('content',$tpl->render());
+    }
+    
+    /**
+     * Edit action
+     * 
+     * @param   string  $login
+     */
+    public function edit_action($login){
+        $user = new User_Object(FALSE);
+        $user->where('login',$login);
+        if(!$user->find()){
+            return _404();
+        }
+        $cogear = getInstance();
+        if(!access('user edit_all') OR $cogear->user->id != $user->id){
+            return _403();
+        }
+        $form = new Form_Manager('User.profile');
+        $form->setValues($user->object());
+        if ($data = $form->result()){
+            $cogear = getInstance();
+            $user->object($data);
+            $user->hashPassword();
+            $user->save();
+        }
+        append('content', $form->render());
+    }
     /**
      * Login form show
      */
@@ -171,4 +232,18 @@ class User_Gear extends Gear {
             append('content', $form->render());
     }
 
+    /**
+     * Hook user control panel
+     */
+    public function hookControlPanel($cp){
+        d('User_CP');
+        if($this->id){
+            $cp->user = t('Welcome, %s!',NULL,HTML::a(Url::gear('user').$this->login,$this->getName()));
+        }
+        else {
+            $cp->login = HTML::a(Url::gear('user').'/login',t('Login'));
+            $cp->register = HTML::a(Url::gear('user').'/register',t('Register'));
+        }
+        d();
+    }
 }

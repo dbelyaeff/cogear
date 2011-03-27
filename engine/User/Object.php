@@ -132,4 +132,34 @@ class User_Object extends Db_ORM {
     public function genHash(){
         return md5($this->password.Cogear::key());
     }
+    
+    /**
+     * Get name
+     * 
+     * If name is not provided, login will be used
+     * 
+     * @return string
+     */
+    public function getName(){
+        if($this->id){
+            return $this->name ? $this->name : $this->login;
+        }
+        return NULL;
+    }
+    
+    /**
+     * Get user panel — for profile and other pages
+     * 
+     * @return string
+     */
+    public function getPanel(){
+        $cogear = getInstance();
+        $panel = new Core_ArrayObject();
+        $panel->append(HTML::paired_tag('b',$this->login));
+        if(access('user edit_all') OR $this->id == $cogear->user->id){
+            $panel->append(HTML::a(Url::gear('user').$this->login.'/edit',icon('cog')));
+        }
+        event('user.panel',$panel);
+        return $panel;
+    }
 }

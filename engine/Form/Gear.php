@@ -15,18 +15,4 @@ class Form_Gear extends Gear {
     protected $desciption = 'Handle forms';
     protected $order = 0;
     protected $handler;
-
-    /**
-     * Constructor
-     */
-    public function  __construct() {
-        parent::__construct();
-//        Template::bindGlobal('form',$this->handler);
-    }
-    /**
-     * Initialize
-     */
-    public function init(){
-        parent::init();
-    }
 }

@@ -58,6 +58,13 @@ final class Cogear implements Interface_Singleton {
      * @var object
      */
     public $theme;
+    
+    /**
+     * Default action for callback
+     * 
+     * @var string
+     */
+    private static $default_action = 'index';
     const GEAR = 'Gear';
     /**
      * Delimiter for string callbacks
@@ -108,14 +115,11 @@ final class Cogear implements Interface_Singleton {
      * @param mixed $arg_N
      * @return  boolean
      */
-    public function event($name) {
+    public function event($name,&$arg = NULL) {
         $result = TRUE;
         if (isset($this->events[$name])) {
-            $args = func_get_args();
-            // Throw away hook name
-            array_shift($args);
             foreach ($this->events[$name] as $callback) {
-                is_callable($callback) && FALSE === call_user_func_array($callback, $args) && $result = FALSE;
+                is_callable($callback) && FALSE === $callback[0]->$callback[1](&$arg) && $result = FALSE;
             }
         }
         return $result;
@@ -131,7 +135,7 @@ final class Cogear implements Interface_Singleton {
         if (strpos($string, self::DELIM)) {
             return explode(self::DELIM, $string);
         }
-        return array($string, $this->default_action);
+        return array($string, self::$default_action);
     }
 
     /**
@@ -172,7 +176,7 @@ final class Cogear implements Interface_Singleton {
             return new $class;
         } elseif (isset($cogear->$element)) {
             return $cogear->$element;
-        } elseif (class_exits($class)) {
+        } elseif (class_exists($class)) {
             $Reflection = new ReflectionClass($class);
             if ($Reflection->implementsInterface('Singleton')) {
                 return $class::getInstance();
@@ -302,7 +306,7 @@ final class Cogear implements Interface_Singleton {
     public function getTheme(){
         foreach($this->active_gears as $gear=>$class){
             if(strpos($gear,'Theme') !== FALSE){
-                return $this->gears->$gear;
+                return $this->theme = $this->gears->$gear;
             }
         }
         return $this->activateTheme('Theme_Default');
@@ -545,4 +549,9 @@ function hook(){
     $cogear = getInstance();
     $args = func_get_args();
     return call_user_func_array(array($cogear,'hook'), &$args);
+}
+
+function config($name,$default_value = NULL){
+    $cogear = getInstance();
+    return $cogear->get($name,$default_value);
 }
