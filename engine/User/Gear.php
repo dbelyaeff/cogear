@@ -23,6 +23,7 @@ class User_Gear extends Gear {
         parent::init();
         $cogear = getInstance();
         $this->current = new User_Object();
+        $this->current->init();
         hook('menu.Admin_Menu.menu',array($this,'adminMenuLink'));
         $user_cp = new User_CP();
         hook('theme.body.before',array($user_cp,'output'));
@@ -107,7 +108,7 @@ class User_Gear extends Gear {
      * @param string $login
      */
     public function show_action($login){
-        $user = new User_Object(FALSE);
+        $user = new User_Object();
         $user->where('login',$login);
         if(!$user->find()){
             return _404();
@@ -123,7 +124,7 @@ class User_Gear extends Gear {
      * @param   string  $login
      */
     public function edit_action($login){
-        $user = new User_Object(FALSE);
+        $user = new User_Object();
         $user->where('login',$login);
         if(!$user->find()){
             return _404();
@@ -132,13 +133,18 @@ class User_Gear extends Gear {
         if(!access('user edit_all') OR $cogear->user->id != $user->id){
             return _403();
         }
+        append('content',HTML::paired_tag('h1',t('User <b>%s</b> edit',NULL,$user->login)));
         $form = new Form_Manager('User.profile');
         $form->setValues($user->object());
         if ($data = $form->result()){
             $cogear = getInstance();
-            $user->object($data);
+            $user->merge($data);
             $user->hashPassword();
-            $user->save();
+            if($user->update()){
+                d('User edit');
+                info(t('User data saved!'),t('Success'));
+                d();
+            }
         }
         append('content', $form->render());
     }

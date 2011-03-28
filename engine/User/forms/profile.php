@@ -6,12 +6,12 @@ return array(
                     'label' => t('Login','User'),
                     'type' => 'text',
                     'access' => access('user edit_login'),
-                    'validators' => array(array('Length',3),'AlphaNum','Required','User_Validate_Login'),
+                    'validators' => array(array('Length',3),'AlphaNum','Required',array('User_Validate_Login', User_Validate_Login::EXCLUDE_SELF)),
                 ),
                 'email' => array(
                     'label' => t('E-Mail','User'),
                     'type' => 'text',
-                    'validators' => array('Email','Required','User_Validate_Email'),
+                    'validators' => array('Email','Required',array('User_Validate_Email',  User_Validate_Email::EXCLUDE_SELF)),
                 ),
                 'password' => array(
                     'label' => t('Password','User'),

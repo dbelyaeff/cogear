@@ -419,7 +419,7 @@ abstract class Db_Driver_Abstract {
         $this->from($table);
         $this->addQuery('update', $values);
         $this->where($where);
-        $this->query();
+        return $this->query();
     }
 
     /**
@@ -432,7 +432,7 @@ abstract class Db_Driver_Abstract {
         $this->_query['delete'] = TRUE;
         $this->from($table);
         $where && $this->where($where);
-        $this->query();
+        return $this->query();
     }
 
     /**
@@ -513,6 +513,7 @@ abstract class Db_Driver_Abstract {
         $result = array();
         $fields = isset($this->fields[$table]) ? $this->fields[$table] : $this->fields[$table] = $this->getFields($table);
         foreach ($values as $key => $value) {
+            $key = preg_replace('/[^\w_-]/','',$key);
             if (isset($fields[$key])) {
                 $type = preg_replace('/[^a-z]/', '', $fields[$key]);
                 switch ($type) {

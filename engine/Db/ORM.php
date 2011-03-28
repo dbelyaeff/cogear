@@ -139,17 +139,45 @@ class Db_ORM extends Options {
      */
     public function save() {
         $cogear = getInstance();
-        $primary = $this->primary;
         if (!$data = $this->object->toArray()) {
             return FALSE;
-        } elseif (!isset($data[$primary]) OR !$cogear->db->get_where($this->table, array($primary => $data[$primary]))->row()) {
-            return $cogear->db->insert($this->table, $data);
-            $cogear->event('Db_ORM.save',$this);
+        } elseif (!isset($data[$this->primary]) OR !$cogear->db->get_where($this->table, array($this->primary => $data[$this->primary]))->row()) {
+            return $this->insert($data);
         } else {
-            $cogear->db->update($this->table, $data, array($primary => $data[$primary]));
-            $cogear->event('Db_ORM.save',$this);
+            $this->update($data);
             return NULL;
         }
+    }
+    /**
+     * Insert
+     * 
+     * @param   array   $data
+     * @return 
+     */
+    public function insert($data = NULL){
+        $data OR $data = $this->object->toArray();
+        if(!$data) return;
+        $cogear = getInstance();
+        $cogear->event('Db_ORM.insert',$this);
+        return $cogear->db->insert($this->table, $data);
+    }
+    
+    /**
+     * Simple update
+     * 
+     * @param   array   $data
+     * 
+     */
+    public function update($data = NULL){
+        $data OR $data = $this->object->toArray();
+        if(!$data OR !isset($data[$this->primary])) return;
+        $cogear = getInstance();
+        $cogear->event('Db_ORM.update',$this);
+        if(isset($data[$this->primary])){
+            $primary = $data[$this->primary];
+            unset($data[$this->primary]);
+        }
+        return $cogear->db->update($this->table, $data, array($this->primary => $primary));
     }
 
     /**
@@ -167,7 +195,14 @@ class Db_ORM extends Options {
             $cogear->db->delete($this->table, array($primary => $data[$primary]));
         }
     }
-
+    /**
+     * Merge existing object with new data
+     * 
+     * @param array $data 
+     */
+    public function merge($data = array()){
+        $data && $this->object->mix($data);
+    }
     /**
      * Clear current object
      */

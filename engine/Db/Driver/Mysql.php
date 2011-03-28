@@ -58,7 +58,7 @@ class Db_Driver_Mysql extends Db_Driver_Abstract {
         }
         $this->clear();
         self::stop($query);
-        return $this;
+        return $this->errors ? FALSE : $this;
     }
 
     /**
@@ -68,7 +68,7 @@ class Db_Driver_Mysql extends Db_Driver_Abstract {
      * @return object
      */
     public function getFieldsQuery($table) {
-        return $this->query('SHOW COLUMNS FROM ' . $table)->result();
+        return  $this->query('SHOW COLUMNS FROM ' . $table) ? $this->result() : NULL;
     }
 
     /**
@@ -98,7 +98,7 @@ class Db_Driver_Mysql extends Db_Driver_Abstract {
         $join && $query[] = implode(' ', $join);
         if($where){
             $where = $this->filterFields($from,$where);
-            $query[] = ' WHERE ' . $this->argsToString($where, ' = ');
+            $where && $query[] = ' WHERE ' . $this->argsToString($where, ' = ');
         }
         $group && $query[] = ' GROUP BY ' . implode(', ', $group);
         $having && $query[] = ' HAVING ' . implode(', ', $having);

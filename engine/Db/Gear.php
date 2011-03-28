@@ -43,6 +43,7 @@ class Db_Gear extends Gear {
             $this->driver = new $driver($config);
             $cogear->hook('done',array($this,'showErrors'));
             $cogear->hook('done',array($this,'trace'));
+            $cogear->db = $this->driver;
         }
     }
 
@@ -62,15 +63,5 @@ class Db_Gear extends Gear {
         $tpl = new Template('Db.debug');
         $tpl->queries = $this->driver->getBenchmark();
         append('footer',$tpl->render());
-    }
-    /**
-     * Magic __call method — calls back to database driver
-     *
-     * @param string $name
-     * @param array $args
-     * @return  mixed
-     */
-    public function __call($name,$args){
-        return method_exists($this->driver,$name) ? call_user_func_array(array($this->driver,$name),$args) : FALSE;
     }
 }
