@@ -135,15 +135,23 @@ class User_Gear extends Gear {
         }
         append('content',HTML::paired_tag('h1',t('User <b>%s</b> edit',NULL,$user->login)));
         $form = new Form_Manager('User.profile');
+        $user->password = '';
         $form->setValues($user->object());
         if ($data = $form->result()){
             $cogear = getInstance();
+            if($user->login != $data['login']){
+                $redirect = Url::gear('user').$data['login'];
+            }
             $user->merge($data);
             $user->hashPassword();
             if($user->update()){
                 d('User edit');
-                info(t('User data saved!'),t('Success'));
+                    flash_info(t('User data saved!'),t('Success'));
                 d();
+                if($user->id == $cogear->user->id){
+                    $cogear->user->store($user->object()->toArray());
+                }
+                redirect(Url::gear('user').$user->login);
             }
         }
         append('content', $form->render());

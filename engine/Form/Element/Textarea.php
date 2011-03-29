@@ -13,7 +13,14 @@
 class Form_Element_Textarea extends Form_Element_Abstract{
     protected $type = 'textarea';
     public function  render() {
+        $this->setAttributes();
         $code = HTML::paired_tag('textarea', $this->value, $this->attributes);
+        if ($this->wrapper) {
+            $tpl = new Template($this->wrapper);
+            $tpl->assign($this->attributes);
+            $tpl->code = $code;
+            $code = $tpl->render();
+        }
         return $code;
     }
 }

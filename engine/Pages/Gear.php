@@ -24,8 +24,10 @@ class Pages_Gear extends Gear {
      * Init
      */
     public function init(){
+        parent::init();
         $cogear = getInstance();
         $cogear->router->addRoute(':index', array($this, 'index'), TRUE);
+        hook('user_cp.render.before',array($this,'userPanelExtend'));
     }
     
     /**
@@ -33,7 +35,19 @@ class Pages_Gear extends Gear {
      * 
      * @param string $type 
      */
-    public function index($type = ''){
-        
+    public function index($action = ''){
+        switch($action){
+            case 'create':
+                append('content',HTML::paired_tag('h1',t('New page','Pages')));
+                $form = new Form_Manager('Pages.createdit');
+                
+                append('content',$form->render());
+                break;
+            default:
+        }
+    }
+    
+    public function userPanelExtend($cp){
+        $cp->create = HTML::a(Url::gear('pages').'create',t('Create page','Pages'));
     }
 }

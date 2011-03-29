@@ -90,6 +90,7 @@ class Url {
      */
     public static function gear($gear, $suffix = '/') {
         $cogear = getInstance();
+        if(!$cogear->$gear) return self::link();
         return self::link($cogear->$gear->base . '/' . trim($suffix, '/'));
     }
 

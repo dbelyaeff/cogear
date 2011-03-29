@@ -171,7 +171,7 @@ class Request {
             'version' => $version,
             'os' => $os,
             'is_mobile' => $is_mobile,
-            'locale' => $locale,
+            'locale' => isset($locale) ? $locale : config('site.locale','en'),
         );
     }
 
