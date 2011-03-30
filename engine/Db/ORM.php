@@ -142,9 +142,14 @@ class Db_ORM extends Options {
         if (!$data = $this->object->toArray()) {
             return FALSE;
         } elseif (!isset($data[$this->primary]) OR !$cogear->db->get_where($this->table, array($this->primary => $data[$this->primary]))->row()) {
-            return $this->insert($data);
+            event('Db_ORM.insert.before',$this);
+            $this->object->{$this->primary} = $this->insert($data);
+            event('Db_ORM.insert.after',$this);
+            return $this->object->{$this->primary};
         } else {
+            event('Db_ORM.update.before',$this);
             $this->update($data);
+            event('Db_ORM.update.after',$this);
             return NULL;
         }
     }
@@ -190,10 +195,13 @@ class Db_ORM extends Options {
         if (!$data) {
             return;
         } elseif (!isset($data[$primary])) {
+            event('Db_ORM.delete.before',$this);
             $cogear->db->delete($this->table, $data);
         } else {
+            event('Db_ORM.delete.before',$this);
             $cogear->db->delete($this->table, array($primary => $data[$primary]));
         }
+        event('Db_ORM.delete.after',$this);
     }
     /**
      * Merge existing object with new data
