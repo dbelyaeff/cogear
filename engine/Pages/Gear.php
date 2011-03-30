@@ -35,12 +35,17 @@ class Pages_Gear extends Gear {
      * 
      * @param string $type 
      */
-    public function index($action = ''){
+    public function index($action = '',$subaction = NULL){
         switch($action){
             case 'create':
                 append('content',HTML::paired_tag('h1',t('New page','Pages')));
                 $form = new Form_Manager('Pages.createdit');
-                
+                if($result = $form->result()){
+                      $page = new Pages_Page();
+                      $page->object($result);
+                      $page->save();
+                      redirect($page->getUrl());
+                }
                 append('content',$form->render());
                 break;
             default:
@@ -48,6 +53,9 @@ class Pages_Gear extends Gear {
     }
     
     public function userPanelExtend($cp){
-        $cp->create = HTML::a(Url::gear('pages').'create',t('Create page','Pages'));
+        $cogear = getInstance();
+        if($cogear->user->id) {
+            $cp->create = HTML::a(Url::gear('pages').'create',t('Create page','Pages'));
+        }
     }
 }

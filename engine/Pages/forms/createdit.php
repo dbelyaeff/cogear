@@ -6,13 +6,15 @@ return array(
         'name' => array(
             'type' => 'text',
             'label' => t('Name'),
+            'description' => t('Provide name of the page.'),
             'validators' => array(array('Length', 3), 'Required'),
         ),
-        'url_name' => array(
+        'url' => array(
             'type' => 'text',
-            'label' => t('Machine name'),
+            'label' => t('Url'),
+            'description' => t('If you want page to have special url, you may define it here. <br/> Leave this field empty to generate url automatically.'),
             'validators' => array(array('Length', 3)),
-            'filters' => array('Core_Filters_MachineName'),
+            'filters' => array('Form_Filter_MachineName'),
         ),
         'body' => array(
             'type' => 'textarea',

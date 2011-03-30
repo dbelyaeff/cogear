@@ -14,6 +14,7 @@ return array(
     'development' => TRUE,
     'site' => array(
         'name' => 'cogear',
-    )
+        'locale' => 'ru',
+    ),
 );
 

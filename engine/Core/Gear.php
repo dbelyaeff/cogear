@@ -186,7 +186,7 @@ abstract class Gear {
         $styles = $this->dir . DS . 'css';
         is_dir($scripts) && $cogear->assets->addScriptsFolder($scripts);
         is_dir($styles) && $cogear->assets->addStylesFolder($styles);
-        $cogear->router->addRoute($this->base.':maybe',array($this,'index'));
+        $cogear->router->addRoute($this->base . ':maybe', array($this, 'index'));
         $cogear->event('gear.init', $this);
     }
 
@@ -253,12 +253,13 @@ abstract class Gear {
      * Deactivate
      */
     public function deactivate() {
-
+        
     }
+
     /**
      * Update gear
      */
-    public function update(){
+    public function update() {
         
     }
 
@@ -290,7 +291,7 @@ abstract class Gear {
     protected function getFolder() {
         if (!$this->dir)
             $this->getDir();
-        $this->folder = str_replace(array(ROOT,DS), array('','/'), $this->dir);
+        $this->folder = str_replace(array(ROOT, DS), array('', '/'), $this->dir);
         return self::normalizePath($this->dir);
     }
 
@@ -302,24 +303,27 @@ abstract class Gear {
     protected function getGear() {
         return $this->gear ? $this->gear : $this->gear = Cogear::prepareGearNameFromClass($this->reflection->getName());
     }
+
     /**
      * Get base name
      */
-    protected function getBase(){
+    protected function getBase() {
         $cogear = getInstance();
-        $base = str_replace('_','/',strtolower($this->gear));
-        return $this->base ? $this->base : $this->base = $cogear->get($this->gear.'.base',$base);
+        $base = str_replace('_', '/', strtolower($this->gear));
+        return $this->base ? $this->base : $this->base = $cogear->get($this->gear . '.base', $base);
     }
+
     /**
      * Get gear options
      */
-    protected function getSettings(){
+    protected function getSettings() {
         $this->settings = new Core_ArrayObject($this->settings);
-        if($config = Config::read(find(basename($this->dir).DS.'settings'.EXT))){
+        if ($config = Config::read(find(basename($this->dir) . DS . 'settings' . EXT))) {
             return $this->settings ? $this->settings->mix($config) : $this->settings = $config;
         }
         return NULL;
     }
+
     /**
      * Set theme
      * 
@@ -327,12 +331,14 @@ abstract class Gear {
      * 
      * @param   string  $theme 
      */
-    public function setTheme($theme = ''){
+    public function setTheme($theme = '') {
         $theme OR $theme = $this->settings->theme;
-        if(!$theme) return NULL;
+        if (!$theme)
+            return NULL;
         $cogear = getInstance();
         $cogear->setTheme($theme) && $cogear->theme->init();
     }
+
     /**
      * Normalize relative path
      *
@@ -394,8 +400,7 @@ abstract class Gear {
                 $gear_dir = $cogear->gears->$gear->dir;
                 $file_name = implode(DS, $pieces);
                 return $path = $gear_dir . DS . $dir . DS . $file_name;
-            }
-            elseif($found = find(ucfirst(str_replace('_',DS,$gear)).DS.'Gear'.EXT)) {
+            } elseif ($found = find(ucfirst(str_replace('_', DS, $gear)) . DS . 'Gear' . EXT)) {
                 $gear_dir = dirname($found);
                 $file_name = implode(DS, $pieces);
                 return $path = $gear_dir . DS . $dir . DS . $file_name;
@@ -403,23 +408,31 @@ abstract class Gear {
         }
         return NULL;
     }
+
     /**
      * Notify gear that it's requested by uri
      */
-    public function request(){
+    public function request() {
         $this->is_requested = TRUE;
         $cogear = getInstance();
-        if(!page_access(strtolower($this->gear))){
+        if (!page_access(strtolower($this->gear))) {
             return;
         }
-        if($this->settings->theme && $cogear->setTheme($this->settings->theme)){
+        if ($this->settings->theme && $cogear->setTheme($this->settings->theme)) {
             $cogear->theme->init();
-        }
-        else {
+        } else {
             $cogear->getTheme();
             $cogear->theme->init();
         }
-        event('request.'.strtolower($this->gear));
+        event('request.' . strtolower($this->gear));
+    }
+
+    /**
+     * Dispatcher
+     * @param string $action
+     */
+    public function index($action, $subaction=NULL) {
+        method_exists($this, $action.'_action') && $this->{$action.'_action'}($subaction);
     }
 
 }

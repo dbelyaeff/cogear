@@ -37,12 +37,6 @@ class I18n_Gear extends Gear {
         $this->date_format = $cogear->get('site.date_format','Y-m-d H:i');
         parent::__construct();
     }
-    /**
-     * Init gear
-     */
-    public function init() {
-
-    }
 
     /**
      * Transliteration
@@ -134,6 +128,17 @@ function d($domain = ''){
     $cogear = getInstance();
     $cogear->I18n->setDomain($domain);
 }
+
+/**
+ * Transliterate text to machine readable (simplty to latin chars)
+ * 
+ * @param string $text
+ * @return string
+ */
+function transliterate($text){
+    $cogear = getInstance();
+    return $cogear->i18n->transliterate($text);
+}
 /**
  * Plural forms for words
  *
@@ -164,7 +169,7 @@ function declOfNum($number, $titles)
  */
 function transliterate_ru($text){
 		$LettersFrom = explode(",","а,б,в,г,д,е,з,и,к,л,м,н,о,п,р,с,т,у,ф,ц,ы");
-
+                $separator = config('i18n.machine_name.separator','-');
 		$LettersTo   = explode(",","a,b,v,g,d,e,z,i,k,l,m,n,o,p,r,s,t,u,f,c,y");
 		$BiLetters = array(
 		"й" => "jj", "ё" => "jo", "ж" => "zh", "х" => "kh", "ч" => "ch",
@@ -177,6 +182,7 @@ function transliterate_ru($text){
 		$text = str_replace($Caps,$Small,$text);
 		$text = str_replace($LettersFrom,$LettersTo,$text);
 		$text = strtr( $text, $BiLetters );
+                return $text;
 }
 /**
  * Format date
