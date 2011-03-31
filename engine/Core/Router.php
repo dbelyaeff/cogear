@@ -40,8 +40,16 @@ class Router {
     private $args = array();
     /**
      * Matches
+     * 
+     * @var array
      */
     protected $matches = array();
+    /**
+     * Callback
+     * 
+     * @var array
+     */
+    protected $callback = array();
     /**
      * Flag indicates if router has run
      * 
@@ -185,13 +193,19 @@ class Router {
                 $this->args = array_merge($args,array_diff_assoc($this->segments,$exclude));
                 // We have a nice method in hooks to prepare callback
                 if($callback = Cogear::prepareCallback($callback)){
+                    $this->callback = $callback;
+                    event('callback.before',$this);
+                    event('callback.'.get_class($callback[0]).'.before',$this);
                     method_exists($callback[0],'request') && call_user_func(array($callback[0],'request'));
                     call_user_func_array($callback,$this->args);
                     $this->has_run = TRUE;
+                    event('callback.'.get_class($callback[0]).'.after',$this);
+                    event('callback.after',$this);
                     return;
                 }
             }
         }
+        event('callback.failure',$this);
         $this->exec(array($cogear->errors,'_404'));
         return;
     }

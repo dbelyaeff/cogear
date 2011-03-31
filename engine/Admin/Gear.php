@@ -23,7 +23,15 @@ class Admin_Gear extends Gear {
         $cogear = getInstance();
         $this->settings->theme = 'Admin_Theme';
         parent::init();
+    }
+    /**
+     * Request handler
+     * 
+     * Override parent method. Add title.
+     */
+    public function request(){
         title(t('Control Panel'));
+        parent::request();
     }
 
     /**
@@ -222,5 +230,4 @@ class Admin_Gear extends Gear {
         }
         return $result;
     }
-
 }

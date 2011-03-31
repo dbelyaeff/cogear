@@ -18,7 +18,7 @@ class Admin_Menu_Gear extends Gear {
      */
     public function init(){
         hook('request.admin',array($this,'prepare'));
-        hook('done',array($this,'render'));
+        hook('callback.Admin_Gear.after',array($this,'render'));
     }
     /**
      * Prepare menues
@@ -37,10 +37,11 @@ class Admin_Menu_Gear extends Gear {
         Template::bindGlobal('top_menu',$menu);
     }
     /**
-     * Important! Because menu is hookable we need to render it in the latest order to add head > title properly.
+     * 
      */
     public function render(){
-        $top_menu = Template::getGlobal('top_menu')->render('Admin_Menu.top_menu');
-        Template::bindGlobal('top_menu',$top_menu);
+        $menu = Template::getGlobal('top_menu');
+        $output = $menu->render('Admin_Menu.top_menu');
+        Template::bindGlobal('top_menu',$output);
     }
 }
