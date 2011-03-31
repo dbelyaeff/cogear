@@ -126,3 +126,10 @@ class Assets{
         $this->styles = new Core_ArrayObject();
     }
 }
+
+function css($url){
+    append('content',HTML::style($url));
+}
+function js($url){
+    append('content',HTML::script($url));
+}

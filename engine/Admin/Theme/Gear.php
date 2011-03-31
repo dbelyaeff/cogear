@@ -10,7 +10,7 @@
  * @subpackage          Admin
  * @version		$Id$
  */
-class Admin_Theme_Gear extends Theme_Fluid960_Gear{
+class Admin_Theme_Gear extends Theme{
     protected $name = 'Admin CP Theme';
     protected $desciption = 'Theme for Admin interface';
     protected $package = 'Core';

@@ -24,24 +24,15 @@ class Admin_Menu_Gear extends Gear {
      */
     public function render(){
         $cogear = getInstance();
-        $menu = new Menu_SimpleTree('Admin_Menu.menu');
+        $menu = new Menu('admin.sidebar');
         $root = Url::gear('admin');
-        $data = array(
-            'root' => array(
-                '#value' => array('link'=>$root,'text'=>t('Quick Actions','Admin')),
-                'clear' => array('link'=>$root.'clear','text'=>t('Clear cache','Admin')),
-            ),
-            'gears' => array(
-                '#value' => array('link'=>$root.'gears','text'=>t('Gears','Admin')),
-                'index' => array('link'=>$root.'gears','text'=>t('List','Admin')),
-            ),
-
-            'site' => array(
-                '#value' => array('link'=>$root.'site','text'=>t('Site','Admin')),
-            ),
-        );
-        $menu->adopt(&$data);
-        $menu->setActive($cogear->router->getArgs());
-        prepend('sidebar',$menu->render().HTML::style($this->folder.'/css/menu.css'));
+        $menu->{$root} = icon('dashboard','fugue').t('Dashboard');
+        $menu->{$root.'gears'} = icon('gear','fugue').t('Gears');
+        $menu->{$root.'site'} = icon('toolbox','fugue').t('Site');
+        $menu->{$root.'site/clear_cache'} = icon('bin').t('Clear cache');
+        prepend('sidebar',$menu->render('Admin_Menu.sidebar_menu'));
+        css($this->folder.'/css/menu.css');
+        $menu = new Menu('admin.top');
+        Template::bindGlobal('top_menu',$menu);
     }
 }

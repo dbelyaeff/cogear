@@ -1,0 +1,465 @@
+
+/*
+	COGEAR ADMIN THEME
+	by Skvorets
+*/
+
+
+/* RESETS & INIT ============================================= */
+
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, code,
+del, dfn, em, img, q, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-size: 100%;
+  font-family: inherit;
+  vertical-align: baseline;
+}
+
+
+/* Remove possible quote marks (") from <q>, <blockquote>. */
+blockquote:before, blockquote:after, q:before, q:after { content: ""; }
+blockquote, q { quotes: "" ""; }
+
+/* Remove annoying border on linked images. */
+a img { border: none; }
+/* --------------------------------------------------------------
+
+   typography.css
+   * Sets up some sensible default typography.
+
+-------------------------------------------------------------- */
+
+/* Default font settings.
+   The font-size percentage is of 16px. (0.75 * 16px = 12px) */
+html { font-size:100.01%; }
+
+/* Headings
+-------------------------------------------------------------- */
+
+h1,h2,h3,h4,h5,h6
+{
+	font-weight: normal;
+	color: #111;
+	font-family: "Trebuchet MS", trebuchet, tahoma;
+}
+
+
+/* Text elements
+-------------------------------------------------------------- */
+
+p           { margin: 0 0 .7em; }
+p img.left  { float: left; margin: 1.5em 1.5em 1.5em 0; padding: 0; }
+p img.right { float: right; margin: 1.5em 0 1.5em 1.5em; }
+
+blockquote  { margin: 1.5em; color: #666; font-style: italic; }
+strong      { font-weight: bold; }
+em,dfn      { font-style: italic; }
+dfn         { font-weight: bold; }
+sup, sub    { line-height: 0; }
+
+abbr,
+acronym     { border-bottom: 1px dotted #666; }
+address     { margin: 0 0 1.5em; font-style: italic; }
+del         { color:#666; }
+
+pre         { margin: 1.5em 0; white-space: pre; }
+pre,code,tt { font: 1em 'andale mono', 'lucida console', monospace; line-height: 1.5; }
+
+
+/* Lists
+-------------------------------------------------------------- */
+
+li ul,
+li ol       { margin:0 1.5em; }
+ul, ol      { margin: 0 1.5em 1.5em 1.5em; }
+
+ul          { list-style-type: disc; }
+ol          { list-style-type: decimal; }
+
+dl          { margin: 0 0 1.5em 0; }
+dl dt       { font-weight: bold; }
+dd          { margin-left: 1.5em;}
+
+
+/* Misc classes
+-------------------------------------------------------------- */
+
+.small      { font-size: .8em; margin-bottom: 1.875em; line-height: 1.875em; }
+.large      { font-size: 1.2em; line-height: 2.5em; margin-bottom: 1.25em; }
+.hide       { display: none; }
+
+.quiet      { color: #666; }
+.loud       { color: #000; }
+.highlight  { background:#ff0; }
+.added      { background:#060; color: #fff; }
+.removed    { background:#900; color: #fff; }
+
+.first      { margin-left:0; padding-left:0; }
+.last       { margin-right:0; padding-right:0; }
+.top        { margin-top:0; padding-top:0; }
+.bottom     { margin-bottom:0; padding-bottom:0; }
+
+
+
+
+body
+{
+	color: #222;
+	background: #424853 url('../img/body_bg.jpg');
+	font-family: verdana, arial, sans-serif;
+	line-height: 1.5;
+	font-size:.8em;
+}
+
+.container
+{
+	overflow: hidden;
+	padding-right:12px;
+}
+
+.content_body a:link,
+.content_body a:visited
+{
+	color:#1D729A;
+}
+
+.content_body a:hover,
+.content_body a:active
+{
+	color:#1761D8;
+}
+
+
+/* HEADER ===================================================== */
+
+
+.header
+{
+	height: 130px; /* <<<<<<<< Height of the header*/
+	position:relative;
+}
+
+.header_logo
+{
+	position:absolute;
+	z-index:100;
+}
+
+.header h2
+{
+	position:absolute;
+	margin-top:40px;
+	padding-left:370px;  /* not "margin-left" or just "left" - to fix IE behaviour */
+	font-family: georgia, serif;
+	font-size: 22px;
+	font-style: italic;
+	color: #eee;
+}
+.header h2 a:link, .header h2 a:visited
+{
+	color: #eee;
+	text-decoration: none;
+}
+
+.header h2 a:hover, .header h2 a:active
+{
+	color: #fff;
+	text-decoration: underline;
+}
+
+
+/* SIDEBAR ==================================================== */
+
+.sidebar
+{
+	float: left;
+	width: 190px; /* <<<<<<<<<<<< Width of left column*/
+	padding-top:17px;
+        margin-left: -100%;
+}
+
+
+.sidebar_hider
+{
+	display:block;
+	width: 87px;
+	height:16px;
+	margin-left:2px;
+	background-image: url('../img/sidebar_hider.png');
+	background-repeat: no-repeat;
+	position: relative;
+}
+
+.sidebar_hider:hover
+{
+	top:1px;
+}
+
+.sidebar_hider.hidden
+{
+	display:block;
+	width: 16px;
+	height:100px;
+	margin-left:0px;
+	margin-top:-15px;
+	left:-1px;
+	background-position: bottom left;
+}
+
+.sidebar_hider.hidden:hover
+{
+	left:0px;
+	top:0;
+}
+
+.sidebar_menu_hidden
+{
+	display:none;
+}
+
+
+/* SIDEBAR VERTICAL MENU ------------------------------------- */
+
+.sidebar a
+{
+	outline: none;
+}
+
+
+
+
+
+
+/* CONTENT ==================================================== */
+
+.content_wrapper
+{
+	float: left;
+	width: 100%;
+}
+
+.content_column
+{
+	margin-left: 190px; /*Set left margin to .sidebar wifth value*/
+	background: #fff;
+	-webkit-border-radius: 11px;
+	-moz-border-radius: 11px;
+	border-radius: 11px;
+	-webkit-box-shadow: 0px 0px 16px #222;
+	/*-moz-box-shadow: 0px 0px 16px #222;*/
+	-o-box-shadow: 0px 0px 16px #222;
+	box-shadow:0px 0px 16px #222;
+	min-height: 600px;
+}
+
+.content_column.wide
+{
+	margin-left: 20px;
+}
+
+.content_body
+{
+	clear:both;
+	padding: 30px 25px 40px 25px;
+}
+
+.top_title
+{
+	clear: both;
+	position:relative;
+	z-index:20;
+	top:-1px;
+	background: #e4e7e8 url('../img/top_title_bg.png');
+	background-repeat: repeat-x;
+	background-position: bottom;
+	border-top: 1px solid #8e9297;
+	height: 45px;
+	border-bottom: 1px solid #626467;
+	-webkit-box-shadow: 0px -2px 10px RGBA(0,0,0, 0.2), 0px 4px 4px RGBA(0,0,0, 0.06);
+	/*-moz-box-shadow: 0px -2px 10px RGBA(0,0,0, 0.2), 0px 4px 4px RGBA(0,0,0, 0.06);*/
+	-o-box-shadow: 0px -2px 10px RGBA(0,0,0, 0.2), 0px 4px 4px RGBA(0,0,0, 0.06);
+	box-shadow:0px -2px 10px RGBA(0,0,0, 0.2), 0px 4px 4px RGBA(0,0,0, 0.06);
+}
+
+.top_title h1
+{
+	font-size: 20px;
+	color: #28333f;
+	padding: 7px 0 0 25px;
+	margin:0;
+	text-shadow: 1px 1px 0px RGBA(255,255,255, 0.65);
+}
+
+
+
+
+
+/* FOOTER ===================================================== */
+
+.footer
+{
+	clear: left;
+	position:relative;
+	width: 100%;
+	/*height: 88px;   <<<<<<<<<<< footer height */
+}
+
+.footer_logo_text
+{
+	position:absolute;
+	top:32px;
+	left: 190px;
+	margin-left:18px;
+	font-family:tahoma, serif;
+	font-size:19px;
+	color:#dfdfdf;
+	font-size:19px;
+	text-shadow: 0 0 3px RGBA(255,255,255, 0.3);
+	text-decoration:none;
+}
+
+.footer_gear
+{
+	background: url('../img/footer_gear.png');
+	position:relative;
+	top:-50px;
+	left:150px;
+	width: 89px;
+	height:92px;
+}
+
+
+.footer_logo_text span
+{
+	font-size:9px;
+}
+
+.footer_stat #benchmark-results
+{
+	position:absolute;
+	text-align: right;
+	right: 15px;
+	top:21px;
+	font-family:tahoma;
+	font-size:11px;
+	color:#d4d4d4;
+	line-height:1.4em;
+	_margin-top:22px;
+}
+
+.footer_stat .db-debug
+{
+    position:relative;
+    left: 190px;
+    /*margin-left:18px;*/
+    font-family:tahoma, serif;
+    font-size:11px;
+    
+}
+.footer_stat .db-debug 
+{
+    color:#999;   
+}
+.footer_stat .db-debug i
+{
+    color:#dfdfdf; 
+}
+
+
+/* DATA GIRDS (TABLES) ============================================== */
+
+
+table.data_gird
+{
+	width:100%;
+	border:1px solid #777;
+	margin:1em auto;
+	border-collapse:collapse;
+}
+
+.data_gird td,
+.data_gird th
+{
+	color:#444;
+	padding:.4em;
+	text-align: center;
+	border-right:1px solid #aaa;
+}
+.data_gird tr
+{
+	border:1px solid #aab;
+}
+.data_gird thead th,
+.data_gird tfoot th
+{
+	/*background:#D0D8Db;*/
+	background: #eff2f3 url('../img/top_title_bg.png');
+	background-position: bottom;
+	vertical-align:middle;
+	text-align:center;
+	font:bold 14px "Trebuchet MS", trebuchet, tahoma;
+	color: #28333f;
+	letter-spacing: -0.025em;
+	text-shadow: 1px 1px 0px RGBA(255,255,255, 0.5);
+}
+
+.data_gird tbody th,
+.data_gird tbody td
+{
+	vertical-align:top;
+}
+
+.data_gird .left
+{
+	text-align:left;
+	vertical-align:top;
+}
+
+.data_gird .even
+{
+	background:#ebebeb;
+}
+
+.data_gird tbody tr:hover td
+{
+	color:#002;
+	background-color: #C0E3FE;
+	border-top: 1px solid #6891B6;
+	border-bottom: 1px solid #6891B6;
+}
+
+.data_gird .narrow
+{
+	width:1%;
+	padding: 0 7px;
+}
+.data_gird tbody tr.active
+{
+	color:#000;
+	background-color: #D5ECFC;
+}
+.data_gird tbody tr.even.active
+{
+	color:#000;
+	background-color: #CCE0ED;
+}
+
+
+
+.db-debug
+{
+    display: block;
+    clear: both;        
+}
+.db-debug-query
+{
+    
+}

@@ -8,7 +8,7 @@
     <input type="submit" value="<?=t('Apply')?>"/>
 <? foreach($packages as $name=>$gears): ?>
 <h1><span><?= t($name,'Packages')?></span></h1>
-<table class="list">
+<table class="list" cellpadding="0" cellspacing="0">
     <thead>
         <tr>
             <th class="check-all"><input type="checkbox"/></th>

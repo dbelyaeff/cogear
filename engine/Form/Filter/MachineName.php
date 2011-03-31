@@ -26,6 +26,7 @@ class Form_Filter_MachineName extends Form_Filter_Abstract {
         else {
             $value = transliterate($value);
         }
+        $value = strtolower($value);
         return $value;
     }
 

@@ -60,7 +60,6 @@ class Admin_Gear extends Gear {
     }
 
     public function gears($action = 'index') {
-        $menu = new Menu_Object('admin.gears.menu', 'Menu.tabbed_links');
         d('Admin_Gears');
         $cogear = getInstance();
         $all_gears = $cogear->getAllGears();
@@ -69,17 +68,17 @@ class Admin_Gear extends Gear {
         $all_count = sizeof($all_gears);
         $active_count = sizeof($active_gears);
         $inactive_count = sizeof($inactive_gears);
-        $data = array(
-            'index' => array('link' => '/admin/gears', 'text' => t('Active'), 'count' => $active_count),
-            'all' => array('link' => '/admin/gears/all', 'text' => t('All') , 'count' => $all_count),
-            'inactive' => array('link' => '/admin/gears/inactive', 'text' => t('Inactive') , 'count' => $inactive_count),
-            'new' => array('link' => '/admin/gears/new', 'text' => t('New')),
-            'updates' => array('link' => '/admin/gears/updates', 'text' => t('Updates')),
-            'add' => array('link' => '/admin/gears/add', 'text' => t('Add')),
-        );
-        $menu->adopt($data);
-        $menu->setActive($action);
-        append('content', $menu->render());
+        $top_menu = Template::getGlobal('top_menu');
+        $root = Url::gear('admin');
+        $top_menu->{$root.'gears'} = t('Active');
+        $top_menu->{$root.'gears'}->count = $active_count;
+        $top_menu->{$root.'gears/all'} = t('All');
+        $top_menu->{$root.'gears/all'}->count = $all_count;
+        $top_menu->{$root.'gears/inactive'} = t('Inactive');
+        $top_menu->{$root.'gears/inactive'}->count = $inactive_count;
+        $top_menu->{$root.'gears/new'} = t('New');
+        $top_menu->{$root.'gears/updates'} = t('Updates');
+        $top_menu->{$root.'gears/add'} = t('Add');
         $doaction = NULL;
         if(!empty($_REQUEST['action-top'])) $doaction = $_REQUEST['action-top'];
         if(!empty($_REQUEST['action-bottom'])) $doaction = $_REQUEST['action-bottom'];

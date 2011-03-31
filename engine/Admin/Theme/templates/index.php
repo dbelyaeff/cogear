@@ -9,54 +9,56 @@
         <?php echo $styles; ?>
         <?event('theme.head.meta')?>
     </head>
-    <body>
-        <?event('theme.body.before')?>
-        <div class="container_16">
-            <!-- HEADER -->
-            <div id="header" class="grid_16">
-                <div class="grid_4 alpha">
-                    <a href="<?= Url::link('/admin')?>"><img src="<?= $theme->folder ?>/img/logo.png" class="header_logo" alt="COGEAR" /></a>
-                </div>
-                <div id="site_name" class="grid_3">
-                    <?=HTML::a(Url::link('http://'.SITE_URL),$cogear->get('site.name',SITE_URL));?>
-                </div>
-                <div id="header_auth" class="grid_3 prefix_6 omega">
-                    <div class="box"><p>
-                    <?= t('Welcome, ', 'User'); ?> <a href="<?= Url::gear('user',$cogear->user->login)?>" class="user_link"><?= $cogear->user->login; ?></a>
-			| <a href="<?= Url::gear('user','logout'); ?>"><?= t('Logout', 'User'); ?></a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <!-- /HEADER -->
-            <div class="clear"></div>
-            <div id="wrapper" class="grid_16">
-            <!-- SIDEBAR -->
-            <div id="sidebar" class="grid_2 alpha">
-	       <?= $sidebar?>
-            </div>
-            <!-- /SIDEBAR -->
+<body>
+    <?event('theme.body.before')?> 
+<div class="container">
+    <!-- HEADER -->
+    <div class="header">
+        <a href="<?= Url::link('/admin')?>"><img src="<?= $theme->folder ?>/images/logo.png" class="header_logo" alt="COGEAR" /></a>
+        <h2><?=HTML::a(Url::link('http://'.SITE_URL),$cogear->get('site.name',SITE_URL));?></h2>
+    </div>
+    <!-- /HEADER -->
 
-            <div id="content" class="grid_14 omega box">
-                <div>
-                <?= $content?>
-                </div>
-            </div>
-            
-            </div>
-            <div class="clear"></div>
 
-            <!-- FOOTER -->
-            <div id="footer" class="grid_16">
-                <div id="footer_gear" class="grid_12 alpha"> <p>
-                </div>
-                <div id="footer_stat" class="grid_4 omega box">
-                    <div class="padding-10">
-                    <?= $footer ?>
-                    </div>
-                </div>
+    <div class="content_wrapper">
+        <div class="content_column">
+            <?= $top_menu->render('Admin_Menu.top_menu')?>
+            <div class="top_title">
+                <h1><?= $meta->title->toString(' → ')?></h1>
             </div>
-            <!-- /FOOTER -->
-    <?event('theme.body.after')?>
-    </body>
+            <div class="content_body">
+
+            <!-- CONTENT --> 
+            <?= $content?> 
+            <!-- /CONTENT --> 
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <?= $sidebar?> 
+        </div>
+    </div>
+    <!-- /SIDEBAR -->
+
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <div class="footer_gear"> </div>
+        <a href="http://cogear.ru" class="footer_logo_text" title="Сайт сообщества COGEAR">cogear <span>v.2.01</span></a>
+        <div class="footer_stat">
+            <?= $footer ?>
+        </div>
+    </div>
+    <!-- /FOOTER -->
+
+
+</div>
+
+<?event('theme.body.after')?>
+
+</body>
 </html>

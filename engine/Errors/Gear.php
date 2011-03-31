@@ -31,6 +31,7 @@ class Errors_Gear extends Gear {
         error($text,$title = '');
     }
     public function _404(){
+        $this->request();
         $cogear = getInstance();
         $cogear->response->header('Status', '404 '. Response::$codes[404]);
         error(t('Page you are looking for was not found on the server.'),t('Page not found'));

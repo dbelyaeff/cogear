@@ -48,6 +48,7 @@ class Icons_Gear extends Gear {
      */
     public function show($name, $set = '') {
         $set OR $set = self::DEFAULT_SET;
+        $this->sets->$set OR $this->addSet($set, $this->dir . DS . 'sets' . DS . $set);
         if ($src = $this->sets->$set->get($name)) {
             $size = explode('x', $this->sets->$set->size);
             return HTML::img($src,t($name, 'Icons'),array(
@@ -61,5 +62,5 @@ class Icons_Gear extends Gear {
 
 function icon($name, $set = '') {
     $cogear = getInstance();
-    return $cogear->icons->show($name, $set = '');
+    return $cogear->icons->show($name, $set);
 }

@@ -1,0 +1,59 @@
+h1 {
+    border-bottom: 2px solid #CCC;
+    margin:5px 0 12px 0;
+    height: 16px;
+    font-size: 20px;
+
+}
+h4{
+    border-bottom: 2px solid #CCC;
+    margin-bottom: 15px;
+    height: 15px;
+}
+h1 > span, h4 > b {
+    padding: 4px 5px 0 0;
+    text-shadow: 1px 1px 5px #FFF;
+    color: #424141;
+    background: #FFF;
+    font-family: Century Gothic;
+}
+h4 > b {
+    font-size: 15px;
+}
+.padding-10{
+    padding: 10px;
+}
+table.list {
+    width: 100%;
+    border: 1px solid #DFDFDF;
+    -moz-border-radius: 7px;
+    -webkit-border-radius: 7px;
+    border-radius: 7px;
+}
+table.list thead tr th, table.list tfoot tr th{
+    background: #DFDFDF url("../images/thead-background.png") repeat-x left top;
+    color: #333333;
+}
+table.list tr{
+    border-collapse: collapse;
+}
+table.list th {
+    text-shadow: 0 1px 0 #FFF;
+    padding: 7px 7px 8px;
+    text-align: left;
+}
+table.list tr th.check {
+    width:10px;
+}
+table.list tr.active{
+    background: #F7F7F7;
+}
+table.list tr.controls{
+}
+table.list tr.controls td, table.list tr.controls th{
+    padding: 10px 0;
+    border-bottom: 1px dotted #CCC;
+}
+.info h1 span{
+    background: #E1F8E5;
+}

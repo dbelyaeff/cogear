@@ -65,8 +65,16 @@ class Pages_Page extends Db_ORM {
     }
     /**
      * Get url
+     * 
+     * @return  string
      */
     public function getUrl(){
-        
+        if($this->url){
+            $link = str_replace(array('<id>','<url>'),array($this->id,$this->url),config('pages.url',Pages_Gear::DEFAULT_PAGE_URL));
+        }
+        else {
+            $link = Url::gear('pages').'show/'.$this->id;
+        }
+        return $link;
     }
 }

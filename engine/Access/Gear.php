@@ -48,9 +48,10 @@ class Access_Gear extends Gear {
         if (!in_array($rule, $this->rules)) {
             $this->addRule($rule);
         }
-        if ($cogear->user->id == 1)
+        if ($cogear->user->id == 1){
             return TRUE;
-        return!($cogear->session->access && $cogear->session->access->{$rule});
+        }
+        return  !($cogear->session->access && $cogear->session->access->{$rule});
     }
 
     /**
@@ -147,7 +148,6 @@ class Access_Gear extends Gear {
         $cogear->response->header('Status', '403 ' . Response::$codes[403]);
         overlay(t('You don\'t have enought permissions to access this page.'), t('Access denied'));
     }
-
 }
 
 function access($rule) {

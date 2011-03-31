@@ -50,7 +50,7 @@ class Notify_Gear extends Gear {
     public static function overlay($text,$title='',$class='info'){
         $cogear = getInstance();
         $theme = $cogear->get('errors.theme','Theme_Splash');
-        if($cogear->setTheme($theme)){
+        if($cogear->setTheme($theme,TRUE)){
             $cogear->assets->clear();
             $cogear->theme->init();
             self::show($text,$title,$class);

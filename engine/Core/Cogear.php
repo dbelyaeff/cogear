@@ -315,10 +315,11 @@ final class Cogear implements Interface_Singleton {
      * Set theme
      *
      * @param   string  $name
+     * @param   boolean $force
      * @return  object|NULL Theme or NULL.
      */
-    public function setTheme($name = 'Theme_Default'){
-        if($this->theme) return;
+    public function setTheme($name = 'Theme_Default',$force = FALSE){
+        if($this->theme && !$force) return;
         $class = $name.'_'.self::GEAR;
         if(!class_exists($class) OR $this->gears->$name) return NULL;
         $this->gears->$name = new $class;

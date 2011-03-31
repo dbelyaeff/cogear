@@ -171,13 +171,12 @@ class User_Object extends Db_ORM {
      */
     public function getPanel() {
         $cogear = getInstance();
-        $panel = new Core_ArrayObject();
+        $panel = new Stack('user.panel');
         $panel->append(HTML::paired_tag('b', $this->login));
         if (access('user edit_all') OR $this->id == $cogear->user->id) {
             $panel->append(HTML::a(Url::gear('user') . $this->login . '/edit', icon('cog')));
         }
-        event('user.panel', $panel);
-        return $panel;
+        return $panel->render();
     }
 
 }

@@ -39,6 +39,10 @@ class Router {
      */
     private $args = array();
     /**
+     * Matches
+     */
+    protected $matches = array();
+    /**
      * Flag indicates if router has run
      * 
      * @var boolean 
@@ -92,7 +96,7 @@ class Router {
     public function sanitizePath($path) {
         $cogear = getInstance();
         // Sanitize unwanted data from the path
-        $path = preg_replace('#[^' . $cogear->get('permitted_uri_chars','\w-_') . self::DELIM . ']+#iu', '', $path);
+        $path = preg_replace('#[^' . config('permitted_uri_chars','\w-_.') . self::DELIM . ']+#iu', '', $path);
         return trim($path, '/');
     }
 
@@ -135,6 +139,14 @@ class Router {
         return $this->args;
     }
     /**
+     * Get route matches
+     * 
+     * @return array
+     */
+    public function getMatches(){
+        return $this->matches;
+    }
+    /**
      * Get segments
      *
      * @param   int     $num
@@ -162,7 +174,7 @@ class Router {
                 $route .= '$';
             }
             $regexp = '#' . $route . '#isU';
-            if (preg_match($regexp, $this->uri,$matches)) {
+            if (preg_match($regexp, $this->uri,$this->matches)) {
                 $args = array();
                 if(is_array($callback) && sizeof($callback) > 2){
                     $args = array_slice($callback, 2);

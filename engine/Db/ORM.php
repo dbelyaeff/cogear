@@ -113,7 +113,7 @@ class Db_ORM extends Options {
             $cogear->db->where($this->object->toArray());
         }
         if ($result = $cogear->db->get($this->table)->row()) {
-            $cogear->event('Db_ORM.find',$result);
+            event('Db_ORM.find',$result);
             $this->object = $result;
         }
         return $result;
@@ -163,7 +163,7 @@ class Db_ORM extends Options {
         $data OR $data = $this->object->toArray();
         if(!$data) return;
         $cogear = getInstance();
-        $cogear->event('Db_ORM.insert',$this);
+        event('Db_ORM.insert',$this);
         return $cogear->db->insert($this->table, $data);
     }
     
@@ -177,7 +177,7 @@ class Db_ORM extends Options {
         $data OR $data = $this->object->toArray();
         if(!$data OR !isset($data[$this->primary])) return;
         $cogear = getInstance();
-        $cogear->event('Db_ORM.update',$this);
+        event('Db_ORM.update',$this);
         if(isset($data[$this->primary])){
             $primary = $data[$this->primary];
             unset($data[$this->primary]);
