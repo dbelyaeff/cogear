@@ -24,7 +24,7 @@ class User_Gear extends Gear {
         $cogear = getInstance();
         $this->current = new User_Object();
         $this->current->init();
-        hook('menu.Admin_Menu.menu',array($this,'adminMenuLink'));
+        hook('menu.admin.sidebar',array($this,'adminMenuLink'));
         $user_cp = new User_CP();
         hook('theme.body.before',array($user_cp,'output'));
         hook('user_cp.render.before',array($this,'hookControlPanel'));
@@ -34,13 +34,12 @@ class User_Gear extends Gear {
      * 
      * @param type $structure 
      */
-    public function adminMenuLink(&$structure){
+    public function adminMenuLink($menu){
             $root = Url::gear('admin');
-            $structure->inject(array(
-                '#value' => array('link'=>$root.'user','text'=>t('Users','Admin')),
-                'index' => array('link'=>$root.'user','text'=>t('List','Admin')),
-                'add' => array('link'=>$root.'user/add','text'=>t('Add new','Admin')),
-            ),'site',  Core_ArrayObject::BEFORE,'user');
+            $menu->{$root.'user'} = icon('users','fugue').t('Users');
+            $menu->{$root.'user'}->order = 1;
+            $menu->{$root.'user/add'} = icon('user--plus','fugue').t('Add user');
+            $menu->{$root.'user/add'}->order = 2;
     }
     /**
      * Magic __get method
@@ -214,6 +213,11 @@ class User_Gear extends Gear {
      * @param string $action 
      */
     public function admin($action = '') {
+        $top_menu = Template::getGlobal('top_menu');
+        $root = Url::gear('admin').'user/';
+        $top_menu->{$root} = t('List');
+        $top_menu->{$root.'add'} = t('Add');
+
         switch ($action) {
             case 'add':
                 $this->admin_add();

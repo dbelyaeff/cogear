@@ -11,6 +11,7 @@
  * @version		$Id$
  */
 class Menu extends Stack{
+    protected $position = 0;
     public function setActive($uri = NULL){
         if(!sizeof($this)){
             return;
@@ -44,6 +45,7 @@ class Menu extends Stack{
     public function __set($name, $value){
         $element = new Core_ArrayObject();
         $element->value = $value;
+        $element->order = $this->position++;
         $this->offsetSet($name, $element);
     }
     /**
@@ -54,6 +56,7 @@ class Menu extends Stack{
      */
     public function render($template = ''){
         event('menu.'.$this->name,$this);
+        $this->uasort('Core_ArrayObject::sortByOrder');
         $this->setActive();
         $tpl = new Template($template);
         $tpl->menu = $this;
