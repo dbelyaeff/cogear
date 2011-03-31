@@ -167,7 +167,7 @@ class Admin_Gear extends Gear {
             $cogear->activate($gear);
             $result[] = t($gear, 'Gears');
         }
-        $result && flash_info(t('Following gears were activated: ') . '<b>'.implode('</b>, <b>', $result)).'</b>.';
+        $result && flash_info(t('Following gears were activated: ') . '<b>'.implode('</b>, <b>', $result).'</b>.');
     }
 
     /**
@@ -182,7 +182,7 @@ class Admin_Gear extends Gear {
             $cogear->deactivate($gear);
             $result[] = t($gear, 'Gears');
         }
-        $result &&  flash_info(t('Following gears were deactivated: ') . '<b>'.implode('</b>, <b>', $result)).'</b>.';
+        $result &&  flash_info(t('Following gears were deactivated: ') . '<b>'.implode('</b>, <b>', $result).'</b>.');
     }
 
     /**
@@ -197,7 +197,7 @@ class Admin_Gear extends Gear {
             $cogear->update($gear);
             $result[] = t($gear, 'Gears');
         }
-        $result && flash_info(t('Following gears were updated: ') . '<b>'.implode('</b>, <b>', $result)).'</b>.';
+        $result && flash_info(t('Following gears were updated: ') . '<b>'.implode('</b>, <b>', $result).'</b>.');
     }
 
     /**

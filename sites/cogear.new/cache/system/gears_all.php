@@ -11,7 +11,6 @@ return array (
     'Form' => 'Form_Gear',
     'I18n' => 'I18n_Gear',
     'Icons' => 'Icons_Gear',
-    'Menu' => 'Menu_Gear',
     'Meta' => 'Meta_Gear',
     'Notify' => 'Notify_Gear',
     'Pages' => 'Pages_Gear',

@@ -40,14 +40,17 @@ function find($file) {
         GEARS . DS . $file,
     );
     defined('SITE') && $paths[] = SITE . DS . GEARS_FOLDER . DS . $file;
+    $result = array();
     while ($path = array_pop($paths)) {
-        if (strpos($path, '*') && $result = glob($path)) {
-            return $result;
+        if (strpos($path, '*') !== FALSE && $files = glob($path)) {
+              foreach($files as $file){
+                  $result[str_replace($path,'',$file)] = $file;
+              }
         } elseif (file_exists($path)) {
             return $path;
         }
     }
-    return FALSE;
+    return $result ? $result : FALSE;
 }
 
 /**
@@ -56,11 +59,11 @@ function find($file) {
  * @param   mixed   $data
  */
 function debug() {
-    echo '<pre>';
     $args = func_get_args();
-    call_user_func_array('var_dump', $args);
-    $last = array_pop($args);
-    $last === TRUE && die();
+    $tpl = new Template('Core.debug');
+    $tpl->args = $args;
+    append('content',$tpl->render());
+    //call_user_func_array('var_dump', $args);
 }
 
 $aliases = array();

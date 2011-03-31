@@ -4,6 +4,12 @@ return array (
   array (
     0 => 
     array (
+      'rid' => '18',
+      'gid' => '0',
+      'uid' => NULL,
+    ),
+    1 => 
+    array (
       'rid' => '1',
       'gid' => '0',
       'uid' => NULL,
