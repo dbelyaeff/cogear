@@ -15,7 +15,6 @@ class Admin_Gear extends Gear {
 
     protected $name = 'Admin gear';
     protected $description = 'Site control panel';
-    protected $order = 3;
 
     /**
      * Initializer
@@ -24,6 +23,7 @@ class Admin_Gear extends Gear {
         $cogear = getInstance();
         $this->settings->theme = 'Admin_Theme';
         parent::init();
+        title(t('Control Panel'));
     }
 
     /**
@@ -60,7 +60,7 @@ class Admin_Gear extends Gear {
     }
 
     public function gears($action = 'index') {
-        d('Admin_Gears');
+        d('Admin Gears');
         $cogear = getInstance();
         $all_gears = $cogear->getAllGears();
         $active_gears = $cogear->getActiveGears();
@@ -98,7 +98,6 @@ class Admin_Gear extends Gear {
             }
             back();
         }
-
         switch ($action) {
             case 'index':
                 $gears = array();

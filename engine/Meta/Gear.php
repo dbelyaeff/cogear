@@ -28,17 +28,34 @@ class Meta_Gear extends Gear {
     public function __construct() {
         parent::__construct();
         $this->info = Core_ArrayObject::transform($this->info);
-        Template::bindGlobal('meta', $this->info);
     }
     /**
      * Init
      */
     public function init(){
         parent::init();
-        $cogear = getInstance();
-        title(t($cogear->get('site.name',SITE_URL)));
+        Template::bindGlobal('meta', $this->info);
+        title(t(config('site.name',SITE_URL)));
+        hook('theme.head.meta',array($this,'head'));
+        hook('menu.setActive',array($this,'menuTitleHook'));
     }
-
+    /**
+     * Set title from active menu element
+     * 
+     * @param string $element 
+     */
+    public function menuTitleHook($element){
+        title(strip_tags($element->value));
+    }
+    /**
+     * Generate <head> output
+     */
+    public function head(){
+        echo HTML::paired_tag('title', $this->info->title->toString(config('meta.title.delimiter',' &raquo; ')));
+        echo HTML::tag('meta', array('type'=>'keywords','content'=>$this->info->keywords->toString(', ')));
+        echo HTML::tag('meta', array('type'=>'description','content'=>$this->info->description->toString('. ')));
+        event('theme.head.meta.after');
+    }
 }
 function title($text) {
     $cogear = getInstance();

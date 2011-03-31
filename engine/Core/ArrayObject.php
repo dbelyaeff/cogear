@@ -113,11 +113,12 @@ class Core_ArrayObject extends ArrayObject {
     }
 
     /**
-     * Reverse data
+     * Reverse object
+     * 
+     * @return object
      */
     public function reverse() {
-        $this->exchangeArray(array_reverse($this->toArray()));
-        return $this;
+        return new Core_ArrayObject(array_reverse($this->toArray()));
     }
 
     /**
@@ -155,7 +156,16 @@ class Core_ArrayObject extends ArrayObject {
         }
         $this->exchangeArray($result);
     }
-
+    /**
+     * Slice a piece of iterable
+     * 
+     * @param int $from
+     * @param int $length 
+     */
+    public function slice($from, $length = NULL){
+        $copy = $this->toArray();
+        return new Core_ArrayObject(array_slice($copy,$from,$length));
+    }
     /**
      * Simple wrapper for getArrayCopy method
      */

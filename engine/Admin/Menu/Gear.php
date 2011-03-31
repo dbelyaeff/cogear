@@ -17,12 +17,13 @@ class Admin_Menu_Gear extends Gear {
      * Init
      */
     public function init(){
-        hook('request.admin',array($this,'render'));
+        hook('request.admin',array($this,'prepare'));
+        hook('done',array($this,'render'));
     }
     /**
-     * Render menu
+     * Prepare menues
      */
-    public function render(){
+    public function prepare(){
         $cogear = getInstance();
         $menu = new Menu('admin.sidebar');
         $root = Url::gear('admin');
@@ -34,5 +35,12 @@ class Admin_Menu_Gear extends Gear {
         css($this->folder.'/css/menu.css');
         $menu = new Menu('admin.top');
         Template::bindGlobal('top_menu',$menu);
+    }
+    /**
+     * Important! Because menu is hookable we need to render it in the latest order to add head > title properly.
+     */
+    public function render(){
+        $top_menu = Template::getGlobal('top_menu')->render('Admin_Menu.top_menu');
+        Template::bindGlobal('top_menu',$top_menu);
     }
 }

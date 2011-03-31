@@ -30,6 +30,7 @@ class Assets{
         $this->clear();
         Template::bindGlobal('scripts',$this->scripts);
         Template::bindGlobal('styles',$this->styles);
+        hook('theme.head.meta.after',array($this,'output'));
     }
 
     /**
@@ -117,6 +118,12 @@ class Assets{
      */
     public function getAssets(){
         return $this->getScripts()."\n".$this->getStyles()."\n";
+    }
+    /**
+     * Output 
+     */
+    public function output(){
+        echo $this->getAssets();
     }
     /**
      * Reset styles and scripts

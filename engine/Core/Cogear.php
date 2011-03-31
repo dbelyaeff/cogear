@@ -179,7 +179,7 @@ final class Cogear implements Interface_Singleton {
         } elseif (class_exists($class)) {
             $Reflection = new ReflectionClass($class);
             if ($Reflection->implementsInterface('Singleton')) {
-                return $class::getInstance();
+                return call_user_func($class,'getInstance');
             } else {
                 return new $class;
             }

@@ -26,10 +26,12 @@ class Menu extends Stack{
             if(strpos($uri, $path) !== FALSE){
                 if(isset($this->{'/'.$path})){
                     $this->{'/'.$path}->active = TRUE;
+                    event('menu.setActive',$this->{'/'.$path});
                     break;
                 }
                 elseif(isset($this->{'/'.$path.'/'})){
                     $this->{'/'.$path.'/'}->active = TRUE;
+                    event('menu.setActive',$this->{'/'.$path.'/'});
                     break;
                 }
             }        

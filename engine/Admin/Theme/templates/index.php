@@ -1,12 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $cogear->get('site.lang', 'en'); ?>">
     <head>
-        <title><?php echo $meta->title->toString($cogear->get('site.title_separator',' &laquo; ')); ?></title>
-        <meta type="keywords" content="<?php echo $meta->keywords->toString(', '); ?>"/>
-        <meta type="description" content="<?php echo $meta->description; ?>"/>
-        <?php echo $meta->info; ?>
-        <?php echo $scripts; ?>
-        <?php echo $styles; ?>
         <?event('theme.head.meta')?>
     </head>
 <body>
@@ -22,9 +16,11 @@
 
     <div class="content_wrapper">
         <div class="content_column">
-            <?= $top_menu->render('Admin_Menu.top_menu')?>
+            <?= $top_menu?>
             <div class="top_title">
-                <h1><?= $meta->title->toString(' → ')?></h1>
+                <? if(sizeof($meta->title) > 0):?>
+                <h1><?= reset($meta->title)?></h1>
+                <? endif; ?>
             </div>
             <div class="content_body">
 
