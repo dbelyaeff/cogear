@@ -1,0 +1,20 @@
+a.button, input[type="submit"],input[type="button"],input[type="reset"]{
+    cursor: pointer;
+    font-size: 14px;
+    color: #FFF;
+    margin: 0;
+    padding: 4px 14px;
+    background: #4298d4;
+    border: none;
+    white-space: nowrap;
+    text-shadow:0 1px 0 #45688E;
+}
+a.button:hover, input[type="submit"]:hover,input[type="button"]:hover,input[type="reset"]:hover{
+    opacity: 0.9;
+}
+div.button, div.submit{
+    -moz-border-radius: 4px;
+    float: left;
+    border: 1px solid;
+    border-color:  #7C98BA #7C98BA #498cbb;
+}

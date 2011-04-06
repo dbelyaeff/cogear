@@ -1,73 +1,53 @@
 select, input[type="text"],input[type="password"],input[type="search"],textarea{
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
-	border: 1px solid #AAAAAA;
-	padding: 4px 2px;
+    border: 1px solid #CCC;
+    padding: 4px 2px;
 }
 input[type="text"],input[type="password"],input[type="search"],textarea{
     width: 300px;
 }
 input[type="text"]:focus,input[type="password"]:focus,input[type="search"]:focus,textarea:focus{
-	-moz-box-shadow: 0 0 8px rgba(82, 168, 236, 0.5);
-	-webkit-box-shadow: 0 0 8px rgba(82, 168, 236, 0.5);
-	box-shadow: 0 0 8px rgba(82, 168, 236, 0.5);
-	border-color: rgba(82, 168, 236, 0.75);
-	outline: medium none;
+    outline: medium none;
 }
 select,input[type="checkbox"],input[type="radio"]{
     cursor: pointer;
 }
 form div.errors{
-	font-size: 0.9em;
-	color: #9E2323;
+    font-size: 0.9em;
+    color: #9E2323;
 }
-/* Bit of Safari hack */
-a.button, input[type="submit"],input[type="button"],input[type="reset"]{
-	-moz-border-radius:11px;
-	-webkit-border-radius:11px;
-	border-radius:11px;
-	cursor: pointer;
-	border:1px solid #BBBBBB;
-	color:#464646;
-	font-size:1.1em;
-	line-height:19px;
-	padding:2px 10px 5px;
-	text-align:center;
-	text-decoration:none;
-	text-shadow:0 1px 0 #FFF;
-        background: url("../images/button-bg.png") repeat-x left top;
-}
-a.button:hover, input[type="submit"]:hover,input[type="button"]:hover,input[type="reset"]:hover{
-	border:1px solid #3f3f3f;
-}
- label{
-         cursor: pointer;
+
+label{
+    color: #498cbb;
+    cursor: pointer;
 }
 form div.form-element label{
-	display: block;
-
+    display: block;
+    font-size: 14px;
 }
 form div.form-element.inline label{
     display: inline;
+}
+form div.form-element .description{
+    color: #999999;
+    font-size: 12px;
 }
 form div.form-element.left > input {
     float: left;
 }
 form div.form-element{
-	clear: both;
-	margin: 0 0 5px 0;
+    clear: both;
+    margin: 0 0 5px 0;
 }
 form div.errors{
-	padding: 5px;
-	background: #FFBBBB;
-	border: 2px solid #FF8181;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
-	max-width: 300px;
-	margin-top: 5px;	
-	position: relative;
+    padding: 5px;
+    background: #FFBBBB;
+    border: 2px solid #FF8181;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    max-width: 300px;
+    margin-top: 5px;	
+    position: relative;
 }
 form fieldset{
     border: 1px solid #CCC;

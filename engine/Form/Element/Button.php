@@ -10,6 +10,14 @@
  * @subpackage          Form
  * @version		$Id$
  */
-class Form_Element_Submit extends Form_Element_Button{
-    protected $type = 'submit';
+class Form_Element_Button extends Form_Element_Abstract{
+    protected $type = 'button';
+    /**
+     * Buttons data shouldn't be in result
+     *
+     * @return NULL
+     */
+    public function result(){
+        return NULL;
+    }
 }

@@ -31,6 +31,7 @@ class Form_Element_Abstract extends Options {
     protected $attributes = array();
     protected $is_fetched;
     protected $wrapper = 'Form.element';
+    protected $code = '';
 
     /**
      * Constructor
@@ -167,6 +168,7 @@ class Form_Element_Abstract extends Options {
         $this->attributes->description = $this->description;
         $this->attributes->type = $this->type;
         $this->attributes->value = $this->value;
+        $this->attributes->class = $this->type . ($this->class ? ' '.$this->class : '');
         $this->attributes->required = in_array('Required',(array)$this->validators) ? TRUE : NULL;
         $this->attributes->errors = $this->errors;
         $this->disabled && $this->attributes->disabled = 'disabled';
@@ -178,14 +180,20 @@ class Form_Element_Abstract extends Options {
      */
     public function render() {
         $this->setAttributes();
-        $code = HTML::input($this->attributes);
+        $this->code = HTML::input($this->attributes);
+        $this->decorate();
+        return $this->code;
+    }
+    /**
+     * Decorate elements
+     */
+    private function decorate(){
         if ($this->wrapper) {
             $tpl = new Template($this->wrapper);
             $tpl->assign($this->attributes);
-            $tpl->code = $code;
-            $code = $tpl->render();
+            $tpl->code = $this->code;
+            $this->code = $tpl->render();
         }
-        return $code;
     }
 
 }
