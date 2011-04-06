@@ -38,6 +38,7 @@ class Url {
         isset($url['path']) && $link .= '/' . ltrim($url['path'], '/');
         isset($url['query']) && $link .= '?' . $url['query'];
         isset($url['fragment']) && $link .= '#' . $url['fragment'];
+        event('link',$link);
         return $link;
     }
 

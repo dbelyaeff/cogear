@@ -29,6 +29,7 @@ class Admin_Menu_Gear extends Gear {
         $root = Url::gear('admin');
         $menu->{$root} = icon('dashboard','fugue').t('Dashboard');
         $menu->{$root.'gears'} = icon('gear','fugue').t('Gears');
+        $menu->{$root.'theme'} = icon('layout').t('Theme');
         $menu->{$root.'site'} = icon('toolbox','fugue').t('Site');
         $menu->{$root.'site/clear_cache'} = icon('bin').t('Clear cache');
         prepend('sidebar',$menu->render('Admin_Menu.sidebar_menu'));

@@ -160,6 +160,8 @@ class Form_Element_Abstract extends Options {
 
     /**
      * Set attributes
+     * 
+     * @return  Core_ArrayObject
      */
     public function setAttributes() {
         $this->attributes->id = $this->getId();
@@ -173,14 +175,15 @@ class Form_Element_Abstract extends Options {
         $this->attributes->errors = $this->errors;
         $this->disabled && $this->attributes->disabled = 'disabled';
         $this->checked && $this->attributes->checked = 'checked';
+        return $this->attributes;
     }
 
     /**
      * Render element
      */
-    public function render() {
-        $this->setAttributes();
-        $this->code = HTML::input($this->attributes);
+    public function render($attributes = NULL) {
+        $attributes OR $attributes = $this->setAttributes();
+        $this->code = HTML::input($attributes);
         $this->decorate();
         return $this->code;
     }

@@ -32,7 +32,9 @@ class Form_Manager extends Options {
         'checkbox' => 'Form_Element_Checkbox',
         'select' => 'Form_Element_Select',
         'submit' => 'Form_Element_Submit',
-        'button' => 'Form_Element_Button'
+        'button' => 'Form_Element_Button',
+        'file' => 'Form_Element_File',
+        'image' => 'Form_Element_Image',
     );
     protected $callback;
     /**

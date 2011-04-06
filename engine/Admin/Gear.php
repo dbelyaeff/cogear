@@ -23,6 +23,14 @@ class Admin_Gear extends Gear {
         $cogear = getInstance();
         $this->settings->theme = 'Admin_Theme';
         parent::init();
+        hook('user_cp.render.before',array($this,'hookControlPanel'));
+    }
+    /**
+     * Add Control Panel to user panel
+     */
+    public function hookControlPanel($cp){
+        $cogear = getInstance();
+        $cogear->user->id && access('admin')&& $cp->admin = HTML::a(Url::gear('admin'),t('Control Panel'));;
     }
     /**
      * Request handler
@@ -63,6 +71,10 @@ class Admin_Gear extends Gear {
                 break;
             case 'gears':
                 $this->gears($subaction);
+                break;
+            case 'theme':
+                $form = new Form_Manager('Admin.theme');
+                append('content',$form->render());
                 break;
         }
     }

@@ -71,6 +71,7 @@ class Pages_Page extends Db_ORM {
     public function getUrl(){
         if($this->url){
             $link = str_replace(array('<id>','<url>'),array($this->id,$this->url),config('pages.url',Pages_Gear::DEFAULT_PAGE_URL));
+            $link = Url::link($link);
         }
         else {
             $link = Url::gear('pages').'show/'.$this->id;

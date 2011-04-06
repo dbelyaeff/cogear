@@ -22,7 +22,7 @@ class Form_Element_Image extends Form_Element_File{
      *
      * @return  mixed
      */
-    protected function result() {
+    public function result() {
         $cogear =  getInstance();
         $image = new Image($this->name,  get_object_vars($this),$this->isRequired);
         if ($result = $image->upload()) {
@@ -37,6 +37,7 @@ class Form_Element_Image extends Form_Element_File{
      * Render
      */
     public function render(){
+        $this->setAttributes();
         if($this->value && $this->value = Url::link(Url::toUri(UPLOADS.$this->value,ROOT,FALSE))){
             return HTML::img(array(
                 'src' => $this->value,
@@ -48,7 +49,11 @@ class Form_Element_Image extends Form_Element_File{
                 'rel' => $this->name,
             ));
         }
-        else return parent::compile();
+        else {
+            $attributes = $this->attributes;
+            $attributes->type = 'file';
+            return parent::render($attributes);
+        }
     }
     /**
      * Perform ajax handler

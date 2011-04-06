@@ -117,7 +117,7 @@ final class Cogear implements Interface_Singleton {
         $args = array_slice($args, 1);
         if ($this->events->$name) {
             foreach ($this->events->$name as $callback) {
-                FALSE === $callback->call(&$args) && $result = FALSE;
+                $result && FALSE === $callback->call(&$args) && $result = FALSE;
             }
         }
         return $result;
