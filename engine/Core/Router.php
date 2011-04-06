@@ -192,7 +192,7 @@ class Router {
                 $exclude = strpos($root,self::DELIM) ? preg_split(self::DELIM, $root, -1, PREG_SPLIT_NO_EMPTY) : (array) $root;
                 $this->args = array_merge($args,array_diff_assoc($this->segments,$exclude));
                 // We have a nice method in hooks to prepare callback
-                if($callback = Cogear::prepareCallback($callback)){
+                if($callback = Callback::prepare($callback)){
                     $this->callback = $callback;
                     event('callback.before',$this);
                     event('callback.'.get_class($callback[0]).'.before',$this);

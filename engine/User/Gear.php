@@ -26,7 +26,7 @@ class User_Gear extends Gear {
         $this->current->init();
         hook('menu.admin.sidebar',array($this,'adminMenuLink'));
         $user_cp = new User_CP();
-        hook('theme.body.before',array($user_cp,'output'));
+        hook('before',array($user_cp,'output'));
         hook('user_cp.render.before',array($this,'hookControlPanel'));
     }
     /**

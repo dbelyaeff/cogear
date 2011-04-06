@@ -33,8 +33,18 @@ abstract class Theme extends Gear {
     public function __construct(){
         parent::__construct();
         $this->regions = Core_ArrayObject::transform($this->regions);
-        foreach($this->regions as $name=>&$region){
-            Template::getGlobal($name) OR Template::bindGlobal($name,$region);
+        foreach($this->regions as $name=>$region){
+            hook($name,array($this,'renderRegion'),$name);
+        }
+    }
+    /**
+     * Render region
+     * 
+     * @param string $name 
+     */
+    public function renderRegion($name){
+        if($this->regions->$name){
+            echo $this->regions->$name;
         }
     }
     /**
@@ -67,31 +77,12 @@ abstract class Theme extends Gear {
     }
 }
 function append($name,$value){
-    $data = Template::getGlobal($name);
-    if(is_array($data) OR $data instanceof Core_ArrayObject){
-        $data[] = $value;
-    }
-    elseif(is_string($data)){
-        $data .= $value;
-    }
-    else {
-        $data = $value;
-    }
-    Template::setGlobal($name,$data);
+    $cogear = getInstance();
+    if(!$cogear->theme->regions->$name) return;
+    $cogear->theme->regions->$name->append($value);
 }
 function prepend($name,$value){
-    $data = Template::getGlobal($name);
-    if(is_array($data)){
-        array_unshift($data,$value);
-    }
-    elseif($data instanceof Core_ArrayObject){
-        $data->prepend($value);
-    }
-    elseif(is_string($data)){
-        $data = $value.$data;
-    }
-    else {
-        $data = $value;
-    }
-    Template::setGlobal($name,$data);
+    $cogear = getInstance();
+    if(!$cogear->theme->regions->$name) return;
+    $cogear->theme->regions->$name->prepend($value);
 }

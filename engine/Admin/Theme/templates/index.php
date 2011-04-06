@@ -1,10 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $cogear->get('site.lang', 'en'); ?>">
     <head>
-        <?event('theme.head.meta')?>
+        <?event('head')?>
     </head>
 <body>
-    <?event('theme.body.before')?> 
+    <?event('before')?> 
 <div class="container">
     <!-- HEADER -->
     <div class="header">
@@ -25,7 +25,7 @@
             <div class="content_body">
 
             <!-- CONTENT --> 
-            <?= $content?> 
+            <?event('content')?> 
             <!-- /CONTENT --> 
 
             </div>
@@ -35,7 +35,7 @@
 
     <!-- SIDEBAR -->
     <div class="sidebar">
-        <?= $sidebar?> 
+        <?event('sidebar')?> 
         </div>
     </div>
     <!-- /SIDEBAR -->
@@ -46,15 +46,13 @@
         <div class="footer_gear"> </div>
         <a href="http://cogear.ru" class="footer_logo_text" title="Сайт сообщества COGEAR">cogear <span>v.2.01</span></a>
         <div class="footer_stat">
-            <?= $footer ?>
+            <?event('footer')?>
         </div>
     </div>
     <!-- /FOOTER -->
 
 
 </div>
-
-<?event('theme.body.after')?>
-
+<?event('after')?>
 </body>
 </html>

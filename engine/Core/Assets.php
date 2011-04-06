@@ -30,7 +30,7 @@ class Assets{
         $this->clear();
         Template::bindGlobal('scripts',$this->scripts);
         Template::bindGlobal('styles',$this->styles);
-        hook('theme.head.meta.after',array($this,'output'));
+        hook('head',array($this,'output'));
     }
 
     /**

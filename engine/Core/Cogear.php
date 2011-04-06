@@ -59,24 +59,16 @@ final class Cogear implements Interface_Singleton {
      */
     public $theme;
     
-    /**
-     * Default action for callback
-     * 
-     * @var string
-     */
-    private static $default_action = 'index';
+
     const GEAR = 'Gear';
-    /**
-     * Delimiter for string callbacks
-     * Some_Gear->method where -> is delim
-     */
-    const DELIM = '->';
+
 
     /**
      * Constructor
      */
     private function __construct() {
         $this->gears = new Core_ArrayObject();
+        $this->events = new Core_ArrayObject();
     }
 
     /**
@@ -102,9 +94,13 @@ final class Cogear implements Interface_Singleton {
      * @param   callback  $callback
      */
     public function hook($event, $callback) {
-        isset($this->events[$event]) OR $this->events[$event] = array();
-        $callback = self::prepareCallback($callback);
-        in_array($callback, $this->events[$event]) OR array_push($this->events[$event], $callback);
+        $args = func_get_args();
+        $this->events->$event OR $this->events->$event = new Event();
+        $args = array_slice($args, 2);
+        $callback = new Callback($callback);
+        $callback->setArgs($args);
+        $this->events->$event->append($callback);
+        
     }
 
     /**
@@ -115,76 +111,16 @@ final class Cogear implements Interface_Singleton {
      * @param mixed $arg_N
      * @return  boolean
      */
-    public function event($name,&$arg = NULL) {
+    public function event($name) {
         $result = TRUE;
-        if (isset($this->events[$name])) {
-            foreach ($this->events[$name] as $callback) {
-                is_callable($callback) && FALSE === $callback[0]->$callback[1](&$arg) && $result = FALSE;
+        $args = func_get_args();
+        $args = array_slice($args, 1);
+        if ($this->events->$name) {
+            foreach ($this->events->$name as $callback) {
+                FALSE === $callback->call(&$args) && $result = FALSE;
             }
         }
         return $result;
-    }
-
-    /**
-     * Transform string to action
-     *
-     * @param	string	$string
-     * @return	callback
-     */
-    public static function stringToAction($string) {
-        if (strpos($string, self::DELIM)) {
-            return explode(self::DELIM, $string);
-        }
-        return array($string, self::$default_action);
-    }
-
-    /**
-     * Prepare callback
-     *
-     * @param   mixed   $callback
-     * @return  mixed
-     */
-    public static function prepareCallback($callback) {
-        if (!is_callable($callback)) {
-            if (is_string($callback)) {
-                $cogear = getInstance();
-                $callback = self::stringToAction($callback);
-                $callback[0] = self::prepareCallbackObject($callback[0]);
-                return is_callable($callback) ? $callback : NULL;
-            }
-            else {
-                return NULL;
-            }
-        }
-        return is_callable($callback) ? $callback : NULL;
-    }
-
-    /**
-     * Prepare callback object
-     *
-     * @param   string  $class
-     * @return  object
-     */
-    public static function prepareCallbackObject($class) {
-        $cogear = getInstance();
-        $element = lcfirst($class);
-        if (strpos($class, '_Gear')) {
-            $gear_name = str_replace('_Gear', '', $class);
-            if ($cogear->gears->$gear_name) {
-                return $cogear->gears->$gear_name;
-            }
-            return new $class;
-        } elseif (isset($cogear->$element)) {
-            return $cogear->$element;
-        } elseif (class_exists($class)) {
-            $Reflection = new ReflectionClass($class);
-            if ($Reflection->implementsInterface('Singleton')) {
-                return call_user_func($class,'getInstance');
-            } else {
-                return new $class;
-            }
-        }
-        return NULL;
     }
 
     /**

@@ -43,9 +43,9 @@ function find($file) {
     $result = array();
     while ($path = array_pop($paths)) {
         if (strpos($path, '*') !== FALSE && $files = glob($path)) {
-              foreach($files as $file){
-                  $result[str_replace($path,'',$file)] = $file;
-              }
+            foreach ($files as $file) {
+                $result[str_replace($path, '', $file)] = $file;
+            }
         } elseif (file_exists($path)) {
             return $path;
         }
@@ -59,11 +59,13 @@ function find($file) {
  * @param   mixed   $data
  */
 function debug() {
+    echo '<pre>';
     $args = func_get_args();
-    $tpl = new Template('Core.debug');
-    $tpl->args = $args;
-    append('content',$tpl->render());
-    //call_user_func_array('var_dump', $args);
+//    $tpl = new Template('Core.debug');
+//    $tpl->args = $args;
+//    append('content',$tpl->render());
+    call_user_func_array('var_dump', $args);
+    echo '</pre>';
 }
 
 $aliases = array();
