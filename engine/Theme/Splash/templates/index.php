@@ -4,11 +4,6 @@
     <?event('head')?>
     </head>
     <body>
-        <?event('before')?>
-        <?event('header')?>
         <?event('content')?>
-        <?event('sidebar')?>
-        <?event('footer')?>
-        <?event('after')?>
-    </body>
+      </body>
 </html>

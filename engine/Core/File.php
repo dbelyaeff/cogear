@@ -75,7 +75,7 @@ class File extends Options{
         if(!isset($_FILES[$this->name])) return FALSE;
         $file = $_FILES[$this->name];
         $cogear = getInstance();
-        $cogear->hooks->invoke('form.file.preupload',$file);
+        event('file.preupload',$file);
         switch($file['error']){
             case UPLOAD_ERR_CANT_WRITE:
                 $this->errors[] = t('Can\'t upload file. Check write permission for temporary folder.','File Errors');
@@ -113,7 +113,7 @@ class File extends Options{
                     $this->errors[] = t('Upload path is not defined.','File Erros');
                 }
                 strpos($this->options->path,ROOT) !== FALSE OR $this->options->path = UPLOADS.DS.$this->options->path;
-                Filesystem::checkPath($this->options->path);
+                Filesystem::makeDir($this->options->path);
                 if(!is_dir($this->options->path)){
                     $this->errors[] = t('Upload path <b>%s</b> doesn\'t exist.','File Errors',$this->options->path);
                 }

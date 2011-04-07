@@ -13,7 +13,6 @@
  */
 class Form_Element_File extends Form_Element_Abstract {
     protected $type = 'file';
-    protected $isRequired = FALSE;
     protected $path;
     protected $allowed_types;
     protected $maxsize;
@@ -27,7 +26,7 @@ class Form_Element_File extends Form_Element_Abstract {
      */
     public function result() {
         $cogear = getInstance();
-        $file = new File($this->name, get_object_vars($this),in_array($this->validators,'Required'));
+        $file = new File($this->name, $this->getAttributes(),$this->validators->findByValue('Required'));
         if ($this->value = $file->upload()) {
             $this->is_fetched = TRUE;
         }

@@ -91,12 +91,12 @@ class Image extends File{
     public function getInfo($file = ''){
         $file OR $file = $this->file->path;
         list($this->width,$this->height,$this->type,$this->mime) = new Core_ArrayObject(getimagesize($file));
-        return array(
+        return new Core_ArrayObject(array(
             'width' => $this->width,
             'height' => $this->height,
             'type' => $this->type,
             'mime' => $this->mime,
-        );
+        ));
     }
     /**
      * Check image dimensions for maximum

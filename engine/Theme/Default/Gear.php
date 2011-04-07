@@ -16,6 +16,21 @@ class Theme_Default_Gear extends Theme_960_Gear{
     protected $name = 'Default Theme';
     protected $description = 'Default engine theme.';
     /**
+     * Init
+     */
+    public function init(){
+        parent::init();
+        hook('header',array($this,'renderLogo'));
+    }
+    /**
+     * Render site logo
+     */
+    public function renderLogo(){
+        if($logo = config('theme.logo')){
+            echo HTML::a(Url::link(),HTML::img(Url::toUri(UPLOADS.$logo),config('site.name')));
+        }
+    }
+    /**
      * Admin page
      */
     public function admin(){

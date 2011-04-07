@@ -1,7 +1,7 @@
 <?php 
 return array (
-  'value' => 
+  'theme' => 
   array (
+    'logo' => '',
   ),
-  'ttl' => NULL,
 );

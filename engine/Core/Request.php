@@ -106,7 +106,14 @@ class Request {
             $this->referer = 'REFERER';
         }
     }
-
+    /**
+     * Check if request is ajax
+     * 
+     * @return boolean
+     */
+    public function isAjax(){
+        return $this->is_ajax;
+    }
     /**
      * Get request info
      * 

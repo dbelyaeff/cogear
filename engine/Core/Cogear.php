@@ -53,15 +53,20 @@ final class Cogear implements Interface_Singleton {
      */
     protected $write_gears = FALSE;
     /**
+     * Flag to update config file
+     * 
+     * @var boolean 
+     */
+    protected $write_config = FALSE;
+    /**
      * Theme
      *
      * @var object
      */
     public $theme;
-    
+
 
     const GEAR = 'Gear';
-
 
     /**
      * Constructor
@@ -100,7 +105,6 @@ final class Cogear implements Interface_Singleton {
         $callback = new Callback($callback);
         $callback->setArgs($args);
         $this->events->$event->append($callback);
-        
     }
 
     /**
@@ -161,6 +165,37 @@ final class Cogear implements Interface_Singleton {
     }
 
     /**
+     * Set config value
+     *  
+     * @param type $name
+     * @param type $value 
+     * @return  boolean
+     */
+    public function set($name, $value) {
+        $pieces = explode('.', $name);
+        $current = $this->config;
+        $i = 0;
+        $size = sizeof($pieces);
+        foreach ($pieces as $piece) {
+            if($i < $size-1){
+                if ($current->$piece && $current->$piece instanceof Core_ArrayObject) {
+                    $current = $current->$piece;
+                } else {
+                    $current->$piece = new Core_ArrayObject();
+                    $current = $current->$piece;
+                }
+            }
+            else {
+                $current->$piece = $value;
+            }
+            $i++;
+        }
+        $current = $value;
+        $this->write_config = TRUE;
+        return TRUE;
+    }
+
+    /**
      *  Load gears 
      */
     public function loadGears() {
@@ -170,7 +205,7 @@ final class Cogear implements Interface_Singleton {
                 foreach ($gears_paths as $path) {
                     $gear = self::pathToGear($path);
                     $class = $gear . '_' . self::GEAR;
-                    if ($gear == 'Core' OR !class_exists($class)){
+                    if ($gear == 'Core' OR !class_exists($class)) {
                         continue;
                     }
                     $reflection = new ReflectionClass($class);
@@ -197,56 +232,62 @@ final class Cogear implements Interface_Singleton {
         }
         $this->sortGears();
         foreach ($this->gears as $name => $gear) {
-            if($gear->reflection->isSubclassOf('Theme')){
+            if ($gear->reflection->isSubclassOf('Theme')) {
                 continue;
             }
             $gear->init();
         }
-        Template::bindGlobal('cogear',$this);
+        Template::bindGlobal('cogear', $this);
+        event('gears.loaded', $this);
     }
+
     /**
      * Get all avialable gears
      * 
      * @return array 
      */
-    public function getAllGears(){
+    public function getAllGears() {
         return $this->all_gears;
     }
+
     /**
      * Get only active gears
      * 
      * @return array
      */
-    public function getActiveGears(){
+    public function getActiveGears() {
         return $this->active_gears;
     }
+
     /**
      * Get all Themes
      *
      * @return  array
      */
-    public function getThemes(){
+    public function getThemes() {
         $themes = array();
-        foreach($this->all_gears as $gear=>$class){
-            if(strpos($gear,'Theme') !== FALSE){
-                class_exists($class) && array_push($themes,new $class);
+        foreach ($this->all_gears as $gear => $class) {
+            if (strpos($gear, 'Theme') !== FALSE) {
+                class_exists($class) && array_push($themes, new $class);
             }
         }
         return $themes;
     }
+
     /**
      * Get current theme
      *
      * @return  object
      */
-    public function getTheme(){
-        foreach($this->active_gears as $gear=>$class){
-            if(strpos($gear,'Theme') !== FALSE){
+    public function getTheme() {
+        foreach ($this->active_gears as $gear => $class) {
+            if (strpos($gear, 'Theme') !== FALSE) {
                 return $this->theme = $this->gears->$gear;
             }
         }
         return $this->activateTheme('Theme_Default');
     }
+
     /**
      * Set theme
      *
@@ -254,35 +295,40 @@ final class Cogear implements Interface_Singleton {
      * @param   boolean $force
      * @return  object|NULL Theme or NULL.
      */
-    public function setTheme($name = 'Theme_Default',$force = FALSE){
-        if($this->theme && !$force) return;
-        $class = $name.'_'.self::GEAR;
-        if(!class_exists($class) OR $this->gears->$name) return NULL;
+    public function setTheme($name = 'Theme_Default', $force = FALSE) {
+        if ($this->theme && !$force)
+            return;
+        $class = $name . '_' . self::GEAR;
+        if (!class_exists($class) OR $this->gears->$name)
+            return NULL;
         $this->gears->$name = new $class;
         return $this->theme = $this->gears->$name;
     }
+
     /**
      * Make theme active
      * 
      * @param string $name
      */
-    public function activateTheme($name,$activate = TRUE){
-        foreach($this->active_gears as $gear=>$class){
-            if(strpos($gear,'Theme') !== FALSE){
-                if($gear == $name){
+    public function activateTheme($name, $activate = TRUE) {
+        foreach ($this->active_gears as $gear => $class) {
+            if (strpos($gear, 'Theme') !== FALSE) {
+                if ($gear == $name) {
                     $found = $gear;
-                }
-                else {
+                } else {
                     $this->deactivate($gear);
                 }
-            }  
+            }
         }
-         if(isset($found)) return;
-         $class = $name.'_'.self::GEAR;
-        if(!class_exists($class) OR $this->gears->$name) return NULL;
+        if (isset($found))
+            return;
+        $class = $name . '_' . self::GEAR;
+        if (!class_exists($class) OR $this->gears->$name)
+            return NULL;
         $activate && $this->activate($name);
         return $this->setTheme($name);
     }
+
     /**
      * Install gear
      * @param string $gear
@@ -324,6 +370,7 @@ final class Cogear implements Interface_Singleton {
         }
         return $this;
     }
+
     /**
      * Activate gear
      * @param string $gear
@@ -334,7 +381,7 @@ final class Cogear implements Interface_Singleton {
                 $this->install($gear);
             }
             $object = new $this->all_gears[$gear];
-            $object instanceof Theme ? $this->activateTheme($object->gear,FALSE) : $object->activate();
+            $object instanceof Theme ? $this->activateTheme($object->gear, FALSE) : $object->activate();
             $this->active_gears[$gear] = $this->all_gears[$gear];
             $this->write_gears = TRUE;
         }
@@ -365,24 +412,24 @@ final class Cogear implements Interface_Singleton {
      */
     public static function pathToGear($path) {
         $paths = array(
-            'site' => SITE . DS. GEARS_FOLDER,
+            'site' => SITE . DS . GEARS_FOLDER,
             'gears' => GEARS,
             'engine' => ENGINE . DS,
-            'alt_engine' => ENGINE . DS . 'Core' ,
+            'alt_engine' => ENGINE . DS . 'Core',
         );
-        foreach($paths as $explicit_path){
-            if(strpos($path,$explicit_path) !== FALSE){
+        foreach ($paths as $explicit_path) {
+            if (strpos($path, $explicit_path) !== FALSE) {
                 $path = str_replace($explicit_path, '', $path);
                 continue;
             }
         }
         $gear = str_replace(array(
-                DS.pathinfo($path,PATHINFO_BASENAME),
-                DS
-            ),array(
-                '',
-                '_'
-            ),$path);
+            DS . pathinfo($path, PATHINFO_BASENAME),
+            DS
+                ), array(
+            '',
+            '_'
+                ), $path);
         return $gear;
     }
 
@@ -398,12 +445,18 @@ final class Cogear implements Interface_Singleton {
     /**
      * Desctructor
      */
-    public function __destruct() {
+    public function clear() {
         if ($this->write_gears) {
             $this->system_cache->write('gears/all', $this->all_gears);
             $this->system_cache->write('gears/installed', $this->installed_gears);
             $this->system_cache->write('gears/active', $this->active_gears);
         }
+        if ($this->write_config) {
+            $settings = new Config(SITE . DS . 'settings' . EXT);
+            $this->config->differ($settings);
+            $this->config->write(SITE.DS.'config'.EXT);
+        }
+        event('clean');
     }
 
     /**
@@ -476,19 +529,19 @@ function cogear() {
     return Cogear::getInstance();
 }
 
-function event(){
+function event() {
     $cogear = getInstance();
     $args = func_get_args();
-    return call_user_func_array(array($cogear,'event'), &$args);
+    return call_user_func_array(array($cogear, 'event'), &$args);
 }
 
-function hook(){
+function hook() {
     $cogear = getInstance();
     $args = func_get_args();
-    return call_user_func_array(array($cogear,'hook'), &$args);
+    return call_user_func_array(array($cogear, 'hook'), &$args);
 }
 
-function config($name,$default_value = NULL){
+function config($name, $default_value = NULL) {
     $cogear = getInstance();
-    return $cogear->get($name,$default_value);
+    return $cogear->get($name, $default_value);
 }

@@ -23,37 +23,29 @@ class Form_Element_Image extends Form_Element_File{
      * @return  mixed
      */
     public function result() {
-        $cogear =  getInstance();
-        $image = new Image($this->name,  get_object_vars($this),$this->isRequired);
+        $image = new Image($this->name,  $this->getAttributes(), $this->validators->findByValue('Required'));
         if ($result = $image->upload()) {
-            $this->requestIsFetched = TRUE;
+            $this->is_fetched = TRUE;
             $this->image = $image->getInfo();
             $this->value = $result;
         }
-        else $this->errors = $image->getErrors();
+        else $this->errors = $image->errors;
         return $this->value;
     }
     /**
      * Render
      */
     public function render(){
-        $this->setAttributes();
+        $this->getAttributes();
+        $this->attributes->type = 'file';
         if($this->value && $this->value = Url::link(Url::toUri(UPLOADS.$this->value,ROOT,FALSE))){
-            return HTML::img(array(
-                'src' => $this->value,
-                'width' => $this->image->width,
-                'height' => $this->image->height,
-                'alt' => '',
-            )).HTML::a('',icon('delete'),array(
-                'class' => 'form-action',
-                'rel' => $this->name,
-            ));
+            $tpl = new Template('Form.image');
+            $tpl->assign($this->getAttributes());
+            $tpl->value = $this->value;
+            $tpl->image = $this->image;
+            $this->code = $tpl->render();
         }
-        else {
-            $attributes = $this->attributes;
-            $attributes->type = 'file';
-            return parent::render($attributes);
-        }
+        return parent::render();
     }
     /**
      * Perform ajax handler

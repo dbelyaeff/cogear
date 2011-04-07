@@ -63,3 +63,15 @@ textarea{
     width:100%;
     height: 300px;
 }
+div.image-preview{
+    position: relaitve;
+}
+div.image-preview a.delete{
+    position: absolute;
+    text-decoration: none;
+    font-family: Tahoma;
+    font-size: 14px;
+}
+div.image-preview a.delete:hover{
+    color: #CCC;
+}

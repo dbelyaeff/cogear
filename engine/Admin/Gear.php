@@ -23,21 +23,24 @@ class Admin_Gear extends Gear {
         $cogear = getInstance();
         $this->settings->theme = 'Admin_Theme';
         parent::init();
-        hook('user_cp.render.before',array($this,'hookControlPanel'));
+        hook('user_cp.render.before', array($this, 'hookControlPanel'));
     }
+
     /**
      * Add Control Panel to user panel
      */
-    public function hookControlPanel($cp){
+    public function hookControlPanel($cp) {
         $cogear = getInstance();
-        $cogear->user->id && access('admin')&& $cp->admin = HTML::a(Url::gear('admin'),t('Control Panel'));;
+        $cogear->user->id && access('admin') && $cp->admin = HTML::a(Url::gear('admin'), t('Control Panel'));
+        ;
     }
+
     /**
      * Request handler
      * 
      * Override parent method. Add title.
      */
-    public function request(){
+    public function request() {
         title(t('Control Panel'));
         parent::request();
     }
@@ -73,8 +76,20 @@ class Admin_Gear extends Gear {
                 $this->gears($subaction);
                 break;
             case 'theme':
-                $form = new Form_Manager('Admin.theme');
-                append('content',$form->render());
+                $form = new Form('Admin.theme');
+
+                if ($form->is_ajaxed) {
+                    $form->elements->logo->is_ajaxed && $cogear->set('theme.logo', '');
+                    $logo_removed_flag = TRUE;
+                } else {
+                    $form->setValues(array(
+                        'logo' => config('theme.logo'),
+                    ));
+                }
+                if ($result = $form->result()) {
+                    isset($logo_removed_flag) OR $cogear->set('theme.logo', $result->logo);
+                }
+                append('content', $form->render());
                 break;
         }
     }
@@ -90,19 +105,22 @@ class Admin_Gear extends Gear {
         $inactive_count = sizeof($inactive_gears);
         $top_menu = Template::getGlobal('top_menu');
         $root = Url::gear('admin');
-        $top_menu->{$root.'gears'} = t('Active');
-        $top_menu->{$root.'gears'}->count = $active_count;
-        $top_menu->{$root.'gears/all'} = t('All');
-        $top_menu->{$root.'gears/all'}->count = $all_count;
-        $top_menu->{$root.'gears/inactive'} = t('Inactive');
-        $top_menu->{$root.'gears/inactive'}->count = $inactive_count;
-        $top_menu->{$root.'gears/new'} = t('New');
-        $top_menu->{$root.'gears/updates'} = t('Updates');
-        $top_menu->{$root.'gears/add'} = t('Add');
+        $top_menu->{$root . 'gears'} = t('Active');
+        $top_menu->{$root . 'gears'}->count = $active_count;
+        $top_menu->{$root . 'gears/all'} = t('All');
+        $top_menu->{$root . 'gears/all'}->count = $all_count;
+        $top_menu->{$root . 'gears/inactive'} = t('Inactive');
+        $top_menu->{$root . 'gears/inactive'}->count = $inactive_count;
+        $top_menu->{$root . 'gears/new'} = t('New');
+        $top_menu->{$root . 'gears/updates'} = t('Updates');
+        $top_menu->{$root . 'gears/add'} = t('Add');
         $doaction = NULL;
-        if(!empty($_REQUEST['action-top'])) $doaction = $_REQUEST['action-top'];
-        if(!empty($_REQUEST['action-bottom'])) $doaction = $_REQUEST['action-bottom'];
-        if(!empty($_REQUEST['action'])) $doaction = $_REQUEST['action'];
+        if (!empty($_REQUEST['action-top']))
+            $doaction = $_REQUEST['action-top'];
+        if (!empty($_REQUEST['action-bottom']))
+            $doaction = $_REQUEST['action-bottom'];
+        if (!empty($_REQUEST['action']))
+            $doaction = $_REQUEST['action'];
         if ($doaction && isset($_REQUEST['gears'])) {
             $gears = $this->filter_gears($_REQUEST['gears']);
             switch ($doaction) {
@@ -157,11 +175,11 @@ class Admin_Gear extends Gear {
                 break;
             case 'new':
                 $gears = array();
-                $new_period = 60*60*7; // Gears that has been updated last week are to be new
+                $new_period = 60 * 60 * 7; // Gears that has been updated last week are to be new
                 foreach ($all_gears as $gear => $class) {
                     $object = new $class;
-                    if(time() - $object->file->getMTime() <= $new_period){
-                        if(!$object->active = ($object->package == 'Core' OR $object->type == Gear::CORE OR in_array($gear, array_keys($active_gears)))){
+                    if (time() - $object->file->getMTime() <= $new_period) {
+                        if (!$object->active = ($object->package == 'Core' OR $object->type == Gear::CORE OR in_array($gear, array_keys($active_gears)))) {
                             $gears[$object->package][$gear] = $object;
                         }
                     }
@@ -186,7 +204,7 @@ class Admin_Gear extends Gear {
             $cogear->activate($gear);
             $result[] = t($gear, 'Gears');
         }
-        $result && flash_info(t('Following gears were activated: ') . '<b>'.implode('</b>, <b>', $result).'</b>.');
+        $result && flash_info(t('Following gears were activated: ') . '<b>' . implode('</b>, <b>', $result) . '</b>.');
     }
 
     /**
@@ -201,7 +219,7 @@ class Admin_Gear extends Gear {
             $cogear->deactivate($gear);
             $result[] = t($gear, 'Gears');
         }
-        $result &&  flash_info(t('Following gears were deactivated: ') . '<b>'.implode('</b>, <b>', $result).'</b>.');
+        $result && flash_info(t('Following gears were deactivated: ') . '<b>' . implode('</b>, <b>', $result) . '</b>.');
     }
 
     /**
@@ -216,7 +234,7 @@ class Admin_Gear extends Gear {
             $cogear->update($gear);
             $result[] = t($gear, 'Gears');
         }
-        $result && flash_info(t('Following gears were updated: ') . '<b>'.implode('</b>, <b>', $result).'</b>.');
+        $result && flash_info(t('Following gears were updated: ') . '<b>' . implode('</b>, <b>', $result) . '</b>.');
     }
 
     /**
@@ -231,7 +249,7 @@ class Admin_Gear extends Gear {
     private function filter_gears($gears) {
         $result = array();
         foreach ($gears as $gear) {
-            $class = $gear.'_Gear';
+            $class = $gear . '_Gear';
             if (class_exists($class)) {
                 $object = new $class;
                 if ($object->type == Gear::CORE OR $object->package == 'Core') {
@@ -242,4 +260,5 @@ class Admin_Gear extends Gear {
         }
         return $result;
     }
+
 }

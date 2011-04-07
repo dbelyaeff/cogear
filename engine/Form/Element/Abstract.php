@@ -18,7 +18,9 @@ class Form_Element_Abstract extends Options {
     protected $label;
     protected $value;
     protected $disabled;
+    protected $checked;
     protected $type;
+    protected $class;
     /**
      * Link to form instance
      *
@@ -27,11 +29,12 @@ class Form_Element_Abstract extends Options {
     protected $form;
     protected $filters = array();
     protected $validators = array();
-    protected $errors = array();
     protected $attributes = array();
+    protected $errors = array();
     protected $is_fetched;
     protected $wrapper = 'Form.element';
     protected $code = '';
+    protected $is_ajaxed;
 
     /**
      * Constructor
@@ -40,7 +43,13 @@ class Form_Element_Abstract extends Options {
      */
     public function __construct($options) {
         parent::__construct($options);
-        $this->attributes = new Core_ArrayObject($this->attributes);
+        $this->attributes = new Core_ArrayObject();
+        $this->filters = new Core_ArrayObject();
+        $this->validators = new Core_ArrayObject();
+        $this->errors = new Core_ArrayObject();
+        if($this->form->is_ajaxed && Ajax::get('element') == $this->name){
+            $this->is_ajaxed = TRUE;
+        }
     }
 
     /**
@@ -91,7 +100,7 @@ class Form_Element_Abstract extends Options {
      */
     public function isCallable($class, $suffix = 'Validate') {
         $args = array();
-        if (is_array($class) OR $class instanceof  ArrayObject) {
+        if (is_array($class) OR $class instanceof ArrayObject) {
             $args = array_slice($class->toArray(), 1);
             $class = $class[0];
         }
@@ -140,13 +149,11 @@ class Form_Element_Abstract extends Options {
      * @return
      */
     public function result() {
-        //if(isset($this->form->request[$this->name])){
-            $this->value = isset($this->form->request[$this->name]) ? $this->form->request[$this->name] : NULL;
-            $this->is_fetched = TRUE;
-            $this->filter();
-            return $this->validate() ? $this->value : FALSE;
-        //}
-        //return NULL;
+        $this->value = isset($this->form->request[$this->name]) ? $this->form->request[$this->name] : NULL;
+        $this->is_fetched = TRUE;
+        $this->filter();
+        $result = $this->validate() ? $this->value : FALSE;
+        return $result;
     }
 
     /**
@@ -159,44 +166,69 @@ class Form_Element_Abstract extends Options {
     }
 
     /**
-     * Set attributes
+     * Form and return HTML object attributes from object data
      * 
-     * @return  Core_ArrayObject
+     * @return array
      */
-    public function setAttributes() {
-        $this->attributes->id = $this->getId();
-        $this->attributes->name = $this->name;
-        $this->attributes->label = $this->label;
-        $this->attributes->description = $this->description;
-        $this->attributes->type = $this->type;
-        $this->attributes->value = $this->value;
-        $this->attributes->class = $this->type . ($this->class ? ' '.$this->class : '');
-        $this->attributes->required = in_array('Required',(array)$this->validators) ? TRUE : NULL;
-        $this->attributes->errors = $this->errors;
-        $this->disabled && $this->attributes->disabled = 'disabled';
-        $this->checked && $this->attributes->checked = 'checked';
+    public function getAttributes() {
+        if (!sizeof($this->attributes)) {
+            $reflection = new ReflectionObject($this);
+            if ($props = $reflection->getProperties()) {
+                foreach ($props as $prop) {
+                    $this->attributes->{$prop->name} = $this->{$prop->name};
+                }
+            }
+            $this->attributes->class = $this->attributes->type . ' ' . $this->attributes->class;
+            $this->attributes->required = $this->validators && $this->validators->findByValue('Required');
+            $this->attributes->disabled OR $this->attributes->offsetUnset('disabled');
+            $this->attributes->checked OR $this->attributes->offsetUnset('checked');
+            $this->attributes->form = $this->form;
+            $this->attributes->element = $this;
+        }
         return $this->attributes;
     }
 
     /**
      * Render element
      */
-    public function render($attributes = NULL) {
-        $attributes OR $attributes = $this->setAttributes();
-        $this->code = HTML::input($attributes);
+    public function render() {
+        $this->code OR $this->code = HTML::input($this->getAttributes());
         $this->decorate();
         return $this->code;
     }
+
     /**
      * Decorate elements
      */
-    private function decorate(){
+    protected function decorate() {
         if ($this->wrapper) {
             $tpl = new Template($this->wrapper);
             $tpl->assign($this->attributes);
+            $tpl->element = $this;
+            $tpl->form = $this->form;
             $tpl->code = $this->code;
             $this->code = $tpl->render();
         }
     }
 
+    /**
+     * Process ajax request
+     * 
+     * @return array
+     */
+    public function ajax() {
+        if(!$this->is_ajaxed) return NULL;
+        $result = array();
+        $action = Ajax::get('action', 'replace');
+        $result['action'] = $action;
+        $result['id'] = $this->getId();
+        switch ($action) {
+            case 'replace':
+                $this->setValue(NULL);
+                $result['code'] = $this->render();
+                break;
+        }
+        event('form.element.ajax', $this, $result);
+        return $result;
+    }
 }

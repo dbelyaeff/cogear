@@ -12,6 +12,7 @@
  * @version		$Id$
  */
 class Config extends Core_ArrayObject{
+    protected $file;
     const AS_ARRAY = 0;
     const AS_OBJECT = 1;
     /**
@@ -21,7 +22,10 @@ class Config extends Core_ArrayObject{
      * @param string $section 
      */
     public function __construct($path = '',$section = '') {
-        $path && $this->load($path,$section);
+        if($path){
+            $this->file = $path;
+            $this->load($path,$section);
+        }
     }
     /**
      * Load file into internal config
@@ -55,7 +59,10 @@ class Config extends Core_ArrayObject{
      * @param string $file
      * @param array $data
      */
-    public static function write($file,$data){
-        file_put_contents($file, PHP_FILE_PREFIX.var_export($data,TRUE));
+    public function write($file = NULL,$data = NULL){
+        $file OR $file = $this->file;
+        $data OR $data = $this->toArray();
+        Filesystem::makeDir(dirname($file));
+        file_put_contents($file, PHP_FILE_PREFIX."return ".var_export($data,TRUE).';');
     }
 }

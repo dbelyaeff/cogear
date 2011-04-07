@@ -65,7 +65,22 @@ class Core_ArrayObject extends ArrayObject {
      */
     public function mix($data) {
         $data instanceof self && $data = $data->toArray();
-        $this->exchangeArray(self::transform(array_merge($this->toArray(), $data)));
+        is_array($data) && $this->exchangeArray(self::transform(array_merge($this->toArray(), $data)));
+    }
+    
+    /**
+     * Find element by value
+     * 
+     * @param mixed $needle 
+     * @return  NULL|mixed  Null or found element key.
+     */
+    public function findByValue($needle){
+        foreach($this as $key=>$value){
+            if($value == $needle){
+                return $key;
+            }
+        }
+        return NULL;
     }
 
     /**
@@ -120,7 +135,16 @@ class Core_ArrayObject extends ArrayObject {
     public function reverse() {
         return new Core_ArrayObject(array_reverse($this->toArray()));
     }
-
+    /**
+     * Exclude elements with the same keys from input $data
+     * 
+     * @param array $data 
+     */
+    public function differ($data){
+        $data instanceof self && $data = $data->toArray();
+        $storage = $this->toArray();
+        $this->exchangeArray(array_diff_key($storage, $data));
+    }
     /**
      * Inject value at special position or before key
      * 

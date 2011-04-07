@@ -18,6 +18,7 @@ class Form_Manager extends Options {
     protected $enctype = self::ENCTYPE_MULTIPART;
     protected $template = 'Form.form';
     public $request;
+    protected $is_ajaxed;
     /**
      * Elements config
      * @var array
@@ -74,6 +75,7 @@ class Form_Manager extends Options {
      * Initialize elements
      */
     public function init(){
+        $this->is_ajaxed = Ajax::get('form') == $this->name;
         $elements = array();
         foreach($this->elements as $name=>$config){
             $config->type OR $config->type = 'input';
@@ -124,6 +126,17 @@ class Form_Manager extends Options {
                    $is_valid = FALSE;
                }
             }
+        }
+        if($this->is_ajaxed){
+            $response = array();
+            foreach($this->elements as $name=>$element){
+                if($name == Ajax::get('element')){
+                    if($result = $element->ajax()){
+                        $response[$name] = $result;
+                    }
+                }
+            }
+            $response && Ajax::json($response);
         }
         return $is_valid && $result ? Core_ArrayObject::transform($result) : FALSE;
     }

@@ -109,7 +109,6 @@ spl_autoload_register('autoload');
 $cogear = Cogear::getInstance();
 // Some gears are needed to be preloaded
 $cogear->request = new Request();
-$cogear->config = new Config();
 // Set host
 $host = $cogear->request->get('HTTP_HOST');
 // Defince site folder
@@ -150,6 +149,10 @@ $cogear->session = Session::factory('session', $options);
 // Load other gears
 
 $cogear->loadGears();
-$cogear->event('ignite');
-$cogear->event('done');
+// Load current site settings if file exists
+$cogear->config->load(SITE.DS.'config'.EXT);
+event('ignite');
+event('done');
 $cogear->response->send();
+$cogear->clear();
+event('exit');
