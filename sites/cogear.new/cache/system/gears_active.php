@@ -20,6 +20,11 @@ return array (
     'jQuery' => 'jQuery_Gear',
     'Admin_Menu' => 'Admin_Menu_Gear',
     'Theme_Default' => 'Theme_Default_Gear',
+    'Wysiwyg' => 'Wysiwyg_Gear',
+    'elFinder' => 'elFinder_Gear',
+    'elRTE' => 'elRTE_Gear',
+    'TinyMCE' => 'TinyMCE_Gear',
+    'CKEditor' => 'CKEditor_Gear',
   ),
   'ttl' => NULL,
 );

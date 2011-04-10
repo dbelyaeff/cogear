@@ -140,3 +140,7 @@ function css($url){
 function js($url){
     append('content',HTML::script($url));
 }
+
+function inline_js($code){
+    append('content',HTML::script($code, array(),TRUE));
+}

@@ -146,11 +146,10 @@ $cogear->router = new Router();
 $cogear->assets = new Assets();
 $cogear->response = new Response();
 $cogear->session = Session::factory('session', $options);
-// Load other gears
-
-$cogear->loadGears();
 // Load current site settings if file exists
 $cogear->config->load(SITE.DS.'config'.EXT);
+// Load gears
+$cogear->loadGears();
 event('ignite');
 event('done');
 $cogear->response->send();

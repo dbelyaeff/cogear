@@ -78,7 +78,7 @@ class Pages_Gear extends Gear {
                         $form = new Form_Manager('Pages.createdit');
                         $form->elements->submit->setValue(t('Update'));
                         $form->setValues($page->object());
-                        if ($result = $form->result()) {
+                        if ($result = $form->result()){
                             $page->mix($result);
                             $page->last_update = time();
                             $page->update();

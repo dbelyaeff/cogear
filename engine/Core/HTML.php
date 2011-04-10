@@ -108,15 +108,16 @@ final class HTML {
      *
      * @param string $path
      * @param array $attributes
+     * @param boolean   $inline
      * @return string
      */
-    public static function script($path, $attributes = array()) {
-        if(strpos($path,"\n") == FALSE){
+    public static function script($path, $attributes = array(),$inline = NULL) {
+        if(!$inline){
             $attributes['src'] = $path;
             $script = '';
         }
         else {
-            $attributes['src'] = '';
+            unset($attributes['src']);
             $script = $path;
         }
         isset($attributes['charset']) OR $attributes['charset'] = 'utf-8';

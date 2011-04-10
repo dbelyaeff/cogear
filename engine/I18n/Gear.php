@@ -33,7 +33,7 @@ class I18n_Gear extends Gear {
      */
     public function __construct(){
         $cogear = getInstance();
-        $this->locale = $cogear->get('site.locale','en');
+        $this->locale = config('site.locale','en');
         $this->date_format = $cogear->get('site.date_format','Y-m-d H:i');
         parent::__construct();
     }

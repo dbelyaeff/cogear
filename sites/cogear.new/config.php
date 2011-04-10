@@ -2,6 +2,9 @@
 return array (
   'theme' => 
   array (
-    'logo' => '',
+    'logo' => '/theme/logo/logo.png',
   ),
+    'wysiwyg' => array(
+        'editor' => 'ckeditor',
+    )
 );
