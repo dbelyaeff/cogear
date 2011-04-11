@@ -79,15 +79,23 @@ class Admin_Gear extends Gear {
                 $form = new Form('Admin.theme');
 
                 if ($form->is_ajaxed) {
-                    $form->elements->logo->is_ajaxed && $cogear->set('theme.logo', '');
-                    $logo_removed_flag = TRUE;
+                    if($form->elements->logo->is_ajaxed){
+                        $cogear->set('theme.logo', '');
+                        $logo_removed_flag = TRUE;
+                    }
+                    if($form->elements->favicon->is_ajaxed){
+                        $cogear->set('theme.favicon', '');
+                        $favicon_removed_flag = TRUE;
+                    }
                 } else {
                     $form->setValues(array(
                         'logo' => config('theme.logo'),
+                        'favicon' => config('theme.favicon'),
                     ));
                 }
                 if ($result = $form->result()) {
                     isset($logo_removed_flag) OR $cogear->set('theme.logo', $result->logo);
+                    isset($favicon_removed_flag) OR $cogear->set('theme.favicon', $result->favicon);
                 }
                 append('content', $form->render());
                 break;

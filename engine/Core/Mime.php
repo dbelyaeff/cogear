@@ -84,6 +84,7 @@ class Mime {
         'jpg' => array('image/jpeg', 'image/pjpeg'),//, 'application/octet-stream'),
         'jpe' => array('image/jpeg', 'image/pjpeg'),
         'png' => array('image/png', 'image/x-png'),//, 'application/octet-stream'),
+        'ico' => 'image/x-icon',
         'tiff' => 'image/tiff',
         'tif' => 'image/tiff',
         'css' => 'text/css',

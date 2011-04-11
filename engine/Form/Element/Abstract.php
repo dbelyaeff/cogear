@@ -171,7 +171,6 @@ class Form_Element_Abstract extends Options {
      * @return array
      */
     public function getAttributes() {
-        if (!sizeof($this->attributes)) {
             $reflection = new ReflectionObject($this);
             if ($props = $reflection->getProperties()) {
                 foreach ($props as $prop) {
@@ -184,7 +183,6 @@ class Form_Element_Abstract extends Options {
             $this->attributes->checked OR $this->attributes->offsetUnset('checked');
             $this->attributes->form = $this->form;
             $this->attributes->element = $this;
-        }
         return $this->attributes;
     }
 
