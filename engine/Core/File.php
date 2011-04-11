@@ -122,7 +122,7 @@ class File extends Options{
                 $this->file = new Core_ArrayObject($file);
                 return !$this->errors ? $this->processUpload() : FALSE;
         }
-        return FALSE;
+        return NULL;
     }
     /**
      * Process upload

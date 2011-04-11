@@ -81,11 +81,9 @@ class Admin_Gear extends Gear {
                 if ($form->is_ajaxed) {
                     if($form->elements->logo->is_ajaxed){
                         $cogear->set('theme.logo', '');
-                        $logo_removed_flag = TRUE;
                     }
                     if($form->elements->favicon->is_ajaxed){
                         $cogear->set('theme.favicon', '');
-                        $favicon_removed_flag = TRUE;
                     }
                 } else {
                     $form->setValues(array(
@@ -94,8 +92,8 @@ class Admin_Gear extends Gear {
                     ));
                 }
                 if ($result = $form->result()) {
-                    isset($logo_removed_flag) OR $cogear->set('theme.logo', $result->logo);
-                    isset($favicon_removed_flag) OR $cogear->set('theme.favicon', $result->favicon);
+                    $result->logo && $cogear->set('theme.logo', $result->logo);
+                    $result->favicon && $cogear->set('theme.favicon', $result->favicon);
                 }
                 append('content', $form->render());
                 break;

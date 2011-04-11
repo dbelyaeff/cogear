@@ -11,13 +11,17 @@
  * @subpackage          Form
  * @version		$Id$
  */
-class Form_Element_Image extends Form_Element_File {
+class Form_Element_Image extends Form_Element_Abstract {
 
     protected $image;
     protected $resize;
     protected $crop;
     protected $watermark;
     protected $thumbnails;
+    protected $path;
+    protected $maxsize;
+    protected $overwrite = TRUE;
+    protected $rename;
 
     /**
      * Set value from request
@@ -31,8 +35,9 @@ class Form_Element_Image extends Form_Element_File {
             $this->image = $image->getInfo();
             $this->value = $result;
         }
-        else
+        else {
             $this->errors = $image->errors;
+        }
         return $this->value;
     }
 
@@ -49,8 +54,7 @@ class Form_Element_Image extends Form_Element_File {
             $tpl->image = $this->image;
             $this->code = $tpl->render();
         }
-        $this->decorate();
-        return $this->code;
+        return parent::render();
     }
 
     /**

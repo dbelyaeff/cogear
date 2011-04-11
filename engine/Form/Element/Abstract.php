@@ -47,7 +47,7 @@ class Form_Element_Abstract extends Options {
         $this->filters = new Core_ArrayObject();
         $this->validators = new Core_ArrayObject();
         $this->errors = new Core_ArrayObject();
-        if($this->form->is_ajaxed && Ajax::get('element') == $this->name){
+        if ($this->form->is_ajaxed && Ajax::get('element') == $this->name) {
             $this->is_ajaxed = TRUE;
         }
     }
@@ -171,18 +171,18 @@ class Form_Element_Abstract extends Options {
      * @return array
      */
     public function getAttributes() {
-            $reflection = new ReflectionObject($this);
-            if ($props = $reflection->getProperties()) {
-                foreach ($props as $prop) {
-                    $this->attributes->{$prop->name} = $this->{$prop->name};
-                }
+        $reflection = new ReflectionObject($this);
+        if ($props = $reflection->getProperties()) {
+            foreach ($props as $prop) {
+                $this->attributes->{$prop->name} = $this->{$prop->name};
             }
-            $this->attributes->class = $this->attributes->type . ' ' . $this->attributes->class;
-            $this->attributes->required = $this->validators && $this->validators->findByValue('Required');
-            $this->attributes->disabled OR $this->attributes->offsetUnset('disabled');
-            $this->attributes->checked OR $this->attributes->offsetUnset('checked');
-            $this->attributes->form = $this->form;
-            $this->attributes->element = $this;
+        }
+        $this->attributes->class = $this->attributes->type . ' ' . $this->attributes->class;
+        $this->attributes->required = $this->validators && $this->validators->findByValue('Required');
+        $this->attributes->disabled OR $this->attributes->offsetUnset('disabled');
+        $this->attributes->checked OR $this->attributes->offsetUnset('checked');
+        $this->attributes->form = $this->form;
+        $this->attributes->element = $this;
         return $this->attributes;
     }
 
@@ -215,7 +215,8 @@ class Form_Element_Abstract extends Options {
      * @return array
      */
     public function ajax() {
-        if(!$this->is_ajaxed) return NULL;
+        if (!$this->is_ajaxed)
+            return NULL;
         $result = array();
         $action = Ajax::get('action', 'replace');
         $result['action'] = $action;
@@ -229,4 +230,5 @@ class Form_Element_Abstract extends Options {
         event('form.element.ajax', $this, $result);
         return $result;
     }
+
 }
