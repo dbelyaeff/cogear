@@ -158,20 +158,19 @@ body
 	position:absolute;
 	margin-top:40px;
 	padding-left:370px;  /* not "margin-left" or just "left" - to fix IE behaviour */
-	font-family: georgia, serif;
-	font-size: 22px;
+	font: 32px/125% 'Copse',Georgia,serif;
 	font-style: italic;
 	color: #eee;
 }
 .header h2 a:link, .header h2 a:visited
 {
-	color: #eee;
+	color: #999999;
 	text-decoration: none;
+        text-shadow: 0 2px 0 #FCF9EE, 0 4px 0 rgba(0, 0, 0, 0.15);
 }
 
 .header h2 a:hover, .header h2 a:active
 {
-	color: #fff;
 	text-decoration: underline;
 }
 
