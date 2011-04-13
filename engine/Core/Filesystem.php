@@ -114,5 +114,14 @@ class Filesystem {
     public static function makeDir($dir, $perms = 0777, $recursive = TRUE) {
         is_dir($dir) OR $dir && mkdir($dir, $perms, $recursive);
     }
+    /**
+     * Read file
+     *  
+     * @param string $path
+     * @return string 
+     */
+    public static function read($path){
+        return file_get_contents($path);
+    }
 
 }

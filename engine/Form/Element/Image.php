@@ -29,7 +29,7 @@ class Form_Element_Image extends Form_Element_Abstract {
      * @return  mixed
      */
     public function result() {
-        $image = new Image($this->name, $this->getAttributes(), $this->validators->findByValue('Required'));
+        $image = new Upload_Image($this->name, $this->getAttributes(), $this->validators->findByValue('Required'));
         if ($result = $image->upload()) {
             $this->is_fetched = TRUE;
             $this->image = $image->getInfo();
