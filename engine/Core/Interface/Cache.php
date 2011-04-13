@@ -11,7 +11,7 @@
  * @version		$Id$
  */
 interface Interface_Cache {
-    public function read($name,$force);
+    public function read($name,$force=NULL);
     public function write($name,$value,array $tags,int $ttl);
     public function remove($name);
     public function removeTags($name);

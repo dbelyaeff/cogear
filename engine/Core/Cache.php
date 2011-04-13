@@ -67,7 +67,7 @@ class Cache implements Interface_Cache {
      * @param string $force
      * @return  mixed
      */
-    public function read($name, $force=FALSE) {
+    public function read($name, $force=NULL) {
         return $this->adapter->read($name, $force);
     }
 
