@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  Redactor WYSIWYG editor 
  * 
@@ -13,27 +14,41 @@
  * @version		$Id$
  */
 class Wysiwyg_Redactor_Editor extends Wysiwyg_Abstract {
-    protected $options = array('focus'=>TRUE);
+
+    protected $options = array(
+        'focus' => TRUE,
+        );
+    /**
+     * Constructor
+     * 
+     * @param array $options 
+     */
+    public function __construct($options  = array()) {
+        $this->options['image_upload'] =  Url::gear('upload').'/image';
+        parent::__construct($options);
+    }
     /**
      * Load scripts
      */
-    public function load(){
+    public function load() {
         $path = Url::toUri(dirname(__FILE__));
-        js($path.'/editor/editor.js');
-        css($path.'/editor/css/editor.css');
+        js($path . '/editor/editor.js');
+        css($path . '/editor/css/editor.css');
     }
+
     /**
      * Render
      * 
      * @return string
      */
-    public function render(){
+    public function render() {
         inline_js("$(document).ready(
 		function()
 		{
-			$('#{$this->getId()} textarea').editor(".json_encode($this->options).");
+			$('#{$this->getId()} textarea').editor(" . json_encode($this->options) . ");
 		}
 	);");
         return parent::render();
     }
+
 }

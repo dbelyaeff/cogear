@@ -110,9 +110,11 @@ class Filesystem {
      * @param string $dir
      * @param int $perms
      * @param boolean $recursive
+     * @return  string
      */
     public static function makeDir($dir, $perms = 0777, $recursive = TRUE) {
         is_dir($dir) OR $dir && mkdir($dir, $perms, $recursive);
+        return $dir;
     }
     /**
      * Read file

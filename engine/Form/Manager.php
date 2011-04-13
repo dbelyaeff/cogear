@@ -15,6 +15,7 @@ class Form_Manager extends Options {
     protected $prefix = 'form';
     protected $method  = 'POST';
     protected $action;
+    protected $ajax;
     protected $enctype = self::ENCTYPE_MULTIPART;
     protected $template = 'Form.form';
     public $request;
@@ -160,6 +161,7 @@ class Form_Manager extends Options {
             'method' => $this->method,
             'action' => $this->action,
             'enctype' => $this->enctype,
+            'class' => 'form'.($this->ajax ? ' ajaxed' : ''),
         );
         $tpl->elements = $this->elements;
         return $tpl->render();
