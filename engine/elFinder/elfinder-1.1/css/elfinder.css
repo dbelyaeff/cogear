@@ -851,3 +851,9 @@ tr.el-finder-droppable td.icon  p { background-position:5px -450px; }
 	height:48px;
 	float:left;
 }
+.el-select{
+    color: #000000;
+}
+.el-finder li {
+    margin: 0;
+}

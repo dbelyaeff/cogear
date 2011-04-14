@@ -12,7 +12,6 @@
  * @version		$Id$
  */
 class User_Object extends Db_ORM {
-
     /**
      * Constructor
      * 
@@ -163,7 +162,27 @@ class User_Object extends Db_ORM {
         }
         return NULL;
     }
-
+    /**
+     * Get user profile link
+     */
+    public function getProfileLink(){
+        if($this->id){
+            return Url::gear('user').$this->login;
+        }
+        return NULL;
+    }
+    /**
+     * Get user avatar
+     * 
+     * @return  User_Avatar
+     */
+    public function getAvatar(){
+        if(!($this->avatar instanceof User_Avatar)){
+            $this->avatar = new User_Avatar($this->avatar);
+            $this->avatar->setUser($this);
+        }
+        return $this->avatar;
+    }
     /**
      * Get user panel — for profile and other pages
      * 
@@ -172,9 +191,10 @@ class User_Object extends Db_ORM {
     public function getPanel() {
         $cogear = getInstance();
         $panel = new Stack('user.panel');
-        $panel->append(HTML::paired_tag('b', $this->login));
+        $panel->avatar = $this->getAvatar();
+        $panel->login = HTML::paired_tag('b', $this->login);
         if (access('user edit_all') OR $this->id == $cogear->user->id) {
-            $panel->append(HTML::a(Url::gear('user') . $this->login . '/edit', icon('cog')));
+            $panel->edit = HTML::a(Url::gear('user') . $this->login . '/edit', icon('cog'));
         }
         return $panel->render();
     }

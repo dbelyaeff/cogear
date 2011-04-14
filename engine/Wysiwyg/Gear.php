@@ -14,7 +14,7 @@ class Wysiwyg_Gear extends Gear {
     protected $name = 'WYSIWYG';
     protected $description = 'Visual editors manager.';
     public static $editors = array(
-        'redactor' => 'Wysiwyg_Redactor_Editor',
+        'redactor' => 'Redactor_Editor',
     );
     protected $order = -10;
     /**

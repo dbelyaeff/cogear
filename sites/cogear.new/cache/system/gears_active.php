@@ -25,6 +25,10 @@ return array (
     'elRTE' => 'elRTE_Gear',
     'TinyMCE' => 'TinyMCE_Gear',
     'CKEditor' => 'CKEditor_Gear',
+    'ajaxUpload' => 'ajaxUpload_Gear',
+    'Test' => 'Test_Gear',
+    'Upload' => 'Upload_Gear',
+    'Redactor' => 'Redactor_Gear',
   ),
   'ttl' => NULL,
 );

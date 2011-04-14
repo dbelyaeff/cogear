@@ -21,6 +21,7 @@ class Form_Element_Abstract extends Options {
     protected $checked;
     protected $type;
     protected $class;
+    protected $access;
     /**
      * Link to form instance
      *
@@ -42,10 +43,10 @@ class Form_Element_Abstract extends Options {
      * @param array $options
      */
     public function __construct($options) {
-        parent::__construct($options);
-        $this->attributes = new Core_ArrayObject();
         $this->filters = new Core_ArrayObject();
         $this->validators = new Core_ArrayObject();
+        parent::__construct($options);
+        $this->attributes = new Core_ArrayObject();
         $this->errors = new Core_ArrayObject();
         if ($this->form->is_ajaxed && Ajax::get('element') == $this->name) {
             $this->is_ajaxed = TRUE;
@@ -76,7 +77,7 @@ class Form_Element_Abstract extends Options {
      * @param   string  $error
      */
     public function addError($error) {
-        in_array($error, $this->errors) OR $this->errors[] = $error;
+        $this->errors->findByValue($error) OR $this->errors->append($error);
         return TRUE;
     }
 
@@ -174,7 +175,7 @@ class Form_Element_Abstract extends Options {
         $reflection = new ReflectionObject($this);
         if ($props = $reflection->getProperties()) {
             foreach ($props as $prop) {
-                $this->attributes->{$prop->name} = $this->{$prop->name};
+                $this->attributes->{$prop->name} OR $this->attributes->{$prop->name} = $this->{$prop->name};
             }
         }
         $this->attributes->class = $this->attributes->type . ' ' . $this->attributes->class;

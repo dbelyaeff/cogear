@@ -432,7 +432,7 @@ abstract class Gear {
      * Dispatcher
      * @param string $action
      */
-    public function index($action, $subaction=NULL) {
+    public function index($action = 'index', $subaction=NULL) {
         method_exists($this, $action.'_action') && $this->{$action.'_action'}($subaction);
     }
 

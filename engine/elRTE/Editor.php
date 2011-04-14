@@ -12,11 +12,14 @@
  * @version		$Id$
  */
 class elRTE_Editor extends Wysiwyg_Abstract {
+
     protected $options = array(
         'styleWithCSS' => FALSE,
+        'width' => 600,
         'height' => 400,
-        'toolbar' => 'maxi',
+        'toolbar' => 'normal',
     );
+
     /**
      * Load editor
      */
@@ -25,20 +28,40 @@ class elRTE_Editor extends Wysiwyg_Abstract {
         css($path . 'css/elrte.full.css');
         js($path . 'js/elrte.full.js');
     }
+
     /**
      * Render
      * 
      * @return string
      */
     public function render() {
-        $this->options['lang'] = config('site.locale','en');
+        $this->options['lang'] = config('site.locale', 'en');
+        extract($this->options);
+        cogear()->gears->elFinder->load();
         inline_js("$(document).ready(
 		function()
 		{
-                  var opts = ".json_encode($this->options).";
+                  var opts = {
+                    lang: '{$lang}',
+                    styleWithCSS: ".($styleWithCSS ? 'true' : 'false').",
+                    width: {$width},
+                    height: {$height},
+                    toolbar: '{$toolbar}',
+                    fmAllow: true,
+                    fmOpen: function(callback){
+                        $(\"<div id='{$this->getId()}-elfinder'>\").elfinder({
+                            url: '" . Url::gear('elFinder') . "',
+                            lang: '{$lang}'j,
+                            dialog : { width : 900, modal : true, title : '".t('Files')."' }, // открываем в диалоговом окне
+                            closeOnEditorCallback : true, // закрываем после выбора файла
+                            editorCallback : callback
+                        })
+                    }
+                };
          $('#{$this->getId()} textarea').elrte(opts);
 		}
 	);");
+        event('elRTE.load', $this);
         return parent::render();
     }
 

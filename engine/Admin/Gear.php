@@ -31,8 +31,10 @@ class Admin_Gear extends Gear {
      */
     public function hookControlPanel($cp) {
         $cogear = getInstance();
-        $cogear->user->id && access('admin') && $cp->admin = HTML::a(Url::gear('admin'), t('Control Panel'));
-        ;
+        if($cogear->user->id && access('admin')){
+            $cp->admin = HTML::a(Url::gear('admin'), t('Control Panel'));
+        }
+        
     }
 
     /**

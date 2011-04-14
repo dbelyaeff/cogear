@@ -188,7 +188,7 @@ class Router {
                     $args = array_slice($callback, 2);
                     $callback = array($callback[0],$callback[1]);
                 }
-                $root = substr($clean_route,0,strpos($clean_route,'('));
+                $root = trim(substr($clean_route,0,strpos($clean_route,'(')),self::DELIM);
                 $exclude = strpos($root,self::DELIM) ? preg_split(self::DELIM, $root, -1, PREG_SPLIT_NO_EMPTY) : (array) $root;
                 $this->args = array_merge($args,array_diff_assoc($this->segments,$exclude));
                 // We have a nice method in hooks to prepare callback

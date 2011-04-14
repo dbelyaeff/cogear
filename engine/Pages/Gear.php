@@ -19,7 +19,7 @@ class Pages_Gear extends Gear {
     protected $type = Gear::CORE;
     protected $package = 'Pages';
     protected $order = 0;
-    const DEFAULT_PAGE_URL = '<url>-<id>.html';
+    const DEFAULT_PAGE_URL = 'page/<id>';
 
     /**
      * Init
@@ -28,16 +28,16 @@ class Pages_Gear extends Gear {
         parent::init();
         $cogear = getInstance();
         $cogear->router->addRoute(':index', array($this, 'index'), TRUE);
-        $url = config('pages.url',Pages_Gear::DEFAULT_PAGE_URL);
+        $url = config('pages.url', Pages_Gear::DEFAULT_PAGE_URL);
         $cogear->router->addRoute(str_replace(array(
-            '.',
-            '<id>',
-            '<url>',
-        ),array(
-            '\.',
-            '(?P<id>\d+)',
-            '.+'
-        ),$url),array($this,'catchPage'),TRUE);
+                    '.',
+                    '<id>',
+                    '<url>',
+                        ), array(
+                    '\.',
+                    '(?P<id>\d+)',
+                    '.+'
+                        ), $url), array($this, 'catchPage'), TRUE);
         hook('user_cp.render.before', array($this, 'userPanelExtend'));
     }
 
@@ -61,13 +61,13 @@ class Pages_Gear extends Gear {
                     $page->created_date = time();
                     $page->last_update = time();
                     $page->save();
-                    flash_info(t('New page has been successfully added!','Pages'));
+                    flash_info(t('New page has been successfully added!', 'Pages'));
                     redirect($page->getUrl());
                 }
                 append('content', $form->render());
                 break;
             case 'show':
-                $this->showPage($action);
+                $this->showPage($subaction);
                 break;
             case 'edit':
                 $page = new Pages_Page();
@@ -78,11 +78,11 @@ class Pages_Gear extends Gear {
                         $form = new Form_Manager('Pages.createdit');
                         $form->elements->submit->setValue(t('Update'));
                         $form->setValues($page->object());
-                        if ($result = $form->result()){
-                            $page->mix($result);
+                        if ($result = $form->result()) {
+                            $page->object()->mix($result);
                             $page->last_update = time();
                             $page->update();
-                            flash_info(t('Page has been update.','Pages'));
+                            flash_info(t('Page has been update.', 'Pages'));
                             redirect($page->getUrl());
                         }
                         append('content', $form->render());
@@ -116,14 +116,16 @@ class Pages_Gear extends Gear {
             }
         }
     }
+
     /**
      * Catch page from specific route and render it
      */
-    public function catchPage(){
+    public function catchPage() {
         $cogear = getInstance();
         $matches = $cogear->router->getMatches();
         $this->showPage($matches['id']);
     }
+
     /**
      * Show page
      * 
@@ -134,10 +136,10 @@ class Pages_Gear extends Gear {
         $page = new Pages_Page();
         $page->where('id', $id);
         if ($page->find()) {
-            event('Pages.showPage.before',$page);
+            event('Pages.showPage.before', $page);
             $page->teaser = $teaser;
             $this->renderPage($page);
-            event('Pages.showPage.after',$page);
+            event('Pages.showPage.after', $page);
         } else {
             return _404();
         }

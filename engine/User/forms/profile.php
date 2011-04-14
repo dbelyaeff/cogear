@@ -2,6 +2,13 @@
 return array(
             'name' => 'user-profile',
             'elements' => array(
+                'avatar' => array(
+                    'label' => t('Avatar','User'),
+                    'type' => 'image',
+                    'resize' => config('user.avatar.size','64x64'),
+                    'path' => UPLOADS.DS.'avatars'.DS.cogear()->user->id,
+                    'rename' => cogear()->user->id,
+                ),
                 'login' => array(
                     'label' => t('Login','User'),
                     'type' => 'text',

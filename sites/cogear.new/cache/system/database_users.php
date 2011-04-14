@@ -5,7 +5,7 @@ return array (
     'id' => 'int(11) unsigned',
     'login' => 'varchar(255)',
     'password' => 'varchar(255)',
-    'key' => 'varchar(255)',
+    'hash' => 'varchar(255)',
     'email' => 'varchar(255)',
     'name' => 'varchar(255)',
     'user_group' => 'int(3)',

@@ -16,12 +16,12 @@ class jQueryUI_Gear extends Gear{
     protected $package = 'jQuery';
     protected $order = -99;
     protected $settings = array(
-        'theme' => 'ui-lightness',
+        'theme' => 'smoothness',
     );
     
     public function init(){
         $cogear = getInstance();
         parent::init();
-        $cogear->assets->addStyle($this->dir.DS.'css'.DS.$this->settings->theme.DS.'jquery-ui-1.8.10.custom.css');
+        $cogear->assets->addStyle($this->dir.DS.'css'.DS.$this->settings->theme.DS.'jquery-ui-1.8.11.custom.css');
     }
 }

@@ -76,7 +76,7 @@ class User_Gear extends Gear {
      * Dispatcher
      * @param string $action
      */
-    public function index($action,$subaction=NULL) {
+    public function index($action = 'index',$subaction=NULL) {
         switch ($action) {
             case 'login':
                 $this->login_action();
@@ -133,15 +133,19 @@ class User_Gear extends Gear {
             return _403();
         }
         append('content',HTML::paired_tag('h1',t('User <b>%s</b> edit',NULL,$user->login)));
-        $form = new Form_Manager('User.profile');
+        $form = new Form('User.profile');
         $user->password = '';
         $form->setValues($user->object());
-        if ($data = $form->result()){
+        if($form->elements->avatar->is_ajaxed && Ajax::get('action') == 'replace'){
+            $user->avatar = '';
+            $user->update();
+        }
+        if ($result = $form->result()){
             $cogear = getInstance();
-            if($user->login != $data['login']){
-                $redirect = Url::gear('user').$data['login'];
+            if($user->login != $result['login']){
+                $redirect = Url::gear('user').$result['login'];
             }
-            $user->merge($data);
+            $user->merge($result);
             $user->hashPassword();
             if($user->update()){
                 d('User edit');
@@ -256,7 +260,8 @@ class User_Gear extends Gear {
     public function hookControlPanel($cp){
         d('User_CP');
         if($this->id){
-            $cp->user = t('Welcome, %s!',NULL,HTML::a(Url::gear('user').$this->login,$this->getName()));
+            $cp->user = t('Welcome, %s <a href="%s">%s</a>!',NULL,$this->getAvatar()->getSize('24x24'), Url::gear('user').$this->login,$this->getName());
+            $cp->logout = HTML::a(Url::gear('user').'logout',t('Logout'));
         }
         else {
             $cp->login = HTML::a(Url::gear('user').'/login',t('Login'));

@@ -65,7 +65,7 @@ class Core_ArrayObject extends ArrayObject {
      */
     public function mix($data) {
         $data instanceof self && $data = $data->toArray();
-        is_array($data) && $this->exchangeArray(self::transform(array_merge($this->toArray(), $data)));
+        is_array($data) && $this->exchangeArray(self::transform(array_merge($this->toArray(),$data)));
     }
     
     /**

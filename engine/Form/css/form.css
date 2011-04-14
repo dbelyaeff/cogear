@@ -1,44 +1,47 @@
-select, input[type="text"],input[type="password"],input[type="search"],textarea{
+.form select, .form input[type="text"],.form input[type="password"],.form input[type="search"],textarea{
     border: 1px solid #CCC;
     padding: 4px 2px;
 }
-input[type="text"],input[type="password"],input[type="search"],textarea{
+.form input[type="text"],.form input[type="password"],.form input[type="search"],textarea{
     width: 300px;
 }
-input[type="text"]:focus,input[type="password"]:focus,input[type="search"]:focus,textarea:focus{
+.form input[type="text"]:focus,.form input[type="password"]:focus,.form input[type="search"]:focus,textarea:focus{
     outline: medium none;
 }
-select,input[type="checkbox"],input[type="radio"]{
+.form select,.form input[type="checkbox"],.form input[type="radio"]{
     cursor: pointer;
 }
-form div.errors{
+.form div.errors{
     font-size: 0.9em;
     color: #9E2323;
 }
 
-label{
+.form label{
     color: #498cbb;
     cursor: pointer;
 }
-form div.form-element label{
+.form div.form-element label{
     display: block;
     font-size: 14px;
 }
-form div.form-element.inline label{
+.form div.form-element.inline label{
     display: inline;
 }
-form div.form-element .description{
+.form div.form-element .description{
     color: #999999;
     font-size: 12px;
 }
-form div.form-element.left > input {
+.form div.form-element.left > .form input {
     float: left;
 }
-form div.form-element{
+.form div.form-element{
     clear: both;
     margin: 0 0 5px 0;
 }
-form div.errors{
+.form .error{
+    border: 1px solid #FF8181;
+}
+.form div.errors{
     padding: 5px;
     background: #FFBBBB;
     border: 2px solid #FF8181;
@@ -46,14 +49,24 @@ form div.errors{
     -webkit-border-radius: 5px;
     border-radius: 5px;
     max-width: 300px;
-    margin-top: 5px;	
     position: relative;
+    display: none;
 }
-form fieldset{
+.form div.errors span.corner {
+    position: absolute;
+    top: 6px;
+    left: -16px;
+    border-color: transparent #FF8181 transparent  transparent;
+    border-style: solid;
+    border-width: 8px;
+    height: 0px;
+    width: 0px;
+}
+.form fieldset{
     border: 1px solid #CCC;
     padding: 10px;
 }
-form fieldset legend{
+.form fieldset legend{
     padding: 0 5px;
 }
 a img{
