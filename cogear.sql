@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 03, 2011 at 01:52 PM
+-- Generation Time: Apr 18, 2011 at 12:46 AM
 -- Server version: 5.1.40
 -- PHP Version: 5.3.3
 
@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS `access` (
 --
 
 INSERT INTO `access` (`rid`, `gid`, `uid`) VALUES
+(18, 0, NULL),
 (1, 0, NULL);
 
 -- --------------------------------------------------------
@@ -54,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `access_rules` (
   `rule` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `rule` (`rule`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=16 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=28 ;
 
 --
 -- Dumping data for table `access_rules`
@@ -65,7 +66,46 @@ INSERT INTO `access_rules` (`id`, `rule`) VALUES
 (2, 'admin site'),
 (3, 'user register'),
 (14, 'user'),
-(15, 'pages');
+(15, 'pages'),
+(16, 'user edit_all'),
+(17, 'user edit_login'),
+(18, 'pages create'),
+(19, 'pages edit_all'),
+(20, 'errors'),
+(21, 'test'),
+(22, 'upload'),
+(23, 'elfinder'),
+(24, 'pages delete'),
+(25, 'benchmark'),
+(26, 'developer'),
+(27, 'development');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pages`
+--
+
+DROP TABLE IF EXISTS `pages`;
+CREATE TABLE IF NOT EXISTS `pages` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `aid` int(11) unsigned NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `url` varchar(255) NOT NULL,
+  `path` varchar(255) NOT NULL,
+  `body` text NOT NULL,
+  `created_date` int(255) NOT NULL,
+  `last_update` int(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+
+--
+-- Dumping data for table `pages`
+--
+
+INSERT INTO `pages` (`id`, `aid`, `name`, `url`, `path`, `body`, `created_date`, `last_update`) VALUES
+(1, 1, 'РџСЂРёРІРµС‚, РјРёСЂ!', 'privet,-mir!', '                   1', '<img alt="" src="/sites/cogear.new/uploads/images/pages/2011/04/14//gamecast.jpg"/>\r\n\r\n<p>РћС„РёРіРµРЅРЅРѕ! </p>', 1302619389, 1302734036),
+(2, 1, 'РќРѕРІРѕСЃС‚СЊ РґРЅСЏ', '', '                   2', '<br><div><img src="http://cogear.new/sites/cogear.new/uploads/files/1/Some%20folder/iAvatar-quadro.jpg" height="147" width="147"></div>&nbsp;Р Р°Р±РѕС‚Р°РµС‚ Р·Р°РіСЂСѓР·РєР° РєР°СЂС‚РёРЅРѕРє! РЈСЂР°!<br>\r\n<p><img src="/sites/cogear.new/uploads/images/pages/2011/04/14//1kon-av.jpg"></p>  ', 1302733674, 1302848480);
 
 -- --------------------------------------------------------
 
@@ -98,7 +138,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `login` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `key` varchar(255) NOT NULL,
+  `hash` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `user_group` int(3) NOT NULL,
@@ -106,14 +146,15 @@ CREATE TABLE IF NOT EXISTS `users` (
   `validation_code` varchar(255) NOT NULL,
   `is_valid` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `login`, `password`, `key`, `email`, `name`, `user_group`, `avatar`, `validation_code`, `is_valid`) VALUES
-(1, 'admin', 'efc002c854ab0f77646a496dad4ec39c', '', 'admin@cogear.ru', '', 0, '', '', 0);
+INSERT INTO `users` (`id`, `login`, `password`, `hash`, `email`, `name`, `user_group`, `avatar`, `validation_code`, `is_valid`) VALUES
+(1, 'admin', 'efc002c854ab0f77646a496dad4ec39c', '', 'admin@cogear.ru', '', 0, '/avatars/1/1.jpg', '', 0),
+(3, '', '61e8e72f8439d50fb863cd0eb9893cd4', '', '', '', 0, '', '', 0);
 
 -- --------------------------------------------------------
 
