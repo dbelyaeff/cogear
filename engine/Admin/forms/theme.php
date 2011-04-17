@@ -11,14 +11,14 @@ return array(
         ),
         'favicon' => array(
             'label' => t('Icon'),
-            'type' => 'file',
+            'type' => 'image',
             'path' => UPLOADS . DS . 'theme' . DS . 'icon',
             'rename' => 'favicon',
-            'allowed_types' => 'ico',
+            'allowed_types' => array('ico'),
         ),
         'send' => array(
             'type' => 'submit',
-            'value' => t('Update'),
+            'label' => t('Update'),
         )
     )
 );

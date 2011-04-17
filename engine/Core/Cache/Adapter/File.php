@@ -50,7 +50,7 @@ class Cache_Adapter_File extends Options implements Interface_Cache {
         $name = $this->prepareFilename($name);
         $path = $this->path . DS . $name;
         if (file_exists($path)) {
-            $data = Config::read($path);
+            $data = Config::read($path,Config::AS_ARRAY);
             if($force){
                 return $data['value'];
             }

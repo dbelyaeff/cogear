@@ -22,7 +22,7 @@ class Form_Element_Image extends Form_Element_Abstract {
     protected $maxsize;
     protected $overwrite = TRUE;
     protected $rename;
-
+    protected $allowed_types = array('jpg','gif','png');
     /**
      * Set value from request
      *

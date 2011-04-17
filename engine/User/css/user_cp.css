@@ -1,25 +1,49 @@
 #user_cp{
-    background: #f9f9f9;
-    width: 1000px;
+    background: #333 url("../images/cp-background.png") repeat-x top left;
     height: 35px;
-    position: relative;
-    top: -5px;
-    left: 50%;
-    margin-left: -500px;
-    border: 2px solid #bababa;
-    -moz-border-radius: 5px;
+    -moz-box-shadow: 0 2px 2px #999;
+    -webkit-box-shadow: 0 2px 2px #999;
+    box-shadow: 0 2px 2px #999;
+    color: #FFF;
+    font-family: Trebuchet MS,Myriad Pro;
+    font-size: 101%;
+    z-index: 1;
 }
 #user_cp ul{
-    margin: 0px 0 0 10px;
+    margin: 0px 0 0 0px;
     float: left;
+    height: 35px;
 }
 #user_cp ul li{
     float: left;
-    padding: 5px 7px 5px 0px;
     margin: 0px;
     list-style: none;  
-    height: 20px;
+    height: 35px;
+    padding: 0;
 }
 #user_cp ul li a, #user_cp ul li img{
     vertical-align: middle;
+}
+#user_cp a {
+    color: #FFF;
+    text-shadow: 1px 1px 2px #000000;
+    display: block;
+    float: left;
+    height: 25px;
+    padding: 5px 18px 5px 14px;
+    text-decoration: none;
+    background: transparent url("../images/cp-background.png") no-repeat right -72px;
+}
+#user_cp a:hover{
+    background: url("../images/cp-background.png") repeat-x 0 -35px;
+}
+#user_cp a.active{
+    background: url("../images/cp-background.png") repeat-x 0 -35px;
+}
+#user_cp img{
+    margin: 0 4px 0 0;
+}
+#user_cp #user-logout{
+    position: absolute;
+    right: 0;
 }

@@ -54,8 +54,8 @@ class User_Avatar {
      * @param string $file 
      */
     public function render($file = NULL) {
-        $file OR $file = UPLOADS.DS.$this->file;
-        return HTML::a($this->user->getProfileLink(),HTML::img(Url::toUri($file), $this->user->login, array('class' => 'avatar')));
+        $file OR $file = UPLOADS.$this->file;
+        return HTML::img(Url::toUri($file), $this->user->login, array('class' => 'avatar'));
     }
 
     /**

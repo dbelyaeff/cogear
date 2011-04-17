@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Stack — enhanced Core_ArrayObject 
  *
@@ -11,12 +12,14 @@
  * @version		$Id$
  */
 class Stack extends Core_ArrayObject {
+
     /**
      * Stack name
      * 
      * @var string 
      */
     protected $name;
+
     /**
      * Constructor
      * 
@@ -32,8 +35,9 @@ class Stack extends Core_ArrayObject {
      * @param string $glue
      * @return string
      */
-    public function render($glue = ' '){
-        event('stack.'.$this->name,$this);
-        return $this->toString($glue);        
+    public function render($glue = ' ') {
+        event('stack.' . $this->name, $this);
+        return $this->toString($glue);
     }
+
 }

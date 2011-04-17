@@ -150,7 +150,7 @@ class Form_Element_Abstract extends Options {
      * @return
      */
     public function result() {
-        $this->value = isset($this->form->request[$this->name]) ? $this->form->request[$this->name] : NULL;
+        $this->value = isset($this->form->request[$this->name]) ? $this->form->request[$this->name] : $this->value;
         $this->is_fetched = TRUE;
         $this->filter();
         $result = $this->validate() ? $this->value : FALSE;

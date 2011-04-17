@@ -25,13 +25,13 @@ class Admin_Menu_Gear extends Gear {
      */
     public function prepare(){
         $cogear = getInstance();
-        $menu = new Menu('admin.sidebar');
         $root = Url::gear('admin');
-        $menu->{$root} = icon('dashboard','fugue').t('Dashboard');
-        $menu->{$root.'gears'} = icon('gear','fugue').t('Gears');
-        $menu->{$root.'theme'} = icon('layout').t('Theme');
-        $menu->{$root.'site'} = icon('toolbox','fugue').t('Site');
-        $menu->{$root.'site/clear_cache'} = icon('bin').t('Clear cache');
+        $menu =  new Menu_Object('admin.sidebar',$root);
+        $menu['1'] = new Menu_Item($root,icon('dashboard','fugue').t('Dashboard'));
+        $menu['5'] = new Menu_Item($root.'gears',icon('gear','fugue').t('Gears'));
+        $menu['10'] = new Menu_Item($root.'theme',icon('layout').t('Theme'));
+        $menu['15'] = new Menu_Item($root.'site',icon('toolbox','fugue').t('Site'));
+        $menu['15.1'] = new Menu_Item($root.'site/clear_cache',icon('bin').t('Clear cache'));
         prepend('sidebar',$menu->render('Admin_Menu.sidebar_menu'));
         css($this->folder.'/css/menu.css');
         $menu = new Menu('admin.top');

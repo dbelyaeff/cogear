@@ -23,7 +23,7 @@ class Admin_Gear extends Gear {
         $cogear = getInstance();
         $this->settings->theme = 'Admin_Theme';
         parent::init();
-        hook('user_cp.render.before', array($this, 'hookControlPanel'));
+        hook('menu.user_cp', array($this, 'hookControlPanel'));
     }
 
     /**
@@ -32,7 +32,7 @@ class Admin_Gear extends Gear {
     public function hookControlPanel($cp) {
         $cogear = getInstance();
         if($cogear->user->id && access('admin')){
-            $cp->admin = HTML::a(Url::gear('admin'), t('Control Panel'));
+            $cp->{Url::gear('admin')} = icon('cog').' '.t('Control Panel');
         }
         
     }

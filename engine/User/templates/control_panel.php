@@ -1,7 +1,7 @@
 <div id="user_cp">
     <ul>
-    <? foreach($data as $key=>$item): ?>
-        <li><?=$item?></li>
+    <? foreach($menu as $key=>$item): ?>
+        <li id="<?=str_replace('/','-',trim($key,'/'))?>"><a <?if($item->active):?> class="active"<?endif?> href="<?=$key?>"><?=$item->value?></a></li>
     <? endforeach; ?>
     </ul>
 </div>

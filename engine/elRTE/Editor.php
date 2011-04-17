@@ -51,7 +51,7 @@ class elRTE_Editor extends Wysiwyg_Abstract {
                     fmOpen: function(callback){
                         $(\"<div id='{$this->getId()}-elfinder'>\").elfinder({
                             url: '" . Url::gear('elFinder') . "',
-                            lang: '{$lang}'j,
+                            lang: '{$lang}',
                             dialog : { width : 900, modal : true, title : '".t('Files')."' }, // открываем в диалоговом окне
                             closeOnEditorCallback : true, // закрываем после выбора файла
                             editorCallback : callback

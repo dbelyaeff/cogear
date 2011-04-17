@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Theme
  *
@@ -13,6 +14,7 @@
  * @version		$Id$
  */
 abstract class Theme extends Gear {
+
     protected $name = 'Theme';
     protected $description = 'Theme for cogear.';
     protected $type = Gear::THEME;
@@ -27,62 +29,87 @@ abstract class Theme extends Gear {
         'sidebar' => array(),
         'footer' => array(),
     );
+
     /**
      * Constructor
      */
-    public function __construct(){
-        parent::__construct();
+    public function __construct() {
         $this->regions = Core_ArrayObject::transform($this->regions);
-        foreach($this->regions as $name=>$region){
-            hook($name,array($this,'renderRegion'),$name);
+        parent::__construct();
+        foreach ($this->regions as $name => $region) {
+            hook($name, array($this, 'renderRegion'), $name);
         }
     }
+
+    /**
+     * Register region
+     *  
+     * @param string $name 
+     */
+    public static function registerRegion($name) {
+        cogear()->theme->regions->$name OR cogear()->theme->regions->$name = new Core_ArrayObject();
+    }
+
     /**
      * Render region
      * 
      * @param string $name 
      */
-    public function renderRegion($name){
-        if($this->regions->$name){
+    public function renderRegion($name) {
+        if ($this->regions->$name) {
             echo $this->regions->$name;
         }
     }
+
     /**
      * Init
      */
-    public function init(){
+    public function init() {
         $Reflection = new ReflectionClass($this);
         $parent = $Reflection->getParentClass();
-        if($parent->name != 'Gear' && $parent->name != 'Theme'){
+        if ($parent->name != 'Gear' && $parent->name != 'Theme') {
             $theme = new $parent->name;
-            $theme->init();
+            $theme->init(FALSE);
             $cogear = getInstance();
             $cogear->gears->{$parent->name} = $theme;
         }
         parent::init();
+    }
+
+    /**
+     * Activate
+     */
+    public function activate() {
         $cogear = getInstance();
         $cogear->theme = $this;
-        Template::bindGlobal('theme',$this);
-        $cogear->hook('done',__CLASS__.'->render');
-        $this->template = new Template($this->gear.'.'.$this->layout);
+        Template::bindGlobal('theme', $this);
+        hook('done', array($this, 'render'));
+        $this->template = new Template($this->gear . '.' . $this->layout);
     }
+
     /**
      * Render theme
      */
-    public function render(){
-        if(self::$is_rendered) return;
+    public function render() {
+        if ($this->is_rendered)
+            return;
         $cogear = getInstance();
         $cogear->response->append($cogear->theme->template->render());
-        self::$is_rendered = TRUE;
+        $this->is_rendered = TRUE;
     }
+
 }
-function append($name,$value){
+
+function append($name, $value) {
     $cogear = getInstance();
-    if(!$cogear->theme->regions->$name) return;
+    if (!$cogear->theme->regions->$name)
+        return;
     $cogear->theme->regions->$name->append($value);
 }
-function prepend($name,$value){
+
+function prepend($name, $value) {
     $cogear = getInstance();
-    if(!$cogear->theme->regions->$name) return;
+    if (!$cogear->theme->regions->$name)
+        return;
     $cogear->theme->regions->$name->prepend($value);
 }

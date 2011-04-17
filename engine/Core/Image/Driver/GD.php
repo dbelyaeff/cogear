@@ -35,7 +35,7 @@ class Image_Driver_GD extends Image_Driver_Abstract {
             case IMAGETYPE_PNG:
                 $this->source = imagecreatefrompng($path);
                 imagealphablending($this->source, TRUE);
-//                imagesavealpha($this->source, TRUE);
+                imagesavealpha($this->source, TRUE);
                 break;
             case IMAGETYPE_ICO:
                 $this->source = imagecreatefromstring(Filesystem::read($path));

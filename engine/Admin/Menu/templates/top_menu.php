@@ -1,4 +1,4 @@
-<ul class="top_menu">
+<ul id="top_menu">
     <? foreach($menu as $uri=>$element): 
         $element->class OR $element->class = '';
         if($element->active){

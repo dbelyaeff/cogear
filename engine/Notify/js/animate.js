@@ -1,3 +1,3 @@
 $(document).ready(function(){
-    $('.info').delay(1000).fadeOut();
+    $('.notify').delay(3000).slideUp();
 })

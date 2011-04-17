@@ -1,5 +1,4 @@
 <?php
-
 return array(
     'database' => array(
         'dsn' => 'mysql://root@localhost/cogear',

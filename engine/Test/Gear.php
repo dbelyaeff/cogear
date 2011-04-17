@@ -11,6 +11,8 @@
  * @version		$Id$
  */
 class Test_Gear extends Gear {
+    protected $name = 'Test';
+    protected $description = 'Gear for testing.';
 
     public function index($action=NULL, $subaction = NULL) {
         $image = new Image($this->dir . DS . 'images' . DS . 'siamese.cat.jpg');

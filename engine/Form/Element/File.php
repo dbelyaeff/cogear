@@ -28,8 +28,9 @@ class Form_Element_File extends Form_Element_Abstract {
     public function result() {
         $cogear = getInstance();
         $file = new Upload_File($this->name, $this->getAttributes(), $this->validators->findByValue('Required'));
-        if ($this->value = $file->upload()) {
+        if ($value = $file->upload()) {
             $this->is_fetched = TRUE;
+            $this->value = $value;
         } else {
             $this->errors = $file->errors;
         }

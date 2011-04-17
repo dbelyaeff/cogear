@@ -25,9 +25,9 @@ class User_Gear extends Gear {
         $this->current = new User_Object();
         $this->current->init();
         hook('menu.admin.sidebar',array($this,'adminMenuLink'));
-        $user_cp = new User_CP();
+        $user_cp = new Menu('user_cp','User.control_panel');
         hook('before',array($user_cp,'output'));
-        hook('user_cp.render.before',array($this,'hookControlPanel'));
+        hook('menu.user_cp',array($this,'hookControlPanel'));
     }
     /**
      * Hook to add admin menu element
@@ -36,10 +36,8 @@ class User_Gear extends Gear {
      */
     public function adminMenuLink($menu){
             $root = Url::gear('admin');
-            $menu->{$root.'user'} = icon('users','fugue').t('Users');
-            $menu->{$root.'user'}->order = 1;
-            $menu->{$root.'user/add'} = icon('user--plus','fugue').t('Add user');
-            $menu->{$root.'user/add'}->order = 2;
+            $menu['14'] = new Menu_Item($root.'user',icon('users','fugue').t('Users'));
+            $menu['14.1'] = new Menu_Item($root.'user/add',icon('user--plus','fugue').t('Add user'));
     }
     /**
      * Magic __get method
@@ -260,12 +258,13 @@ class User_Gear extends Gear {
     public function hookControlPanel($cp){
         d('User_CP');
         if($this->id){
-            $cp->user = t('Welcome, %s <a href="%s">%s</a>!',NULL,$this->getAvatar()->getSize('24x24'), Url::gear('user').$this->login,$this->getName());
-            $cp->logout = HTML::a(Url::gear('user').'logout',t('Logout'));
+            $cp->{Url::gear('user').$this->login} = $this->getAvatar()->getSize('24x24').$this->getName();
+            $cp->{Url::gear('user').'logout'} = icon('control-power','fugue').t('Logout');
+            $cp->{Url::gear('user').'logout'}->order = 100;
         }
         else {
-            $cp->login = HTML::a(Url::gear('user').'/login',t('Login'));
-            $cp->register = HTML::a(Url::gear('user').'/register',t('Register'));
+            $cp->{Url::gear('user').'login'} = t('Login');
+            $cp->{Url::gear('user').'register'} = t('Register');
         }
         d();
     }

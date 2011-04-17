@@ -53,6 +53,7 @@ class Notify_Gear extends Gear {
         if($cogear->setTheme($theme,TRUE)){
             $cogear->assets->clear();
             $cogear->theme->init();
+            $cogear->theme->activate();
             self::show($text,$title,$class);
             $cogear->theme->render();
             $cogear->response->send();

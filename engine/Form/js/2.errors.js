@@ -1,12 +1,10 @@
 $(document).ready(function(){
         $('form div.errors.active').each(function(){
-        $(this).css({
-            position: 'absolute',
-            top: $(this).prev().position().top,
-            left: $(this).prev().position().left + $(this).prev().width() + 10
-        }).fadeIn("slow"); 
-        $(this).prev().change(function(){
-            $(this).next().fadeOut("slow");
-        })
+            var target = $(this).parent();
+        $(this).slideDown("slow"); 
+        $(this).prev().css('box-shadow','0px 0px 1px red').change(function(){
+            $(this).next().slideUp("slow");
+            $(this).css('box-shadow','');
+        });
     });
 });

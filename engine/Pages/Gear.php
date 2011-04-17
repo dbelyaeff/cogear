@@ -38,7 +38,7 @@ class Pages_Gear extends Gear {
                     '(?P<id>\d+)',
                     '.+'
                         ), $url), array($this, 'catchPage'), TRUE);
-        hook('user_cp.render.before', array($this, 'userPanelExtend'));
+        hook('menu.user_cp', array($this, 'userPanelExtend'));
     }
 
     /**
@@ -76,15 +76,23 @@ class Pages_Gear extends Gear {
                     if (access('pages edit_all') OR $cogear->user->id == $page->aid) {
                         append('content', HTML::paired_tag('h1', t('Edit page', 'Pages')));
                         $form = new Form_Manager('Pages.createdit');
-                        $form->elements->submit->setValue(t('Update'));
+                        $form->init();
+                        if(access('pages delete')){
+                            $form->addElement('delete',array('label'=>t('Delete'),'type'=>'submit'));
+                        }
                         $form->setValues($page->object());
                         if ($result = $form->result()) {
+                            if($result->delete){
+                                $page->delete();
+                                redirect(Url::link());
+                            }
                             $page->object()->mix($result);
                             $page->last_update = time();
                             $page->update();
                             flash_info(t('Page has been update.', 'Pages'));
                             redirect($page->getUrl());
                         }
+                        $form->elements->submit->setValue(t('Update'));
                         append('content', $form->render());
                     } else {
                         return _403();
@@ -164,7 +172,7 @@ class Pages_Gear extends Gear {
     public function userPanelExtend($cp) {
         $cogear = getInstance();
         if ($cogear->user->id) {
-            $cp->create = HTML::a(Url::gear('pages') . 'create', t('Create page', 'Pages'));
+            $cp->{Url::gear('pages') . 'create'} = icon('page_edit','famfamfam').' '.t('Create page', 'Pages');
         }
     }
 

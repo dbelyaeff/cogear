@@ -1,12 +1,16 @@
-div.info{
-   padding: 5px 10px;
-   background: #E1F8E5;
-   border: 2px groove #16B935;
-   -moz-border-radius: 5px;
-   -webkit-border-radius: 5px;
-   border-radius: 5px;
-   margin: 5px 0 10px 0;
+div.notify{
+    padding: 5px 10px;
+    background-color: #FFFFE0;
+    border: 1px solid #E6DB55;
+    border-radius: 5px;
+    border-radius: 5px;
+    margin: 5px 0 10px 0;
 }
 div.info > p{
     font-size: 1.2em;
+}
+div.error {
+    background: #FFEBE8;
+    border: 1px solid #CC0000;
+    border-radius: 3px 3px 3px 3px;
 }

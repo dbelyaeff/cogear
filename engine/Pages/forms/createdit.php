@@ -12,11 +12,11 @@ return array(
         'body' => array(
             'type' => 'textarea',
             'label' => t('Text'),
-            'validators' => array('Required'),
+            'validators' => array(array('Length', 10),'Required'),
         ),
         'submit' => array(
             'type' => 'submit',
-            'value' => t('Save'),
+            'label' => t('Save'),
         )
     ),
 );

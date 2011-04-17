@@ -192,7 +192,7 @@ class User_Object extends Db_ORM {
         $cogear = getInstance();
         $panel = new Stack('user.panel');
         $panel->avatar = $this->getAvatar();
-        $panel->login = HTML::paired_tag('b', $this->login);
+        $panel->login = HTML::a($this->getProfileLink(), $this->login, array('class'=>'implicit'));
         if (access('user edit_all') OR $this->id == $cogear->user->id) {
             $panel->edit = HTML::a(Url::gear('user') . $this->login . '/edit', icon('cog'));
         }

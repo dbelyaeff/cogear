@@ -1,23 +1,23 @@
 <div id="admin-menu" class="sidebar_menu">
     <ul>
         <? $last_level = 1 ?>
-        <? $root = substr($menu->getIterator()->key(),1)?>
-        <?php foreach ($menu as $url => $element): ?>
-            <? $uri = substr(parse_url($url,PHP_URL_PATH),1)?>
-            <? $level = substr_count($uri, '/') ?>
-                <? if($level > $last_level && $level > 1):?>
-                    <ul>
-                <? elseif($level < $last_level):?>
-                    </ul>
-                <? endif; ?>
-            <li>
-                <?
-                 $class = '';
-                 $element->active && $class='class="active"';
-                ?>
-                <a href="<?=$url?>"<?=$class?>><?=$element->value?></a>
-                
+        <? $z = 0?>
+        <? foreach ($menu as $path => $item): ?>
+            <? $level = count(explode('.', $path)) ?>
+            <? if ($level > $last_level): ?><ul><? endif ?>
+            <? if ($level <= $last_level) {
+                for ($i = 0; $i < $last_level - $level; $i++) {
+                    ?></ul></li><?
+                }
+            }
+            ?>
+            <? if($level <= $last_level && $z != 0):?>
+            <?endif?>
+            <li <?if($item->active):?>class="active"<?endif?>>
+                <a href="<?= $item->link ?>"><?= $item->text ?></a>
             <? $last_level = $level ?>
-        <?php endforeach; ?>
+            <?$z++?>
+        <? endforeach ?>
+        </li>
     </ul>
 </div>

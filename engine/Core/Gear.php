@@ -424,6 +424,7 @@ abstract class Gear {
             $cogear->getTheme();
             $cogear->theme->init();
         }
+        $cogear->theme->activate();
         event('request.gear',$this);
         event('request.' . strtolower($this->gear));
     }

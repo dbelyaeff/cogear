@@ -42,8 +42,11 @@ class Db_Gear extends Gear {
             }
             $this->driver = new $driver($config);
             $cogear->hook('done',array($this,'showErrors'));
-            $cogear->hook('done',array($this,'trace'));
+            $cogear->hook('debug',array($this,'trace'));
             $cogear->db = $this->driver;
+        }
+        else {
+            die('Couldn\'t connect to database.');
         }
     }
 
@@ -62,6 +65,6 @@ class Db_Gear extends Gear {
     public function trace(){
         $tpl = new Template('Db.debug');
         $tpl->queries = $this->driver->getBenchmark();
-        append('footer',$tpl->render());
+        echo $tpl->render();
     }
 }

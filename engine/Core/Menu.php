@@ -12,6 +12,21 @@
  */
 class Menu extends Stack{
     protected $position = 0;
+    protected $template;
+    /**
+     * Constructor
+     *  
+     * @param string $template 
+     */
+    public function __construct($name,$template = 'Core.menu'){
+        parent::__construct($name);
+        $this->template = $template;
+    }
+    /**
+     * Set active element
+     * 
+     * @param string $uri
+     */
     public function setActive($uri = NULL){
         if(!sizeof($this)){
             return;
@@ -23,7 +38,7 @@ class Menu extends Stack{
         $root = $this->getIterator()->key();
         while($pieces) {
             $path = implode('/',$pieces);
-            if(strpos($uri, $path) !== FALSE){
+            if($path && strpos($uri, $path) !== FALSE){
                 if(isset($this->{'/'.$path})){
                     $this->{'/'.$path}->active = TRUE;
                     event('menu.setActive',$this->{'/'.$path});
@@ -51,12 +66,21 @@ class Menu extends Stack{
         $this->offsetSet($name, $element);
     }
     /**
+     * Get Menu name
+     * 
+     * @return string
+     */
+    public function getName(){
+        return $this->name;
+    }
+    /**
      * Render menu
      * 
      * @param string $glue
      * @return string
      */
     public function render($template = ''){
+        $template OR $template = $this->template;
         event('menu.'.$this->name,$this);
         $this->uasort('Core_ArrayObject::sortByOrder');
         $this->setActive();
@@ -64,5 +88,10 @@ class Menu extends Stack{
         $tpl->menu = $this;
         return $tpl->render();
     }
-    
+    /**
+     * Output
+     */
+    public function output(){
+        echo $this->render();
+    }
 }

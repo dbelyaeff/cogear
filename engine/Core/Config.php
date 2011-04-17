@@ -13,8 +13,8 @@
  */
 class Config extends Core_ArrayObject{
     protected $file;
-    const AS_ARRAY = 0;
-    const AS_OBJECT = 1;
+    const AS_ARRAY = 1;
+    const AS_OBJECT = 21;
     /**
      * Constructor
      * 
@@ -46,10 +46,10 @@ class Config extends Core_ArrayObject{
         if(!file_exists($file)){
             return NULL;
         }
-        elseif($mode == self::AS_OBJECT){
+        elseif($mode === self::AS_OBJECT){
             return Core_ArrayObject::transform(include $file);
         }
-        elseif($mode == self::AS_ARRAY){
+        elseif($mode === self::AS_ARRAY){
             return include $file;
         }
     }

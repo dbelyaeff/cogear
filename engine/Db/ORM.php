@@ -48,7 +48,7 @@ class Db_ORM extends Options {
         $cogear = getInstance();
         $this->table = $table;
         $this->fields = $cogear->db->getFields($table);
-        $fields = array_keys($this->fields);
+        $fields = array_keys((array)$this->fields);
         $first = reset($fields);
         $this->primary = $primary ? $primary : $first;
         $this->object = new Core_ArrayObject();

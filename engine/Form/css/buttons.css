@@ -1,20 +1,51 @@
-a.button, input[type="submit"],input[type="button"],input[type="reset"]{
+a.button, input[type="submit"], input[type="button"], span#prevBtn a, span#nextBtn a {
+    -moz-transition-duration: 0.25s;
+    -moz-transition-property: background-color, border-color;
+    background-color: #F2F2F2;
+    background-image: -moz-linear-gradient(0% 100% 90deg, rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.2));
+    border-color: #CACACA;
+    border-radius: 5px 5px 5px 5px;
+    border-style: solid !important;
+    border-width: 1px;
+    box-shadow: 0 0 0 transparent inset;
+    color: #333333 !important;
+    display: inline-block;
+    margin-top: 3px;
+    padding: 2px 14px;
+    text-shadow: 0 1px 0 #FFFFFF;
     cursor: pointer;
-    font-size: 14px;
-    color: #FFF;
-    margin: 0;
-    padding: 4px 14px;
-    background: #4298d4;
-    border: none;
-    white-space: nowrap;
-    text-shadow:0 1px 0 #45688E;
+    font-size: 1.1em;
 }
-a.button:hover, input[type="submit"]:hover,input[type="button"]:hover,input[type="reset"]:hover{
-    opacity: 0.9;
+a.button:hover, input[type="submit"]:hover, input[type="button"]:hover, span#prevBtn a:hover, span#nextBtn a:hover {
+    background-color: #FFFFFF;
+    border-color: #989898;
 }
-div.button, div.submit{
-    -moz-border-radius: 4px;
-    float: left;
-    border: 1px solid;
-    border-color:  #7C98BA #7C98BA #498cbb;
+a.button:active, input[type="submit"]:active, input[type="button"]:active, span#prevBtn a:active, span#nextBtn a:active {
+    background-color: #F4F4F4;
+    border-color: #797979;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) inset;
+}
+a.primary, input.primary[type="submit"] {
+    background-color: #007FFF;
+    border-color: #236BB2;
+    color: #FFFFFF !important;
+    font-weight: bold;
+    text-shadow: 0 -1px 0 #000000;
+}
+a.primary:hover, input.primary[type="submit"]:hover {
+    background-color: #0065CB;
+    border-color: #000000;
+}
+a.primary:active, input.primary[type="submit"]:active {
+    background-color: #0059B2;
+    border-color: #797979;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) inset;
+}
+a.button.small {
+    padding-bottom: 1px;
+    padding-top: 2px;
+}
+a.button.bigger {
+    padding-bottom: 6px;
+    padding-top: 3px;
 }
