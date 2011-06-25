@@ -145,7 +145,8 @@ class Response extends Core_ArrayObject {
     }
 }
 
-function redirect($url){
+function redirect($url = NULL){
+    $url OR $url = Url::link();
     header('Location: '.$url);
     exit;
 }

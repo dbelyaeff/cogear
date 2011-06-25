@@ -24,7 +24,7 @@ final class Cogear implements Interface_Singleton {
     /**
      * Events
      */
-    protected $events = array();
+    public $events = array();
     /**
      * Instances of active gears
      *
@@ -98,13 +98,17 @@ final class Cogear implements Interface_Singleton {
      * @param   string  $event
      * @param   callback  $callback
      */
-    public function hook($event, $callback) {
+    public function hook($event, $callback,$position = NULL) {
         $args = func_get_args();
         $this->events->$event OR $this->events->$event = new Event();
-        $args = array_slice($args, 2);
+        $args = array_slice($args, 3);
         $callback = new Callback($callback);
         $callback->setArgs($args);
-        $this->events->$event->append($callback);
+        if($position !== NULL){
+            $this->events->$event->inject($callback,$position);
+        } else {
+            $this->events->$event->append($callback);
+        }
     }
 
     /**

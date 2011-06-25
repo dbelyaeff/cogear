@@ -29,7 +29,7 @@ return array(
 //                ),
                 'submit' => array(
                     'type' => 'submit',
-                    'value' => t('Register'),
+                    'label' => t('Register'),
                 )
 
             )

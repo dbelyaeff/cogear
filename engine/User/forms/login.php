@@ -18,8 +18,7 @@ return array(
                 ),
                 'submit' => array(
                     'type' => 'submit',
-                    'value' => t('Login'),
+                    'label' => t('Login'),
                 )
-
             )
         );

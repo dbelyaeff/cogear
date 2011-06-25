@@ -37,7 +37,7 @@ abstract class Theme extends Gear {
         $this->regions = Core_ArrayObject::transform($this->regions);
         parent::__construct();
         foreach ($this->regions as $name => $region) {
-            hook($name, array($this, 'renderRegion'), $name);
+            hook($name, array($this, 'renderRegion'), NULL, $name);
         }
     }
 

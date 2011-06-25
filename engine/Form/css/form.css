@@ -42,7 +42,7 @@
 .form div.form-element.left > .form input {
     float: left;
 }
-.form div.submit, .form div.button{
+.form div.submit, .form div.button, .form div.span{
     float: left;
     clear: none;
     margin: 0 5px 0 0; 

@@ -46,12 +46,12 @@ class Db_ORM extends Options {
      */
     public function __construct($table, $primary = '') {
         $cogear = getInstance();
+        $this->clear();
         $this->table = $table;
         $this->fields = $cogear->db->getFields($table);
         $fields = array_keys((array)$this->fields);
         $first = reset($fields);
         $this->primary = $primary ? $primary : $first;
-        $this->object = new Core_ArrayObject();
     }
 
     /**
@@ -71,7 +71,14 @@ class Db_ORM extends Options {
      * @return mixed
      */
     public function __get($name) {
-        return $this->object->$name;
+        /*
+         * Some unusual patch
+         *
+         * Sometimes object becomes NULL. Need to find this place and fix. PHP < 5.3 Only
+         * After all it's possible to left just "return $this->object->$name;" over there.
+         *
+         */
+       return is_null($this->object) ? NULL : $this->object->$name;
     }
 
     /**
@@ -100,7 +107,7 @@ class Db_ORM extends Options {
      * @param array|ArrayObject $data
      */
     public function object($data = NULL){
-        return $data ? $this->object->exchangeArray((array)$data) : $this->object;
+        return $data ? $this->object->adopt($data) : $this->object;
     }
     /**
      * Find row

@@ -65,18 +65,38 @@ class Core_ArrayObject extends ArrayObject {
      */
     public function mix($data) {
         $data instanceof self && $data = $data->toArray();
-        is_array($data) && $this->exchangeArray(self::transform(array_merge($this->toArray(),$data)));
+        $data = self::transform(array_merge($this->toArray(), $data));
+        /* Found some issue with PHP < 5.3
+         * Object can't accept another instance of self for exchange
+         * 
+         * $this->exchangeArray($data);
+         * 
+         * Have to reinterpret exchangeArray method with simple foreach cycle
+         */
+        $this->adopt($data);
     }
-    
+
+    /**
+     * Merge some data with existing
+     * 
+     * @param array|object $data 
+     */
+    public function adopt($data) {
+        $this->exchangeArray(array());
+        foreach ($data as $key => $value) {
+            $this->offsetSet($key, $value);
+        }
+    }
+
     /**
      * Find element by value
      * 
      * @param mixed $needle 
      * @return  NULL|mixed  Null or found element key.
      */
-    public function findByValue($needle){
-        foreach($this as $key=>$value){
-            if($value == $needle){
+    public function findByValue($needle) {
+        foreach ($this as $key => $value) {
+            if ($value == $needle) {
                 return $key;
             }
         }
@@ -135,16 +155,18 @@ class Core_ArrayObject extends ArrayObject {
     public function reverse() {
         return new Core_ArrayObject(array_reverse($this->toArray()));
     }
+
     /**
      * Exclude elements with the same keys from input $data
      * 
      * @param array $data 
      */
-    public function differ($data){
+    public function differ($data) {
         $data instanceof self && $data = $data->toArray();
         $storage = $this->toArray();
         $this->exchangeArray(array_diff_key($storage, $data));
     }
+
     /**
      * Inject value at special position or before key
      * 
@@ -152,7 +174,7 @@ class Core_ArrayObject extends ArrayObject {
      * @param   int|string     $position
      * @param   int $order
      */
-    public function inject($value, $position=0, $order = self::BEFORE,$key = NULL) {
+    public function inject($value, $position=0, $order = self::BEFORE, $key = NULL) {
         $result = array();
         $it = $this->getIterator();
         $i = 0;
@@ -180,16 +202,18 @@ class Core_ArrayObject extends ArrayObject {
         }
         $this->exchangeArray($result);
     }
+
     /**
      * Slice a piece of iterable
      * 
      * @param int $from
      * @param int $length 
      */
-    public function slice($from, $length = NULL){
+    public function slice($from, $length = NULL) {
         $copy = $this->toArray();
-        return new Core_ArrayObject(array_slice($copy,$from,$length));
+        return new Core_ArrayObject(array_slice($copy, $from, $length));
     }
+
     /**
      * Simple wrapper for getArrayCopy method
      */

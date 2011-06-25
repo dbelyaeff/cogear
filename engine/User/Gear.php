@@ -12,10 +12,12 @@
  * @version		$Id$
  */
 class User_Gear extends Gear {
+
     protected $name = 'User';
     protected $description = 'Manage users.';
     protected $order = -10;
     protected $current;
+
     /**
      * Init
      */
@@ -24,21 +26,23 @@ class User_Gear extends Gear {
         $cogear = getInstance();
         $this->current = new User_Object();
         $this->current->init();
-        hook('menu.admin.sidebar',array($this,'adminMenuLink'));
-        $user_cp = new Menu('user_cp','User.control_panel');
-        hook('before',array($user_cp,'output'));
-        hook('menu.user_cp',array($this,'hookControlPanel'));
+        hook('menu.admin.sidebar', array($this, 'adminMenuLink'));
+        $user_cp = new Menu('user_cp', 'User.control_panel');
+        hook('before', array($user_cp, 'output'));
+        hook('menu.user_cp', array($this, 'hookControlPanel'));
     }
+
     /**
      * Hook to add admin menu element
      * 
      * @param type $structure 
      */
-    public function adminMenuLink($menu){
-            $root = Url::gear('admin');
-            $menu['14'] = new Menu_Item($root.'user',icon('users','fugue').t('Users'));
-            $menu['14.1'] = new Menu_Item($root.'user/add',icon('user--plus','fugue').t('Add user'));
+    public function adminMenuLink($menu) {
+        $root = Url::gear('admin');
+        $menu['14'] = new Menu_Item($root . 'user', icon('users', 'fugue') . t('Users'));
+        $menu['14.1'] = new Menu_Item($root . 'user/add', icon('user--plus', 'fugue') . t('Add user'));
     }
+
     /**
      * Magic __get method
      *
@@ -74,7 +78,19 @@ class User_Gear extends Gear {
      * Dispatcher
      * @param string $action
      */
-    public function index($action = 'index',$subaction=NULL) {
+    public function index($action = 'index', $subaction=NULL) {
+        switch ($action) {
+            case 'login':
+            case 'logout':
+            case 'lostpassword':
+                $top_menu = new Menu('User.login', 'Menu.tabs');
+                $root = Url::gear('user');
+                $top_menu->{$root . 'login'} = t('Log in');
+                $top_menu->{$root . 'register'} = t('Register');
+                $top_menu->{$root . 'lostpassword'} = t('Lost password?');
+                append('content', $top_menu->render());
+                break;
+        }
         switch ($action) {
             case 'login':
                 $this->login_action();
@@ -89,7 +105,7 @@ class User_Gear extends Gear {
                 $this->register_action();
                 break;
             default:
-                switch($subaction){
+                switch ($subaction) {
                     case 'edit':
                         $this->edit_action($action);
                         break;
@@ -98,65 +114,77 @@ class User_Gear extends Gear {
                 }
         }
     }
-    
+
     /**
      * Show user profile
      * 
      * @param string $login
      */
-    public function show_action($login){
+    public function show_action($login) {
         $user = new User_Object();
-        $user->where('login',$login);
-        if(!$user->find()){
+        $user->where('login', $login);
+        if (!$user->find()) {
             return _404();
         }
-        $tpl = new Template('User.profile');
-        $tpl->user = $user;
-        append('content',$tpl->render());
+        $this->renderUserInfo($user);
     }
     
+    /**
+     * Render user info
+     * 
+     * @param object $user 
+     */
+    public function renderUserInfo($user){
+        $tpl = new Template('User.profile');
+        $tpl->user = $user;
+        append('content', $tpl->render());
+    }
     /**
      * Edit action
      * 
      * @param   string  $login
      */
-    public function edit_action($login){
+    public function edit_action($login) {
         $user = new User_Object();
-        $user->where('login',$login);
-        if(!$user->find()){
+        $user->where('login', $login);
+        if (!$user->find()) {
             return _404();
         }
         $cogear = getInstance();
-        if(!access('user edit_all') OR $cogear->user->id != $user->id){
+        if (!access('user edit_all') OR $cogear->user->id != $user->id) {
             return _403();
         }
-        append('content',HTML::paired_tag('h1',t('User <b>%s</b> edit',NULL,$user->login)));
+        $this->renderUserInfo($user);
+        $user = new User_Object();
+        $user->where('login', $login);
+        $user->find();
         $form = new Form('User.profile');
         $user->password = '';
-        $form->setValues($user->object());
-        if($form->elements->avatar->is_ajaxed && Ajax::get('action') == 'replace'){
+        $form->object($user->object());
+        if ($form->elements->avatar->is_ajaxed && Ajax::get('action') == 'replace') {
             $user->avatar = '';
             $user->update();
         }
-        if ($result = $form->result()){
+        if ($result = $form->result()) {
             $cogear = getInstance();
-            if($user->login != $result['login']){
-                $redirect = Url::gear('user').$result['login'];
+            if ($user->login != $result['login']) {
+                $redirect = Url::gear('user') . $result['login'];
             }
             $user->merge($result);
-            $user->hashPassword();
-            if($user->update()){
+            $result->password && $user->hashPassword() OR $user->password = NULL;
+            if ($user->update()) {
                 d('User edit');
-                    flash_info(t('User data saved!'),t('Success'));
+                flash_success(t('User data saved!'), t('Success'));
                 d();
-                if($user->id == $cogear->user->id){
+                if ($user->id == $cogear->user->id) {
                     $cogear->user->store($user->object()->toArray());
                 }
-                redirect(Url::gear('user').$user->login);
+                redirect(Url::gear('user') . $user->login);
             }
         }
         append('content', $form->render());
     }
+
     /**
      * Login form show
      */
@@ -164,7 +192,7 @@ class User_Gear extends Gear {
         if ($this->isLogged()) {
             return info('You are already logged in!', 'Authorization');
         }
-        $form = new Form_Manager('User.login');
+        $form = new Form('User.login');
         if ($data = $form->result()) {
             $cogear = getInstance();
             $this->object($data);
@@ -189,6 +217,24 @@ class User_Gear extends Gear {
     }
 
     /**
+     * Lost password recovery
+     */
+    public function lostpassword_action() {
+        $form = new Form('User.lostpassword');
+        if ($data = $form->result()) {
+            $cogear = getInstance();
+            $this->object($data);
+            if ($this->find()) {
+
+                back();
+            } else {
+                error('Login or password weren\'t found in the database', 'Authentification error');
+            }
+        }
+        append('content', $form->render());
+    }
+
+    /**
      * User registration
      */
     public function register_action() {
@@ -198,7 +244,7 @@ class User_Gear extends Gear {
         if ($this->isLogged()) {
             return info('You are already logged in!', 'Authorization');
         }
-        $form = new Form_Manager('User.register');
+        $form = new Form('User.register');
         if ($data = $form->result()) {
             $this->object($data);
             $this->hashPassword();
@@ -216,9 +262,9 @@ class User_Gear extends Gear {
      */
     public function admin($action = '') {
         $top_menu = Template::getGlobal('top_menu');
-        $root = Url::gear('admin').'user/';
+        $root = Url::gear('admin') . 'user/';
         $top_menu->{$root} = t('List');
-        $top_menu->{$root.'add'} = t('Add');
+        $top_menu->{$root . 'add'} = t('Add');
 
         switch ($action) {
             case 'add':
@@ -240,7 +286,7 @@ class User_Gear extends Gear {
      * Add a new user
      */
     public function admin_add() {
-        $form = new Form_Manager('User.register');
+        $form = new Form('User.register');
         if ($data = $form->result()) {
             $user = new User_Object(FALSE);
             $user->object($data);
@@ -255,17 +301,17 @@ class User_Gear extends Gear {
     /**
      * Hook user control panel
      */
-    public function hookControlPanel($cp){
+    public function hookControlPanel($cp) {
         d('User_CP');
-        if($this->id){
-            $cp->{Url::gear('user').$this->login} = $this->getAvatar()->getSize('24x24').$this->getName();
-            $cp->{Url::gear('user').'logout'} = icon('control-power','fugue').t('Logout');
-            $cp->{Url::gear('user').'logout'}->order = 100;
-        }
-        else {
-            $cp->{Url::gear('user').'login'} = t('Login');
-            $cp->{Url::gear('user').'register'} = t('Register');
+        if ($this->id) {
+            $cp->{Url::gear('user') . $this->login} = $this->getAvatar()->getSize('24x24') . $this->getName();
+            $cp->{Url::gear('user') . 'logout'} = icon('control-power', 'fugue') . t('Logout');
+            $cp->{Url::gear('user') . 'logout'}->order = 100;
+        } else {
+            $cp->{Url::gear('user') . 'login'} = t('Login');
+            $cp->{Url::gear('user') . 'register'} = t('Register');
         }
         d();
     }
+
 }

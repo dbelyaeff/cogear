@@ -104,7 +104,8 @@ class Router {
     public function sanitizePath($path) {
         $cogear = getInstance();
         // Sanitize unwanted data from the path
-        $path = preg_replace('#[^' . config('permitted_uri_chars','\w-_.') . self::DELIM . ']+#iu', '', $path);
+        $path = urldecode($path);
+        $path = preg_replace('#[^' . config('permitted_uri_chars','\w-_.') . self::DELIM . ']+#imsu', '', $path);
         return trim($path, '/');
     }
 
@@ -117,7 +118,7 @@ class Router {
     private function parseSegments($path) {
         $cogear = getInstance();
         // Explode uri into pieces, but previosely trim it from aside delimiters and whitespaces
-        return $this->segments = preg_split('#[\s' . preg_quote(self::DELIM) . ']+#', $path, -1, PREG_SPLIT_NO_EMPTY);
+        return $this->segments = preg_split('#[' . preg_quote(self::DELIM) . ']+#', $path, -1, PREG_SPLIT_NO_EMPTY);
     }
     /**
      * Add route

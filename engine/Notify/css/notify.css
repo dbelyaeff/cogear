@@ -6,6 +6,14 @@ div.notify{
     border-radius: 5px;
     margin: 5px 0 10px 0;
 }
+div.success{
+    padding: 5px 10px;
+    background-color: #CCFFD0;
+    border: 1px solid #8ffbb5;
+    border-radius: 5px;
+    border-radius: 5px;
+    margin: 5px 0 10px 0;
+}
 div.info > p{
     font-size: 1.2em;
 }

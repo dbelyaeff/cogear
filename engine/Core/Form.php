@@ -10,6 +10,6 @@
  * @subpackage
  * @version		$Id$
  */
-class Form extends Form_Manager {
+class Form extends Form_Object {
     
 }

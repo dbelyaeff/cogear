@@ -18,6 +18,7 @@ class Form_Validate_Length extends Form_Validate_Abstract {
      * @return	boolean
      */
     public function validate($value, $from = NULL, $to = NULL) {
+        if(!$value) return TRUE;
         $length = strlen($value);
         if ($from && $to && ($length > $to OR $length < $from)) {
             return $this->element->addError(t('Value must be between %d and %d symbols length.', 'Form_Validate', $from, $to));

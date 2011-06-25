@@ -26,8 +26,7 @@ class User_Object extends Db_ORM {
      */
     public function init() {
         if ($this->autologin()) {
-            $cogear = getInstance();
-            $cogear->event('user.autologin', $this);
+            event('user.autologin', $this);
         }
         // Set data for guest
         else {
@@ -84,7 +83,7 @@ class User_Object extends Db_ORM {
      * @param   string  $param
      */
     public function forceLogin($value, $param = 'login') {
-        if ($this->where($paramm, $value)->find()) {
+        if ($this->where($param, $value)->find()) {
             $this->login();
         }
     }
@@ -192,7 +191,7 @@ class User_Object extends Db_ORM {
         $cogear = getInstance();
         $panel = new Stack('user.panel');
         $panel->avatar = $this->getAvatar();
-        $panel->login = HTML::a($this->getProfileLink(), $this->login, array('class'=>'implicit'));
+        $panel->login = HTML::a($this->getProfileLink(), $this->login, array('class'=>'implicit login   '));
         if (access('user edit_all') OR $this->id == $cogear->user->id) {
             $panel->edit = HTML::a(Url::gear('user') . $this->login . '/edit', icon('cog'));
         }

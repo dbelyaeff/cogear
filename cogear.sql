@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 18, 2011 at 12:46 AM
+-- Generation Time: Jun 25, 2011 at 12:06 PM
 -- Server version: 5.1.40
--- PHP Version: 5.3.3
+-- PHP Version: 5.2.12
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `access_rules` (
   `rule` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `rule` (`rule`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=28 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=30 ;
 
 --
 -- Dumping data for table `access_rules`
@@ -78,7 +78,9 @@ INSERT INTO `access_rules` (`id`, `rule`) VALUES
 (24, 'pages delete'),
 (25, 'benchmark'),
 (26, 'developer'),
-(27, 'development');
+(27, 'development'),
+(28, 'theme'),
+(29, 'loginza');
 
 -- --------------------------------------------------------
 
@@ -104,8 +106,8 @@ CREATE TABLE IF NOT EXISTS `pages` (
 --
 
 INSERT INTO `pages` (`id`, `aid`, `name`, `url`, `path`, `body`, `created_date`, `last_update`) VALUES
-(1, 1, 'РџСЂРёРІРµС‚, РјРёСЂ!', 'privet,-mir!', '                   1', '<img alt="" src="/sites/cogear.new/uploads/images/pages/2011/04/14//gamecast.jpg"/>\r\n\r\n<p>РћС„РёРіРµРЅРЅРѕ! </p>', 1302619389, 1302734036),
-(2, 1, 'РќРѕРІРѕСЃС‚СЊ РґРЅСЏ', '', '                   2', '<br><div><img src="http://cogear.new/sites/cogear.new/uploads/files/1/Some%20folder/iAvatar-quadro.jpg" height="147" width="147"></div>&nbsp;Р Р°Р±РѕС‚Р°РµС‚ Р·Р°РіСЂСѓР·РєР° РєР°СЂС‚РёРЅРѕРє! РЈСЂР°!<br>\r\n<p><img src="/sites/cogear.new/uploads/images/pages/2011/04/14//1kon-av.jpg"></p>  ', 1302733674, 1302848480);
+(1, 1, 'Проба пера', 'privet,-mir!', '                   1', 'Первое сообщение!  ', 1302619389, 1308985715),
+(2, 1, 'Привет, мир!', '', '                   2', '<br><div><img src="http://cogear.new/sites/cogear.new/uploads/files/1/Some%20folder/iAvatar-quadro.jpg" height="147" width="147"></div>Первая страница со своим содержимым!  ', 1302733674, 1308985672);
 
 -- --------------------------------------------------------
 
@@ -146,7 +148,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `validation_code` varchar(255) NOT NULL,
   `is_valid` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `users`
@@ -154,7 +156,33 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`id`, `login`, `password`, `hash`, `email`, `name`, `user_group`, `avatar`, `validation_code`, `is_valid`) VALUES
 (1, 'admin', 'efc002c854ab0f77646a496dad4ec39c', '', 'admin@cogear.ru', '', 0, '/avatars/1/1.jpg', '', 0),
-(3, '', '61e8e72f8439d50fb863cd0eb9893cd4', '', '', '', 0, '', '', 0);
+(6, 'Дмитрий Беляев', '', '', 'usemac.ru@gmail.com', '', 0, '', '', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users_loginza`
+--
+
+DROP TABLE IF EXISTS `users_loginza`;
+CREATE TABLE IF NOT EXISTS `users_loginza` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uid` int(10) unsigned NOT NULL,
+  `identity` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `provider` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `photo` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `full_name` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `data` text CHARACTER SET utf8 NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `users_loginza`
+--
+
+INSERT INTO `users_loginza` (`id`, `uid`, `identity`, `provider`, `photo`, `full_name`, `data`) VALUES
+(4, 6, 'http://vkontakte.ru/id32018', 'http://vkontakte.ru/', '', 'Дима Беляев', '{"identity":"http:\\/\\/vkontakte.ru\\/id32018","provider":"http:\\/\\/vkontakte.ru\\/","uid":32018,"name":{"first_name":"\\u0414\\u0438\\u043c\\u0430","last_name":"\\u0411\\u0435\\u043b\\u044f\\u0435\\u0432"},"nickname":"","gender":"M","address":{"home":{"country":"1"}},"photo":"http:\\/\\/cs5520.vkontakte.ru\\/u32018\\/e_9a79e1ca.jpg"}'),
+(3, 6, 'https://www.google.com/accounts/o8/id?id=AItOawlRRknzdYj74YGfCWGdQjeA4bx9ce7I9fw', 'https://www.google.com/accounts/o8/ud', '', 'Дмитрий Беляев', '{"identity":"https:\\/\\/www.google.com\\/accounts\\/o8\\/id?id=AItOawlRRknzdYj74YGfCWGdQjeA4bx9ce7I9fw","provider":"https:\\/\\/www.google.com\\/accounts\\/o8\\/ud","name":{"first_name":"\\u0411\\u0435\\u043b\\u044f\\u0435\\u0432","last_name":"\\u0414\\u043c\\u0438\\u0442\\u0440\\u0438\\u0439","full_name":"\\u0414\\u043c\\u0438\\u0442\\u0440\\u0438\\u0439 \\u0411\\u0435\\u043b\\u044f\\u0435\\u0432"},"email":"usemac.ru@gmail.com","language":"ru","address":{"home":{"country":"RU"}},"uid":"103655702728696946055"}');
 
 -- --------------------------------------------------------
 

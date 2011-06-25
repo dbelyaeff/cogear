@@ -36,7 +36,7 @@ class Meta_Gear extends Gear {
         parent::init();
         Template::bindGlobal('meta', $this->info);
         title(t(config('site.name',SITE_URL)));
-        hook('theme.head.meta',array($this,'head'));
+        hook('head',array($this,'head'),0);
         hook('menu.setActive',array($this,'menuTitleHook'));
     }
     /**
@@ -51,9 +51,9 @@ class Meta_Gear extends Gear {
      * Generate <head> output
      */
     public function head(){
-        echo HTML::paired_tag('title', $this->info->title->toString(config('meta.title.delimiter',' &raquo; ')));
-        echo HTML::tag('meta', array('type'=>'keywords','content'=>$this->info->keywords->toString(', ')));
-        echo HTML::tag('meta', array('type'=>'description','content'=>$this->info->description->toString('. ')));
+        echo HTML::paired_tag('title', $this->info->title->toString(config('meta.title.delimiter',' &raquo; ')))."\n";
+        echo HTML::tag('meta', array('type'=>'keywords','content'=>$this->info->keywords->toString(', ')))."\n";
+        echo HTML::tag('meta', array('type'=>'description','content'=>$this->info->description->toString('. ')))."\n";
         event('theme.head.meta.after');
     }
 }

@@ -29,6 +29,9 @@ return array (
     'Admin_Menu' => 'Admin_Menu_Gear',
     'Theme_Default' => 'Theme_Default_Gear',
     'Menu' => 'Menu_Gear',
+    'Gears' => 'Gears_Gear',
+    'Theme' => 'Theme_Gear',
+    'Loginza' => 'Loginza_Gear',
   ),
   'ttl' => NULL,
 );

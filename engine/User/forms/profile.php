@@ -23,7 +23,7 @@ return array(
                 'password' => array(
                     'label' => t('Password','User'),
                     'type' => 'password',
-                    'validators' => array(array('Length',3),'AlphaNum','Required')
+                    'validators' => array(array('Length',3),'AlphaNum')
                 ),
 //                'role' => array(
 //                    'label' => t('Role','User'),
@@ -37,7 +37,7 @@ return array(
 //                ),
                 'submit' => array(
                     'type' => 'submit',
-                    'value' => t('Save'),
+                    'label' => t('Update'),
                 )
 
             )

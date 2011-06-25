@@ -78,7 +78,7 @@ class Form_Element_Abstract extends Options {
      */
     public function addError($error) {
         $this->errors->findByValue($error) OR $this->errors->append($error);
-        return TRUE;
+        return FALSE;
     }
 
     /**
@@ -163,7 +163,7 @@ class Form_Element_Abstract extends Options {
      * @return string
      */
     public function getId() {
-        return $this->form->getId() . Form_Manager::SEPARATOR . $this->name;
+        return $this->form->getId() . Form_Object::SEPARATOR . $this->name;
     }
 
     /**

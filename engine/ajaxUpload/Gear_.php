@@ -18,7 +18,7 @@ class ajaxUpload_Gear extends Gear {
     protected $type = Gear::MODULE;
     public function init(){
         //config('ajaxUpload.replaceFileInput') && 
-        Form_Manager::$types['file'] = 'ajaxUpload_Element';
+        Form_Object::$types['file'] = 'ajaxUpload_Element';
     }
     
     public function result(){

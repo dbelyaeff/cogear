@@ -78,7 +78,7 @@ class Cache_Adapter_File extends Options implements Interface_Cache {
      * @param array $tags
      * @param int $ttl
      */
-    public function write($name, $value, array $tags = array(), int $ttl = NULL) {
+    public function write($name, $value, $tags = NULL, $ttl = NULL) {
         $name = $this->prepareFilename($name);
         $data = array(
             'value' => $value,

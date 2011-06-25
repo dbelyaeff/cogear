@@ -70,9 +70,15 @@ function flash_error($text, $title='') {
 function error($text, $title='') {
     Notify_Gear::show($text,$title ? $title : t('Error','Errors'),'error');
 }
-function flash_info($text, $title=''){
+function flash_info($text, $title='Notice'){
     Notify_Gear::flash($text,$title);
 }
-function info($text, $title=''){
+function info($text, $title='Notice'){
     Notify_Gear::show($text,$title);
+}
+function flash_success($text, $title='Success'){
+    Notify_Gear::flash($text,$title,'success');
+}
+function success($text, $title='Success'){
+    Notify_Gear::show($text,$title,'success');
 }

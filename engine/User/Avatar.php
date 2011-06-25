@@ -11,7 +11,7 @@
  * @subpackage
  * @version		$Id$
  */
-class User_Avatar {
+class User_Avatar{
 
     protected $file;
     protected $user;
@@ -36,9 +36,11 @@ class User_Avatar {
 
     /**
      * Get specific size avatar
+     * 
+     * @param   string
      */
     public function getSize($size){
-        $original = UPLOADS.DS.$this->file;
+        $original = $this->getFile();
         $info = pathinfo($original);
         $destination = dirname($original).DS.str_replace($info['basename'],$info['filename'].'_'.$size.'.'.$info['extension'],$info['basename']);
         if(!file_exists($destination) OR filemtime($destination) < filemtime($original)){
@@ -47,14 +49,21 @@ class User_Avatar {
         }
         return $this->render($destination);
     }
-
+    /**
+     * Get avatar file
+     * 
+     * @return  string 
+     */
+    public function getFile(){
+        return UPLOADS.DS.$this->file;
+    }
     /**
      * Render avatar
      *  
      * @param string $file 
      */
     public function render($file = NULL) {
-        $file OR $file = UPLOADS.$this->file;
+        $file OR $file = UPLOADS.'/'.$this->file;
         return HTML::img(Url::toUri($file), $this->user->login, array('class' => 'avatar'));
     }
 

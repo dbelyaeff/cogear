@@ -134,13 +134,13 @@ class Assets{
     }
 }
 
-function css($url){
-    append('content',HTML::style($url));
+function css($url,$region='content'){
+    append($region,HTML::style($url));
 }
-function js($url){
-    append('content',HTML::script($url));
+function js($url,$region='content'){
+    append($region,HTML::script($url));
 }
 
-function inline_js($code){
-    append('content',HTML::script($code, array(),TRUE));
+function inline_js($code,$region='content'){
+    append($region,HTML::script($code, array(),TRUE));
 }

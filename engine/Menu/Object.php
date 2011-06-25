@@ -49,11 +49,16 @@ class Menu_Object extends Options {
         $uri = str_replace($this->base_url, '', '/'.$uri);
         $pieces = explode('/', trim($uri, '/'));
         $path = '';
+        debug($this->name);
         while ($pieces) {
             $path = implode('/', $pieces);
+            if($this->name == 'User.login'){
+                debug($path);
+            }
             if ($path && strpos($uri, $path) !== FALSE) {
                 foreach($this as $item){
-                    if(strpos($item->link,$path) !== FALSE){
+                    $link = strpos($item->link,$this->base_url) !== FALSE ? $item->link : $this->base_url.$item->link; 
+                    if(strpos($link,$path) !== FALSE){
                         $item->active = TRUE;
                     }
                 }

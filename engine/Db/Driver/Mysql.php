@@ -30,6 +30,7 @@ class Db_Driver_Mysql extends Db_Driver_Abstract {
     public function connect() {
         $this->connection = $this->methods['connect']($this->config['host'] . ':' . $this->config['port'], $this->config['user'], $this->config['pass']);
         $this->methods['select_db']($this->config['database']);
+        $this->query('SET NAMES utf8;');
         return $this->connection ? TRUE : FALSE;
     }
 

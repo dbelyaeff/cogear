@@ -53,7 +53,7 @@ class Pages_Gear extends Gear {
                 if (!page_access('pages create'))
                     return;
                 append('content', HTML::paired_tag('h1', t('New page', 'Pages')));
-                $form = new Form_Manager('Pages.createdit');
+                $form = new Form('Pages.createdit');
                 if ($result = $form->result()) {
                     $page = new Pages_Page();
                     $page->object($result);
@@ -75,7 +75,7 @@ class Pages_Gear extends Gear {
                 if ($page->find()) {
                     if (access('pages edit_all') OR $cogear->user->id == $page->aid) {
                         append('content', HTML::paired_tag('h1', t('Edit page', 'Pages')));
-                        $form = new Form_Manager('Pages.createdit');
+                        $form = new Form('Pages.createdit');
                         $form->init();
                         if(access('pages delete')){
                             $form->addElement('delete',array('label'=>t('Delete'),'type'=>'submit'));
@@ -89,7 +89,7 @@ class Pages_Gear extends Gear {
                             $page->object()->mix($result);
                             $page->last_update = time();
                             $page->update();
-                            flash_info(t('Page has been update.', 'Pages'));
+                            flash_success(t('Page has been update.', 'Pages'));
                             redirect($page->getUrl());
                         }
                         $form->elements->submit->setValue(t('Update'));

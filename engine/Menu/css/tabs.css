@@ -1,0 +1,41 @@
+.tabs ul{
+    margin:0 0 20px;
+    padding:0 3px;
+    float: left;
+    width: 100%;
+    border-bottom: 1px solid #ccc;
+}
+.tabs ul li{
+    list-style: none;
+    float: left;
+    padding: 5px 15px;
+    color: #333333 !important;
+    display: inline-block;
+    margin:3px 5px 0 0;
+    text-shadow: 0 1px 0 #FFFFFF;
+    cursor: pointer;
+    font-size: 1.1em;
+}
+.tabs ul li a{
+    color: #000;
+    text-decoration: none;
+    text-shadow: 1px 1px 1px #fff;
+    border-bottom: 1px dotted #999;
+}
+.tabs ul li.active a{
+    border: none;
+}
+.tabs ul li.active{
+    background-color: #F2F2F2;
+    background-image: -moz-linear-gradient(0% 100% 90deg, rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.2));
+    border-color: #CACACA;
+    border-radius: 5px 5px 0 0;
+    border-style: solid !important;
+    border-width: 1px;
+    border-bottom: 0;
+    box-shadow: 0 0 0 transparent inset;
+}
+.tabs ul li:hover a{
+    border-bottom: none;
+    text-decoration: underline;
+}

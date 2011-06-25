@@ -79,7 +79,7 @@ class Cache implements Interface_Cache {
      * @param array $tags
      * @param int   $ttl
      */
-    public function write($name, $value, array $tags = array(), int $ttl = NULL) {
+    public function write($name, $value, $tags = NULL, $ttl = NULL) {
         $value = $value instanceof ArrayObject ? $value->toArray() : $value;
         $this->adapter->write($name, $value, $tags, $ttl);
     }
