@@ -61,7 +61,7 @@ class Pages_Gear extends Gear {
                     $page->created_date = time();
                     $page->last_update = time();
                     $page->save();
-                    flash_info(t('New page has been successfully added!', 'Pages'));
+                    flash_success(t('New page has been successfully added!', 'Pages'));
                     redirect($page->getUrl());
                 }
                 append('content', $form->render());

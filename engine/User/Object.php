@@ -65,7 +65,7 @@ class User_Object extends Db_ORM {
         $this->object($data);
         $cogear->session->user = $this->object;
     }
-
+    
     /**
      * Activate user
      */
@@ -83,7 +83,9 @@ class User_Object extends Db_ORM {
      * @param   string  $param
      */
     public function forceLogin($value, $param = 'login') {
-        if ($this->where($param, $value)->find()) {
+        $this->clear();
+        $this->where($param, $value);
+        if ($this->find()) {
             $this->login();
         }
     }

@@ -81,7 +81,7 @@ class User_Gear extends Gear {
     public function index($action = 'index', $subaction=NULL) {
         switch ($action) {
             case 'login':
-            case 'logout':
+            case 'register':
             case 'lostpassword':
                 $top_menu = new Menu('User.login', 'Menu.tabs');
                 $root = Url::gear('user');

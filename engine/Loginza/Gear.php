@@ -62,7 +62,7 @@ class Loginza_Gear extends Gear {
         if ($connected_accounts = $cogear->db->where('uid', $Form->object->id)->get('users_loginza')->result()) {
             $tpl = new Template('Loginza.accounts');
             $tpl->accounts = $connected_accounts;
-            append('content',$tpl->render(),100);
+            append('content', $tpl->render(), 100);
         }
     }
 
@@ -130,12 +130,12 @@ class Loginza_Gear extends Gear {
             else {
                 // Record found → try to log in
                 if ($user->find()) {
-                    $cogear->user->id = $user->uid;
-                    if ($cogear->user->find()) {
-                        $cogear->user->remember();
-                        $cogear->user->login();
+                    $search = new User_Object();
+                    $search->id = $user->uid;
+                    if ($search->find()) {
+                        $cogear->user->forceLogin($user->uid, 'id');
                     } else {
-                        flash_error(t('Cannot find user with id <b>%s</b>.', 'Loginza', $user->aid));
+                        flash_error(t('Cannot find user with id <b>%s</b>.', 'Loginza', $user->uid));
                     }
                     $cogear->session->loginza = NULL;
                     back();
