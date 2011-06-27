@@ -124,7 +124,7 @@ define('SITE_GEARS', SITE . DS . GEARS_FOLDER);
 $cogear->config = new Config(SITE . DS . 'settings' . EXT);
 define('DEVELOPMENT', $cogear->config->development);
 $folder = basename(ROOT);
-if (!in_array($folder, array('www', 'public_html', 'htdocs', SITE))) {
+if (!in_array($folder, array($host,'www', 'public_html', 'htdocs', SITE))) {
     define('SUBDIR', $folder);
     $host .= '/' . SUBDIR;
 }
