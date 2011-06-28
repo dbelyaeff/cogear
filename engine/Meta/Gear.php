@@ -38,6 +38,15 @@ class Meta_Gear extends Gear {
         title(t(config('site.name',SITE_URL)));
         hook('head',array($this,'head'),0);
         hook('menu.setActive',array($this,'menuTitleHook'));
+        hook('Pages.showPage.before',array($this,'showObjectTitle'));
+    }
+    /**
+     * Add object title to meta
+     * 
+     * @param object $object 
+     */
+    public function showObjectTitle($object){
+        $object->name && title($object->name);
     }
     /**
      * Set title from active menu element

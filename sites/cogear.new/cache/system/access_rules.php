@@ -5,6 +5,7 @@ return array (
     1 => 'admin',
     2 => 'admin site',
     25 => 'benchmark',
+    30 => 'dev',
     26 => 'developer',
     27 => 'development',
     23 => 'elfinder',

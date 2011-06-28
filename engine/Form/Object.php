@@ -213,7 +213,10 @@ class Form_Object extends Options {
             'class' => 'form' . ($this->ajax ? ' ajaxed' : ''),
         );
         $tpl->elements = $this->elements;
-        return $tpl->render();
+        $output = $tpl->render();
+        event('form.render.after', $this, &$output);
+        event('form.' . $this->name . '.render.after', $this, &$output);
+        return $output;
     }
 
 }

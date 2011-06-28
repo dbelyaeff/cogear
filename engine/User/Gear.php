@@ -171,7 +171,12 @@ class User_Gear extends Gear {
                 $redirect = Url::gear('user') . $result['login'];
             }
             $user->merge($result);
-            $result->password && $user->hashPassword() OR $user->password = NULL;
+            if($result->password){
+                $user->hashPassword();
+            }
+            else {
+                unset($user->password);
+            }
             if ($user->update()) {
                 d('User edit');
                 flash_success(t('User data saved!'), t('Success'));

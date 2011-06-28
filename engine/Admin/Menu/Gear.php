@@ -17,7 +17,7 @@ class Admin_Menu_Gear extends Gear {
      * Init
      */
     public function init(){
-        hook('request.admin',array($this,'prepare'));
+        hook('gear.request.admin',array($this,'prepare'));
         hook('callback.Admin_Gear.after',array($this,'render'));
     }
     /**
@@ -26,7 +26,7 @@ class Admin_Menu_Gear extends Gear {
     public function prepare(){
         $cogear = getInstance();
         $root = Url::gear('admin');
-        $menu =  new Menu_Object('admin.sidebar',$root);
+        $menu =  new Menu_Tree('admin.sidebar',$root);
         $menu['1'] = new Menu_Item($root,icon('dashboard','fugue').t('Dashboard'));
         $menu['5'] = new Menu_Item($root.'gears',icon('gear','fugue').t('Gears'));
         $menu['10'] = new Menu_Item($root.'theme',icon('layout').t('Theme'));

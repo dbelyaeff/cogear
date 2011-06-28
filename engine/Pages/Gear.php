@@ -74,7 +74,6 @@ class Pages_Gear extends Gear {
                 $page->where('id', intval($subaction));
                 if ($page->find()) {
                     if (access('pages edit_all') OR $cogear->user->id == $page->aid) {
-                        append('content', HTML::paired_tag('h1', t('Edit page', 'Pages')));
                         $form = new Form('Pages.createdit');
                         $form->init();
                         if(access('pages delete')){

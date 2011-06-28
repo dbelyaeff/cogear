@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Gears manager
  *
@@ -81,9 +82,11 @@ class Gears_Gear extends Gear {
             case 'index':
                 $gears = array();
                 foreach ($active_gears as $gear => $class) {
-                    $object = new $class;
-                    $object->active = TRUE;
-                    $gears[$object->package][$gear] = $object;
+                    if (class_exists($class)) {
+                        $object = new $class;
+                        $object->active = TRUE;
+                        $gears[$object->package][$gear] = $object;
+                    }
                 }
                 $tpl = new Template('Admin_Theme.gears');
                 $tpl->packages = $gears;
@@ -93,9 +96,11 @@ class Gears_Gear extends Gear {
             case 'all':
                 $gears = array();
                 foreach ($all_gears as $gear => $class) {
-                    $object = new $class;
-                    $object->active = ($object->package == 'Core' OR $object->type == Gear::CORE OR in_array($gear, array_keys($active_gears)));
-                    $gears[$object->package][$gear] = $object;
+                    if (class_exists($class)) {
+                        $object = new $class;
+                        $object->active = ($object->package == 'Core' OR $object->type == Gear::CORE OR in_array($gear, array_keys($active_gears)));
+                        $gears[$object->package][$gear] = $object;
+                    }
                 }
                 $tpl = new Template('Admin_Theme.gears');
                 $tpl->packages = $gears;
@@ -105,9 +110,11 @@ class Gears_Gear extends Gear {
             case 'inactive':
                 $gears = array();
                 foreach ($inactive_gears as $gear => $class) {
-                    $object = new $class;
-                    $object->active = ($object->package == 'Core' OR $object->type == Gear::CORE OR in_array($gear, array_keys($active_gears)));
-                    $gears[$object->package][$gear] = $object;
+                    if (class_exists($class)) {
+                        $object = new $class;
+                        $object->active = ($object->package == 'Core' OR $object->type == Gear::CORE OR in_array($gear, array_keys($active_gears)));
+                        $gears[$object->package][$gear] = $object;
+                    }
                 }
                 $tpl = new Template('Admin_Theme.gears');
                 $tpl->packages = $gears;

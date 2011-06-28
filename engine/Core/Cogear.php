@@ -58,13 +58,6 @@ final class Cogear implements Interface_Singleton {
      * @var boolean 
      */
     protected $write_config = FALSE;
-    /**
-     * Theme
-     *
-     * @var object
-     */
-    public $theme;
-
 
     const GEAR = 'Gear';
 
@@ -236,9 +229,6 @@ final class Cogear implements Interface_Singleton {
         }
         $this->sortGears();
         foreach ($this->gears as $name => $gear) {
-            if ($gear->reflection->isSubclassOf('Theme')) {
-                continue;
-            }
             $gear->init();
         }
         Template::bindGlobal('cogear', $this);
@@ -263,76 +253,7 @@ final class Cogear implements Interface_Singleton {
         return $this->active_gears;
     }
 
-    /**
-     * Get all Themes
-     *
-     * @return  array
-     */
-    public function getThemes() {
-        $themes = array();
-        foreach ($this->all_gears as $gear => $class) {
-            if (strpos($gear, 'Theme') !== FALSE) {
-                class_exists($class) && array_push($themes, new $class);
-            }
-        }
-        return $themes;
-    }
-
-    /**
-     * Get current theme
-     *
-     * @return  object
-     */
-    public function getTheme() {
-        foreach ($this->active_gears as $gear => $class) {
-            if (strpos($gear, 'Theme') !== FALSE) {
-                return $this->theme = $this->gears->$gear;
-            }
-        }
-        return $this->activateTheme('Theme_Default');
-    }
-
-    /**
-     * Set theme
-     *
-     * @param   string  $name
-     * @param   boolean $force
-     * @return  object|NULL Theme or NULL.
-     */
-    public function setTheme($name = 'Theme_Default', $force = FALSE) {
-        if ($this->theme && !$force)
-            return;
-        $class = $name . '_' . self::GEAR;
-        if (!class_exists($class) OR $this->gears->$name)
-            return NULL;
-        $this->gears->$name = new $class;
-        return $this->theme = $this->gears->$name;
-    }
-
-    /**
-     * Make theme active
-     * 
-     * @param string $name
-     */
-    public function activateTheme($name, $activate = TRUE) {
-        foreach ($this->active_gears as $gear => $class) {
-            if (strpos($gear, 'Theme') !== FALSE) {
-                if ($gear == $name) {
-                    $found = $gear;
-                } else {
-                    $this->deactivate($gear);
-                }
-            }
-        }
-        if (isset($found))
-            return;
-        $class = $name . '_' . self::GEAR;
-        if (!class_exists($class) OR $this->gears->$name)
-            return NULL;
-        $activate && $this->activate($name);
-        return $this->setTheme($name);
-    }
-
+   
     /**
      * Install gear
      * @param string $gear

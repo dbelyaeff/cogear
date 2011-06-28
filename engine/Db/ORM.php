@@ -80,7 +80,24 @@ class Db_ORM extends Options {
          */
        return is_null($this->object) ? NULL : $this->object->$name;
     }
-
+    /**
+     * Check object variable for existance
+     * 
+     * @param string $name 
+     */
+    public function __isset($name) {
+        return isset($this->object->$name);
+    }
+    /**
+     * Unset object param
+     * 
+     * @param string $name
+     */
+    public function __unset($name) {
+        if(isset($this->object->$name)){
+            unset($this->object->$name);
+        }
+    }
     /**
      * Magic __call method
      *

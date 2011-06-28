@@ -35,6 +35,7 @@ class I18n_Gear extends Gear {
         $cogear = getInstance();
         $this->locale = config('site.locale','en');
         $this->date_format = $cogear->get('site.date_format','Y-m-d H:i');
+        date_default_timezone_set(config('site.timezone','Europe/Moscow'));
         parent::__construct();
     }
 

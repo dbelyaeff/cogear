@@ -250,10 +250,11 @@ class Session extends Options implements Interface_Factory {
      */
     private function init(){
         $cogear = getInstance();
+        event('session.init',$this);
         isset($_SESSION['user_agent']) OR $_SESSION['user_agent'] = $cogear->request->getUserAgent();
         isset($_SESSION['ip_address']) OR $_SESSION['ip_address'] = $cogear->request->get('ip');
         if(!isset($_SESSION['history'])){
-            $_SESSION['history'] = array();
+            $_SESSION['history'] = new Core_ArrayObject();
         }
         else {
             $last = end($_SESSION['history']);
@@ -262,7 +263,7 @@ class Session extends Options implements Interface_Factory {
         if(!isset($last) OR $last != $referer){
             $_SESSION['history'][] = $referer;
         }
-        sizeof($_SESSION['history']) > 10 && $_SESSION['history'] = array_slice($_SESSION['history'], sizeof($_SESSION['history']) - 10);
+        sizeof($_SESSION['history']) > 10 && $_SESSION['history'] = new Core_ArrayObject(array_slice($_SESSION['history']->toArray(), sizeof($_SESSION['history']) - 10));
     }
     /**
      * Browsing history — last 10 pages

@@ -111,7 +111,7 @@ abstract class Image_Driver_Abstract extends Options {
     abstract public function crop($size,$x = 0.5,$y = 0.5);
     abstract public function rotate($angle);
     abstract public function watermark($watermark = NULL);
-    abstract public function save($path);
+    abstract public function save($path = NULL);
     abstract public function render();
     abstract public function clear();
 

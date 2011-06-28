@@ -28,13 +28,14 @@ class Form_Element_Select extends Form_Element_Abstract{
             $callback = Cogear::prepareCallback($this->callback);
             $this->setValues(call_user_func($callback));
         }
-        $this->setAttributes();
+        $this->getAttributes();
         $code[] = HTML::open_tag('select', $this->attributes);
         foreach($this->values as $key=>$value){
-            $attributes['name'] = $key;
+            $attributes = array();
             if($key == $this->value){
                 $attributes['selected'] = 'selected';
             }
+            $attributes['value'] = $key;
             $code[] = HTML::paired_tag('option', $value, $attributes);
         }
         $code[] = HTML::close_tag('select');

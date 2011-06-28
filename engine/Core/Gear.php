@@ -332,11 +332,11 @@ abstract class Gear {
      * @param   string  $theme 
      */
     public function setTheme($theme = '') {
-        $theme OR $theme = $this->settings->theme;
+        $theme OR $theme = $this->settings->theme->current;
         if (!$theme)
             return NULL;
         $cogear = getInstance();
-        $cogear->setTheme($theme) && $cogear->theme->init();
+        $cogear->setTheme($theme) && $cogear->theme->current->init();
     }
 
     /**
@@ -415,18 +415,10 @@ abstract class Gear {
     public function request() {
         $this->is_requested = TRUE;
         $cogear = getInstance();
-        if (!page_access(strtolower($this->gear))) {
+        if(!event('gear.request',$this)){
             return;
         }
-        if ($this->settings->theme && $cogear->setTheme($this->settings->theme)) {
-            $cogear->theme->init();
-        } else {
-            $cogear->getTheme();
-            $cogear->theme->init();
-        }
-        $cogear->theme->activate();
-        event('request.gear',$this);
-        event('request.' . strtolower($this->gear));
+        event('gear.request.' . strtolower($this->gear));
     }
 
     /**

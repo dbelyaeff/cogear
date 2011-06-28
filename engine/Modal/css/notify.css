@@ -1,0 +1,29 @@
+div.notify{
+    padding: 5px 10px;
+    background-color: #FFFFE0;
+    border: 1px solid #E6DB55;
+    border-radius: 5px;
+    border-radius: 5px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 640px;
+    height: 480px;
+    margin-top: -320px;
+    margin-left: -240px;
+}
+div.success{
+    padding: 5px 10px;
+    background-color: #CCFFD0;
+    border: 1px solid #8ffbb5;
+    border-radius: 5px;
+    border-radius: 5px;
+}
+div.info > p{
+    font-size: 1.2em;
+}
+div.error {
+    background: #FFEBE8;
+    border: 1px solid #CC0000;
+    border-radius: 3px 3px 3px 3px;
+}

@@ -135,6 +135,14 @@ class Core_ArrayObject extends ArrayObject {
     public function __isset($name) {
         return $this->offsetExists($name);
     }
+    /**
+     * Detelte by offset
+     * 
+     * @param string $name 
+     */
+    public function __unset($name){
+        $this->offsetUnset($name);
+    }
 
     /**
      * Prepend element — insert element at the beginning

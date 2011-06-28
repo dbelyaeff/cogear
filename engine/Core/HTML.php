@@ -20,6 +20,7 @@ final class HTML {
         'form' => array('action', 'method', 'enctype'),
         'input' => array('type', 'value', 'disabled', 'checked', 'name'),
         'select' => array('type', 'value', 'disabled', 'name'),
+        'option' => array('selected','value'),
         'textarea' => array('rows', 'cols', 'name', 'disabled'),
         'script' => array('src', 'type', 'charset'),
         'link' => array('media', 'type', 'rel', 'href'),

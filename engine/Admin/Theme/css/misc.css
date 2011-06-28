@@ -1,20 +1,13 @@
 h1 {
-    border-bottom: 2px solid #CCC;
     margin:5px 0 12px 0;
     height: 16px;
     font-size: 20px;
 
 }
-h4{
-    border-bottom: 2px solid #CCC;
-    margin-bottom: 15px;
-    height: 15px;
-}
 h1 > span, h4 > b {
     padding: 4px 5px 0 0;
     text-shadow: 1px 1px 5px #FFF;
     color: #424141;
-    background: #FFF;
     font-family: Century Gothic;
 }
 h4 > b {
