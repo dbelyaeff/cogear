@@ -21,7 +21,6 @@ return array (
     'Modal' => 'Modal_Gear',
     'Pages' => 'Pages_Gear',
     'Redactor' => 'Redactor_Gear',
-    'Robo' => 'Robo_Gear',
     'Test' => 'Test_Gear',
     'Theme' => 'Theme_Gear',
     'TinyMCE' => 'TinyMCE_Gear',
