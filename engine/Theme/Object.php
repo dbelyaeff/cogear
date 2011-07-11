@@ -21,44 +21,42 @@ abstract class Theme_Object extends Gear {
     private static $is_rendered = FALSE;
     public $template;
     public $theme;
-    public $layout = 'index';
-    public $regions = array(
-        'header' => array(),
-        'content' => array(),
-        'sidebar' => array(),
-        'footer' => array(),
-    );
 
     /**
      * Constructor
      */
     public function __construct() {
         parent::__construct();
-        $this->regions = Core_ArrayObject::transform($this->regions);
-        foreach ($this->regions as $name => $region) {
-            hook($name, array($this, 'renderRegion'), NULL, $name);
-        }
         $this->theme = Theme_Gear::classToTheme($this->gear);
     }
 
     /**
-     * Register region
-     *  
-     * @param string $name 
-     */
-    public static function registerRegion($name) {
-        cogear()->theme->current->regions->$name OR cogear()->theme->current->regions->$name = new Core_ArrayObject();
-    }
-
-    /**
-     * Render region
+     * Theme admin page
      * 
-     * @param string $name 
+     * @param type $action
+     * @param type $subaction 
      */
-    public function renderRegion($name) {
-        if ($this->regions->$name) {
-            echo $this->regions->$name;
+    public function admin($action = NULL, $subaction = NULL) {
+        $form = new Form('Admin.theme');
+
+        if ($form->is_ajaxed) {
+            if ($form->elements->logo->is_ajaxed) {
+                $cogear->set('theme.logo', '');
+            }
+            if ($form->elements->favicon->is_ajaxed) {
+                $cogear->set('theme.favicon', '');
+            }
+        } else {
+            $form->setValues(array(
+                'logo' => config('theme.logo'),
+                'favicon' => config('theme.favicon'),
+            ));
         }
+        if ($result = $form->result()) {
+            $result->logo && $cogear->set('theme.logo', $result->logo);
+            $result->favicon && $cogear->set('theme.favicon', $result->favicon);
+        }
+        append('content', $form->render());
     }
 
     /**
@@ -93,4 +91,5 @@ abstract class Theme_Object extends Gear {
         $cogear->response->append($this->template->render());
         $this->is_rendered = TRUE;
     }
+
 }

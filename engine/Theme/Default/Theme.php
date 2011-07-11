@@ -30,9 +30,4 @@ class Theme_Default_Theme extends Theme_960_Theme{
             echo HTML::a(Url::link(),HTML::img(Url::toUri(UPLOADS.$logo),config('site.name')));
         }
     }
-    /**
-     * Admin page
-     */
-    public function admin(){
-    }
 }
