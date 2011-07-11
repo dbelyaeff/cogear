@@ -32,17 +32,6 @@ class Modal_Gear extends Gear {
     }
 
     /**
-     * Index
-     * 
-     * @param type $subaction 
-     */
-    public function index_action($subaction = NULL) {
-        info('asdasd');
-        success('asdasd');
-        error('asdasd');
-    }
-
-    /**
      * Show modal window
      * 
      * @param string $content
