@@ -25,7 +25,13 @@ class Template_File extends Template_Abstract {
             ini_get('short_open_tag') OR $this->code = str_replace('<?=','<?php echo',$this->code);
         }
         else {
-            error(t('Template <b>%s</b> is not found by path <u>%s</u>.','Errors',$this->name,$this->path));
+            /**
+             * There we have an option — render as normal error or with just simple exit.
+             * If we try to render any Modal (success, notify or error template) we can be easliy catched by looping error throwing us into nowhere.
+             * That's why we use such a hint there.
+             */
+            $message = t('Template <b>%s</b> is not found by path <u>%s</u>.','Errors',$this->name,$this->path);
+            strpos($this->name, 'Modal') !== FALSE ? exit($message) : error($message);
         }
     }
 }
