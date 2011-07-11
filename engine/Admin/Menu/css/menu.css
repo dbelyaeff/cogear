@@ -155,3 +155,6 @@ ul#top_menu li.right a
     border-right: 0;
     border-left: 1px solid #666666;
 }
+#top_title.no-corners{
+    border-radius: 0;
+}
