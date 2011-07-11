@@ -32,6 +32,7 @@ return array (
     'Admin_Menu' => 'Admin_Menu_Gear',
     'Theme_Default' => 'Theme_Default_Gear',
     'Theme' => 'Theme_Gear',
+    'Modal' => 'Modal_Gear',
   ),
   'ttl' => NULL,
 );

@@ -1,29 +1,38 @@
-div.notify{
-    padding: 5px 10px;
-    background-color: #FFFFE0;
-    border: 1px solid #E6DB55;
+.modal{
+    width: 500px;
+    min-height: 50px;
+    padding: 5px 15px;
     border-radius: 5px;
-    border-radius: 5px;
+    background: #000;
+    opacity: 0.7;
+    color: #FFF;
+    border: 1px solid #000;
+    box-shadow: 1px 1px 3px #000;
+    display: none;
+    cursor: pointer;
+    margin: 0 0 10px 0;
+    position: relative;
+}
+.modal.success{
+    background-color: #8dc63f;
+    border-color: #70b01a;
+}
+.modal.info{
+    background-color: #ebec8f;
+    border-color: #aeb017;
+    color: #000;
+}
+.modal.error{
+    background-color: #fe3b77;
+    border-color:  #dc0043;
+}
+.modal .close{
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 640px;
-    height: 480px;
-    margin-top: -320px;
-    margin-left: -240px;
+    top: 2px;
+    right: 5px;
+    font-weight: bold;
+    font-size: 12px;
 }
-div.success{
-    padding: 5px 10px;
-    background-color: #CCFFD0;
-    border: 1px solid #8ffbb5;
-    border-radius: 5px;
-    border-radius: 5px;
-}
-div.info > p{
-    font-size: 1.2em;
-}
-div.error {
-    background: #FFEBE8;
-    border: 1px solid #CC0000;
-    border-radius: 3px 3px 3px 3px;
+.modal h1, .modal p {
+    font-family: "Century Gothic";
 }

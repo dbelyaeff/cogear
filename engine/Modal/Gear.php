@@ -15,9 +15,12 @@ class Modal_Gear extends Gear {
 
     protected $name = 'Modal';
     protected $description = 'Handle with modal dialogs and windows.';
-    protected $type = Gear::MODULE;
     protected $package = 'Modal';
     protected $order = 100;
+    protected $template = 'Modal.window';
+    const INFO = 0;
+    const DIALOG = 1;
+    const AJAX = 2;
 
     /**
      * Init
@@ -28,91 +31,131 @@ class Modal_Gear extends Gear {
     }
 
     /**
-     * Show flash messages from session storage
+     * Index
+     * 
+     * @param type $subaction 
      */
-    public function showFlash() {
-        $cogear = getInstance();
-        if ($cogear->session->messages) {
-            foreach ($cogear->session->messages as $message) {
-                self::show($message['text'], $message['title'], $message['class']);
-            }
-            $cogear->session->messages = NULL;
-        }
-    }
-
-    /**
-     * Set flash message to storage
-     */
-    public static function flash($text, $title = '', $class='info') {
-        $cogear = getInstance();
-        $cogear->session->messages OR $cogear->session->messages = new Core_ArrayObject();
-        $cogear->session->messages->append(array('text' => $text, 'title' => $title, 'class' => $class));
+    public function index_action($subaction = NULL) {
+        info('asdasd');
+        success('asdasd');
+        error('asdasd');
     }
 
     /**
      * Show modal window
      * 
-     * @param   string    $text
-     * @param   string  $title
-     * @param   string  $class
+     * @param string $content
+     * @param string $title
+     * @param string $class
+     * @param int $type 
      */
-    public static function show($text, $title = '', $class='info') {
-        self::render('Modal.Modal', array('title' => $title ? $title : t('Info', 'Modal'), 'description' => $text, 'class' => $class));
+    public function show($content = NULL, $title = NULL, $class = 'info', $type = NULL) {
+        $tpl = new Template($this->template);
+        $tpl->title = $title OR t('Info');
+        $tpl->content = $content;
+        $tpl->class = $class;
+        $tpl->type = $type ? $type : self::INFO;
+        append('content', $tpl->render());
     }
 
     /**
-     * Render Modal to output
+     * Set flash message
+     * 
+     * @param string $content
+     * @param string $title
+     * @param string $class
+     * @param int $type 
      */
-    public static function render($template, $params) {
-        $template = new Template($template);
-        $template->set($params);
+    public function flash($content = NULL, $title = NULL, $class = 'info', $type = NULL) {
+        $data = func_get_args();
         $cogear = getInstance();
-        prepend('content', $template->render());
+        $cogear->session->messages OR $cogear->session->messages = new Core_ArrayObject();
+        $cogear->session->messages->append($data);
     }
-
+    
     /**
-     * Show message using overlay
+     * Show flashed messages
      */
-    public static function overlay($text, $title='', $class='info') {
+    public function showFlash(){
         $cogear = getInstance();
-        $theme = $cogear->get('errors.theme', 'Theme_Splash');
-        if ($cogear->setTheme($theme, TRUE)) {
-            $cogear->assets->clear();
-            $cogear->theme->init();
-            $cogear->theme->activate();
-            self::show($text, $title, $class);
-            $cogear->theme->render();
-            $cogear->response->send();
-            die();
+        if($cogear->session->messages){
+            foreach($cogear->session->messages as $offset=>$data){
+                call_user_func_array(array($this,'show'), $data);
+            }
+            $cogear->session->destroy('messages');
         }
     }
-
 }
 
-function overlay($text, $title = '') {
-    Modal_Gear::overlay($text, $title ? $title : t('Error', 'Errors'), 'error');
+/**
+ * Show success modal dialog
+ * 
+ * @param string $content
+ * @param string $title
+ * @param string $class 
+ */
+function success($content=NULL,$title=NULL,$class='success'){
+    $content OR $content = t('Operation is successfully completed.');
+    $title OR $title = t('Success');
+    cogear()->modal->show($content,$title,$class);
 }
-
-function flash_error($text, $title='') {
-    Modal_Gear::flash($text, $title ? $title : t('Error', 'Errors'), 'error');
+/**
+ * Show flash success modal dialog
+ * 
+ * @param string $content
+ * @param string $title
+ * @param string $class 
+ */
+function flash_success($content=NULL,$title=NULL,$class='success'){
+    $content OR $content = t('Operation is successfully completed.');
+    $title OR $title = t('Success');
+    cogear()->modal->flash($content,$title,$class);
 }
-
-function error($text, $title='') {
-    Modal_Gear::show($text, $title ? $title : t('Error', 'Errors'), 'error');
+/**
+ * Show info modal dialog
+ * 
+ * @param string $content
+ * @param string $title
+ * @param string $class 
+ */
+function info($content=NULL,$title=NULL,$class='info'){
+    $content OR $content = t('Please pay attetion to this notification.');
+    $title OR $title = t('Info');
+    cogear()->modal->show($content,$title,$class);
 }
-
-function flash_info($text, $title='Notice') {
-    Modal_Gear::flash($text, $title);
+/**
+ * Show flash info modal dialog
+ * 
+ * @param string $content
+ * @param string $title
+ * @param string $class 
+ */
+function flash_info($content=NULL,$title=NULL,$class='info'){
+    $content OR $content = t('Please pay attetion to this notification.');
+    $title OR $title = t('Info');
+    cogear()->modal->flash($content,$title,$class);
 }
-
-function info($text, $title='Notice') {
-    Modal_Gear::show($text, $title);
+/**
+ * Show error modal dialog
+ * 
+ * @param string $content
+ * @param string $title
+ * @param string $class 
+ */
+function error($content=NULL,$title=NULL,$class='error'){
+    $content OR $content = t('Operation failed.');
+    $title OR $title = t('Failure');
+    cogear()->modal->show($content,$title,$class);
 }
-
-function flash_success($text, $title='Success') {
-    Modal_Gear::flash($text, $title, 'success');
-}
-
-function success($text, $title='Success') {
-    Modal_Gear::show($text, $title, 'success');
+/**
+ * Show flash error modal dialog
+ * 
+ * @param string $content
+ * @param string $title
+ * @param string $class 
+ */
+function flash_error($content=NULL,$title=NULL,$class='error'){
+    $content OR $content = t('Operation failed.');
+    $title OR $title = t('Failure');
+    cogear()->modal->flash($content,$title,$class);
 }
