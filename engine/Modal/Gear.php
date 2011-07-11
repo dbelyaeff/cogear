@@ -18,6 +18,7 @@ class Modal_Gear extends Gear {
     protected $package = 'Modal';
     protected $order = 100;
     protected $template = 'Modal.window';
+    protected $version = '0.1';
     const INFO = 0;
     const DIALOG = 1;
     const AJAX = 2;
