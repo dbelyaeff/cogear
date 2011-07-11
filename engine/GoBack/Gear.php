@@ -22,7 +22,7 @@ class GoBack_Gear extends Gear {
      */
     public function init() {
         parent::init();
-        //hook('form.render',array($this,'showGoBackButton'));
+        hook('form.render',array($this,'showGoBackButton'));
     }
     
     /**
@@ -30,7 +30,7 @@ class GoBack_Gear extends Gear {
      */
     public function showGoBackButton(){
         $cogear = getInstance();
-        $link = $cogear->session->history->current();
+        $link = $cogear->session->history->getIterator()->current();
         append('content',HTML::a($link,t("← Go back"),array('class'=>'button goback')));
     }
 }

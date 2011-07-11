@@ -153,5 +153,5 @@ $cogear->loadGears();
 event('ignite');
 event('done');
 $cogear->response->send();
-$cogear->clear();
+$cogear->save();
 event('exit');

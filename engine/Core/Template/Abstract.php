@@ -51,7 +51,7 @@ class Template_Abstract extends Options {
      * @param mixed $value
      */
     public function set($name, $value = NULL) {
-        if (is_array($name) OR $name instanceof  ArrayObject) {
+        if (is_array($name) OR $name instanceof ArrayObject) {
             foreach ($name as $key => $value) {
                 $this->set($key, $value);
             }
@@ -69,7 +69,7 @@ class Template_Abstract extends Options {
      */
     public function assign() {
         $args = func_get_args();
-        call_user_func_array(array($this,'set'), $args);
+        call_user_func_array(array($this, 'set'), $args);
     }
 
     /**
@@ -149,7 +149,7 @@ class Template_Abstract extends Options {
             }
             return;
         } else {
-            self::$global_vars[$name] =& $value;
+            self::$global_vars[$name] = & $value;
         }
     }
 
@@ -162,11 +162,11 @@ class Template_Abstract extends Options {
     public static function getGlobal($name = '') {
         return $name ? (isset(self::$global_vars[$name]) ? self::$global_vars[$name] : NULL) : self::$global_vars;
     }
-    
+
     /**
      * Clear global vars
      */
-    public static function clear(){
+    public static function clear() {
         self::$global_vars = array();
     }
 
@@ -181,12 +181,7 @@ class Template_Abstract extends Options {
         ob_start();
         self::$global_vars && extract(self::$global_vars);
         $this->vars && extract($this->vars);
-        try {
-            eval('?>' . $this->code);
-        } catch (Exception $e) {
-            ob_end_clean();
-            throw $e;
-        }
+        include $this->path;
         $output = ob_get_clean();
         return $output;
     }

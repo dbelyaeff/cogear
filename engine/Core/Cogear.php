@@ -36,28 +36,28 @@ final class Cogear implements Interface_Singleton {
      *
      * @var array
      */
-    protected $active_gears = array();
+    private $active_gears = array();
     /**
      * All gears in folders
      * @var array
      */
-    protected $all_gears = array();
+    private $all_gears = array();
     /**
      * Installed gears
      * @var array
      */
-    protected $installed_gears = array();
+    private $installed_gears = array();
     /**
      * Flag to update gears system caches
      * @var boolean
      */
-    protected $write_gears = FALSE;
+    private $write_gears = FALSE;
     /**
      * Flag to update config file
      * 
      * @var boolean 
      */
-    protected $write_config = FALSE;
+    private $write_config = FALSE;
 
     const GEAR = 'Gear';
 
@@ -283,7 +283,7 @@ final class Cogear implements Interface_Singleton {
         }
         return $this;
     }
-
+    
     /**
      * Update gear
      * @param string $gear
@@ -306,7 +306,7 @@ final class Cogear implements Interface_Singleton {
                 $this->install($gear);
             }
             $object = new $this->all_gears[$gear];
-            $object instanceof Theme ? $this->activateTheme($object->gear, FALSE) : $object->activate();
+            $object->activate();
             $this->active_gears[$gear] = $this->all_gears[$gear];
             $this->write_gears = TRUE;
         }
@@ -368,9 +368,9 @@ final class Cogear implements Interface_Singleton {
     }
 
     /**
-     * Desctructor
+     * Save current gears and config
      */
-    public function clear() {
+    public function save() {
         if ($this->write_gears) {
             $this->system_cache->write('gears/all', $this->all_gears);
             $this->system_cache->write('gears/installed', $this->installed_gears);
@@ -381,7 +381,7 @@ final class Cogear implements Interface_Singleton {
             $this->config->differ($settings);
             $this->config->write(SITE.DS.'config'.EXT);
         }
-        event('clean');
+        event('clear');
     }
 
     /**

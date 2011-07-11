@@ -23,9 +23,7 @@
             <div class="grid_14" id="content">
                 <?= $top_menu ?>
                 <div id="top_title"<?if($top_menu){?> class="no-corners"<?}?>>
-                    <? if (sizeof($meta->title) > 0): ?>
-                        <h1><?= reset($meta->title) ?></h1>
-                    <? endif; ?>
+                    <h1><?= $title?></h1>
                 </div>
                 <div id="wrapper">
                     <!-- CONTENT --> 

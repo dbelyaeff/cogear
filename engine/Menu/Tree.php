@@ -51,9 +51,6 @@ class Menu_Tree extends Options {
         $path = '';
         while ($pieces) {
             $path = implode('/', $pieces);
-            if($this->name == 'User.login'){
-                debug($path);
-            }
             if ($path && strpos($uri, $path) !== FALSE) {
                 foreach($this as $item){
                     $link = strpos($item->link,$this->base_url) !== FALSE ? $item->link : $this->base_url.$item->link; 

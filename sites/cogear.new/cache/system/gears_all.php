@@ -15,6 +15,7 @@ return array (
     'Grid' => 'Grid_Gear',
     'I18n' => 'I18n_Gear',
     'Icons' => 'Icons_Gear',
+    'Layout' => 'Layout_Gear',
     'Loginza' => 'Loginza_Gear',
     'Menu' => 'Menu_Gear',
     'Meta' => 'Meta_Gear',

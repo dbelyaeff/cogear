@@ -7,6 +7,6 @@ return array (
   ),
   'wysiwyg' => 
   array (
-    'editor' => 'elRTE',
+    'editor' => 'redactor',
   ),
 );

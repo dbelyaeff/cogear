@@ -88,7 +88,7 @@ class Gears_Gear extends Gear {
                         $gears[$object->package][$gear] = $object;
                     }
                 }
-                $tpl = new Template('Admin_Theme.gears');
+                $tpl = new Template('Gears.list');
                 $tpl->packages = $gears;
                 $tpl->link = Url::gear('admin') . '/gears';
                 append('content', $tpl->render());
@@ -102,7 +102,7 @@ class Gears_Gear extends Gear {
                         $gears[$object->package][$gear] = $object;
                     }
                 }
-                $tpl = new Template('Admin_Theme.gears');
+                $tpl = new Template('Gears.list');
                 $tpl->packages = $gears;
                 $tpl->link = Url::gear('admin') . '/gears';
                 append('content', $tpl->render());
@@ -116,7 +116,7 @@ class Gears_Gear extends Gear {
                         $gears[$object->package][$gear] = $object;
                     }
                 }
-                $tpl = new Template('Admin_Theme.gears');
+                $tpl = new Template('Gears.list');
                 $tpl->packages = $gears;
                 $tpl->link = Url::gear('admin') . '/gears';
                 append('content', $tpl->render());
@@ -132,7 +132,7 @@ class Gears_Gear extends Gear {
                         }
                     }
                 }
-                $tpl = new Template('Admin_Theme.gears');
+                $tpl = new Template('Gears.list');
                 $tpl->packages = $gears;
                 $tpl->link = Url::gear('admin') . '/gears';
                 append('content', $tpl->render());
@@ -152,7 +152,7 @@ class Gears_Gear extends Gear {
             $cogear->activate($gear);
             $result[] = t($gear, 'Gears');
         }
-        $result && flash_info(t('Following gears were activated: ') . '<b>' . implode('</b>, <b>', $result) . '</b>.');
+        $result && flash_success(t('Following gears were activated: ') . '<b>' . implode('</b>, <b>', $result) . '</b>.');
     }
 
     /**
@@ -167,7 +167,7 @@ class Gears_Gear extends Gear {
             $cogear->deactivate($gear);
             $result[] = t($gear, 'Gears');
         }
-        $result && flash_info(t('Following gears were deactivated: ') . '<b>' . implode('</b>, <b>', $result) . '</b>.');
+        $result && flash_success(t('Following gears were deactivated: ') . '<b>' . implode('</b>, <b>', $result) . '</b>.');
     }
 
     /**
@@ -182,7 +182,7 @@ class Gears_Gear extends Gear {
             $cogear->update($gear);
             $result[] = t($gear, 'Gears');
         }
-        $result && flash_info(t('Following gears were updated: ') . '<b>' . implode('</b>, <b>', $result) . '</b>.');
+        $result && flash_success(t('Following gears were updated: ') . '<b>' . implode('</b>, <b>', $result) . '</b>.');
     }
 
     /**

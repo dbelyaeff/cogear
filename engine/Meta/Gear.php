@@ -39,6 +39,7 @@ class Meta_Gear extends Gear {
         hook('head',array($this,'head'),0);
         hook('menu.setActive',array($this,'menuTitleHook'));
         hook('Pages.showPage.before',array($this,'showObjectTitle'));
+        hook('admin.gear.request',array($this,'showObjectTitle'));
     }
     /**
      * Add object title to meta
@@ -46,7 +47,7 @@ class Meta_Gear extends Gear {
      * @param object $object 
      */
     public function showObjectTitle($object){
-        $object->name && title($object->name);
+        $object->name && title(t($object->name));
     }
     /**
      * Set title from active menu element
@@ -54,7 +55,8 @@ class Meta_Gear extends Gear {
      * @param string $element 
      */
     public function menuTitleHook($element){
-        title(strip_tags($element->value));
+        $cogear = getInstance();
+        $cogear->meta->info->title->inject(trim(strip_tags($element->value)),$cogear->meta->info->title->count()-1);
     }
     /**
      * Generate <head> output

@@ -147,6 +147,7 @@ class Response extends Core_ArrayObject {
 
 function redirect($url = NULL){
     $url OR $url = Url::link();
+    cogear()->save();
     header('Location: '.$url);
     exit;
 }

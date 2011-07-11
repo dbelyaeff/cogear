@@ -37,16 +37,6 @@ class Admin_Gear extends Gear {
     }
 
     /**
-     * Request handler
-     * 
-     * Override parent method. Add title.
-     */
-    public function request() {
-        title(t('Control Panel'));
-        parent::request();
-    }
-
-    /**
      * Dispatch request
      */
     public function index($action = '', $subaction = 'index') {
@@ -55,12 +45,15 @@ class Admin_Gear extends Gear {
         $rev_args = array_reverse($args);
         $class = array();
         $stop = FALSE;
+        Template::setGlobal('title',t('Control Panel'));
         while ($piece = array_pop($rev_args)) {
             $class[] = ucfirst($piece);
             $gear = implode('_', $class);
             if ($cogear->gears->$gear) {
                 $callback = array($cogear->gears->$gear, 'admin');
                 if (is_callable($callback)) {
+                    event('admin.gear.request',$cogear->gears->$gear);
+                    Template::setGlobal('title',$gear);
                     $cogear->router->exec($callback, $rev_args);
                     $stop = TRUE;
                     break;

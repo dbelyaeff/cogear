@@ -18,6 +18,7 @@ class Errors_Gear extends Gear {
      * Init
      */
     public function init(){
+        set_error_handler(array($this,'showError'));
         $cogear = getInstance();
         $cogear->errors = $this;
         parent::init();
@@ -29,6 +30,9 @@ class Errors_Gear extends Gear {
      */
     public function show($text,$title = ''){
         error($text,$title = '');
+    }
+    public function showError($errno,$error,$file,$line,$context){
+        error(t('Error in file <b>%s</b> was found at line <b>%d</b>: <blockquote>%s</blockquote>','Errors',$file,$line,$error),t('Error'));
     }
     public function _404(){
         $this->request();

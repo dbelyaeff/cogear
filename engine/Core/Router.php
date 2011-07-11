@@ -161,7 +161,7 @@ class Router {
      * @param   int     $num
      * @return array|string
      */
-    public function segments($num = NULL){
+    public function getSegments($num = NULL){
         return $num ? (isset($this->segments[$num]) ? $this->segments[$num] : NULL) : $this->segments;
     }
     /**

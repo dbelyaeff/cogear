@@ -33,6 +33,8 @@ return array (
     'Theme_Default' => 'Theme_Default_Gear',
     'Theme' => 'Theme_Gear',
     'Modal' => 'Modal_Gear',
+    'Layout' => 'Layout_Gear',
+    'GoBack' => 'GoBack_Gear',
   ),
   'ttl' => NULL,
 );
