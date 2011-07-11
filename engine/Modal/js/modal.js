@@ -67,8 +67,12 @@
         out: function(){
             var windows = this.container.find('.modal:visible');
             console.log(windows);
-            if(windows.length > 0){
+            if(windows.length > 1){
                 windows.first().slideUp();
+                this.repos();
+            }
+            else if(windows.length > 0){
+                windows.first().fadeOut();
                 this.repos();
             }
             else {
