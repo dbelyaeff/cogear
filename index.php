@@ -64,8 +64,9 @@ function debug() {
 //    $tpl = new Template('Core.debug');
 //    $tpl->args = $args;
 //    append('content',$tpl->render());
-    call_user_func_array('var_dump', $args);
-    echo '</pre>';
+//    call_user_func_array('var_dump', $args);
+//    echo '</pre>';
+    info(var_export($args,TRUE));
 }
 
 $aliases = array();
@@ -152,6 +153,5 @@ $cogear->config->load(SITE.DS.'config'.EXT);
 $cogear->loadGears();
 event('ignite');
 event('done');
-$cogear->response->send();
 $cogear->save();
 event('exit');

@@ -88,6 +88,7 @@ class Response extends Core_ArrayObject {
     public function __construct() {
         $cogear = getInstance();
         $this->headers = new Core_ArrayObject($this->headers);
+        hook('exit',array($this,'send'));
     }
 
     /**

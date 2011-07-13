@@ -194,10 +194,10 @@ class Db_ORM extends Options {
     public function filter($data,$type = 0){
         // Fullfill filters
         switch($type){
-            case self::IN:
+            case self::FILTER_IN:
                 $filters = $this->filters_in;
                 break;
-            case self::OUT:
+            case self::FILTER_OUT:
             default:
                 $filters = $this->filters_out;
         }
@@ -209,7 +209,7 @@ class Db_ORM extends Options {
                 foreach($filters[$field] as $callback){
                     // Apply filter if it's callable
                     if(is_callable($callback)){
-                        $data[$field] = call_user_func_array($filters[$field], array($value));
+                        $data[$field] = call_user_func_array($callback, array($value));
                     }
                 }
             }
