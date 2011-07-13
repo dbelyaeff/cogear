@@ -31,6 +31,29 @@ class Db_ORM extends Options {
      * @var array
      */
     protected $fields = array();
+    
+    /**
+     * Filters before save to DB
+     * 
+     * 'field' => array('filter1',…,'filterN'),
+     * 
+     * Pay attention that filter must be a real existing callback
+     * 
+     * @var array
+     */
+    protected $filters_in = array();
+    /**
+     * Filters after load from DB
+     * 
+     * 'field' => array('filter1',…,'filterN'),
+     * 
+     * Pay attention that filter must be a real existing callback
+     * 
+     * @var array
+     */
+    protected $filters_out = array();
+    const FILTER_IN = 0;
+    const FILTER_OUT = 1;
     /**
      * Current object
      * 
@@ -138,7 +161,7 @@ class Db_ORM extends Options {
         }
         if ($result = $cogear->db->get($this->table)->row()) {
             event('Db_ORM.find',$result);
-            $this->object = $result;
+            $this->object = $this->filter($result,self::FILTER_OUT);
         }
         return $result;
     }
@@ -153,9 +176,46 @@ class Db_ORM extends Options {
         if ($this->object) {
             $cogear->db->where($this->object->toArray());
         }
-        return $cogear->db->get($this->table)->result();
+        if($result = $cogear->db->get($this->table)->result()){
+            foreach($result as &$element){
+                $element = $this->filter($element,self::FILTER_OUT);
+            }
+        }
+        return $result;
     }
-
+    
+    /**
+     * Filter data
+     * 
+     * @param object $data
+     * @param int $type
+     * @return object
+     */
+    public function filter($data,$type = 0){
+        // Fullfill filters
+        switch($type){
+            case self::IN:
+                $filters = $this->filters_in;
+                break;
+            case self::OUT:
+            default:
+                $filters = $this->filters_out;
+        }
+        // Seeking through the data
+        foreach($data as $field=>$value){
+            // If filter isset for field
+            if(isset($filters[$field])){
+                // Seeking through filters
+                foreach($filters[$field] as $callback){
+                    // Apply filter if it's callable
+                    if(is_callable($callback)){
+                        $data[$field] = call_user_func_array($filters[$field], array($value));
+                    }
+                }
+            }
+        }
+        return $data;
+    }
     /**
      * Save
      *
@@ -167,11 +227,13 @@ class Db_ORM extends Options {
             return FALSE;
         } elseif (!isset($data[$this->primary]) OR !$cogear->db->get_where($this->table, array($this->primary => $data[$this->primary]))->row()) {
             event('Db_ORM.insert.before',$this);
+            $data = $this->filter($data,self::FILTER_IN);
             $this->object->{$this->primary} = $this->insert($data);
             event('Db_ORM.insert.after',$this);
             return $this->object->{$this->primary};
         } else {
             event('Db_ORM.update.before',$this);
+            $data = $this->filter($data,self::FILTER_IN);
             $this->update($data);
             event('Db_ORM.update.after',$this);
             return NULL;

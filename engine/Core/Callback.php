@@ -126,5 +126,13 @@ class Callback {
         }
         return NULL;
     }
-
+    
+    /**
+     * Magic __toString method
+     * 
+     * @return string
+     */
+    public function __toString(){
+        return serialize($this);
+    }
 }
