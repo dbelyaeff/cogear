@@ -222,6 +222,8 @@ final class Cogear implements Interface_Singleton {
                 $object = new $class;
                 if ($object->info('type') == Gear::CORE) {
                     $this->gears->$gear instanceof Gear OR $this->gears->$gear = $object;
+                    $lower_name = strtolower($gear);
+                    $this->gears->$lower_name =& $this->gears->$gear;
                     $this->active_gears[$gear] = $class;
                     $this->write_gears = TRUE;
                 }
