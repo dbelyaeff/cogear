@@ -1,28 +1,31 @@
 <?php
-
 /**
- * Modal gear
+ * Messages gear
  *
  * @author		Dmitriy Belyaev <admin@cogear.ru>
  * @copyright		Copyright (c) 2011, Dmitriy Belyaev
  * @license		http://cogear.ru/license.html
  * @link		http://cogear.ru
  * @package		Core
- * @subpackage          Modal
+ * @subpackage          messages
  * @version		$Id$
  */
-class Modal_Gear extends Gear {
+class Messages_Gear extends Gear {
 
-    protected $name = 'Modal';
-    protected $description = 'Handle with modal dialogs and windows.';
-    protected $package = 'Modal';
+    protected $name = 'Messages';
+    protected $description = 'Handle with messages dialogs and windows.';
     protected $order = 100;
-    protected $template = 'Modal.window';
+    protected $template = 'messages.window';
     protected $version = '0.1';
     const INFO = 0;
     const DIALOG = 1;
     const AJAX = 2;
 
+    public function index($action = NULL, $subaction = NULL){
+        info('asdasd');
+        success('asdasd');
+        error('asdasd');
+    }
     /**
      * Init
      */
@@ -32,7 +35,7 @@ class Modal_Gear extends Gear {
     }
 
     /**
-     * Show modal window
+     * Show messages window
      * 
      * @param string $content
      * @param string $title
@@ -62,90 +65,96 @@ class Modal_Gear extends Gear {
         $cogear->session->messages OR $cogear->session->messages = new Core_ArrayObject();
         $cogear->session->messages->append($data);
     }
-    
+
     /**
      * Show flashed messages
      */
-    public function showFlash(){
+    public function showFlash() {
         $cogear = getInstance();
-        if($cogear->session->messages){
-            foreach($cogear->session->messages as $offset=>$data){
-                call_user_func_array(array($this,'show'), $data);
+        if ($cogear->session->messages) {
+            foreach ($cogear->session->messages as $offset => $data) {
+                call_user_func_array(array($this, 'show'), $data);
             }
             $cogear->session->destroy('messages');
         }
     }
+
 }
 
 /**
- * Show success modal dialog
+ * Show success messages dialog
  * 
  * @param string $content
  * @param string $title
  * @param string $class 
  */
-function success($content=NULL,$title=NULL,$class='success'){
+function success($content=NULL, $title=NULL, $class='success') {
     $content OR $content = t('Operation is successfully completed.');
     $title OR $title = t('Success');
-    cogear()->modal->show($content,$title,$class);
+    cogear()->messages->show($content, $title, $class);
 }
+
 /**
- * Show flash success modal dialog
+ * Show flash success messages dialog
  * 
  * @param string $content
  * @param string $title
  * @param string $class 
  */
-function flash_success($content=NULL,$title=NULL,$class='success'){
+function flash_success($content=NULL, $title=NULL, $class='success') {
     $content OR $content = t('Operation is successfully completed.');
     $title OR $title = t('Success');
-    cogear()->modal->flash($content,$title,$class);
+    cogear()->messages->flash($content, $title, $class);
 }
+
 /**
- * Show info modal dialog
+ * Show info messages dialog
  * 
  * @param string $content
  * @param string $title
  * @param string $class 
  */
-function info($content=NULL,$title=NULL,$class='info'){
+function info($content=NULL, $title=NULL, $class='info') {
     $content OR $content = t('Please pay attetion to this notification.');
     $title OR $title = t('Info');
-    cogear()->modal->show($content,$title,$class);
+    cogear()->messages->show($content, $title, $class);
 }
+
 /**
- * Show flash info modal dialog
+ * Show flash info messages dialog
  * 
  * @param string $content
  * @param string $title
  * @param string $class 
  */
-function flash_info($content=NULL,$title=NULL,$class='info'){
+function flash_info($content=NULL, $title=NULL, $class='info') {
     $content OR $content = t('Please pay attetion to this notification.');
     $title OR $title = t('Info');
-    cogear()->modal->flash($content,$title,$class);
+    cogear()->messages->flash($content, $title, $class);
 }
+
 /**
- * Show error modal dialog
+ * Show error messages dialog
  * 
  * @param string $content
  * @param string $title
  * @param string $class 
  */
-function error($content=NULL,$title=NULL,$class='error'){
+function error($content=NULL, $title=NULL, $class='error') {
     $content OR $content = t('Operation failed.');
     $title OR $title = t('Failure');
-    cogear()->modal->show($content,$title,$class);
+    cogear()->messages->show($content, $title, $class);
 }
+
 /**
- * Show flash error modal dialog
+ * Show flash error messages dialog
  * 
  * @param string $content
  * @param string $title
  * @param string $class 
  */
-function flash_error($content=NULL,$title=NULL,$class='error'){
+function flash_error($content=NULL, $title=NULL, $class='error') {
     $content OR $content = t('Operation failed.');
     $title OR $title = t('Failure');
-    cogear()->modal->flash($content,$title,$class);
+    cogear()->messages->flash($content, $title, $class);
 }

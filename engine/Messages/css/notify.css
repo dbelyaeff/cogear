@@ -1,4 +1,4 @@
-.modal{
+.message{
     width: 500px;
     min-height: 50px;
     padding: 5px 15px;
@@ -13,26 +13,33 @@
     margin: 0 0 10px 0;
     position: relative;
 }
-.modal.success{
+.message.success{
     background-color: #8dc63f;
     border-color: #70b01a;
 }
-.modal.info{
+.message.info{
     background-color: #ebec8f;
     border-color: #aeb017;
     color: #000;
 }
-.modal.error{
+p.info{
+    background-color: #FFFFE0;
+    border-color: #E6DB55;
+    border-radius: 3px 3px 3px 3px;
+    border-style: solid;
+    border-width: 1px;
+    margin: 5px 15px 2px;
+    padding: 0 0.6em;
+    padding: 10px 15px;
+}
+.message.error{
     background-color: #fe3b77;
     border-color:  #dc0043;
 }
-.modal .close{
+.message .close{
     position: absolute;
     top: 2px;
     right: 5px;
     font-weight: bold;
     font-size: 12px;
-}
-.modal h1, .modal p {
-    font-family: "Century Gothic";
 }

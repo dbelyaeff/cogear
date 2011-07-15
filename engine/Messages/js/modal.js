@@ -84,5 +84,5 @@
 })(jQuery);
 
 $(document).ready(function(){
-    modal.render('.modal');
+    modal.render('.message');
 })
