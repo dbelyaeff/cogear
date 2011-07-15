@@ -11,25 +11,14 @@
  * @version		$Id$
  */
 class Db_Driver_Mysql extends Db_Driver_Abstract {
-    protected $methods = array(
-        'connect' => 'mysql_connect',
-        'select_db' => 'mysql_select_db',
-        'disconnect' => 'mysql_close',
-        'query' => 'mysql_query',
-        'error' => 'mysql_error',
-        'fetch' => 'mysql_fetch_assoc',
-        'escape' => 'mysql_real_escape_string',
-        'insert_id' => 'mysql_insert_id'
-
-    );
     /**
      * Connect to database
      *
      * @return boolean
      */
     public function connect() {
-        $this->connection = $this->methods['connect']($this->config['host'] . ':' . $this->config['port'], $this->config['user'], $this->config['pass']);
-        $this->methods['select_db']($this->config['database']);
+        $this->connection = mysql_connect($this->config['host'] . ':' . $this->config['port'], $this->config['user'], $this->config['pass']);
+        mysql_select_db($this->config['database']);
         $this->query('SET NAMES utf8;');
         return $this->connection ? TRUE : FALSE;
     }
@@ -40,7 +29,7 @@ class Db_Driver_Mysql extends Db_Driver_Abstract {
      * @return boolean
      */
     public function disconnect() {
-        return $this->methods['disconnect']($this->connection);
+        return mysql_close($this->connection);
     }
 
     /**
@@ -54,8 +43,8 @@ class Db_Driver_Mysql extends Db_Driver_Abstract {
             $query = $this->buildQuery();
         }
         self::start($query);
-        if (!$this->result = $this->methods['query']($query, $this->connection)) {
-            $this->silent OR $this->errors[] = $this->methods['error']();
+        if (!$this->result = mysql_query($query, $this->connection)) {
+            $this->silent OR $this->errors[] = mysql_errno();
         }
         $this->clear();
         self::stop($query);
@@ -116,7 +105,7 @@ class Db_Driver_Mysql extends Db_Driver_Abstract {
     public function result() {
         $result = array();
         if ($this->result) {
-            while ($row = $this->methods['fetch']($this->result)) {
+            while ($row = mysql_fetch_assoc($this->result)) {
                 $result[] = $row;
             }
         }
@@ -129,7 +118,7 @@ class Db_Driver_Mysql extends Db_Driver_Abstract {
      * @return Core_ArrayObject|NULL
      */
     public function row() {
-        return $this->result ? Core_ArrayObject::transform($this->methods['fetch']($this->result)) : NULL;
+        return $this->result ? Core_ArrayObject::transform(mysql_fetch_assoc($this->result)) : NULL;
     }
 
     /**
@@ -139,7 +128,7 @@ class Db_Driver_Mysql extends Db_Driver_Abstract {
      * @return string
      */
     public function escape($value) {
-        return $this->methods['escape']($value);
+        return mysql_real_escape_string($value);
     }
 
     /**
@@ -148,22 +137,22 @@ class Db_Driver_Mysql extends Db_Driver_Abstract {
      * @return int
      */
     public function getInsertId() {
-        return $this->methods['insert_id']();
+        return mysql_insert_id();
     }
 
     /**
      * Start transaction
      */
     public function transaction() {
-        $this->methods['query']('SET AUTOCOMMIT=0');
-        $this->methods['query']('START TRANSACTION');
+        $this->query('SET AUTOCOMMIT=0');
+        $this->query('START TRANSACTION');
     }
 
     /**
      * Commit transaction
      */
     public function commit() {
-        $this->methods['query']('COMMIT');
-        $this->methods['query']('SET AUTOCOMMIT=1');
+        $this->query('COMMIT');
+        $this->query('SET AUTOCOMMIT=1');
     }
 }

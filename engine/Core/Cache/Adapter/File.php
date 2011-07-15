@@ -13,13 +13,7 @@
  * @subpackage
  * @version		$Id$
  */
-class Cache_Adapter_File extends Options implements Interface_Cache {
-    /**
-     * Path to cache storage
-     *
-     * @var string
-     */
-    protected $path = '';
+class Cache_Adapter_File extends Cache_Adapter_Abstract{
     /**
      * Flag indicates cache state
      * 
@@ -47,8 +41,8 @@ class Cache_Adapter_File extends Options implements Interface_Cache {
         if(!$force && $this->enabled === FALSE){
             return NULL;
         }
-        $name = $this->prepareFilename($name);
-        $path = $this->path . DS . $name;
+        $name = $this->prepareKey($name);
+        $path = $this->options->path . DS . $name;
         if (file_exists($path)) {
             $data = Config::read($path,Config::AS_ARRAY);
             if($force){
@@ -79,7 +73,7 @@ class Cache_Adapter_File extends Options implements Interface_Cache {
      * @param int $ttl
      */
     public function write($name, $value, $tags = NULL, $ttl = NULL) {
-        $name = $this->prepareFilename($name);
+        $name = $this->prepareKey($name);
         $data = array(
             'value' => $value,
             'ttl' => $ttl,
@@ -90,7 +84,7 @@ class Cache_Adapter_File extends Options implements Interface_Cache {
                 $this->write('tags/'.$tag,'',array(),$ttl);
             }
         }
-        file_put_contents($this->path.DS.$name, PHP_FILE_PREFIX.'return '.var_export($data,TRUE).';');
+        file_put_contents($this->options->path.DS.$name, PHP_FILE_PREFIX.'return '.var_export($data,TRUE).';');
     }
     /**
      * Remove cached element
@@ -98,41 +92,17 @@ class Cache_Adapter_File extends Options implements Interface_Cache {
      * @param string $name 
      */
     public function remove($name){
-        @unlink($this->path.DS.$this->prepareFilename($name));
+        @unlink($this->options->path.DS.$this->prepareKey($name));
     }
-    /**
-     * Remove cached tags
-     *
-     * @param string|array $name
-     */
-    public function removeTags($name){
-        if(is_array($name)){
-            foreach($name as $tag){
-                $this->remove('tags/'.$tag);
-            }
-        }
-        else {
-            $this->remove('tags/'.$name);
-        }
-    }
+
     /**
      * Clear cache folder
      */
     public function clear(){
-        if($result = glob($this->path.DS.'*'.EXT)){
+        if($result = glob($this->options->path.DS.'*'.EXT)){
            foreach($result as $path){
                unlink($path);
            }
         }
     }
-    /**
-     *  Prepare filaname for cache
-     * @param string $name
-     * @return string
-     */
-    private function prepareFilename($name) {
-        $name = str_replace('/','_',$name.EXT);//md5($name . Cogear::key()) . EXT;
-        return $name;
-    }
-
 }

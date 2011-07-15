@@ -64,9 +64,9 @@ function debug() {
 //    $tpl = new Template('Core.debug');
 //    $tpl->args = $args;
 //    append('content',$tpl->render());
-//    call_user_func_array('var_dump', $args);
-//    echo '</pre>';
-    info(var_export($args,TRUE));
+    call_user_func_array('var_dump', $args);
+    echo '</pre>';
+//    info(var_export($args,TRUE));
 }
 
 $aliases = array();
@@ -135,7 +135,7 @@ if (($port = $cogear->request->get('SERVER_PORT')) != 80) {
 define('SITE_URL', $host);
 // Define uploads folder
 defined('UPLOADS') OR define('UPLOADS', SITE . DS . 'uploads');
-$cogear->system_cache = new Cache(array('adapter' => Cache::FILE, 'path' => SITE . DS . 'cache' . DS . 'system', 'enabled' => !DEVELOPMENT));
+$cogear->system_cache = new Cache(array('adapter' => 'Cache_Adapter_File', 'path' => SITE . DS . 'cache' . DS . 'system', 'enabled' => !DEVELOPMENT));
 $cogear->cache = $cogear->config->cache ? new Cache($cogear->config->cache) : $cogear->system_cache;
 if (!$options = $cogear->config->cookies) {
     $options = array(

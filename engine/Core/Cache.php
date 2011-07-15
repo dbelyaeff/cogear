@@ -13,22 +13,7 @@
  * @subpackage
  * @version		$Id$
  */
-class Cache implements Interface_Cache {
-
-    /**
-     * Cache adapter
-     *
-     * @var object
-     */
-    private $adapter;
-    /**
-     * Constants
-     */
-    const FILE = 0;
-    const MEMCACHE = 1;
-    const APC = 2;
-    const XCACHE = 3;
-    const EACCELERATOR = 4;
+class Cache extends Adapter {
 
     /**
      * Initiate cache
@@ -36,73 +21,12 @@ class Cache implements Interface_Cache {
      * @param array $options
      */
     public function __construct($options = array()) {
-        $class = 'Cache_Adapter_';
-        isset($options['adapter']) OR trigger_error('No cache adapter is defined.');
-        switch ($options['adapter']) {
-            case self::FILE:
-                $class .= 'File';
-                break;
-            case self::MEMCACHE:
-                $class .= 'Memcache';
-                break;
-            case self::APC:
-                $class .= 'Apc';
-                break;
-            case self::XCACHE:
-                $class .= 'Xcache';
-                break;
-            case self::EACCELERATOR;
-                $class .= 'Eaccelerator';
-                break;
-        }
-        if (class_exists($class)) {
-            $this->adapter = new $class($options);
+        isset($options['adapter']) OR exit('Cache adapter is not defined.');
+        if (class_exists($options['adapter'])) {
+            $this->adapter = new $options['adapter']($options);
+        } else {
+            exit('No cache adapter is defined or class doesn\'t exists.');
         }
     }
 
-    /**
-     * Read cache
-     * 
-     * @param string $name
-     * @param string $force
-     * @return  mixed
-     */
-    public function read($name, $force=NULL) {
-        return $this->adapter->read($name, $force);
-    }
-
-    /**
-     * Write cache
-     *
-     * @param string $name
-     * @param mixed $value
-     * @param array $tags
-     * @param int   $ttl
-     */
-    public function write($name, $value, $tags = NULL, $ttl = NULL) {
-        $value = $value instanceof ArrayObject ? $value->toArray() : $value;
-        $this->adapter->write($name, $value, $tags, $ttl);
-    }
-
-    /**
-     * Remove cache by key
-     * @param string $name 
-     */
-    public function remove($name) {
-        $this->adapter->remove($name);
-    }
-    /**
-     * Remove cache by key
-     * @param string $name
-     */
-    public function removeTags($name) {
-        $this->adapter->removeTags($name);
-    }
-
-    /**
-     * Clear cache
-     */
-    public function clear() {
-        $this->adapter->clear();
-    }
 }

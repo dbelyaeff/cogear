@@ -1,11 +1,11 @@
 <?php
 return array(
     'database' => array(
-        'dsn' => 'mysql://root@localhost/cogear',
+        'dsn' => 'mysqli://root@localhost/cogear',
     ),
     'permitted_uri_chars' => 'а-яa-z0-9\s',
     'cache' => array(
-        'adapter' => Cache::FILE,
+        'adapter' => 'Cache_Adapter_File',
         'enabled' => TRUE,
         'path' => SITE . DS . 'cache',
     ),

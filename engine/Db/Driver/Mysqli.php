@@ -11,15 +11,148 @@
  * @version		$Id$
  */
 class Db_Driver_Mysqli extends Db_Driver_Mysql {
-    protected $methods = array(
-        'connect' => 'mysqli_connect',
-        'select_db' => 'mysqli_select_db',
-        'disconnect' => 'mysqli_close',
-        'query' => 'mysqli_query',
-        'error' => 'mysqli_error',
-        'fetch' => 'mysqli_fetch_assoc',
-        'escape' => 'mysqli_real_escape_string',
-        'insert_id' => 'mysqli_insert_id'
+    /**
+     * Connect to database
+     *
+     * @return boolean
+     */
+    public function connect() {
+        $this->connection = mysqli_connect($this->config['host'] . ':' . $this->config['port'], $this->config['user'], $this->config['pass']);
+        mysqli_select_db($this->connection,$this->config['database']);
+        $this->query('SET NAMES utf8;');
+        return $this->connection ? TRUE : FALSE;
+    }
 
-    );
+    /**
+     * Disconnect from database
+     *
+     * @return boolean
+     */
+    public function disconnect() {
+        return mysqli_close($this->connection);
+    }
+
+    /**
+     * Execute query
+     *
+     * @param string $query
+     * @return Db_Driver_Mysql
+     */
+    public function query($query = '') {
+        if (!$query) {
+            $query = $this->buildQuery();
+        }
+        self::start($query);
+        if (!$this->result = mysqli_query($this->connection,$query)) {
+            $this->silent OR $this->errors[] = mysqli_errno($this->connecton);
+        }
+        $this->clear();
+        self::stop($query);
+        return $this->errors ? FALSE : $this;
+    }
+
+    /**
+     * Get fields from table
+     *
+     * @param string $table
+     * @return object
+     */
+    public function getFieldsQuery($table) {
+        return  $this->query('SHOW COLUMNS FROM ' . $table) ? $this->result() : NULL;
+    }
+
+    /**
+     * Build query
+     *
+     * @return string
+     */
+    public function buildQuery() {
+        $query = array();
+        extract($this->_query);
+        $from = $from[0];
+        if ($insert) {
+            $values = $this->filterFields($from, $insert);
+            $into = array_keys($values);
+            $values = array_values($values);
+            $query[] = 'INSERT INTO ' . $this->prepareTableName($from) . ' (' . $this->prepareValues($into, '') . ') VALUES (' . $this->prepareValues($values) . ')';
+        } elseif ($update) {
+            $values = $this->filterFields($from, $update);
+            $query[] = 'UPDATE ' . $this->prepareTableName($from) . ' SET ' . $this->prepareValues($values);
+        } elseif ($delete) {
+            $query[] = 'DELETE FROM ' . $this->prepareTableName($from);
+        } else {
+            $select = sizeof($select) < 1 ? '*' : implode(', ',$select);
+            $query[] = 'SELECT ' . $select;
+            $query[] = ' FROM ' . $this->prepareTableName($from);
+        }
+        $join && $query[] = implode(' ', $join);
+        if($where){
+            $where = $this->filterFields($from,$where);
+            $where && $query[] = ' WHERE ' . $this->argsToString($where, ' = ');
+        }
+        $group && $query[] = ' GROUP BY ' . implode(', ', $group);
+        $having && $query[] = ' HAVING ' . implode(', ', $having);
+        $order && $query[] = ' ORDER BY ' . implode(', ', $order);
+        $limit && $limit[0] && $query[] = ' LIMIT ' . $limit[0] . ($limit[1] ? ', ' . $limit[1] : '');
+        return $this->query = implode($query);
+    }
+
+    /**
+     * Result
+     *
+     * @return Core_ArrayObject|NULL
+     */
+    public function result() {
+        $result = array();
+        if ($this->result) {
+            while ($row = mysqli_fetch_assoc($this->result)) {
+                $result[] = $row;
+            }
+        }
+        return $result ? Core_ArrayObject::transform($result) : NULL;
+    }
+
+    /**
+     * Row
+     *
+     * @return Core_ArrayObject|NULL
+     */
+    public function row() {
+        return $this->result ? Core_ArrayObject::transform(mysqli_fetch_assoc($this->result)) : NULL;
+    }
+
+    /**
+     * Prepare variable for statement
+     *
+     * @param string $value
+     * @return string
+     */
+    public function escape($value) {
+        return mysqli_real_escape_string($this->connection,$value);
+    }
+
+    /**
+     * Get last insert id
+     *
+     * @return int
+     */
+    public function getInsertId() {
+        return mysqli_insert_id($this->connection);
+    }
+
+    /**
+     * Start transaction
+     */
+    public function transaction() {
+        $this->query('SET AUTOCOMMIT=0');
+        $this->query('START TRANSACTION');
+    }
+
+    /**
+     * Commit transaction
+     */
+    public function commit() {
+        $this->query('COMMIT');
+        $this->query('SET AUTOCOMMIT=1');
+    }
 }
