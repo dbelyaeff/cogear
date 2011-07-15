@@ -9,6 +9,10 @@
  * @package		Core
  * @subpackage          messages
  * @version		$Id$
+ * 
+ * @todo
+ * 
+ * Integrate with jGrowl.
  */
 class Messages_Gear extends Gear {
 
@@ -48,7 +52,7 @@ class Messages_Gear extends Gear {
         $tpl->content = $content;
         $tpl->class = $class;
         $tpl->type = $type ? $type : self::INFO;
-        append('content', $tpl->render());
+        inject('content', $tpl->render(),0);
     }
 
     /**
