@@ -34,6 +34,7 @@ abstract class Options extends Core_ArrayObject{
      * @param string $value
      */
     public function set($name,$value = NULL){
+        if(!$name) return;
         if(is_array($name) OR $name instanceof ArrayObject){
             is_array($name) && $name = new Core_ArrayObject($name);
             foreach($name as $key=>$value){
