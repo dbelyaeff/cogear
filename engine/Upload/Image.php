@@ -65,6 +65,8 @@ class Upload_Image extends Upload_File{
             $this->options->resize && $image->resize($this->options->resize);
             // Crop
             $this->options->crop && $image->crop($this->options->crop);
+            // Size & Crop
+            $this->options->sizecrop && $image->sizecrop($this->options->sizecrop);
             // Watermark
             $this->options->watermark && $image->watermark($this->options->watermark);
             $image->save();

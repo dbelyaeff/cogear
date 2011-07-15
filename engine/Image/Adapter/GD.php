@@ -19,6 +19,7 @@ class Image_Adapter_GD extends Image_Adapter_Abstract {
         'create' => 'imagecreatefrom',
         'render' => 'image',
     );
+
     /**
      * Set driver by image type
      */
@@ -42,16 +43,17 @@ class Image_Adapter_GD extends Image_Adapter_Abstract {
                 break;
         }
     }
+
     /**
      * Create new Image
      * 
      * @param   int $width
      * @param   int $height
      */
-    public function create($width,$height){
-        return imagecreatetruecolor($width,$height);
+    public function create($width, $height) {
+        return imagecreatetruecolor($width, $height);
     }
-    
+
     /**
      * Resize
      * 
@@ -62,6 +64,7 @@ class Image_Adapter_GD extends Image_Adapter_Abstract {
         imagecopyresized($this->destination, $this->source, 0, 0, 0, 0, $size->width, $size->height, $this->info->width, $this->info->height);
         $this->info->width = $size->width;
         $this->info->height = $size->height;
+        $this->exchange();
         return $this;
     }
 
@@ -72,23 +75,38 @@ class Image_Adapter_GD extends Image_Adapter_Abstract {
      * @param double    $x
      * @param doble     $y
      */
-    public function crop($size, $x=0.5, $y=0.5) {
+    public function crop($size, $x=0.5, $y=0., $maintain_ratio = NULL) {
+        $maintain_ratio !== NULL && $this->options->maintain_ratio = $maintain_ratio;
         $size = $this->prepare($size);
         $from = new stdClass();
         $to = new stdClass();
         $from->x = $to->x = 0;
         $from->y = $to->y = 0;
-        if($this->info->width > $size->width){
-            $from->x = $this->info->width*$x - $size->width/2;
+        if ($this->info->width > $size->width) {
+            $from->x = $this->info->width * $x - $size->width / 2;
             $to->x = $from->x + $size->width;
         }
-        if($this->info->height > $size->height){
-            $from->y = $this->info->height*$y - $size->height/2;
+        if ($this->info->height > $size->height) {
+            $from->y = $this->info->height * $y - $size->height / 2;
             $to->y = $from->y + $size->height;
         }
-        imagecopyresampled($this->destination, $this->source, 0, 0, $from->x, $from->y, $size->width, $size->height, $this->info->width, $this->info->height);
-        $this->info->width = $size->width;
-        $this->info->height = $size->height;
+        imagecopy($this->destination, $this->source, 0, 0, $from->x, $from->y, $size->width, $size->height);
+        $this->exchange($size);
+        return $this;
+    }
+
+    /**
+     * Resize to fit size and than crop
+     * 
+     * @param string $size
+     * @param float $x
+     * @param float $y 
+     */
+    public function sizecrop($size, $x=0.5, $y=0.5) {
+        $resize = $this->prepare($size);
+        $side = $resize->width > $resize->height ? $resize->height : $resize->width;
+        $this->resize($side . 'x' . $side);
+        $this->crop($size, $x, $y, FALSE);
         return $this;
     }
 
@@ -122,47 +140,47 @@ class Image_Adapter_GD extends Image_Adapter_Abstract {
     public function watermark($watermark = NULL, $zone = 9, $opacity = 100) {
         $watermark && file_exists($watermark) OR $watermark = config('watermark', ENGINE . DS . 'Core.' . DS . 'images' . DS . 'watermark.png');
         $this->prepare();
-        imagealphablending($this->destination,TRUE);
+        imagealphablending($this->destination, TRUE);
 //        imagesavealpha($this->destination, TRUE);
         $watermark = new self($watermark);
         imagecopy($this->destination, $this->source, 0, 0, 0, 0, $this->info->width, $this->info->height);
-        switch($zone){
+        switch ($zone) {
             case 1:
                 $top = 0;
                 $left = 0;
                 break;
             case 2:
                 $top = 0;
-                $left = ($this->info->width-$watermark->info->width)/2;
+                $left = ($this->info->width - $watermark->info->width) / 2;
                 break;
             case 3:
                 $top = 0;
-                $left = ($this->info->width-$watermark->info->width);
+                $left = ($this->info->width - $watermark->info->width);
                 break;
             case 4:
-                $top = ($this->info->height-$watermark->info->height)/2;
+                $top = ($this->info->height - $watermark->info->height) / 2;
                 $left = 0;
                 break;
             case 5:
-                $top = ($this->info->height-$watermark->info->height)/2;
-                $left = ($this->info->width-$watermark->info->width)/2;
+                $top = ($this->info->height - $watermark->info->height) / 2;
+                $left = ($this->info->width - $watermark->info->width) / 2;
                 break;
             case 6:
-                $top = ($this->info->height-$watermark->info->height)/2;
-                $left = ($this->info->width-$watermark->info->width);
+                $top = ($this->info->height - $watermark->info->height) / 2;
+                $left = ($this->info->width - $watermark->info->width);
                 break;
             case 7:
-                $top = ($this->info->height-$watermark->info->height);
+                $top = ($this->info->height - $watermark->info->height);
                 $left = 0;
                 break;
             case 8:
-                $top = ($this->info->height-$watermark->info->height);
-                $left = ($this->info->width-$watermark->info->width)/2;
+                $top = ($this->info->height - $watermark->info->height);
+                $left = ($this->info->width - $watermark->info->width) / 2;
                 break;
             case 9:
             default:
-                $top = ($this->info->height-$watermark->info->height);
-                $left = ($this->info->width-$watermark->info->width);
+                $top = ($this->info->height - $watermark->info->height);
+                $left = ($this->info->width - $watermark->info->width);
         }
         imagecopymerge($this->destination, $watermark->source, $left, $top, 0, 0, $watermark->info->width, $watermark->info->height, $opacity);
         $watermark->clear();
@@ -222,7 +240,7 @@ class Image_Adapter_GD extends Image_Adapter_Abstract {
      */
     public function clear() {
         @imagedestroy($this->source);
-        @imagedestroy($this->destination);
+        //@imagedestroy($this->destination);
     }
 
 }
