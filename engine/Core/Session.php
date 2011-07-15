@@ -13,7 +13,7 @@
  * @subpackage
  * @version     $Id$
  */
-class Session extends Options implements Interface_Factory {
+class Session implements Interface_Factory {
 
     /**
      * Self instances
@@ -91,7 +91,7 @@ class Session extends Options implements Interface_Factory {
                     @ini_set('session.' . $key, $option);
             }
         }
-        $this->set($options);
+        $this->options += $options;
         $this->run();
     }
 
