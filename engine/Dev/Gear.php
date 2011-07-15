@@ -42,7 +42,7 @@ class Dev_Gear extends Gear {
      * @param object $cp 
      */
     public function hookUserPanel($cp) {
-        $cp->{Url::gear('Dev')} = icon('database-share', 'fugue') . t('Developer');
+        $cp->{Url::gear('dev')} = icon('database-share', 'fugue') . t('Developer');
     }
 
     /**
@@ -68,7 +68,7 @@ class Dev_Gear extends Gear {
         if (!isset($this->points[$name])) {
             $this->points[$name] = array(
                 'time' => microtime() - IGNITE,
-                'memory' => memory_get_usage(),
+                'memory' => memory_get_usage(TRUE),
             );
         }
     }
