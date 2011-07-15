@@ -23,7 +23,6 @@ class User_Gear extends Gear {
      */
     public function init() {
         parent::init();
-        $cogear = getInstance();
         $this->current = new User_Object();
         $this->current->init();
         hook('menu.admin.sidebar', array($this, 'adminMenuLink'));
@@ -150,8 +149,7 @@ class User_Gear extends Gear {
         if (!$user->find()) {
             return _404();
         }
-        $cogear = getInstance();
-        if (!access('user edit_all') OR $cogear->user->id != $user->id) {
+        if (!access('user edit_all') OR $this->id != $user->id) {
             return _403();
         }
         $this->renderUserInfo($user);
@@ -166,7 +164,6 @@ class User_Gear extends Gear {
             $user->update();
         }
         if ($result = $form->result()) {
-            $cogear = getInstance();
             if ($user->login != $result['login']) {
                 $redirect = Url::gear('user') . $result['login'];
             }
@@ -181,8 +178,8 @@ class User_Gear extends Gear {
                 d('User edit');
                 flash_success(t('User data saved!'), t('Success'));
                 d();
-                if ($user->id == $cogear->user->id) {
-                    $cogear->user->store($user->object()->toArray());
+                if ($user->id == $this->id) {
+                    $this->store($user->object()->toArray());
                 }
                 redirect(Url::gear('user') . $user->login);
             }
@@ -199,7 +196,6 @@ class User_Gear extends Gear {
         }
         $form = new Form('User.login');
         if ($data = $form->result()) {
-            $cogear = getInstance();
             $this->object($data);
             $this->hashPassword();
             if ($this->find()) {
@@ -227,7 +223,6 @@ class User_Gear extends Gear {
     public function lostpassword_action() {
         $form = new Form('User.lostpassword');
         if ($data = $form->result()) {
-            $cogear = getInstance();
             $this->object($data);
             if ($this->find()) {
 
