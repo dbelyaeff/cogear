@@ -48,6 +48,12 @@ final class Cogear implements Interface_Singleton {
      */
     private $installed_gears = array();
     /**
+     * Flag inditcates gears state
+     * 
+     * @var boolean 
+     */
+    private $gears_are_loaded;
+    /**
      * Flag to update gears system caches
      * @var boolean
      */
@@ -91,14 +97,14 @@ final class Cogear implements Interface_Singleton {
      * @param   string  $event
      * @param   callback  $callback
      */
-    public function hook($event, $callback,$position = NULL) {
+    public function hook($event, $callback, $position = NULL) {
         $args = func_get_args();
         $this->events->$event OR $this->events->$event = new Event();
         $args = array_slice($args, 3);
         $callback = new Callback($callback);
         $callback->setArgs($args);
-        if($position !== NULL){
-            $this->events->$event->inject($callback,$position);
+        if ($position !== NULL) {
+            $this->events->$event->inject($callback, $position);
         } else {
             $this->events->$event->append($callback);
         }
@@ -174,15 +180,14 @@ final class Cogear implements Interface_Singleton {
         $i = 0;
         $size = sizeof($pieces);
         foreach ($pieces as $piece) {
-            if($i < $size-1){
+            if ($i < $size - 1) {
                 if ($current->$piece && $current->$piece instanceof Core_ArrayObject) {
                     $current = $current->$piece;
                 } else {
                     $current->$piece = new Core_ArrayObject();
                     $current = $current->$piece;
                 }
-            }
-            else {
+            } else {
                 $current->$piece = $value;
             }
             $i++;
@@ -196,6 +201,8 @@ final class Cogear implements Interface_Singleton {
      *  Load gears 
      */
     public function loadGears() {
+        if ($this->gears_are_loaded)
+            return;
         if (!$this->all_gears = $this->system_cache->read('gears/all')) {
             $this->all_gears = array();
             if ($gears_paths = array_merge(find('*' . DS . self::GEAR . EXT), find('*' . DS . '*' . DS . self::GEAR . EXT))) {
@@ -213,17 +220,17 @@ final class Cogear implements Interface_Singleton {
             }
             $this->system_cache->write('gears/all', $this->all_gears);
         }
-        $this->installed_gears = (array) $this->system_cache->read('gears/installed', TRUE);
-        $this->active_gears = (array) $this->system_cache->read('gears/active', TRUE);
+        $this->installed_gears = $this->system_cache->read('gears/installed', TRUE);
+        $this->active_gears = $this->system_cache->read('gears/active', TRUE);
         foreach ($this->all_gears as $gear => $class) {
             if (isset($this->active_gears[$gear])) {
+                $gear = strtolower($gear);
                 $this->gears->$gear instanceof Gear OR class_exists($class) && $this->gears->$gear = new $class;
             } elseif (DEVELOPMENT && class_exists($class)) {
                 $object = new $class;
                 if ($object->info('type') == Gear::CORE) {
+                    $gear = strtolower($gear);
                     $this->gears->$gear instanceof Gear OR $this->gears->$gear = $object;
-                    $lower_name = strtolower($gear);
-                    $this->gears->$lower_name =& $this->gears->$gear;
                     $this->active_gears[$gear] = $class;
                     $this->write_gears = TRUE;
                 }
@@ -235,6 +242,7 @@ final class Cogear implements Interface_Singleton {
         }
         Template::bindGlobal('cogear', $this);
         event('gears.loaded', $this);
+        $this->gears_are_loaded = TRUE;
     }
 
     /**
@@ -255,7 +263,6 @@ final class Cogear implements Interface_Singleton {
         return $this->active_gears;
     }
 
-   
     /**
      * Install gear
      * @param string $gear
@@ -285,7 +292,7 @@ final class Cogear implements Interface_Singleton {
         }
         return $this;
     }
-    
+
     /**
      * Update gear
      * @param string $gear
@@ -381,7 +388,7 @@ final class Cogear implements Interface_Singleton {
         if ($this->write_config) {
             $settings = new Config(SITE . DS . 'settings' . EXT);
             $this->config->differ($settings);
-            $this->config->write(SITE.DS.'config'.EXT);
+            $this->config->write(SITE . DS . 'config' . EXT);
         }
         event('clear');
     }

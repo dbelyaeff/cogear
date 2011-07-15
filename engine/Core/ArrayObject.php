@@ -182,7 +182,7 @@ class Core_ArrayObject extends ArrayObject {
      * @param   int|string     $position
      * @param   int $order
      */
-    public function inject($value, $position=0, $order = self::BEFORE, $key = NULL) {
+    public function inject($value, $position=0, $order = self::BEFORE) {
         $result = array();
         $it = $this->getIterator();
         $i = 0;
@@ -196,7 +196,7 @@ class Core_ArrayObject extends ArrayObject {
                     $result[] = $value;
                 }
             } elseif (is_string($position)) {
-                $key OR $key = $position;
+                $key = $position;
                 if ($order == self::BEFORE && $position == $it->key()) {
                     $result[$key] = $value;
                 }
@@ -250,6 +250,23 @@ class Core_ArrayObject extends ArrayObject {
      */
     public function __toString() {
         return implode("\n", $this->getArrayCopy());
+    }
+    
+    /**
+     * Render object
+     * 
+     * @return string
+     */
+    public function render(){
+        return $this->toString();
+    }
+    /**
+     * 
+     * 
+     * @param int $position 
+     */
+    public function show($position = 0,$where = 0){
+        $position ? inject('content',$this->render(),$position,$where) : append('content',$this->render());
     }
 
     /**

@@ -15,7 +15,7 @@ final class HTML {
 
     public static $default_attributes = array('class', 'id', 'rel');
     public static $allowed_attributes = array(
-        'a' => array('href', 'target'),
+        'a' => array('href', 'target','rel'),
         'img' => array('width', 'height', 'alt', 'title','src'),
         'form' => array('action', 'method', 'enctype'),
         'input' => array('type', 'value', 'disabled', 'checked', 'name'),

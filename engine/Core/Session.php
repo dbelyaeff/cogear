@@ -84,11 +84,11 @@ class Session extends Options implements Interface_Factory {
         foreach (self::$iniOptions as $key => $option) {
             if (isset($options[$key])) {
                 if ($value = isset($options[$key]) ? $options[$key] : $option) {
-                    ini_set('session.' . $key, $value);
+                    @ini_set('session.' . $key, $value);
                 }
             }
             elseif($option){
-                    ini_set('session.' . $key, $option);
+                    @ini_set('session.' . $key, $option);
             }
         }
         $this->set($options);

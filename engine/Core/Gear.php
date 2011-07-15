@@ -176,7 +176,15 @@ abstract class Gear extends Cogearable{
         $this->getSettings();
         $this->file = new SplFileInfo($this->path);
     }
-
+    
+    public function __sleep(){
+        return array('name','description','version','core','type','package','email','author','site','path','dir','folder','order','base','settings');
+    }
+    
+    public function wakeup(){
+        $this->reflection = new ReflectionClass($this);
+        $this->file = new SplFileInfo($this->path);
+    }
     /**
      * Initialize
      */

@@ -117,6 +117,14 @@ class Filesystem {
         return $dir;
     }
     /**
+     * Delete file
+     * 
+     * @param string $file 
+     */
+    public static function delete($file){
+        @unlink($file);
+    }
+    /**
      * Read file
      *  
      * @param string $path

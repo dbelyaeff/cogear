@@ -176,20 +176,12 @@ class Template_Abstract extends Options {
      * @return  string
      */
     public function render() {
-        $cogear = getInstance();
-        $cogear->event('template.render', $this);
+        event('template.render', $this);
         ob_start();
         self::$global_vars && extract(self::$global_vars);
         $this->vars && extract($this->vars);
         include $this->path;
         $output = ob_get_clean();
         return $output;
-    }
-    
-    /**
-     * Send template directly to theme output
-     */
-    public function show(){
-        append('content',$this->render());
     }
 }

@@ -20,7 +20,6 @@ class Cookie {
      * @param string $path
      */
     public static function set($name,$value,$expire = NULL,$path = NULL){
-        $cogear = getInstance();
         // By default cookie lifetime is month
         $expire OR $expire = 2592000;
         $path OR $path = '/';

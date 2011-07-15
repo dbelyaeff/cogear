@@ -11,7 +11,7 @@
  * @subpackage
  * @version		$Id$
  */
-class Callback {
+class Callback extends Cogearable{
 
     protected $callback;
     protected $args = array();
@@ -88,7 +88,6 @@ class Callback {
     public static function prepare($callback) {
         if (!is_callable($callback)) {
             if (is_string($callback)) {
-                $cogear = getInstance();
                 $callback = self::stringToAction($callback);
                 $callback[0] = self::fetchObject($callback[0]);
                 return is_callable($callback) ? $callback : NULL;
@@ -106,12 +105,11 @@ class Callback {
      * @return  object
      */
     public static function fetchObject($class) {
-        $cogear = getInstance();
         $element = lcfirst($class);
         if (strpos($class, '_Gear')) {
             $gear_name = str_replace('_Gear', '', $class);
-            if ($cogear->gears->$gear_name) {
-                return $cogear->gears->$gear_name;
+            if ($this->gears->$gear_name) {
+                return $this->gears->$gear_name;
             }
             return new $class;
         } elseif (isset($cogear->$element)) {

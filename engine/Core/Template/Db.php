@@ -32,7 +32,6 @@ class Template_Db extends Template_Abstract {
         $cogear = getInstance();
         if(!$this->code = $cogear->cache->read('templates/'.$this->name)){
           if($template = $cogear->db->where('name',$this->name)->order('last_update','DESC')->get('templates')->row()){
-              $this->code = $template->code;
               $cogear->cache->write('templates/'.$this->name,$this->code);
           }
           else {
