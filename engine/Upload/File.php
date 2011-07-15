@@ -54,6 +54,12 @@ class Upload_File extends Options {
      * @var boolean
      */
     public $isRequired;
+    /**
+     * Upload file template
+     * 
+     * @var string
+     */
+    protected $tpl = 'Upload.file';
 
     /**
      * Constructor
@@ -172,6 +178,15 @@ class Upload_File extends Options {
         // Remove all unneseccary chars from filename
         $filename = Url::name($filename);
         return $filename;
+    }
+    
+    /**
+     * Render upload button
+     */
+    public function render(){
+        $tpl = new Template($this->tpl);
+        $tpl->name = $this->name;
+        return $tpl->render();
     }
 
 }
