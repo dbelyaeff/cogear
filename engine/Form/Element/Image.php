@@ -16,10 +16,13 @@ class Form_Element_Image extends Form_Element_Abstract {
     protected $image;
     protected $resize;
     protected $crop;
+    protected $sizecrop;
     protected $watermark;
     protected $thumbnails;
     protected $path;
     protected $maxsize;
+    protected $min;
+    protected $max;
     protected $overwrite = TRUE;
     protected $rename;
     protected $allowed_types = array('jpg','gif','png');
