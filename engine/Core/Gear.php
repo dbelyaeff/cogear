@@ -424,8 +424,9 @@ abstract class Gear extends Cogearable{
      * Dispatcher
      * @param string $action
      */
-    public function index($action = 'index', $subaction=NULL) {
-        method_exists($this, $action.'_action') && $this->{$action.'_action'}($subaction);
+    public function index() {
+        $args = func_get_args();
+        method_exists($this, $args[0].'_action') && call_user_func_array(array($this,$args[0].'_action'),array_slice($args,1));
     }
 
 }
