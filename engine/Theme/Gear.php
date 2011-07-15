@@ -43,15 +43,16 @@ class Theme_Gear extends Gear {
      * @param   object  $Gear
      */
     public function handleGearRequest($Gear) {
-        $this->theme($Gear->settings->theme);
+        $this->choose($Gear->settings->theme);
     }
 
     /**
      * Init current theme
      *  
-     * @param type $theme 
+     * @param string $theme 
+     * @param boolean $final
      */
-    public function theme($theme = NULL) {
+    public function choose($theme = NULL) {
         $theme OR $theme = config('theme.current', 'Theme_Default');
         $class = self::themeToClass($theme);
         if (!class_exists($class)) {

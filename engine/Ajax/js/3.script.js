@@ -1,6 +1,5 @@
 $(document).ready(function(){
     $(window).hashchange(function(){
-        console.log(location.hash);
         if(location.hash.charAt(1) == '/' || location.hash.charAt(1) == '?'){
             url = location.hash.substr(1);
             $.getJSON(url,function(data){

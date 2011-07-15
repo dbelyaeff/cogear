@@ -16,6 +16,8 @@ class Meta_Gear extends Gear {
     protected $name = 'Meta';
     protected $description = 'Meta information handler.';
     protected $order = -10;
+    protected $type = Gear::CORE;
+   
     public $info = array(
         'title' => array(),
         'keywords' => array(),
@@ -55,8 +57,7 @@ class Meta_Gear extends Gear {
      * @param string $element 
      */
     public function menuTitleHook($element){
-        $cogear = getInstance();
-        $cogear->meta->info->title->inject(trim(strip_tags($element->value)),$cogear->meta->info->title->count()-1);
+        $this->info->title->inject(trim(strip_tags($element->value)),$this->info->title->count()-1);
     }
     /**
      * Generate <head> output

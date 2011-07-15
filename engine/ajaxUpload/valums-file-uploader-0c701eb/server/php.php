@@ -114,7 +114,7 @@ class qqFileUploader {
             return array('error' => 'No files were uploaded.');
         }
         
-        $size = $this->file->getSize();
+        $size = $this->file->getSizeFromString();
         
         if ($size == 0) {
             return array('error' => 'File is empty');

@@ -20,8 +20,7 @@ class jQueryUI_Gear extends Gear{
     );
     
     public function init(){
-        $cogear = getInstance();
         parent::init();
-        $cogear->assets->addStyle($this->dir.DS.'css'.DS.$this->settings->theme.DS.'jquery-ui-1.8.11.custom.css');
+        $this->assets->addStyle($this->dir.DS.'css'.DS.$this->settings->theme.DS.'jquery-ui-1.8.11.custom.css');
     }
 }

@@ -32,9 +32,8 @@ class I18n_Gear extends Gear {
      * Constructor
      */
     public function __construct(){
-        $cogear = getInstance();
         $this->locale = config('site.locale','en');
-        $this->date_format = $cogear->get('site.date_format','Y-m-d H:i');
+        $this->date_format = config('site.date_format','Y-m-d H:i');
         date_default_timezone_set(config('site.timezone','Europe/Moscow'));
         parent::__construct();
     }
@@ -103,7 +102,7 @@ class I18n_Gear extends Gear {
  */
 function t($text, $domain = '') {
     $cogear = getInstance();
-    $result = $cogear->I18n->translate($text,$domain);
+    $result = $cogear->i18n->translate($text,$domain);
     if(func_num_args () > 2){
         $args = func_get_args();
         $args = array_slice($args, 2);
@@ -127,7 +126,7 @@ function t($text, $domain = '') {
  */
 function d($domain = ''){
     $cogear = getInstance();
-    $cogear->I18n->setDomain($domain);
+    $cogear->i18n->setDomain($domain);
 }
 
 /**

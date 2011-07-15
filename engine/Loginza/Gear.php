@@ -17,7 +17,7 @@ class Loginza_Gear extends Gear {
 
     protected $name = 'Loginza';
     protected $description = 'Public serivce to login and register on site via variety of social services.';
-    protected $type = Gear::CORE;
+    protected $type = Gear::MODULE;
     protected $package = '';
     protected $order = 0;
     protected $api = 0;

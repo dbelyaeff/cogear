@@ -36,10 +36,9 @@ class Cron_Gear extends Gear {
      * Check cron
      */
     public function check() {
-        $cogear = getInstance();
-        if (time() - $cogear->get('cron.last_run') > self::STEP) {
+        if (time() - $this->get('cron.last_run') > self::STEP) {
             // Set cron execute time
-            $cogear->set('cron.last_run', time());
+            $this->set('cron.last_run', time());
             // It's highly important to run cron after server response will be sent to user
             hook('after',array($this,'poorMansCron'));
         }

@@ -24,7 +24,6 @@ class Icons_Gear extends Gear {
      */
     public function init() {
         parent::init();
-        $cogear = getInstance();
         $this->sets = new Core_ArrayObject();
         $this->addSet(self::DEFAULT_SET, $this->dir . DS . 'sets' . DS . self::DEFAULT_SET);
     }
@@ -61,6 +60,5 @@ class Icons_Gear extends Gear {
 }
 
 function icon($name, $set = '') {
-    $cogear = getInstance();
-    return $cogear->icons->show($name, $set);
+    return cogear()->icons->show($name, $set);
 }

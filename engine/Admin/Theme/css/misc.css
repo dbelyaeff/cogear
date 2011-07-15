@@ -4,12 +4,6 @@ h1 {
     font-size: 20px;
 
 }
-h1 > span, h4 > b {
-    padding: 4px 5px 0 0;
-    text-shadow: 1px 1px 5px #FFF;
-    color: #424141;
-    font-family: Century Gothic;
-}
 h4 > b {
     font-size: 15px;
 }
@@ -57,7 +51,4 @@ table.list tr.controls{
 table.list tr.controls td, table.list tr.controls th{
     padding: 10px 0;
     border-bottom: 1px dotted #CCC;
-}
-.info h1 span{
-    background: #E1F8E5;
 }

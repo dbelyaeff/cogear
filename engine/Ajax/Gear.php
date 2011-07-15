@@ -18,5 +18,80 @@ class Ajax_Gear extends Gear {
     protected $type = Gear::CORE;
     protected $order = 0;
 
+    const PARAMS = '?';
+    const PATH = '/';
+    
+    /**
+     * Init
+     */
+    public function init(){
+        parent::init();
+        hook('after',array($this,'appendAjaxIndicator'));
+    }
+    /**
+     * Append hidden ajax indicator to document body
+     */
+    public function appendAjaxIndicator(){
+        echo self::loader();
+    }
+    /**
+     * Return ajax loader image
+     *  
+     * @return type 
+     */
+    public static function loader(){
+        return HTML::img(cogear()->ajax->folder.'/img/ajax-loader.gif',t('Loading…'),array('class'=>'ajax-indicator','id'=>'ajax-indicator'));
+    }
+    /**
+     * Form ajax request via params
+     * 
+     * @param array $params 
+     * @return string
+     */
+    public static function link($params, $prefix = self::PARAMS) {
+        return '#' . $prefix . http_build_query($params);
+    }
+
+    /**
+     * Check if the ajax request has been caught
+     * 
+     * @return boolean
+     */
+    public static function is() {
+        $cogear = getInstance();
+        return $cogear->request->isAjax();
+    }
+
+    /**
+     * Get ajax param
+     * 
+     * @param   string|array  $name
+     * $param   mixed   $default
+     */
+    public static function get($name, $default = NULL) {
+        if (is_array($name)) {
+            $result = array();
+            foreach ($name as $value) {
+                $result[$value] = self::get($value);
+            }
+            return $result;
+        }
+        if (self::is() && isset($_REQUEST[$name])) {
+            return $_REQUEST[$name];
+        }
+        return $default;
+    }
+
+    /**
+     * Send JSON response
+     * 
+     * @param array $data 
+     */
+    public static function json($data) {
+        echo json_encode($data);
+        $cogear = getInstance();
+        $cogear->save();
+        exit();
+    }
 
 }

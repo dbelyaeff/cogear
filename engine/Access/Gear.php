@@ -33,7 +33,6 @@ class Access_Gear extends Gear {
      */
     public function init() {
         parent::init();
-        $cogear = getInstance();
         $this->setRules();
         $this->setRights();
     }
@@ -44,14 +43,13 @@ class Access_Gear extends Gear {
      * @param string $rule
      */
     public function check($rule) {
-        $cogear = getInstance();
         if (!in_array($rule, $this->rules)) {
             $this->addRule($rule);
         }
-        if ($cogear->user->id == 1){
+        if ($this->user->id == 1){
             return TRUE;
         }
-        return  !($cogear->session->access && $cogear->session->access->{$rule});
+        return  !($this->session->access && $this->session->access->{$rule});
     }
 
     /**
@@ -60,11 +58,10 @@ class Access_Gear extends Gear {
      * @param string $rule 
      */
     public function addRule($rule) {
-        $cogear = getInstance();
         $rule = preg_replace('[^a-z0-9_]', '', $rule);
-        $cogear->db->silent();
-        $cogear->db->insert('access_rules', array('rule' => $rule));
-        $cogear->db->silent();
+        $this->db->silent();
+        $this->db->insert('access_rules', array('rule' => $rule));
+        $this->db->silent();
         $this->refresh = TRUE;
     }
 
@@ -72,13 +69,12 @@ class Access_Gear extends Gear {
      * Set rules
      */
     public function setRules() {
-        $cogear = getInstance();
-        if (!$this->rules = $cogear->system_cache->read('access/rules')) {
-            if ($rules = $cogear->db->order('rule')->get('access_rules')->result()) {
+        if (!$this->rules = $this->system_cache->read('access/rules')) {
+            if ($rules = $this->db->order('rule')->get('access_rules')->result()) {
                 foreach ($rules as $rule) {
                     $this->rules[$rule->id] = $rule->rule;
                 }
-                $cogear->system_cache->write('access/rules', $this->rules, array('access'));
+                $this->system_cache->write('access/rules', $this->rules, array('access'));
             }
         }
     }
@@ -87,23 +83,22 @@ class Access_Gear extends Gear {
      * Set rights for user
      */
     public function setRights() {
-        $cogear = getInstance();
         DEVELOPMENT && $this->reset();
-        if ($cogear->session->access !== NULL) {
+        if ($this->session->access !== NULL) {
             return;
         }
-        if (!$access = $cogear->system_cache->read('access/user_group/' . $cogear->user->user_group)) {
-            if ($access = $cogear->db->get_where('access', array('gid' => $cogear->user->user_group))->result()) {
-                $cogear->system_cache->write('access/user_group/' . $cogear->user->user_group, $access, array('access', 'user_groups', 'access/user_groups'));
+        if (!$access = $this->system_cache->read('access/user_group/' . $this->user->user_group)) {
+            if ($access = $this->db->get_where('access', array('gid' => $this->user->user_group))->result()) {
+                $this->system_cache->write('access/user_group/' . $this->user->user_group, $access, array('access', 'user_groups', 'access/user_groups'));
             }
         }
-        if (!$user_access = $cogear->system_cache->read('access/users/' . $cogear->user->id)) {
-            if ($user_access = $cogear->db->get_where('access', array('uid' => $cogear->user->id))->result()) {
-                $cogear->system_cache->write('access/users/' . $cogear->user->id, $user_access, array('access', 'access/users', 'user/' . $cogear->user->id));
+        if (!$user_access = $this->system_cache->read('access/users/' . $this->user->id)) {
+            if ($user_access = $this->db->get_where('access', array('uid' => $this->user->id))->result()) {
+                $this->system_cache->write('access/users/' . $this->user->id, $user_access, array('access', 'access/users', 'user/' . $this->user->id));
             }
         }
         $user_access && $access->mix($user_access);
-        $cogear->session->access = Core_ArrayObject::transform($this->prepare($access));
+        $this->session->access = Core_ArrayObject::transform($this->prepare($access));
     }
 
     /**
@@ -128,31 +123,27 @@ class Access_Gear extends Gear {
      * Public function clear
      */
     public function reset() {
-        $cogear = getInstance();
-        $cogear->session->remove('access');
+        $this->session->remove('access');
     }
 
     /**
      * Clear all stored cache data
      */
     public function clear() {
-        $cogear = getInstance();
-        $cogear->system_cache->removeTags('access');
+        $this->system_cache->removeTags('access');
     }
 
     /**
      * 
      */
     public function _403() {
-        $cogear = getInstance();
-        $cogear->response->header('Status', '403 ' . Response::$codes[403]);
-        overlay(t('You don\'t have enought permissions to access this page.'), t('Access denied'));
+        $this->response->header('Status', '403 ' . Response::$codes[403]);
+        exit(t('You don\'t have enought permissions to access this page.'));
     }
 }
 
 function access($rule) {
-    $cogear = getInstance();
-    return $cogear->access->check($rule);
+    return cogear()->access->check($rule);
 }
 
 function page_access($rule) {

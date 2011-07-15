@@ -12,7 +12,7 @@
  * @subpackage
  * @version		$Id$
  */
-class Theme_Splash_Theme extends Theme_Default_Gear{
+class Theme_Splash_Theme extends Theme_Default_Theme{
     protected $name = 'Splash Theme';
     protected $description = 'Simple theme to show errors';
 }

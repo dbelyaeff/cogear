@@ -19,7 +19,7 @@ abstract class Theme_Object extends Gear {
     protected $order = 100;
     protected $package = 'Themes';
     private static $is_rendered = FALSE;
-    public $template;
+    public $layout = 'index';
     public $theme;
 
     /**

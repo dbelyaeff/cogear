@@ -45,7 +45,7 @@ class User_Avatar{
         $destination = dirname($original).DS.str_replace($info['basename'],$info['filename'].'_'.$size.'.'.$info['extension'],$info['basename']);
         if(!file_exists($destination) OR filemtime($destination) < filemtime($original)){
             $image = new Image($original);
-            $image->resize($size)->save($destination);
+            $image->sizecrop($size)->save($destination);
         }
         return $this->render($destination);
     }
