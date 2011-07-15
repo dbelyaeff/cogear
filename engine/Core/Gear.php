@@ -11,7 +11,7 @@
  * @subpackage
  * @version		$Id$
  */
-abstract class Gear {
+abstract class Gear extends Cogearable{
 
     /**
      * Gear name
@@ -197,9 +197,8 @@ abstract class Gear {
      * @return mixed
      */
     public function __get($name) {
-        return isset($this->$name) ? $this->$name : NULL;
+        return isset($this->$name) ? $this->$name : parent::__get($name);
     }
-
     /**
      * Gear info
      *

@@ -51,7 +51,7 @@ class User_Gear extends Gear {
      */
     public function __get($name) {
         $parent = parent::__get($name);
-        return $parent !== NULL ? $parent : ($this->current->$name ? $this->current->$name : NULL);
+        return $parent !== NULL ? $parent : (isset($this->current->$name) ? $this->current->$name : NULL);
     }
 
     /**
@@ -70,8 +70,8 @@ class User_Gear extends Gear {
      * @param   string  $name
      * @param   array   $args
      */
-    public function __call($name, $args) {
-        return method_exists($this->current, $name) ? call_user_func_array(array($this->current, $name), $args) : NULL;
+    public function __call($name, $args = array()) {
+        return method_exists($this->current, $name) ? call_user_func_array(array($this->current, $name), $args) : parent::__call($name,$args);
     }
 
     /**
