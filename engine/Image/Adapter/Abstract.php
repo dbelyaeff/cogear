@@ -54,7 +54,6 @@ abstract class Image_Adapter_Abstract extends Options {
      */
     public function __construct($path) {
         $this->path = $path;
-        $info = getimagesize($this->path);
         $this->info();
         $this->options = new Core_ArrayObject($this->options);
     }
@@ -77,8 +76,8 @@ abstract class Image_Adapter_Abstract extends Options {
     protected function getSize($size) {
         if (is_string($size)) {
             $size = explode('x', $size);
-            if(file_exists($this->image->file->path)){
-                list($width, $height) = getimagesize($this->image->file->path);
+            if(file_exists($this->path)){
+                list($width, $height) = getimagesize($this->path);
             }
             else {
                 $width = $size[0];
