@@ -202,7 +202,7 @@ class User_Object extends Db_ORM {
     /**
      * Get user upload directory
      */
-    public function getUserDir(){
+    public function getDir(){
         return UPLOADS.DS.'users'.DS.$this->id.DS;
     }
 }
