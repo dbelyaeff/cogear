@@ -91,7 +91,7 @@ class Session extends Options implements Interface_Factory {
                     ini_set('session.' . $key, $option);
             }
         }
-        $this->setOptions($options,'options');
+        $this->set($options);
         $this->run();
     }
 

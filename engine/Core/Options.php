@@ -12,28 +12,38 @@
  */
 abstract class Options extends Core_ArrayObject{
     /**
+     * Options
+     * 
+     * @var array 
+     */
+    protected $options;
+    /**
      * Constructor
      *
      * @param array|ArrayObject $options
      * @param string $storage
      */
-    public function  __construct($options,$storage = '') {
-        $this->setOptions($options,$storage);
+    public function  __construct($options) {
+        $this->options = new Core_ArrayObject();
+        $this->set($options);
     }
     /**
      * Set options
      * 
-     * @param array|ArrayObject $options
-     * @param string $storage
+     * @param array|ArrayObject $name
+     * @param string $value
      */
-    public function setOptions($options,$storage = NULL){
-        $storage = $storage ? ($this->$storage instanceof Core_ArrayObject ? $this->$storage : $this->$storage = Core_ArrayObject::transform($this->$storage)) : $this;
-        foreach($options as $key=>$value){
-            is_array($value) && $value = Core_ArrayObject::transform($value);
-            $storage->$key = $value;
+    public function set($name,$value = NULL){
+        if(is_array($name) OR $name instanceof ArrayObject){
+            is_array($name) && $name = new Core_ArrayObject($name);
+            foreach($name as $key=>$value){
+                $this->options->$key = $value;
+            }
+            return;
         }
+        $this->options->$name = $value;
     }
-
+    
     /**
      * Magic __get method
      * 
