@@ -18,7 +18,7 @@ abstract class Options extends Core_ArrayObject {
      * 
      * @var array 
      */
-    protected $options;
+    protected $options = array();
     const SELF = 1;
 
     /**
@@ -28,7 +28,7 @@ abstract class Options extends Core_ArrayObject {
      * @param string $storage
      */
     public function __construct($options, $place = NULL) {
-        $this->options = new Core_ArrayObject();
+        $this->options = new Core_ArrayObject($this->options);
         if ($place == self::SELF) {
             $options instanceof Core_ArrayObject OR $options = new Core_ArrayObject($options);
             foreach($options as $key=>$value){
