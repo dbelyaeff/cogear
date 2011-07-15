@@ -65,7 +65,7 @@ abstract class Image_Driver_Abstract extends Options {
      * @param string $size
      * @return array 
      */
-    protected function getSize($size) {
+    protected function getSizeFromString($size) {
         if (is_string($size)) {
             list($width, $height) = getimagesize($this->image->file->path);
             $size = explode('x', $size);
@@ -86,8 +86,8 @@ abstract class Image_Driver_Abstract extends Options {
         // If we have previous operation — save it result to source
         $this->destination && $this->source = $this->destination;
         if ($size) {
-            $size = $this->formDestination($size);
-            $this->destination = imagecreatetruecolor($size->width, $size->height);
+            $size = $this->getSizeFromString($size);
+            $this->destination = $this->create($size->width, $size->height);
             return $size;
         }
         return NULL;
@@ -98,7 +98,7 @@ abstract class Image_Driver_Abstract extends Options {
      * 
      * @param
      */
-    protected function formDestination($size) {
+    protected function getSizeFromString($size) {
         $size = explode('x', $size);
         if ($this->options->maintain_ratio OR sizeof($size) == 1) {
             $ratio = $this->info->width / $this->info->height;
@@ -106,7 +106,7 @@ abstract class Image_Driver_Abstract extends Options {
         }
         return new Core_ArrayObject(array('width' => $size[0], 'height' => $size[1]));
     }
-    
+    abstract public function create($width,$height);
     abstract public function resize($size);
     abstract public function crop($size,$x = 0.5,$y = 0.5);
     abstract public function rotate($angle);

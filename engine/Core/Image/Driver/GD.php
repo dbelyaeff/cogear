@@ -42,7 +42,16 @@ class Image_Driver_GD extends Image_Driver_Abstract {
                 break;
         }
     }
-
+    /**
+     * Create new Image
+     * 
+     * @param   int $width
+     * @param   int $height
+     */
+    public function create($width,$height){
+        return imagecreatetruecolor($width,$height);
+    }
+    
     /**
      * Resize
      * 
@@ -65,7 +74,19 @@ class Image_Driver_GD extends Image_Driver_Abstract {
      */
     public function crop($size, $x=0.5, $y=0.5) {
         $size = $this->prepare($size);
-        imagecopyresampled($this->destination, $this->source, 0, 0, $this->info->width * $x, $this->info->height * $y, $size->width, $size->height, $this->info->width, $this->info->height);
+        $from = new stdClass();
+        $to = new stdClass();
+        $from->x = $to->x = 0;
+        $from->y = $to->y = 0;
+        if($this->info->width > $size->width){
+            $from->x = $this->info->width/2 - $size->width/2;
+            $to->x = $from->x + $size->width;
+        }
+        if($this->info->height > $size->height){
+            $from->y = $this->info->height/2 - $size->height/2;
+            $to->y = $from->y + $size->height;
+        }
+        imagecopyresized($this->destination, $this->source, 0, 0, $from->x, $from->y, $size->width, $size->height, $this->info->width, $this->info->height);
         $this->info->width = $size->width;
         $this->info->height = $size->height;
         return $this;
