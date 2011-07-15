@@ -72,7 +72,7 @@ class Form_Object extends Options {
                 $options = $config;
             }
         }
-        parent::__construct($options);
+        parent::__construct($options,Options::SELF);
     }
 
     /**
@@ -104,7 +104,7 @@ class Form_Object extends Options {
             return;
         event('form.init', $this);
         event('form.init.' . $this->name, $this);
-        $this->is_ajaxed = Ajax::get('form') == $this->name;
+        $this->is_ajaxed = isset($_REQUEST['form']) && $_REQUEST['form'] == $this->name;
         $elements = array();
         foreach ($this->elements as $name => $config) {
             $this->addElement($name, $config);
@@ -218,5 +218,4 @@ class Form_Object extends Options {
         event('form.' . $this->name . '.render.after', $this, &$output);
         return $output;
     }
-
 }

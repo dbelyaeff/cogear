@@ -45,7 +45,7 @@ class Form_Element_Abstract extends Options {
     public function __construct($options) {
         $this->filters = new Core_ArrayObject();
         $this->validators = new Core_ArrayObject();
-        parent::__construct($options);
+        parent::__construct($options,Options::SELF);
         $this->attributes = new Core_ArrayObject();
         $this->errors = new Core_ArrayObject();
         if ($this->form->is_ajaxed && Ajax::get('element') == $this->name) {
