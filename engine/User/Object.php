@@ -199,5 +199,10 @@ class User_Object extends Db_ORM {
         }
         return $panel->render();
     }
-
+    /**
+     * Get user upload directory
+     */
+    public function getUserDir(){
+        return UPLOADS.DS.'users'.DS.$this->id.DS;
+    }
 }
