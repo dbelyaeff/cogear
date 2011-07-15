@@ -185,5 +185,11 @@ class Template_Abstract extends Options {
         $output = ob_get_clean();
         return $output;
     }
-
+    
+    /**
+     * Send template directly to theme output
+     */
+    public function show(){
+        append('content',$this->render());
+    }
 }
