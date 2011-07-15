@@ -26,7 +26,7 @@ abstract class Options extends Core_ArrayObject{
      * @param array|ArrayObject $options
      * @param string $storage
      */
-    public function setOptions($options,$storage){
+    public function setOptions($options,$storage = NULL){
         $storage = $storage ? ($this->$storage instanceof Core_ArrayObject ? $this->$storage : $this->$storage = Core_ArrayObject::transform($this->$storage)) : $this;
         foreach($options as $key=>$value){
             is_array($value) && $value = Core_ArrayObject::transform($value);
