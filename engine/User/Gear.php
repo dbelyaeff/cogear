@@ -49,14 +49,17 @@ class User_Gear extends Gear {
                 }
                 break;
             case 'admin':
-                $menu->{'user'} = t('Users');
-                $menu->{'user'}->order = 100;
-                $menu->{'user/add'} = t('Add user');
-                $menu->{'user/add'}->order = 101;
+                $menu->{'user/list'} = t('Users');
+                $menu->{'user/list'}->order = 100;
                 break;
             case 'tabs_admin_user':
                 $menu->{'user/list'} = t('List');
                 $menu->{'user/add'} = t('Add');
+                break;
+            case 'tabs_user_login':
+                $menu->{'login'} = t('Log in');
+                $menu->{'register'} = t('Register');
+                $menu->{'lostpassword'} = t('Lost password?');
                 break;
         }
         d();
@@ -102,13 +105,7 @@ class User_Gear extends Gear {
             case 'login':
             case 'register':
             case 'lostpassword':
-                $top_menu = new Menu('User.login', 'Menu.tabs');
-                $root = Url::gear('user');
-                $top_menu->{$root . 'login'} = t('Log in');
-                $top_menu->{$root . 'register'} = t('Register');
-                $top_menu->{$root . 'lostpassword'} = t('Lost password?');
-                $top_menu->show();
-                break;
+                new Menu_Tabs('user_login',Url::gear('user'));
         }
         switch ($action) {
             case 'login':
