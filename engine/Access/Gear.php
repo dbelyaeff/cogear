@@ -17,6 +17,7 @@ class Access_Gear extends Gear {
     protected $description = 'Access control gear';
     protected $rules;
     protected $refresh;
+    protected $order = -100;
 
     /**
      * Desctructor
