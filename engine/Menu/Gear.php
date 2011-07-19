@@ -13,4 +13,32 @@
 class Menu_Gear extends Gear {
     protected $name = 'Menu';
     protected $description = 'Menu handler';
+    protected $menu;
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        parent::__construct();
+        $this->menu = new Core_ArrayObject();
+    }
+    /**
+     * Register new Menu
+     *  
+     * Done automatically when you are creating new Menu_Object
+     * 
+     * @param string $name
+     * @param Menu_Object $menu 
+     */
+    public function register($name,Menu_Object &$menu){
+        $this->menu->$name = $menu;
+    }
+    
+    /**
+     * Get menu
+     * 
+     * @param type $name 
+     */
+    public function get($name){
+        return $this->menu->$name ? $this->menu->$name : NULL; 
+    }
 }

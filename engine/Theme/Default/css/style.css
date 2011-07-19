@@ -1,11 +1,3 @@
-#header{
-    height: 150px;
-
-}
-#header #logo {
-    background: url(../images/logo.png) no-repeat;
-}
-#header #logo h1{
-    font-size: 90px;
-    text-indent: -9999px;
+a {
+    color: #2B587A;
 }

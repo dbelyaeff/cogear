@@ -41,6 +41,23 @@ class Pages_Gear extends Gear {
     }
 
     /**
+     * Menu handler
+     * 
+     * @param object $menu 
+     */
+    public function menu($name, &$menu) {
+        switch ($name) {
+            case 'user':
+                if ($this->user->id) {
+                    $menu->{Url::gear('pages') . 'create'} = t('Create page', 'Pages');
+                }
+                break;
+            case 'admin':
+                $menu->{'pages'} = t('Pages');
+                break;
+        }
+    }
+    /**
      * Show pages
      * 
      * @param string $type 
@@ -162,19 +179,5 @@ class Pages_Gear extends Gear {
         append('content', $tpl->render());
         }
 
-        /**
-         * Add "create page" link into header
-         * 
-         * @param object $cp 
-         */
-        public function menu($name, &$cp) {
-        switch ($name) {
-            case 'user_cp':
-                if ($this->user->id) {
-                    $cp->{Url::gear('pages') . 'create'} = icon('page_edit', 'famfamfam') . ' ' . t('Create page', 'Pages');
-                }
-                break;
-        }
-    }
 
 }

@@ -11,19 +11,31 @@
  * @subpackage          
  * @version		$Id$
  */
-class Menu_Plain extends Stack {
+class Menu_Object extends Stack {
 
-    protected $position = 0;
     protected $template = 'Menu.menu';
+    protected $base_uri;
+    public $position = 0;
 
     /**
      * Constructor
      *  
      * @param string $template 
      */
-    public function __construct($name,$template = NULL) {
+    public function __construct($name, $template = NULL, $base_uri = NULL) {
         parent::__construct($name);
+        cogear()->menu->register($name, &$this);
         $template && $this->template = $template;
+        $this->base_uri = rtrim(parse_url($base_uri ? $base_uri : Url::link(), PHP_URL_PATH), '/') . '/';
+    }
+
+    /**
+     * Get base url
+     * 
+     * @return string 
+     */
+    public function getBaseUri() {
+        return $this->base_uri;
     }
 
     /**
@@ -32,25 +44,19 @@ class Menu_Plain extends Stack {
      * @param string $uri
      */
     public function setActive($uri = NULL) {
-        if (!sizeof($this)) {
+        if (!$this->count()) {
             return;
         }
         $cogear = getInstance();
         $uri OR $uri = $cogear->router->getUri();
+        $root = trim($this->base_uri, '/');
+        $uri = trim(str_replace($root, '', $uri), '/');
         $pieces = explode('/', trim($uri, '/'));
-        $path = '';
-        $root = $this->getIterator()->key();
         while ($pieces) {
-            $path = implode('/', $pieces);
-            if ($path && strpos($uri, $path) !== FALSE) {
-                if (isset($this->{'/' . $path})) {
-                    $this->{'/' . $path}->active = TRUE;
-                    event('menu.setActive', $this->{'/' . $path});
-                    break;
-                } elseif (isset($this->{'/' . $path . '/'})) {
-                    $this->{'/' . $path . '/'}->active = TRUE;
-                    event('menu.setActive', $this->{'/' . $path . '/'});
-                    break;
+            $uri = implode('/', $pieces);
+            foreach (array($uri, '/' . $uri . '/') as $path) {
+                if ($this->offsetExists($path)) {
+                    $this->{$path}->active(TRUE);
                 }
             }
             array_pop($pieces);
@@ -63,11 +69,35 @@ class Menu_Plain extends Stack {
      * @param	string
      * @param	mixed
      */
-    public function __set($name, $value) {
-        $element = new Core_ArrayObject();
-        $element->value = $value;
-        $element->order = $this->position++;
-        $this->offsetSet($name, $element);
+    public function __set($path, $value = NULL) {
+        $element = new Menu_Item($path, $value, $this->position++, $this->base_uri);
+        $this->add($path, $element);
+    }
+
+    /**
+     * Magic __get method
+     * 
+     * @param type $name 
+     */
+    public function __get($name) {
+        $name = trim($name, '/');
+        $vars = new Core_ArrayObject(array($name, '/' . $name, $name . '/', '/' . $name . '/'));
+        foreach ($vars as $name) {
+            if ($this->offsetExists($name)) {
+                return $this->offsetGet($name);
+            }
+        }
+        return NULL;
+    }
+
+    /**
+     * Add item to menu
+     * 
+     * @param string $path
+     * @param Menu_Item $item 
+     */
+    public function add($path, Menu_Item $item) {
+        $this->offsetSet($path, $item);
     }
 
     /**
@@ -80,6 +110,24 @@ class Menu_Plain extends Stack {
     }
 
     /**
+     * Mix current menu into another
+     *  
+     * @param string $name
+     * @param string $place 
+     */
+    public function mixWith(&$menu, $name, $place = NULL) {
+        $this->uasort('Core_ArrayObject::sortByOrder');
+        if ($place && $menu->{$place}) {
+            $position = $menu->{$place}->order;
+            $i = 1;
+        }
+        else $position = $menu->position;
+        foreach ($this as $path => $item) {
+            $menu->add($path, new Menu_Item($path, $item->value, (float) ($position . '.' . $i++), $item->getBaseUri()));
+        }
+    }
+
+    /**
      * Render menu
      * 
      * @param string $glue
@@ -87,7 +135,7 @@ class Menu_Plain extends Stack {
      */
     public function render($template = '') {
         $template OR $template = $this->template;
-        event('menu.' . $this->name, $this);
+        event('menu.' . $this->name, &$this);
         if ($this->count()) {
             $this->uasort('Core_ArrayObject::sortByOrder');
             $this->setActive();
@@ -96,6 +144,13 @@ class Menu_Plain extends Stack {
             return $tpl->render();
         }
         return NULL;
+    }
+
+    /**
+     * Show menu
+     */
+    public function output() {
+        echo $this->render();
     }
 
 }

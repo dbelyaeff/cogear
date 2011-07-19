@@ -15,7 +15,7 @@ class Icons_Gear extends Gear {
 
     protected $name = 'Icons';
     protected $description = 'Icons manager.';
-    protected $order = -1;
+    protected $order = -100;
     protected $sets;
     const DEFAULT_SET = 'famfamfam';
 

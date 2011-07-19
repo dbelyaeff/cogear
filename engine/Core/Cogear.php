@@ -64,6 +64,11 @@ final class Cogear implements Interface_Singleton {
      * @var boolean 
      */
     private $write_config = FALSE;
+    
+    /**
+     * Stop current event executrion flag
+     */
+    public $stop_event = FALSE;
 
     const GEAR = 'Gear';
 
@@ -119,12 +124,15 @@ final class Cogear implements Interface_Singleton {
      * @return  boolean
      */
     public function event($name) {
-        $result = TRUE;
+        $result = new Core_ArrayObject();
         $args = func_get_args();
         $args = array_slice($args, 1);
         if ($this->events->$name) {
             foreach ($this->events->$name as $callback) {
-                $result && FALSE === $callback->call(&$args) && $result = FALSE;
+                 if($this->events->$name->is_stopped()) continue;
+                 if($data = $callback->call(&$args)){
+                     $result->append($data);
+                 }
             }
         }
         return $result;
@@ -203,7 +211,7 @@ final class Cogear implements Interface_Singleton {
     public function loadGears() {
         if ($this->gears_are_loaded)
             return;
-        if (!$this->all_gears = $this->system_cache->read('gears/all')) {
+        if (DEVELOPMENT OR !$this->all_gears = $this->system_cache->read('gears/all',TRUE)) {
             $this->all_gears = array();
             if ($gears_paths = array_merge(find('*' . DS . self::GEAR . EXT), find('*' . DS . '*' . DS . self::GEAR . EXT))) {
                 foreach ($gears_paths as $path) {

@@ -43,8 +43,9 @@ class Dev_Gear extends Gear {
      */
     public function menu($name, &$cp) {
         switch ($name) {
-            case 'user_cp':
-                $cp->{Url::gear('dev')} = icon('database-share', 'fugue') . t('Developer');
+            case 'user':
+                $cp->{Url::gear('dev')} =  t('Developer');
+                $cp->{Url::gear('dev')}->order = 99;
                 break;
         }
     }

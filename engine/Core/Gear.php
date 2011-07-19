@@ -197,7 +197,6 @@ abstract class Gear extends Cogearable{
         $cogear->router->addRoute($this->base . ':maybe', array($this, 'index'));
         $cogear->event('gear.init', $this);
     }
-
     /**
      * Magic __get method
      *

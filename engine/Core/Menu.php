@@ -10,6 +10,6 @@
  * @subpackage          
  * @version		$Id$
  */
-class Menu extends Menu_Plain{
+class Menu extends Menu_Object{
     
 }

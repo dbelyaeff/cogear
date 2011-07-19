@@ -17,6 +17,7 @@ class User_Gear extends Gear {
     protected $description = 'Manage users.';
     protected $order = 0;
     protected $current;
+
     /**
      * Init
      */
@@ -24,38 +25,38 @@ class User_Gear extends Gear {
         parent::init();
         $this->current = new User_Object();
         $this->current->init();
-        hook('menu.admin.sidebar', array($this, 'adminMenuLink'));
         new User_Menu();
     }
 
     /**
-     * Hook to add admin menu element
-     * 
-     * @param type $structure 
-     */
-    public function adminMenuLink($menu) {
-        $root = Url::gear('admin');
-        $menu['14'] = new Menu_Item($root . 'user', icon('users', 'fugue') . t('Users'));
-        $menu['14.1'] = new Menu_Item($root . 'user/add', icon('user--plus', 'fugue') . t('Add user'));
-    }
-    /**
      * Menu builder
      * 
      * @param string $name
-     * @param object $cp 
+     * @param object $menu 
      */
-    public function menu($name, &$cp) {
+    public function menu($name, &$menu) {
         d('User_CP');
         switch ($name) {
-            case 'user_cp':
+            case 'user':
+                $root = Url::gear('user');
                 if ($this->id) {
-                    $cp->{Url::gear('user') . $this->login} = $this->getAvatar()->getSize('24x24') . $this->getName();
-                    $cp->{Url::gear('user') . 'logout'} = icon('control-power', 'fugue') . t('Logout');
-                    $cp->{Url::gear('user') . 'logout'}->order = 100;
+                    $menu->{$root . $this->login} = t('My Profile');
+                    $menu->{$root . 'logout'} = t('Logout');
+                    $menu->{$root . 'logout'}->order = 100;
                 } else {
-                    $cp->{Url::gear('user') . 'login'} = t('Login');
-                    $cp->{Url::gear('user') . 'register'} = t('Register');
+                    $menu->{$root . 'login'} = t('Login');
+                    $menu->{$root . 'register'} = t('Register');
                 }
+                break;
+            case 'admin':
+                $menu->{'user'} = t('Users');
+                $menu->{'user'}->order = 100;
+                $menu->{'user/add'} = t('Add user');
+                $menu->{'user/add'}->order = 101;
+                break;
+            case 'tabs_admin_user':
+                $menu->{'user/list'} = t('List');
+                $menu->{'user/add'} = t('Add');
                 break;
         }
         d();
@@ -106,7 +107,7 @@ class User_Gear extends Gear {
                 $top_menu->{$root . 'login'} = t('Log in');
                 $top_menu->{$root . 'register'} = t('Register');
                 $top_menu->{$root . 'lostpassword'} = t('Lost password?');
-                append('content', $top_menu->render());
+                $top_menu->show();
                 break;
         }
         switch ($action) {
@@ -280,11 +281,7 @@ class User_Gear extends Gear {
      * @param string $action 
      */
     public function admin($action = '') {
-        $top_menu = Template::getGlobal('top_menu');
-        $root = Url::gear('admin') . 'user/';
-        $top_menu->{$root} = t('List');
-        $top_menu->{$root . 'add'} = t('Add');
-
+        new Menu_Tabs('admin_user',Url::gear('admin'));
         switch ($action) {
             case 'add':
                 $this->admin_add();

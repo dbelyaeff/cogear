@@ -43,18 +43,18 @@ class Callback extends Cogearable{
      * @param   array   $args
      * @return  boolean
      */
-    public function call($args = array()){
+    public function call(&$args = array()){
         if(!is_callable($this->callback)) return NULL;
         $args = array_merge_recursive($args,$this->args);
-        return call_user_func_array($this->callback, $args);
+        return call_user_func_array($this->callback, &$args);
     }
     /**
      * Set args
      * 
      * @param array $args 
      */
-    public function setArgs($args) {
-        $this->args = $args;
+    public function setArgs(&$args) {
+        $this->args =& $args;
     }
 
     /**

@@ -10,15 +10,15 @@
  * @subpackage          
  * @version		$Id$
  */
-class Menu_Auto extends Menu_Tree {
+class Menu_Auto extends Menu_Object {
     /**
      * Constructor
      * 
      * @param string $name
      * @param string $base_url 
      */
-    public function __construct($name,$base_url = NULL){
-        parent::__construct($name,$base_url);
+    public function __construct($name,$template = NULL,$base_url = NULL){
+        parent::__construct($name,$template,$base_url);
         $this->init();
     }
     /**

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Menu Item
  *
@@ -7,22 +8,54 @@
  * @license		http://cogear.ru/license.html
  * @link		http://cogear.ru
  * @package		Menu
- * @subpackage
+ * @subpackage          
  * @version		$Id$
  */
-class Menu_Item extends Options {
+class Menu_Item extends Core_ArrayObject{
+    public $path;
+    public $value;
+    public $order = 0;
+    protected $base_uri;
     protected $active;
-    protected $link;
-    protected $text;
 
     /**
      * Constructor
      * 
-     * @param string $link
-     * @param string $text 
+     * @param string $base_uri
      */
-    public function __construct($link,$text) {
-        $this->link = $link;
-        $this->text = $text;
+    public function __construct($path,$value = NULL,$order = 0,$base_uri = NULL) {
+        $this->path = trim($path,'/');
+        $this->value = $value;
+        $this->order = $order;
+        $this->base_uri = $base_uri;
     }
+
+    /**
+     * Get uri
+     * 
+     * @return string
+     */
+    public function getUri() {
+        return $this->getBaseUri() . $this->path;
+    }
+    
+    /**
+     * Get base uri
+     * 
+     * @return string 
+     */
+    public function getBaseUri(){
+        return $this->base_uri ? $this->base_uri : Url::link();
+    }
+
+    /**
+     * Make item active
+     *  
+     * @param   boolean $value
+     * @return  boolean
+     */
+    public function active($value = NULL) {
+        return $value ? $this->active = TRUE : $this->active;
+    }
+
 }

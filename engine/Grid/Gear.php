@@ -13,5 +13,4 @@
 class Grid_Gear extends Gear {
     protected $name = 'Grid';
     protected $description = 'Useful tool to display and manage data.';
-    protected $type = Gear::MODULE;
 }

@@ -19,12 +19,23 @@ class Gears_Gear extends Gear {
     protected $package = 'Gears';
     protected $order = 0;
 
-    /**
-     * Init
-     */
-    public function init() {
-        parent::init();
-        $cogear = getInstance();
+    public function menu($name, &$menu) {
+        switch ($name) {
+            case 'admin':
+                $menu->{'gears/active'} = t('Gears');
+                break;
+            case 'tabs_gears':
+                $menu->{'gears/active'} = t('Active');
+                $menu->{'gears/active'}->count = $active_count;
+                $menu->{'gears/all'} = t('All');
+                $menu->{'gears/all'}->count = $all_count;
+                $menu->{'gears/inactive'} = t('Inactive');
+                $menu->{'gears/inactive'}->count = $inactive_count;
+                $menu->{'gears/new'} = t('New');
+                $menu->{'gears/updates'} = t('Updates');
+                $menu->{'gears/add'} = t('Add');
+                break;
+        }
     }
 
     /**
@@ -36,7 +47,8 @@ class Gears_Gear extends Gear {
         
     }
 
-    public function admin($action = 'index') {
+    public function admin($action = 'active') {
+        new Menu_Tabs('gears',Url::gear('admin'));
         d('Admin Gears');
         $cogear = getInstance();
         $all_gears = $cogear->getAllGears();
@@ -45,17 +57,7 @@ class Gears_Gear extends Gear {
         $all_count = sizeof($all_gears);
         $active_count = sizeof($active_gears);
         $inactive_count = sizeof($inactive_gears);
-        $top_menu = Template::getGlobal('top_menu');
-        $root = Url::gear('admin');
-        $top_menu->{$root . 'gears'} = t('Active');
-        $top_menu->{$root . 'gears'}->count = $active_count;
-        $top_menu->{$root . 'gears/all'} = t('All');
-        $top_menu->{$root . 'gears/all'}->count = $all_count;
-        $top_menu->{$root . 'gears/inactive'} = t('Inactive');
-        $top_menu->{$root . 'gears/inactive'}->count = $inactive_count;
-        $top_menu->{$root . 'gears/new'} = t('New');
-        $top_menu->{$root . 'gears/updates'} = t('Updates');
-        $top_menu->{$root . 'gears/add'} = t('Add');
+
         $doaction = NULL;
         if (!empty($_REQUEST['action-top']))
             $doaction = $_REQUEST['action-top'];
@@ -80,6 +82,7 @@ class Gears_Gear extends Gear {
         }
         switch ($action) {
             case 'index':
+            case 'active':
                 $gears = array();
                 foreach ($active_gears as $gear => $class) {
                     if (class_exists($class)) {

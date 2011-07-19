@@ -25,7 +25,6 @@ class Wysiwyg_Gear extends Gear {
      */
     public function init() {
         parent::init();
-        hook('menu.admin.sidebar', array($this, 'adminMenuLink'));
         Form::$types['textarea'] = self::$editors[config('wysiwyg.editor', 'redactor')];
     }
 
@@ -34,9 +33,13 @@ class Wysiwyg_Gear extends Gear {
      * 
      * @param type $structure 
      */
-    public function adminMenuLink($menu) {
-        $root = Url::gear('admin');
-        $menu['20'] = new Menu_Item($root . 'wysiwyg', icon('text_padding_bottom') . t('Editor'));
+    public function menu($name,&$menu) {
+        switch($name){
+            case 'admin':
+                $menu->{'wysiwyg'} = t('Editor');
+                $menu->{'wysiwyg'}->order = 200;
+                break;
+        }
     }
 
     /**

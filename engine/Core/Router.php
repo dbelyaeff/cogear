@@ -197,7 +197,7 @@ class Router {
                     $this->callback = $callback;
                     event('callback.before',$this);
                     event('callback.'.get_class($callback[0]).'.before',$this);
-                    method_exists($callback[0],'request') && call_user_func(array($callback[0],'request'));
+                    method_exists($callback[0],'request') && call_user_func_array(array($callback[0],'request'),&$this->args);
                     call_user_func_array($callback,$this->args);
                     $this->has_run = TRUE;
                     event('callback.'.get_class($callback[0]).'.after',$this);

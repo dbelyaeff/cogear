@@ -15,13 +15,7 @@ class User_Menu extends Menu_Auto {
      * Constructor
      */
     public function __construct() {
-        parent::__construct('user_cp', 'User.control_panel');
-        hook('before',array($this,'output'));
-    }
-    /**
-     * Output menu
-     */
-    public function output(){
-        echo $this->render();
+        parent::__construct('user', 'User.menu');
+        hook('sidebar',array($this,'output'));
     }
 }

@@ -109,7 +109,7 @@ class Theme_Gear extends Gear {
     public function renderRegion($name){
             $this->regions->$name OR $this->regions->$name = new Theme_Region();
             hook($name,array($this,'showRegion'),NULL,$name);
-            event($name);
+            return event($name);
     }
     
     /**
@@ -120,7 +120,8 @@ class Theme_Gear extends Gear {
      * @param string $name 
      */
     public function showRegion($name){
-         echo $this->regions->$name->render();
+        $this->regions->$name === NULL && $this->regions->$name = new Theme_Region();
+        echo $this->regions->$name->render();
     }
 }
 
@@ -144,5 +145,5 @@ function inject($name, $value, $position = 0) {
 
 function theme($place) {
     $cogear = getInstance();
-    $cogear->theme->renderRegion($place);
+    return $cogear->theme->renderRegion($place);
 }
