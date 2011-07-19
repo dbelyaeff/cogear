@@ -12,6 +12,7 @@
  * @version		$Id$
  */
 class User_Object extends Db_ORM {
+    public $dir;
     /**
      * Constructor
      * 
@@ -27,6 +28,7 @@ class User_Object extends Db_ORM {
     public function init() {
         if ($this->autologin()) {
             event('user.autologin', $this);
+            $this->dir = $this->dir();
         }
         // Set data for guest
         else {
@@ -202,7 +204,7 @@ class User_Object extends Db_ORM {
     /**
      * Get user upload directory
      */
-    public function getDir(){
+    public function dir(){
         return UPLOADS.DS.'users'.DS.$this->id.DS;
     }
 }

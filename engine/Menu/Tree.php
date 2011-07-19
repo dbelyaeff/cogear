@@ -11,9 +11,8 @@
  * @subpackage
  * @version		$Id$
  */
-class Menu_Tree extends Options {
+class Menu_Tree extends Menu_Plain {
 
-    protected $name;
     protected $base_url;
 
     /**
@@ -21,18 +20,9 @@ class Menu_Tree extends Options {
      * 
      * @param type $name 
      */
-    public function __construct($name,$base_url = NULL) {
-        $this->name = $name;
+    public function __construct($name,$template=NULL,$base_url = NULL) {
+        parent::__construct($name,$template);
         $this->base_url = rtrim(parse_url($base_url ? $base_url : Url::link(),PHP_URL_PATH),'/');
-    }
-
-    /**
-     * Get menu name
-     * 
-     * @return string 
-     */
-    public function getName() {
-        return preg_replace('#([^a-z-]+)#imsU', '-', $this->name);
     }
 
     /**
@@ -53,7 +43,7 @@ class Menu_Tree extends Options {
             $path = implode('/', $pieces);
             if ($path && strpos($uri, $path) !== FALSE) {
                 foreach($this as $item){
-                    $link = strpos($item->link,$this->base_url) !== FALSE ? $item->link : $this->base_url.$item->link; 
+                    $link = !$this->base_url OR strpos($item->link,$this->base_url) !== FALSE ? $item->link : $this->base_url.$item->link; 
                     if(strpos($link,$path) !== FALSE){
                         $item->active = TRUE;
                     }
@@ -61,20 +51,6 @@ class Menu_Tree extends Options {
             }
             array_pop($pieces);
         }
-    }
-
-    /**
-     * Render menu
-     * 
-     * @param string $tpl
-     */
-    public function render($tpl = 'Menu.menu') {
-        event('menu.' . $this->name, $this);
-        $this->ksort();
-        $this->setActive();
-        $tpl = new Template($tpl);
-        $tpl->menu = $this;
-        return $tpl->render();
     }
 
 }

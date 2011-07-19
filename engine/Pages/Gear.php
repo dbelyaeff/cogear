@@ -38,7 +38,6 @@ class Pages_Gear extends Gear {
                     '(?P<id>\d+)',
                     '.+'
                         ), $url), array($this, 'catchPage'), TRUE);
-        hook('menu.user_cp', array($this, 'userPanelExtend'));
     }
 
     /**
@@ -76,12 +75,12 @@ class Pages_Gear extends Gear {
                     if (access('pages edit_all') OR $cogear->user->id == $page->aid) {
                         $form = new Form('Pages.createdit');
                         $form->init();
-                        if(access('pages delete')){
-                            $form->addElement('delete',array('label'=>t('Delete'),'type'=>'submit'));
+                        if (access('pages delete')) {
+                            $form->addElement('delete', array('label' => t('Delete'), 'type' => 'submit'));
                         }
                         $form->setValues($page->object());
                         if ($result = $form->result()) {
-                            if($result->delete){
+                            if ($result->delete) {
                                 $page->delete();
                                 redirect(Url::link());
                             }
@@ -161,17 +160,20 @@ class Pages_Gear extends Gear {
         $tpl = new Template('Pages.page');
         $tpl->page = $page;
         append('content', $tpl->render());
-    }
+        }
 
-    /**
-     * Add "create page" link into header
-     * 
-     * @param object $cp 
-     */
-    public function userPanelExtend($cp) {
-        $cogear = getInstance();
-        if ($cogear->user->id) {
-            $cp->{Url::gear('pages') . 'create'} = icon('page_edit','famfamfam').' '.t('Create page', 'Pages');
+        /**
+         * Add "create page" link into header
+         * 
+         * @param object $cp 
+         */
+        public function menu($name, &$cp) {
+        switch ($name) {
+            case 'user_cp':
+                if ($this->user->id) {
+                    $cp->{Url::gear('pages') . 'create'} = icon('page_edit', 'famfamfam') . ' ' . t('Create page', 'Pages');
+                }
+                break;
         }
     }
 

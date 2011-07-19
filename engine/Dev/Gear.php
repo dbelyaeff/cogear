@@ -33,16 +33,20 @@ class Dev_Gear extends Gear {
         parent::init();
         $this->addPoint('system.begin');
         hook('done', array($this, 'finalPoint'));
-        hook('menu.user_cp', array($this, 'hookUserPanel'));
     }
 
     /**
      * Add benchmark info to user panel
      * 
+     * @param   string  $name 
      * @param object $cp 
      */
-    public function hookUserPanel($cp) {
-        $cp->{Url::gear('dev')} = icon('database-share', 'fugue') . t('Developer');
+    public function menu($name, &$cp) {
+        switch ($name) {
+            case 'user_cp':
+                $cp->{Url::gear('dev')} = icon('database-share', 'fugue') . t('Developer');
+                break;
+        }
     }
 
     /**
@@ -54,7 +58,7 @@ class Dev_Gear extends Gear {
             $cogear = getInstance();
             $template = new Template('Dev.results');
             $template->data = Dev_Gear::humanize($cogear->dev->measurePoint('system'));
-            append('footer', $template->render());
+            append('after', $template->render());
             js($this->folder . '/js/inline/debug.js');
         }
     }
@@ -68,7 +72,7 @@ class Dev_Gear extends Gear {
         if (!isset($this->points[$name])) {
             $this->points[$name] = array(
                 'time' => microtime() - IGNITE,
-                'memory' => memory_get_usage(TRUE),
+                'memory' => memory_get_usage(),
             );
         }
     }

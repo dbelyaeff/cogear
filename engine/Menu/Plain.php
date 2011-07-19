@@ -14,16 +14,16 @@
 class Menu_Plain extends Stack {
 
     protected $position = 0;
-    protected $template;
+    protected $template = 'Menu.menu';
 
     /**
      * Constructor
      *  
      * @param string $template 
      */
-    public function __construct($name, $template = 'Core.menu') {
+    public function __construct($name,$template = NULL) {
         parent::__construct($name);
-        $this->template = $template;
+        $template && $this->template = $template;
     }
 
     /**
@@ -71,12 +71,12 @@ class Menu_Plain extends Stack {
     }
 
     /**
-     * Get Menu name
+     * Get menu name
      * 
-     * @return string
+     * @return string 
      */
     public function getName() {
-        return $this->name;
+        return preg_replace('#([^a-z-]+)#imsU', '-', $this->name);
     }
 
     /**
@@ -96,13 +96,6 @@ class Menu_Plain extends Stack {
             return $tpl->render();
         }
         return NULL;
-    }
-
-    /**
-     * Output
-     */
-    public function output() {
-        echo $this->render();
     }
 
 }

@@ -15,9 +15,8 @@ class User_Gear extends Gear {
 
     protected $name = 'User';
     protected $description = 'Manage users.';
-    protected $order = -10;
+    protected $order = 0;
     protected $current;
-
     /**
      * Init
      */
@@ -26,9 +25,7 @@ class User_Gear extends Gear {
         $this->current = new User_Object();
         $this->current->init();
         hook('menu.admin.sidebar', array($this, 'adminMenuLink'));
-        $user_cp = new Menu('user_cp', 'User.control_panel');
-        hook('before', array($user_cp, 'output'));
-        hook('menu.user_cp', array($this, 'hookControlPanel'));
+        new User_Menu();
     }
 
     /**
@@ -40,6 +37,28 @@ class User_Gear extends Gear {
         $root = Url::gear('admin');
         $menu['14'] = new Menu_Item($root . 'user', icon('users', 'fugue') . t('Users'));
         $menu['14.1'] = new Menu_Item($root . 'user/add', icon('user--plus', 'fugue') . t('Add user'));
+    }
+    /**
+     * Menu builder
+     * 
+     * @param string $name
+     * @param object $cp 
+     */
+    public function menu($name, &$cp) {
+        d('User_CP');
+        switch ($name) {
+            case 'user_cp':
+                if ($this->id) {
+                    $cp->{Url::gear('user') . $this->login} = $this->getAvatar()->getSize('24x24') . $this->getName();
+                    $cp->{Url::gear('user') . 'logout'} = icon('control-power', 'fugue') . t('Logout');
+                    $cp->{Url::gear('user') . 'logout'}->order = 100;
+                } else {
+                    $cp->{Url::gear('user') . 'login'} = t('Login');
+                    $cp->{Url::gear('user') . 'register'} = t('Register');
+                }
+                break;
+        }
+        d();
     }
 
     /**
@@ -70,7 +89,7 @@ class User_Gear extends Gear {
      * @param   array   $args
      */
     public function __call($name, $args = array()) {
-        return method_exists($this->current, $name) ? call_user_func_array(array($this->current, $name), $args) : parent::__call($name,$args);
+        return method_exists($this->current, $name) ? call_user_func_array(array($this->current, $name), $args) : parent::__call($name, $args);
     }
 
     /**
@@ -127,17 +146,18 @@ class User_Gear extends Gear {
         }
         $this->renderUserInfo($user);
     }
-    
+
     /**
      * Render user info
      * 
      * @param object $user 
      */
-    public function renderUserInfo($user){
+    public function renderUserInfo($user) {
         $tpl = new Template('User.profile');
         $tpl->user = $user;
         append('content', $tpl->render());
     }
+
     /**
      * Edit action
      * 
@@ -168,10 +188,9 @@ class User_Gear extends Gear {
                 $redirect = Url::gear('user') . $result['login'];
             }
             $user->merge($result);
-            if($result->password){
+            if ($result->password) {
                 $user->hashPassword();
-            }
-            else {
+            } else {
                 unset($user->password);
             }
             if ($user->update()) {
@@ -296,22 +315,6 @@ class User_Gear extends Gear {
         }
         else
             append('content', $form->render());
-    }
-
-    /**
-     * Hook user control panel
-     */
-    public function hookControlPanel($cp) {
-        d('User_CP');
-        if ($this->id) {
-            $cp->{Url::gear('user') . $this->login} = $this->getAvatar()->getSize('24x24') . $this->getName();
-            $cp->{Url::gear('user') . 'logout'} = icon('control-power', 'fugue') . t('Logout');
-            $cp->{Url::gear('user') . 'logout'}->order = 100;
-        } else {
-            $cp->{Url::gear('user') . 'login'} = t('Login');
-            $cp->{Url::gear('user') . 'register'} = t('Register');
-        }
-        d();
     }
 
 }

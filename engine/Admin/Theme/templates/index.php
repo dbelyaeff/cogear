@@ -33,11 +33,6 @@
                 </div>
             </div>
 
-            <div class="grid_16">
-                <div id="debug">
-                    <? theme('debug') ?>
-                </div>
-            </div>
         </div>
         <!-- FOOTER -->
         <div id="footer">

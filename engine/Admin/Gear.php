@@ -20,19 +20,20 @@ class Admin_Gear extends Gear {
      * Initializer
      */
     public function init() {
-        $cogear = getInstance();
         $this->settings->theme = 'Admin_Theme';
         parent::init();
-        hook('menu.user_cp', array($this, 'hookControlPanel'));
     }
 
     /**
      * Add Control Panel to user panel
      */
-    public function hookControlPanel($cp) {
-        $cogear = getInstance();
-        if ($cogear->user->id && access('admin')) {
-            $cp->{Url::gear('admin')} = icon('cog') . ' ' . t('Control Panel');
+    public function menu($name,&$cp) {
+        switch($name){
+            case 'user_cp':
+                if ($this->user->id && access('admin')) {
+                    $cp->{Url::gear('admin')} = icon('cog') . ' ' . t('Control Panel');
+                }
+                break;
         }
     }
 
@@ -40,8 +41,7 @@ class Admin_Gear extends Gear {
      * Dispatch request
      */
     public function index($action = '', $subaction = 'index') {
-        $cogear = getInstance();
-        $args = $cogear->router->getArgs();
+        $args = $this->router->getArgs();
         $rev_args = array_reverse($args);
         $class = array();
         $stop = FALSE;
@@ -49,12 +49,12 @@ class Admin_Gear extends Gear {
         while ($piece = array_pop($rev_args)) {
                 $class[] = $piece;
                 $gear = implode('_', $class);
-                if ($cogear->gears->$gear) {
-                    $callback = array($cogear->gears->$gear, 'admin');
+                if ($this->gears->$gear) {
+                    $callback = array($this->gears->$gear, 'admin');
                     if (is_callable($callback)) {
-                        event('admin.gear.request',$cogear->gears->$gear);
+                        event('admin.gear.request',$this->gears->$gear);
                         Template::setGlobal('title',$gear);
-                        $cogear->router->exec($callback, $rev_args);
+                        $this->router->exec($callback, $rev_args);
                         $stop = TRUE;
                         break;
                     }
