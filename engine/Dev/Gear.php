@@ -46,7 +46,7 @@ class Dev_Gear extends Gear {
         switch ($name) {
             case 'user':
                 $cp->{Url::gear('dev')} =  t('Developer');
-                $cp->{Url::gear('dev')}->order = 99;
+                $cp->{Url::gear('dev')}->order = 98;
                 break;
         }
     }
