@@ -69,7 +69,7 @@ class Menu_Object extends Stack {
      * @param	string
      * @param	mixed
      */
-    public function __set($path, $value = NULL) {
+    public function __set($path, $value) {
         $element = new Menu_Item($path, $value, $this->position++, $this->base_uri);
         $this->add($path, $element);
     }
