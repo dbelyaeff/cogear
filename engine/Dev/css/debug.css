@@ -1,16 +1,7 @@
 #debug{
-    position: absolute;
-    top: 35px;
-    right: 5px;
-    font-size: 0.9em;
-    width: 350px;
-    background: #414141;
-    color: #FFF;
-    padding: 10px;
-    z-index: 7;
-    border-top: 1px solid #000;
-    opacity: 0.8;
-    border-radius: 0 0 5px 5px;
-    box-shadow: 1px 1px 5px #000;
+    background: #efefef;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #CCC;
     display: none;
 }
