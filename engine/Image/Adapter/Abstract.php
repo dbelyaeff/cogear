@@ -76,10 +76,9 @@ abstract class Image_Adapter_Abstract extends Options {
     protected function getSize($size) {
         if (is_string($size)) {
             $size = explode('x', $size);
-            if(file_exists($this->path)){
+            if (file_exists($this->path)) {
                 list($width, $height) = getimagesize($this->path);
-            }
-            else {
+            } else {
                 $width = $size[0];
                 isset($size[1]) && $height = $size[1];
             }
@@ -127,11 +126,23 @@ abstract class Image_Adapter_Abstract extends Options {
      * @param
      */
     public function getSizeFromString($size) {
-        $size = explode('x', $size);
-        if (sizeof($size) == 1) {
-            $size[1] = $size[0];
+        // Simple 200x200 or just 200
+        if (preg_match('(\d+(x\d+)?)', $size)) {
+            $size = explode('x', $size);
+            if (sizeof($size) == 1) {
+                $size[1] = $size[0];
+            }
+            return new Core_ArrayObject(array('width' => $size[0], 'height' => $size[1]));
         }
-        return new Core_ArrayObject(array('width' => $size[0], 'height' => $size[1]));
+        // Preset usage
+        // Example: small_24x24 or any name you like with a-z_- characters in name
+        elseif(preg_match('([\w_-]+)', $size)){
+            $preset = new Image_Preset($size);
+            if($preset->load()){
+                return $this->getSizeFromString($preset->size);
+            }
+        }
+        return NULL;
     }
 
     abstract public function create($width, $height);

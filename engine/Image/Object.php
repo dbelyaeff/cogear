@@ -23,6 +23,14 @@ class Image_Object extends Adapter {
         $this->adapter = file_exists($this->file) ? new $driver($this->file) : new Core_ArrayObject();
     }
     /**
+     * Get image file
+     * 
+     * @return string
+     */
+    public function getFile(){
+        return $this->file;
+    }
+    /**
      * Get image info by path 
      *
      * @param string $path

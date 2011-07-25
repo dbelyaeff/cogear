@@ -41,8 +41,8 @@ class User_Avatar{
      */
     public function getSize($size){
         $original = $this->getFile();
-        $thumb = new Image_Thumb($original);
-        return $this->render($thumb->get($size));
+        $thumb = new Image_Thumb($original,$size);
+        return (string)$thumb;
     }
     /**
      * Get avatar file
@@ -59,7 +59,7 @@ class User_Avatar{
      */
     public function render($file = NULL) {
         $file OR $file = UPLOADS.'/'.$this->file;
-        return HTML::img(Url::toUri($this->getSize(config('user.profile.avatar_size','200'))), $this->user->login, array('class' => 'avatar'));
+        return HTML::img(Url::toUri($this->getSize(config('user.profile.avatar.size','200x200'))), $this->user->login, array('class' => 'avatar'));
     }
 
     /**

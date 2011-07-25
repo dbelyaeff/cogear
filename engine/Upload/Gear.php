@@ -22,8 +22,6 @@ class Upload_Gear extends Gear {
             case 'file':
                  $tpl = new Template('Upload.file');
                  $tpl->show();
-//                $file = new Upload_File('myfile', array('path' => cogear()->user->getDir(), 'maxsize' => '100'));
-//                append('content', $file->render());
                 break;
             case 'image':
 
@@ -31,13 +29,6 @@ class Upload_Gear extends Gear {
             default:
                 append('content', HTML::a(Url::gear('upload') . '/file?iframe', t('Upload'), array('rel' => 'modal', 'class' => 'button')));
         }
-    }
-
-    /**
-     * Upload image
-     */
-    public function image_action() {
-        
     }
 }
 

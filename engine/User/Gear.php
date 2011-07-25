@@ -40,7 +40,7 @@ class User_Gear extends Gear {
             case 'user':
                 $root = Url::gear('user');
                 if ($this->id) {
-                    $menu->{$root . $this->login} = t('My Profile');
+                    $menu->{$root} = t('My Profile');
                     $menu->{$root . 'logout'} = t('Logout');
                     $menu->{$root . 'logout'}->order = 100;
                 } else {
@@ -105,7 +105,7 @@ class User_Gear extends Gear {
             case 'login':
             case 'register':
             case 'lostpassword':
-                new Menu_Tabs('user_login',Url::gear('user'));
+                new Menu_Tabs('user_login', Url::gear('user'));
         }
         switch ($action) {
             case 'login':
@@ -119,6 +119,10 @@ class User_Gear extends Gear {
                 break;
             case 'register':
                 $this->register_action();
+                break;
+            case 'index':
+            case 'profile':
+                $this->show_action();
                 break;
             default:
                 switch ($subaction) {
@@ -136,11 +140,16 @@ class User_Gear extends Gear {
      * 
      * @param string $login
      */
-    public function show_action($login) {
-        $user = new User_Object();
-        $user->where('login', $login);
-        if (!$user->find()) {
-            return _404();
+    public function show_action($login = NULL) {
+        if ($login) {
+            $user = new User_Object();
+            $user->where('login', $login);
+            if (!$user->find()) {
+                return _404();
+            }
+        }
+        else {
+            $user = $this->current;
         }
         $this->renderUserInfo($user);
     }
@@ -278,7 +287,7 @@ class User_Gear extends Gear {
      * @param string $action 
      */
     public function admin($action = '') {
-        new Menu_Tabs('admin_user',Url::gear('admin'));
+        new Menu_Tabs('admin_user', Url::gear('admin'));
         switch ($action) {
             case 'add':
                 $this->admin_add();

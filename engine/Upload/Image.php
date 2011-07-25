@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  Images hanlder
  *
@@ -12,7 +13,8 @@
  * @subpackage  	Image
  * @version		$Id$
  */
-class Upload_Image extends Upload_File{
+class Upload_Image extends Upload_File {
+
     /**
      * Allowed image types
      * @var string
@@ -43,64 +45,82 @@ class Upload_Image extends Upload_File{
      */
     protected $mime;
     /**
+     * Preset name
+     * 
+     * @var string
+     */
+    protected $preset;
+
+    /**
      * Constructor
      *
      * @param string $name
      * @param array $options
      */
-    public function __construct($name,$options = array()){
+    public function __construct($name, $options = array()) {
         isset($options['allowed_types']) OR $options['allowed_types'] = $this->allowed_types;
-        parent::__construct($name,$options);
+        parent::__construct($name, $options);
     }
+
     /**
      * Upload
      * 
      * @return  boolean
      */
-    public function upload(){
-        if($result = parent::upload()){
+    public function upload() {
+        if ($result = parent::upload()) {
             $this->getInfo();
             $image = new Image($this->file->path);
-            // Resize
-            $this->options->resize && $image->resize($this->options->resize);
-            // Crop
-            $this->options->crop && $image->crop($this->options->crop);
-            // Size & Crop
-            $this->options->sizecrop && $image->sizecrop($this->options->sizecrop);
-            // Watermark
-            $this->options->watermark && $image->watermark($this->options->watermark);
+            if ($this->options->preset) {
+                $preset = new Image_Preset($this->options->preset);
+                if ($preset->load()) {
+                    $preset->process($image);
+                }
+            } else {
+                // Resize
+                $this->options->resize && $image->resize($this->options->resize);
+                // Crop
+                $this->options->crop && $image->crop($this->options->crop);
+                // Size & Crop
+                $this->options->sizecrop && $image->sizecrop($this->options->sizecrop);
+                // Watermark
+                $this->options->watermark && $image->watermark($this->options->watermark);
+            }
             $image->save();
             return $result;
         }
         return FALSE;
     }
+
     /**
      * Process upload
      *
      * @return boolean|string
      */
-    protected function processUpload(){
+    protected function processUpload() {
         $this->getInfo($this->file->tmp_name);
-        if($this->options->max && !$this->checkMax($this->options->max->width,$this->options->max->height)
-        OR $this->options->min && !$this->checkMin($this->options->max->width,$this->options->max->height)){
+        if ($this->options->max && !$this->checkMax($this->options->max->width, $this->options->max->height)
+                OR $this->options->min && !$this->checkMin($this->options->max->width, $this->options->max->height)) {
             return FALSE;
         }
         return parent::processUpload();
     }
+
     /**
      * Get info about uploaded image
      *
      * @return array
      */
-    public function getInfo($file = ''){
+    public function getInfo($file = '') {
         $file OR $file = $this->file->path;
-        list($this->width,$this->height,$this->type) = new Core_ArrayObject(getimagesize($file));
+        list($this->width, $this->height, $this->type) = new Core_ArrayObject(getimagesize($file));
         return new Core_ArrayObject(array(
             'width' => $this->width,
             'height' => $this->height,
             'type' => $this->type,
         ));
     }
+
     /**
      * Check image dimensions for maximum
      *
@@ -109,14 +129,15 @@ class Upload_Image extends Upload_File{
      * @param   boolean $strict
      * @return  boolean
      */
-    public function checkMax($width,$height,$strict = NULL){
-        if(($strict && $this->width > $width && $this->height > $height) OR
-                      ($this->width > $width OR $this->height > $height)){
-            $this->errors[] = t('Maximum image dimensions are <b>%sx%s</b>pixels.','Image',$width,$height);
+    public function checkMax($width, $height, $strict = NULL) {
+        if (($strict && $this->width > $width && $this->height > $height) OR
+                ($this->width > $width OR $this->height > $height)) {
+            $this->errors[] = t('Maximum image dimensions are <b>%sx%s</b>pixels.', 'Image', $width, $height);
             return FALSE;
         }
         return TRUE;
     }
+
     /**
      * Check image dimensions for minimum
      *
@@ -125,14 +146,15 @@ class Upload_Image extends Upload_File{
      * @param   boolean $strict
      * @return  boolean
      */
-    public function checkMin($width,$height,$strict = NULL){
-        if(($strict && $this->width < $width && $this->height < $height) OR
-                      ($this->width < $width OR $this->height < $height)){
-            $this->errors[] = t('Minimal image dimensions are <b>%sx%s</b>pixels.','Image',$width,$height);
+    public function checkMin($width, $height, $strict = NULL) {
+        if (($strict && $this->width < $width && $this->height < $height) OR
+                ($this->width < $width OR $this->height < $height)) {
+            $this->errors[] = t('Minimal image dimensions are <b>%sx%s</b>pixels.', 'Image', $width, $height);
             return FALSE;
         }
         return TRUE;
     }
+
     /**
      * Magic call method
      * 
@@ -141,6 +163,7 @@ class Upload_Image extends Upload_File{
      * @return mixed
      */
     public function __call($name, $arguments) {
-        return is_callable(array($this->adapter,$name)) ? call_user_func_array(array($this->adapter,$name),$arguments) : NULL;
+        return is_callable(array($this->adapter, $name)) ? call_user_func_array(array($this->adapter, $name), $arguments) : NULL;
     }
+
 }

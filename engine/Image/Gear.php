@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Image gear
  *
@@ -11,7 +12,17 @@
  * @version		$Id$
  */
 class Image_Gear extends Gear {
+
     protected $name = 'Image';
     protected $description = 'Image processor.';
     protected $package = 'Images';
+
+}
+
+function image_preset($name, $path,$toUri = FALSE) {
+    $preset = new Image_Preset($name);
+    if ($preset->load()) {
+        $image = $preset->image($path)->render();
+        return $toUri ? Url::toUri($image) : $image;
+    }
 }
