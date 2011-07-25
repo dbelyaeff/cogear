@@ -130,7 +130,7 @@ final class Cogear implements Interface_Singleton {
         if ($this->events->$name) {
             foreach ($this->events->$name as $callback) {
                  if($this->events->$name->is_stopped()) continue;
-                 if($data = $callback->call(&$args)){
+                 if($data = $callback->call($args)){
                      $result->append($data);
                  }
             }
@@ -162,12 +162,22 @@ final class Cogear implements Interface_Singleton {
      * @param   string  $default
      * @return  string
      */
-    public function get($name, $default = NULL) {
+    public function get($name = NULL, $default = NULL) {
+        if($name === NULL){
+            return $this->config;
+        }
         $pieces = explode('.', $name);
+        $size = sizeof($pieces);
         $current = $this->config;
+        $depth = 1;
         foreach ($pieces as $piece) {
-            if ($current->$piece && $current->$piece instanceof Core_ArrayObject) {
-                $current = $current->$piece;
+            if ($current->$piece) {
+                if($depth < $size && $current->$piece instanceof Core_ArrayObject){
+                    $current = $current->$piece;
+                    $depth++;
+                    continue;
+                }
+                return $current->$piece;
             } else {
                 return $current->$piece ? $current->$piece : $default;
             }
@@ -474,16 +484,16 @@ function cogear() {
 function event() {
     $cogear = getInstance();
     $args = func_get_args();
-    return call_user_func_array(array($cogear, 'event'), &$args);
+    return call_user_func_array(array($cogear, 'event'), $args);
 }
 
 function hook() {
     $cogear = getInstance();
     $args = func_get_args();
-    return call_user_func_array(array($cogear, 'hook'), &$args);
+    return call_user_func_array(array($cogear, 'hook'), $args);
 }
 
-function config($name, $default_value = NULL) {
+function config($name = NULL, $default_value = NULL) {
     $cogear = getInstance();
     return $cogear->get($name, $default_value);
 }
