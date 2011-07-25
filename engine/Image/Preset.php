@@ -32,7 +32,7 @@ class Image_Preset extends Core_ArrayObject {
                 call_user_func_array(array($this->image, $action), $params);
             }
         }
-        return $path;
+        return $this;
     }
 
     /**
@@ -55,9 +55,8 @@ class Image_Preset extends Core_ArrayObject {
     public function image($image){
         if($image instanceof Image_Object){
             $this->image = $image;
-            return;
         }
-        if(file_exists($image)){
+        elseif(file_exists($image)){
             $this->image = new Image_Object($image);
         }
         return $this;

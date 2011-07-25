@@ -74,7 +74,7 @@ class Upload_Image extends Upload_File {
             if ($this->options->preset) {
                 $preset = new Image_Preset($this->options->preset);
                 if ($preset->load()) {
-                    $preset->process($image);
+                    $preset->image($image)->process();
                 }
             } else {
                 // Resize
