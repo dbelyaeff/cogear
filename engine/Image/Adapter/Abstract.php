@@ -126,7 +126,7 @@ abstract class Image_Adapter_Abstract extends Options {
      * 
      * @param
      */
-    protected function getSizeFromString($size) {
+    public function getSizeFromString($size) {
         $size = explode('x', $size);
         if (sizeof($size) == 1) {
             $size[1] = $size[0];
