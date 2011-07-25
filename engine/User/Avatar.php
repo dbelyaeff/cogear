@@ -41,13 +41,8 @@ class User_Avatar{
      */
     public function getSize($size){
         $original = $this->getFile();
-        $info = pathinfo($original);
-        $destination = dirname($original).DS.str_replace($info['basename'],$info['filename'].'_'.$size.'.'.$info['extension'],$info['basename']);
-        if(!file_exists($destination) OR filemtime($destination) < filemtime($original)){
-            $image = new Image($original);
-            $image->sizecrop($size)->save($destination);
-        }
-        return $this->render($destination);
+        $thumb = new Image_Thumb($original);
+        return $this->render($thumb->get($size));
     }
     /**
      * Get avatar file
@@ -64,7 +59,7 @@ class User_Avatar{
      */
     public function render($file = NULL) {
         $file OR $file = UPLOADS.'/'.$this->file;
-        return HTML::img(Url::toUri($file), $this->user->login, array('class' => 'avatar'));
+        return HTML::img(Url::toUri($this->getSize(config('user.profile.avatar_size','200'))), $this->user->login, array('class' => 'avatar'));
     }
 
     /**

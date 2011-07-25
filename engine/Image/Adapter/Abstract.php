@@ -81,7 +81,7 @@ abstract class Image_Adapter_Abstract extends Options {
             }
             else {
                 $width = $size[0];
-                $height = $size[1];
+                isset($size[1]) && $height = $size[1];
             }
             if (sizeof($size) == 1) {
                 $size[1] = $this->image->options->maintain_ratio === FALSE ? $size[0] : $height * $size[0] / $width;

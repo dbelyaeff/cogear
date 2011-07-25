@@ -197,7 +197,7 @@ class User_Object extends Db_ORM {
         $panel->avatar = $this->getAvatar();
         $panel->login = HTML::a($this->getProfileLink(), $this->login, array('class'=>'implicit login   '));
         if (access('user edit_all') OR $this->id == $cogear->user->id) {
-            $panel->edit = HTML::a(Url::gear('user') . $this->login . '/edit', icon('cog'));
+            $panel->edit = HTML::a(Url::gear('user') . $this->login . '/edit', t('[edit]'),array('class'=>'edit'));
         }
         return $panel->render();
     }

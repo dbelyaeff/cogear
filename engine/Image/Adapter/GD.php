@@ -195,6 +195,7 @@ class Image_Adapter_GD extends Image_Adapter_Abstract {
     public function save($file = NULL) {
         $this->prepare();
         $path = $file ? $file : $this->path;
+        Filesystem::makeDir(dirname($path));
         switch ($this->info->type) {
             case IMAGETYPE_JPEG:
                 imagejpeg($this->source, $path, config('image.jpeg.quality', 75));
