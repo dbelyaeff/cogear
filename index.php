@@ -20,7 +20,6 @@ define('ENGINE', ROOT . DS . 'engine');
 // Gears for all sites
 define('GEARS', ROOT . DS . 'gears');
 define('SITES', ROOT . DS . 'sites');
-define('LIBRARY', ROOT . DS . 'library');
 define('DEFAULT_SITE', SITES . DS . 'default');
 define('PHP_FILE_PREFIX', '<?php ' . "\n");
 define('IGNITE', time());
