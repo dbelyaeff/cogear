@@ -60,12 +60,8 @@ function find($file) {
 function debug() {
     echo '<pre>';
     $args = func_get_args();
-//    $tpl = new Template('Core.debug');
-//    $tpl->args = $args;
-//    append('content',$tpl->render());
     call_user_func_array('var_dump', $args);
     echo '</pre>';
-//    info(var_export($args,TRUE));
 }
 
 /**
@@ -87,7 +83,7 @@ function autoload($class) {
 spl_autoload_register('autoload');
 
 $cogear = Cogear::getInstance();
-// Some gears are needed to be preloaded
+// Some root classes are needed to be preloaded
 $cogear->request = new Request();
 // Set host
 $host = $cogear->request->get('HTTP_HOST');
@@ -123,7 +119,7 @@ if (!$options = $cogear->config->cookies) {
     );
 }
 $cogear->router = new Router();
-$cogear->assets = new Assets();
+$cogear->assets = new Harvester();
 $cogear->response = new Response();
 $cogear->session = Session::factory('session', $options);
 // Load current site settings if file exists

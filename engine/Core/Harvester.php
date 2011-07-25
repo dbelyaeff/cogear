@@ -1,6 +1,6 @@
 <?php
 /**
- * Assets class
+ * Assets harvester class
  *
  * @author		Dmitriy Belyaev <admin@cogear.ru>
  * @copyright		Copyright (c) 2011, Dmitriy Belyaev
@@ -10,7 +10,7 @@
  * @subpackage          Assets
  * @version		$Id$
  */
-class Assets{
+class Harvester{
     /**
      * Scripts
      *
