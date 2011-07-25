@@ -72,10 +72,11 @@ class Image_Adapter_GD extends Image_Adapter_Abstract {
      * Crop
      * 
      * @param string $crop 
-     * @param double    $x
-     * @param doble     $y
+     * @param double    $x  If it's < 1, than it is a percent. 0.5 = 50%. When it's > 1, it's exact pixel.
+     * @param double     $y Likely as $x.
+     * @param boolean $maintain_ratio
      */
-    public function crop($size, $x=0.5, $y=0., $maintain_ratio = NULL) {
+    public function crop($size, $x=0.5, $y=0.5, $maintain_ratio = NULL) {
         $maintain_ratio !== NULL && $this->options->maintain_ratio = $maintain_ratio;
         $size = $this->prepare($size);
         $from = new stdClass();
@@ -83,11 +84,11 @@ class Image_Adapter_GD extends Image_Adapter_Abstract {
         $from->x = $to->x = 0;
         $from->y = $to->y = 0;
         if ($this->info->width > $size->width) {
-            $from->x = $this->info->width * $x - $size->width / 2;
+            $from->x = $x < 1 ? $this->info->width * $x - $size->width / 2 : $x;
             $to->x = $from->x + $size->width;
         }
         if ($this->info->height > $size->height) {
-            $from->y = $this->info->height * $y - $size->height / 2;
+            $from->y = $y < 1 ? $this->info->height * $y - $size->height / 2 : $y;
             $to->y = $from->y + $size->height;
         }
         imagecopy($this->destination, $this->source, 0, 0, $from->x, $from->y, $size->width, $size->height);
