@@ -94,7 +94,7 @@ class Db_Driver_Mysql extends Db_Driver_Abstract {
         }
         if ($or_where) {
             $or_where = $this->filterFields($from, $or_where);
-            $or_where && $query[] = 'OR WHERE ' . $this->argsToString($or_where, ' = ');
+            $or_where && $query[] = 'OR ' . $this->argsToString($or_where, ' = ');
         }
         $group && $query[] = ' GROUP BY ' . implode(', ', $group);
         $having && $query[] = ' HAVING ' . implode(', ', $having);
