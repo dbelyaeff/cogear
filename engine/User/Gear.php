@@ -22,6 +22,7 @@ class User_Gear extends Gear {
      * Init
      */
     public function init() {
+        $this->router->addRoute('users:maybe', array($this, 'users'));
         parent::init();
         $this->current = new User_Object();
         $this->current->init();
@@ -41,6 +42,7 @@ class User_Gear extends Gear {
                 $root = Url::gear('user');
                 if ($this->id) {
                     $menu->{$root} = t('My Profile');
+                    $menu->{'users'} = t('Find users');
                     $menu->{$root . 'logout'} = t('Logout');
                     $menu->{$root . 'logout'}->order = 100;
                 } else {
@@ -49,12 +51,13 @@ class User_Gear extends Gear {
                 }
                 break;
             case 'admin':
-                $menu->{'user/list'} = t('Users');
-                $menu->{'user/list'}->order = 100;
+                $menu->{Url::gear('admin').'user'} = t('Users');
+                $menu->{Url::gear('admin').'user'}->order = 100;
                 break;
             case 'tabs_admin_user':
-                $menu->{'user/list'} = t('List');
-                $menu->{'user/add'} = t('Add');
+                $menu->{'/'} = t('List');
+                $menu->{'add'} = t('Add');
+                $menu->{'add'}->class = 'fl_r';
                 break;
             case 'tabs_user_login':
                 $menu->{'login'} = t('Log in');
@@ -120,18 +123,31 @@ class User_Gear extends Gear {
             case 'register':
                 $this->register_action();
                 break;
+            case 'find':
+                $this->users();
+                break;
             case 'index':
             case 'profile':
                 $this->show_action();
                 break;
+            case 'edit':
+                $this->edit_action($subaction);
+                break;
             default:
-                switch ($subaction) {
-                    case 'edit':
-                        $this->edit_action($action);
-                        break;
-                    default:
-                        $this->show_action($action);
-                }
+                $this->show_action($action);
+        }
+    }
+
+    /**
+     * Users list
+     */
+    public function users($action = NULL) {
+        switch ($action) {
+            default:
+                $grid = new Grid('users');
+                $users = new User_Object();
+                $grid->adopt($users->findAll());
+                $grid->show();
         }
     }
 
@@ -140,15 +156,15 @@ class User_Gear extends Gear {
      * 
      * @param string $login
      */
-    public function show_action($login = NULL) {
-        if ($login) {
+    public function show_action($id = NULL) {
+        if ($id) {
             $user = new User_Object();
-            $user->where('login', $login);
+            $this->db->where('id',$id);
+            $this->db->or_where('login',$id);
             if (!$user->find()) {
                 return _404();
             }
-        }
-        else {
+        } else {
             $user = $this->current;
         }
         $this->renderUserInfo($user);
@@ -170,18 +186,19 @@ class User_Gear extends Gear {
      * 
      * @param   string  $login
      */
-    public function edit_action($login) {
+    public function edit_action($id = NULL) {
+        $id OR $id = $this->user->id;
         $user = new User_Object();
-        $user->where('login', $login);
+        $this->db->where('id', $id);
         if (!$user->find()) {
             return _404();
         }
-        if (!access('user edit_all') OR $this->id != $user->id) {
+        if (!access('user edit_all') && $this->id != $user->id) {
             return _403();
         }
         $this->renderUserInfo($user);
         $user = new User_Object();
-        $user->where('login', $login);
+        $user->where('id', $id);
         $user->find();
         $form = new Form('User.profile');
         $user->password = '';
@@ -193,6 +210,11 @@ class User_Gear extends Gear {
         if ($result = $form->result()) {
             if ($user->login != $result['login']) {
                 $redirect = Url::gear('user') . $result['login'];
+            }
+            if ($result->delete && access('users delete_all')) {
+                $user->delete();
+                flash_success(t('User <b>%s</b> was deleted!'));
+                redirect(Url::link('/users'));
             }
             $user->merge($result);
             if ($result->password) {
@@ -287,21 +309,14 @@ class User_Gear extends Gear {
      * @param string $action 
      */
     public function admin($action = '') {
-        new Menu_Tabs('admin_user', Url::gear('admin'));
+        new Menu_Tabs('admin_user', Url::gear('admin').'user');
         switch ($action) {
             case 'add':
                 $this->admin_add();
                 break;
             default:
-                $this->admin_list();
+                $this->users();
         }
-    }
-
-    /**
-     * Show list of users
-     */
-    public function admin_list() {
-        
     }
 
     /**

@@ -11,8 +11,9 @@
  * @subpackage
  * @version		$Id$
  */
-class User_Object extends Db_ORM {
+class User_Object extends Db_Item {
     public $dir;
+    protected $template = 'User.list';
     /**
      * Constructor
      * 
@@ -197,7 +198,7 @@ class User_Object extends Db_ORM {
         $panel->avatar = $this->getAvatar();
         $panel->login = HTML::a($this->getProfileLink(), $this->login, array('class'=>'implicit login   '));
         if (access('user edit_all') OR $this->id == $cogear->user->id) {
-            $panel->edit = HTML::a(Url::gear('user') . $this->login . '/edit', t('[edit]'),array('class'=>'edit'));
+            $panel->edit = HTML::a(Url::gear('user') . 'edit/'.$this->id, t('[edit]'),array('class'=>'edit'));
         }
         return $panel->render();
     }

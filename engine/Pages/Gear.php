@@ -49,26 +49,34 @@ class Pages_Gear extends Gear {
         switch ($name) {
             case 'user':
                 if ($this->user->id) {
-                    $menu->{Url::gear('pages') . 'create'} = t('Create page', 'Pages');
+                    $menu->{Url::gear('pages')} = t('My pages', 'Pages');
                 }
                 break;
             case 'admin':
                 $menu->{'pages'} = t('Pages');
                 break;
+            case 'tabs_pages':
+                $menu->{'/'} = t('All');
+                $menu->{'create'} = t('Add new');
+                $menu->{'create'}->class = 'fl_r';
+                if($this->router->getSegments(1) == 'edit'){
+                    $menu->{'edit'} = t('Edit', 'Pages');
+                }
+                break;
         }
     }
+
     /**
      * Show pages
      * 
      * @param string $type 
      */
     public function index($action = '', $subaction = NULL) {
-        $cogear = getInstance();
+        new Menu_Tabs('pages', Url::gear('pages'));
         switch ($action) {
             case 'create':
                 if (!page_access('pages create'))
                     return;
-                append('content', HTML::paired_tag('h1', t('New page', 'Pages')));
                 $form = new Form('Pages.createdit');
                 if ($result = $form->result()) {
                     $page = new Pages_Page();
@@ -127,17 +135,11 @@ class Pages_Gear extends Gear {
      * @param int $page 
      */
     public function showPages($page) {
-        $cogear = getInstance();
-        //$pager = new Pages_Pager();
-        //$pager->page = $page;
-        $cogear->db->order('id', 'DESC');
-        if ($pages = $cogear->db->get('pages')->result()) {
-            foreach ($pages as $data) {
-                $page = new Pages_Page();
-                $page->object($data);
-                $this->renderPage($page);
-            }
-        }
+        $grid = new Grid('Pages.my');
+        $pages = new Pages_Page();
+        $this->db->order('id', 'DESC');
+        $grid->adopt($pages->findAll());
+        $grid->show();
     }
 
     /**
@@ -153,14 +155,12 @@ class Pages_Gear extends Gear {
      * Show page
      * 
      * @param   int $id
-     * @param   boolean $teaser
      */
-    public function showPage($id, $teaser = FALSE) {
+    public function showPage($id) {
         $page = new Pages_Page();
         $page->where('id', $id);
         if ($page->find()) {
             event('Pages.showPage.before', $page);
-            $page->teaser = $teaser;
             $this->renderPage($page);
             event('Pages.showPage.after', $page);
         } else {
@@ -175,9 +175,8 @@ class Pages_Gear extends Gear {
      */
     public function renderPage($page) {
         $tpl = new Template('Pages.page');
-        $tpl->page = $page;
+        $tpl->item = $page;
         append('content', $tpl->render());
-        }
-
+    }
 
 }

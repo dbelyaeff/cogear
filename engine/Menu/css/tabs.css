@@ -16,6 +16,9 @@
     cursor: pointer;
     font-size: 1.1em;
 }
+.tabs ul li.fl_r{
+    float: right;
+}
 .tabs ul li a{
     color: #000;
     text-decoration: none;

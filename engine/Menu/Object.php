@@ -24,7 +24,7 @@ class Menu_Object extends Stack {
      */
     public function __construct($name, $template = NULL, $base_uri = NULL) {
         parent::__construct($name);
-        cogear()->menu->register($name, &$this);
+        cogear()->menu->register($name, $this);
         $template && $this->template = $template;
         $this->base_uri = rtrim(parse_url($base_uri ? $base_uri : Url::link(), PHP_URL_PATH), '/') . '/';
     }
@@ -55,7 +55,7 @@ class Menu_Object extends Stack {
         while ($pieces) {
             $uri = implode('/', $pieces);
             foreach (array($uri, '/' . $uri . '/') as $path) {
-                if ($this->offsetExists($path)) {
+                if ($this->{$path}) {
                     $this->{$path}->active(TRUE);
                 }
             }
@@ -117,9 +117,9 @@ class Menu_Object extends Stack {
      */
     public function mixWith(&$menu, $name, $place = NULL) {
         $this->uasort('Core_ArrayObject::sortByOrder');
+        $i = 1;
         if ($place && $menu->{$place}) {
             $position = $menu->{$place}->order;
-            $i = 1;
         }
         else $position = $menu->position;
         foreach ($this as $path => $item) {
@@ -135,7 +135,7 @@ class Menu_Object extends Stack {
      */
     public function render($template = '') {
         $template OR $template = $this->template;
-        event('menu.' . $this->name, &$this);
+        event('menu.' . $this->name, $this);
         if ($this->count()) {
             $this->uasort('Core_ArrayObject::sortByOrder');
             $this->setActive();

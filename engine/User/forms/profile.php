@@ -6,11 +6,15 @@ return array(
         'avatar' => array(
             'label' => t('Avatar', 'User'),
             'type' => 'image',
-            //'resize' => config('user.avatar.size','64x64'),
-            'min' => array('width' => 64, 'height' => 64),
-            'sizecrop' => config('user.avatar.sizecrop', '64x64'),
+            'preset' => 'avatar.photo',
             'path' => UPLOADS . DS . 'avatars' . DS . cogear()->user->id,
         //'rename' => cogear()->user->id,
+        ),
+        'realname' => array(
+            'label' => t('Real name','User'),
+            'type' => 'text',
+            'access' => access('user_edit_realname'),
+            'validators' => array(array('Length',5),'Name','Required'),
         ),
         'login' => array(
             'label' => t('Login', 'User'),
@@ -41,6 +45,11 @@ return array(
         'submit' => array(
             'type' => 'submit',
             'label' => t('Update'),
+        ),
+        'delete' => array(
+            'type' => 'submit',
+            'label' => t('Delete'),
+            'access' => access('users delete_all'),
         )
     )
 );

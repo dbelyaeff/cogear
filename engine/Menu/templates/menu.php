@@ -13,7 +13,7 @@
             ?>
             <? if($level <= $last_level && $z != 0):?>
             <?endif?>
-            <li>
+            <li<?if($item->class){?> class="<?=$item->class?>"<?}?>>
                 <a href="<?= $item->link ?>"><?= $item->text ?></a>
             <? $last_level = $level ?>
             <?$z++?>

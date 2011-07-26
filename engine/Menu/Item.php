@@ -25,6 +25,7 @@ class Menu_Item extends Core_ArrayObject{
      */
     public function __construct($path,$value = NULL,$order = 0,$base_uri = NULL) {
         $this->path = trim($path,'/');
+        $base_uri && $this->path = str_replace($base_uri,'',$this->path);
         $this->value = $value;
         $this->order = $order;
         $this->base_uri = $base_uri;
@@ -55,7 +56,11 @@ class Menu_Item extends Core_ArrayObject{
      * @return  boolean
      */
     public function active($value = NULL) {
-        return $value ? $this->active = TRUE : $this->active;
+        if($value){
+            $this->active = TRUE;
+            $this->class ? $this->class .= ' active' : $this->class = 'active';
+        }
+        return $this->active;
     }
 
 }

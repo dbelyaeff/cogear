@@ -57,7 +57,7 @@ class User_Avatar{
      *  
      * @param string $file 
      */
-    public function render($file = NULL) {
+    public function render($size) {
         $file OR $file = UPLOADS.'/'.$this->file;
         return HTML::img(Url::toUri($this->getSize(config('user.profile.avatar.size','200x200'))), $this->user->login, array('class' => 'avatar'));
     }
