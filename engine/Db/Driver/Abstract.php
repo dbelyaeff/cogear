@@ -26,6 +26,7 @@ abstract class Db_Driver_Abstract extends Cogearable{
         'from' => array(),
         'join' => array(),
         'where' => array(),
+        'or_where' => array(),
         'where_in' => array(),
         'group' => array(),
         'having' => array(),
@@ -245,6 +246,22 @@ abstract class Db_Driver_Abstract extends Cogearable{
         } else {
             $name .= ' ' . trim($condition);
             $this->addQuery('where', array($name => $value));
+        }
+        return $this;
+    }
+    /**
+     * OR WHERE subquery
+     *
+     * @param   string|array    $name
+     * @param   string $value
+     * @return object   Self intsance.
+     */
+    public function or_where($name, $value = NULL, $condition = ' = ') {
+        if (is_array($name)) {
+            $this->addQuery('or_where', $name, $condition);
+        } else {
+            $name .= ' ' . trim($condition);
+            $this->addQuery('or_where', array($name => $value));
         }
         return $this;
     }
@@ -584,6 +601,7 @@ abstract class Db_Driver_Abstract extends Cogearable{
             'from' => array(),
             'join' => array(),
             'where' => array(),
+            'or_where' => array(),
             'where_in' => array(),
             'group' => array(),
             'having' => array(),

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Mysql Database Driver
  *
@@ -11,6 +12,7 @@
  * @version		$Id$
  */
 class Db_Driver_Mysql extends Db_Driver_Abstract {
+
     /**
      * Connect to database
      *
@@ -58,7 +60,7 @@ class Db_Driver_Mysql extends Db_Driver_Abstract {
      * @return object
      */
     public function getFieldsQuery($table) {
-        return  $this->query('SHOW COLUMNS FROM ' . $table) ? $this->result() : NULL;
+        return $this->query('SHOW COLUMNS FROM ' . $table) ? $this->result() : NULL;
     }
 
     /**
@@ -81,14 +83,18 @@ class Db_Driver_Mysql extends Db_Driver_Abstract {
         } elseif ($delete) {
             $query[] = 'DELETE FROM ' . $this->prepareTableName($from);
         } else {
-            $select = sizeof($select) < 1 ? '*' : implode(', ',$select);
+            $select = sizeof($select) < 1 ? '*' : implode(', ', $select);
             $query[] = 'SELECT ' . $select;
             $query[] = ' FROM ' . $this->prepareTableName($from);
         }
         $join && $query[] = implode(' ', $join);
-        if($where){
-            $where = $this->filterFields($from,$where);
+        if ($where) {
+            $where = $this->filterFields($from, $where);
             $where && $query[] = ' WHERE ' . $this->argsToString($where, ' = ');
+        }
+        if ($or_where) {
+            $or_where = $this->filterFields($from, $or_where);
+            $or_where && $query[] = 'OR WHERE ' . $this->argsToString($or_where, ' = ');
         }
         $group && $query[] = ' GROUP BY ' . implode(', ', $group);
         $having && $query[] = ' HAVING ' . implode(', ', $having);
@@ -155,4 +161,5 @@ class Db_Driver_Mysql extends Db_Driver_Abstract {
         $this->query('COMMIT');
         $this->query('SET AUTOCOMMIT=1');
     }
+
 }

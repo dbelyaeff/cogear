@@ -61,41 +61,6 @@ class Db_Driver_Mysqli extends Db_Driver_Mysql {
         return  $this->query('SHOW COLUMNS FROM ' . $table) ? $this->result() : NULL;
     }
 
-    /**
-     * Build query
-     *
-     * @return string
-     */
-    public function buildQuery() {
-        $query = array();
-        extract($this->_query);
-        $from = $from[0];
-        if ($insert) {
-            $values = $this->filterFields($from, $insert);
-            $into = array_keys($values);
-            $values = array_values($values);
-            $query[] = 'INSERT INTO ' . $this->prepareTableName($from) . ' (' . $this->prepareValues($into, '') . ') VALUES (' . $this->prepareValues($values) . ')';
-        } elseif ($update) {
-            $values = $this->filterFields($from, $update);
-            $query[] = 'UPDATE ' . $this->prepareTableName($from) . ' SET ' . $this->prepareValues($values);
-        } elseif ($delete) {
-            $query[] = 'DELETE FROM ' . $this->prepareTableName($from);
-        } else {
-            $select = sizeof($select) < 1 ? '*' : implode(', ',$select);
-            $query[] = 'SELECT ' . $select;
-            $query[] = ' FROM ' . $this->prepareTableName($from);
-        }
-        $join && $query[] = implode(' ', $join);
-        if($where){
-            $where = $this->filterFields($from,$where);
-            $where && $query[] = ' WHERE ' . $this->argsToString($where, ' = ');
-        }
-        $group && $query[] = ' GROUP BY ' . implode(', ', $group);
-        $having && $query[] = ' HAVING ' . implode(', ', $having);
-        $order && $query[] = ' ORDER BY ' . implode(', ', $order);
-        $limit && $limit[0] && $query[] = ' LIMIT ' . $limit[0] . ($limit[1] ? ', ' . $limit[1] : '');
-        return $this->query = implode($query);
-    }
 
     /**
      * Result
