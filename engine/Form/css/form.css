@@ -1,7 +1,7 @@
 .form {
     font: 1em Trebuchet MS,Myriad Pro;
 }
-.form select, .form input[type="text"],.form input[type="password"],.form input[type="search"],textarea{
+.form select, .form input[type="text"],.form input[type="password"],.form input[type="search"]{
     border: 1px solid #DFDFDF;
     padding: 3px 4px;
     font-size: 1.7em;

@@ -44,6 +44,7 @@ class Admin_Gear extends Gear {
      * Dispatch request
      */
     public function index() {
+        if(!access('admin')) return _403();
         new Admin_Menu();
         $args = $this->router->getArgs();
         $rev_args = array_reverse($args);

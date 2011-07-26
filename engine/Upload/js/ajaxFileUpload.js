@@ -97,6 +97,7 @@
                     error: function(response){
                         $ajaxFileUpload.onFailure();
                         $handler.loading();
+                        console.log(response.responseText);
                         $ajaxFileUpload.settings.debug && console.log('File is failed to upload.') && console.log(response);
                     }
                 });

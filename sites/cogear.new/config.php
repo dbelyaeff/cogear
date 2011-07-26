@@ -7,11 +7,11 @@ return array (
   ),
   'wysiwyg' => 
   array (
-    'editor' => 'redactor',
+    'editor' => 'editor',
   ),
   'cron' => 
   array (
-    'last_run' => 1311627030,
+    'last_run' => 1311711179,
   ),
   'user' => 
   array (
@@ -27,6 +27,14 @@ return array (
   array (
     'presets' => 
     array (
+      'post' => 
+      array (
+        'size' => '150x150',
+        'actions' => 
+        array (
+          0 => 'resize',
+        ),
+      ),
       'avatar' => 
       array (
         'small' => 
@@ -43,6 +51,14 @@ return array (
           'actions' => 
           array (
             0 => 'sizecrop',
+          ),
+        ),
+        'photo' => 
+        array (
+          'size' => '200x200',
+          'actions' => 
+          array (
+            0 => 'resize',
           ),
         ),
       ),

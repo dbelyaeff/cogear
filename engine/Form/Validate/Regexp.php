@@ -42,7 +42,7 @@ class Form_Validate_Regexp extends Form_Validate_Abstract{
 	 * @return	boolean
 	 */
 	public function validate($value){
-		if(!preg_match('#^'.$this->regexp.'$#',$value)){
+		if(!preg_match('#^'.$this->regexp.'$#iu',$value)){
 			return $this->element->addError($this->error_msg ? $this->error_msg : t('Field has incorrect value.'));
 		}		
 		return TRUE;

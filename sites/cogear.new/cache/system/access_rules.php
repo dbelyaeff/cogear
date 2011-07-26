@@ -22,6 +22,8 @@ return array (
     16 => 'user edit_all',
     17 => 'user edit_login',
     3 => 'user register',
+    32 => 'users delete_all',
+    31 => 'user_edit_realname',
   ),
   'ttl' => NULL,
   'tags' => 

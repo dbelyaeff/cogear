@@ -40,7 +40,7 @@ return array (
     'jQueryTools' => 'jQueryTools_Gear',
     'jQueryUI' => 'jQueryUI_Gear',
     'jQuery' => 'jQuery_Gear',
-    'Ajax_FileUpload' => 'Ajax_FileUpload_Gear',
+    'Upload_Ajax' => 'Upload_Ajax_Gear',
   ),
   'ttl' => NULL,
 );

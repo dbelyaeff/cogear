@@ -11,7 +11,7 @@
  * @subpackage
  * @version		$Id$
  */
-class Router {
+class Router extends Options {
 
     /**
      * Routes
@@ -93,6 +93,7 @@ class Router {
         $cogear = getInstance();
         $this->uri = $this->sanitizePath($cogear->request->get('PATH_INFO'));
         $this->segments = $this->parseSegments($this->uri);
+        $this->routes = new Core_ArrayObject($this->routes);
         $cogear->hook('ignite',array($this,'run'));
     }
 
@@ -197,7 +198,7 @@ class Router {
                     $this->callback = $callback;
                     event('callback.before',$this);
                     event('callback.'.get_class($callback[0]).'.before',$this);
-                    method_exists($callback[0],'request') && call_user_func_array(array($callback[0],'request'),&$this->args);
+                    method_exists($callback[0],'request') && call_user_func_array(array($callback[0],'request'),$this->args);
                     call_user_func_array($callback,$this->args);
                     $this->has_run = TRUE;
                     event('callback.'.get_class($callback[0]).'.after',$this);
@@ -206,7 +207,6 @@ class Router {
                 }
             }
         }
-        event('callback.failure',$this);
         $this->exec(array($cogear->errors,'_404'));
         return;
     }

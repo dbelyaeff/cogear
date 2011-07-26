@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Grid Object
  *
@@ -7,87 +6,46 @@
  * @copyright		Copyright (c) 2011, Dmitriy Belyaev
  * @license		http://cogear.ru/license.html
  * @link		http://cogear.ru
- * @package		Core
+ * @package		Grid
  * @subpackage
  * @version		$Id$
  */
-class Grid_Object extends Nameable{
-
-    protected $fields;
-    /**
-     * Raw data
-     *  
-     * @var array
-     */
-    protected $data;
-    /**
-     * Data converted to Grid lines
-     * 
-     * @var object 
-     */
-    protected $lines;
-    protected $template;
-    public static $types = array(
-        'text' => 'Grid_Element_Text',
-        'checkbox' => 'Grid_Element_Checkbox',
-        'image' => 'Grid_Element_Image',
-    );
-
+class Grid_Object extends Options {
+    protected $name;
+    protected $item_template;
     /**
      * Constructor
-     *  
-     * @param string $name
-     * @param array $fields
-     * @param array $data 
+     * 
+     * @param string $name 
      */
-    public function __construct($name, $fields = NULL, $data = NULL, $template = 'Grid.grid') {
+    public function __construct($name) {
         $this->name = $name;
-        $this->fields = Core_ArrayObject::transform($fields);
-        $this->data = Core_ArrayObject::transform($data);
-        $this->template = $template;
-        $this->lines = new Core_ArrayObject();
     }
-
     /**
-     * Set fields
+     * Set template for items looping render
      * 
-     * @param array $fields 
+     * @param string $template
+     * @return Grid_Object 
      */
-    public function setFields($fields) {
-        $this->fields = Core_ArrayObject::transform($fields);
+    public function setItemTemplate($template){
+        $this->item_template = $template;
         return $this;
     }
-
     /**
-     * Set data
-     * 
-     * @param array $data 
+     * Render
      */
-    public function setData($data) {
-        $this->data = Core_ArrayObject::transform($data);
-        return $this;
-    }
-    
-    /**
-     * Render grid
-     */
-    public function render($tpl = ''){
-        $tpl OR $tpl = $this->template;
-        $tpl = new Template($tpl);
-        $tpl->grid = $this;
-        foreach($this->data as $item){
-            $line = new Grid_Line($this);
-            foreach($item as $key=>$row){
-                if($this->fields->$key && array_key_exists($this->fields->$key->type,self::$types) && class_exists(self::$types[$this->fields->$key->type])){
-                    $row = new self::$types[$this->fields->$key->type]($key,$row,$this->fields->$key);
-                    if($row instanceof Grid_Row){
-                        $line->append($row);
-                    }
-                }
-            }
-            $this->lines->append($line);
+    public function render(){
+        event('grid.render',$this);
+        event('grid.render.'.$this->name,$this);
+        $output = new Core_ArrayObject();
+        foreach($this as $item){
+            $item->in_grid = TRUE;
+            $output->append($item->render($this->item_template));
         }
+        $tpl = new Template('Grid.grid');
+        $tpl->grid = $this;
+        $tpl->data = $output->toString();
         return $tpl->render();
     }
-
+    
 }

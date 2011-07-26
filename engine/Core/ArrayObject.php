@@ -64,7 +64,8 @@ class Core_ArrayObject extends ArrayObject {
      * @param  array|self $data
      */
     public function mix($data) {
-        $data instanceof self && $data = $data->toArray();
+        if(!$data) return;
+        $data instanceof self && $data = (array)$data;
         $data = self::transform(array_merge($this->toArray(), $data));
         /* Found some issue with PHP < 5.3
          * Object can't accept another instance of self for exchange
@@ -226,7 +227,6 @@ class Core_ArrayObject extends ArrayObject {
      * Simple wrapper for getArrayCopy method
      */
     public function toArray($result = array()) {
-        // return $this->getArrayCopy();
         foreach ($this as $key => $value) {
             $result[$key] = $value instanceof self ? $value->toArray() : $value;
         }

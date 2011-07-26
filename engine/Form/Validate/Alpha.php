@@ -15,6 +15,6 @@ class Form_Validate_Alpha extends Form_Validate_Regexp{
 	 * Constructor
 	 */
 	public function __construct(){
-		parent::__construct('([\w^\d_-]+)',t('Value must contain only alphabetical characters.'));
+		parent::__construct('(\w^\d_-]+)',t('Value must contain only alphabetical characters.'));
 	} 
 } 

@@ -10,6 +10,6 @@
  * @subpackage          Ajax
  * @version		$Id$
  */
-class Ajax_FileUpload_Form_File extends Form_Element_File{
+class Upload_Ajax_Form_File extends Form_Element_File{
     
 }

@@ -5,6 +5,7 @@
     opacity: 0.7;
     border: 1px solid #000;
     margin: 0 0 10px 0;
+    clear: both;
 }
 .message > p{
     margin: 0;

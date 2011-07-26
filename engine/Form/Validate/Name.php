@@ -10,11 +10,12 @@
  * @subpackage	Form
  * @version		$Id$
  */
-class Form_Validate_Alpha extends Form_Validate_Regexp{
+class Form_Validate_Name extends Form_Validate_Regexp{
 	/**
 	 * Constructor
 	 */
 	public function __construct(){
-		parent::__construct('([\w^\d_-]+)',t('Value must contain only alphabetical characters.'));
+                $regexp = '([a-zа-я\s]+)';
+		parent::__construct($regexp,t('Value must contain only alphabetical characters and spaces.'));
 	} 
 } 

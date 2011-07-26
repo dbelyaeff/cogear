@@ -24,7 +24,7 @@ class Redactor_Editor extends Wysiwyg_Abstract {
      * @param array $options 
      */
     public function __construct($options  = array()) {
-        $this->options['image_upload'] =  Url::gear('upload').'/image';
+        $this->options['image_upload'] =  Url::gear('upload').'image';
         parent::__construct($options);
     }
     /**
@@ -45,7 +45,7 @@ class Redactor_Editor extends Wysiwyg_Abstract {
         inline_js("$(document).ready(
 		function()
 		{
-			$('#{$this->getId()} textarea').editor(" . json_encode($this->options) . ");
+			$('#{$this->getId()} textarea').editor(" . json_encode((array)$this->options) . ");
 		}
 	);");
         return parent::render();

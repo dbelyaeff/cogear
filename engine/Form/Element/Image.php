@@ -23,6 +23,7 @@ class Form_Element_Image extends Form_Element_Abstract {
     protected $maxsize;
     protected $min;
     protected $max;
+    protected  $preset;
     protected $overwrite = TRUE;
     protected $rename;
     protected $allowed_types = array('jpg','gif','png');

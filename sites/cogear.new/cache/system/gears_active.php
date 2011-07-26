@@ -44,6 +44,7 @@ return array (
     'image' => 'Image_Gear',
     'structure' => 'Structure_Gear',
     'grid' => 'Grid_Gear',
+    'upload_ajax' => 'Upload_Ajax_Gear',
   ),
   'ttl' => NULL,
 );

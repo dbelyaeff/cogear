@@ -11,7 +11,7 @@
  * @subpackage          Ajax
  * @version		$Id$
  */
-class Ajax_FileUpload_Form_Image extends Form_Element_Image {
+class Upload_Ajax_Form_Image extends Form_Element_Image {
 
     /**
      * Set value from request
@@ -33,12 +33,12 @@ class Ajax_FileUpload_Form_Image extends Form_Element_Image {
                 'file' => Url::toUri(UPLOADS . $this->value),
                 'width' => $this->image->width,
                 'height' => $this->image->height,
-                'errors' => $this->errors ? strip_tags(implode("\n",$this->errors)) : '',
+                'errors' => $this->errors ? strip_tags(implode("\n", $this->errors)) : '',
             );
             Ajax::json($result);
         }
         // if there is hidden field with the same name — take value from there
-        if(isset($this->form->request[$this->name])){
+        if (isset($this->form->request[$this->name])) {
             $this->value = $this->form->request[$this->name];
         }
         return $this->value;
@@ -51,13 +51,13 @@ class Ajax_FileUpload_Form_Image extends Form_Element_Image {
         $this->getAttributes();
         $this->attributes->type = 'file';
         $this->attributes->class = 'ajaxed image';
+        $tpl = new Template('Upload_Ajax.image');
+        $tpl->assign($this->attributes);
         if ($this->value && $this->value = Url::link(Url::toUri(UPLOADS . $this->value, ROOT, FALSE))) {
-            $tpl = new Template('Ajax_FileUpload.image');
-            $tpl->assign($this->attributes);
             $tpl->value = $this->value;
             $tpl->image = $this->image;
-            $this->code = $tpl->render();
         }
+        $this->code = $tpl->render();
         return Form_Element_Abstract::render();
     }
 

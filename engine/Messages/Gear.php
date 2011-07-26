@@ -19,17 +19,12 @@ class Messages_Gear extends Gear {
     protected $name = 'Messages';
     protected $description = 'Handle with messages dialogs and windows.';
     protected $order = 100;
-    protected $template = 'messages.window';
+    protected $template = 'Messages.window';
     protected $version = '0.1';
     const INFO = 0;
     const DIALOG = 1;
     const AJAX = 2;
 
-    public function index($action = NULL, $subaction = NULL){
-        info('asdasd');
-        success('asdasd');
-        error('asdasd');
-    }
     /**
      * Init
      */
@@ -52,7 +47,7 @@ class Messages_Gear extends Gear {
         $tpl->content = $content;
         $tpl->class = $class;
         $tpl->type = $type ? $type : self::INFO;
-        inject('content', $tpl->render(),0);
+        inject('content', $tpl->render(),-1);
     }
 
     /**

@@ -13,7 +13,7 @@
  * @subpackage
  * @version		$Id$
  */
-class Redactor_Editor extends Wysiwyg_Abstract {
+class Wysiwyg_Editor extends Wysiwyg_Abstract {
 
     protected $options = array(
         'focus' => TRUE,
@@ -24,16 +24,12 @@ class Redactor_Editor extends Wysiwyg_Abstract {
      * @param array $options 
      */
     public function __construct($options  = array()) {
-        $this->options['image_upload'] =  Url::gear('upload').'/image';
         parent::__construct($options);
     }
     /**
      * Load scripts
      */
     public function load() {
-        $path = Url::toUri(dirname(__FILE__));
-        js($path . '/editor/editor.js');
-        css($path . '/editor/css/editor.css');
     }
 
     /**
@@ -42,12 +38,6 @@ class Redactor_Editor extends Wysiwyg_Abstract {
      * @return string
      */
     public function render() {
-        inline_js("$(document).ready(
-		function()
-		{
-			$('#{$this->getId()} textarea').editor(" . json_encode($this->options) . ");
-		}
-	);");
         return parent::render();
     }
 

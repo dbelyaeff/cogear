@@ -68,6 +68,9 @@ class Upload_Image extends Upload_File {
      * @return  boolean
      */
     public function upload() {
+        if($this->options->preset && $preset = config('image.presets.'.$this->options->preset)){
+            $preset->options && $this->options->mix($preset->options);
+        }
         if ($result = parent::upload()) {
             $this->getInfo();
             $image = new Image($this->file->path);

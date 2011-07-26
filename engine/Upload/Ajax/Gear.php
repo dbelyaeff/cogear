@@ -10,7 +10,7 @@
  * @subpackage          Ajax
  * @version		$Id$
  */
-class Ajax_FileUpload_Gear extends Gear {
+class Upload_Ajax_Gear extends Gear {
 
     protected $name = 'Ajax FileUpload';
     protected $description = 'Handle ajax fileupload.';
@@ -23,8 +23,8 @@ class Ajax_FileUpload_Gear extends Gear {
     public function init() {
         parent::init();
         $cogear = getInstance();
-        Form::$types['file'] = 'Ajax_FileUpload_Form_File';
-        Form::$types['image'] = 'Ajax_FileUpload_Form_Image';
+        Form::$types['file'] = 'Upload_Ajax_Form_File';
+        Form::$types['image'] = 'Upload_Ajax_Form_Image';
     }
     /**
      * Default dispatcher

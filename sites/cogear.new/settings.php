@@ -3,7 +3,7 @@ return array(
     'database' => array(
         'dsn' => 'mysqli://root@localhost/cogear',
     ),
-    'permitted_uri_chars' => 'а-яa-z0-9\s',
+    'permitted_uri_chars' => 'а-яa-z0-9\s_\.',
     'cache' => array(
         'adapter' => 'Cache_Adapter_File',
         'enabled' => TRUE,
