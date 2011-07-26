@@ -26,6 +26,12 @@ class Db_ORM extends Options {
      */
     protected $primary;
     /**
+     * Reflection object
+     * 
+     * @var object 
+     */
+    protected $refleciton;
+    /**
      * Fields
      *
      * @var array
@@ -72,6 +78,7 @@ class Db_ORM extends Options {
         $this->clear();
         $this->table = $table;
         $this->fields = $cogear->db->getFields($table);
+        $this->reflection = new ReflectionClass($this);
         $fields = array_keys((array)$this->fields);
         $first = reset($fields);
         $this->primary = $primary ? $primary : $first;
