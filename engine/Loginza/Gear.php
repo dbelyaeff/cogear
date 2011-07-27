@@ -20,7 +20,7 @@ class Loginza_Gear extends Gear {
     protected $type = Gear::MODULE;
     protected $package = '';
     protected $order = 0;
-    protected $api = 0;
+    protected $api;
 
     /**
      * Init
@@ -138,7 +138,10 @@ class Loginza_Gear extends Gear {
                         flash_error(t('Cannot find user with id <b>%s</b>.', 'Loginza', $user->uid));
                     }
                     $cogear->session->loginza = NULL;
-                    back();
+                    // This tiny little redirect caused error by Loginza "Invalid / empty session data! Retry auth.:
+                    // Left it where it is for memories.
+                    // Important! Do not uncomment!
+                    //back();
                 }
                 // If record wasn't found → register user with special data
                 else {
