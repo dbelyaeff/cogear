@@ -15,6 +15,7 @@ class jQueryTools_Gear extends Gear {
     protected $name = 'jQueryTools';
     protected $description = 'Add jQueryTools library.';
     protected $package = 'jQuery';
+    protected $type = Gear::MODULE;
     protected $order = -50;
 
     /**
