@@ -3,6 +3,10 @@
 return array(
     'name' => 'user-profile',
     'elements' => array(
+        'personal' => array(
+          'label' => t('Personal','User'),
+            'type' => 'tab',
+        ),
         'avatar' => array(
             'label' => t('Avatar', 'User'),
             'type' => 'image',

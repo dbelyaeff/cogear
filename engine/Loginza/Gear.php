@@ -31,7 +31,7 @@ class Loginza_Gear extends Gear {
         $this->api = new Loginza_API();
         hook('form.user-login.result.before', array($this, 'hookUserForm'));
         hook('form.user-register.result.before', array($this, 'hookUserForm'));
-        hook('form.user-profile.result.before', array($this, 'hookUserProfile'));
+        hook('form.user-profile.init', array($this, 'hookUserProfile'));
     }
 
     /**
@@ -54,16 +54,25 @@ class Loginza_Gear extends Gear {
      */
     public function hookUserProfile($Form) {
         js('http://loginza.ru/js/widget.js');
-        $Form->addElement('loginza', array(
-            'type' => 'span',
-            'value' => HTML::a($this->api->getWidgetUrl(Url::link() . 'loginza'), HTML::img($this->folder . '/img/sign_in_button_gray.gif', t('Log in via social services', 'Loginza')), array('class' => 'loginza')),
-        ));
-        $cogear = getInstance();
-        if ($connected_accounts = $cogear->db->where('uid', $Form->object->id)->get('users_loginza')->result()) {
+        $data = array(
+            'social' => array(
+                'type' => 'tab',
+                'label' => t('Social')
+            ),
+            'loginza' => array(
+                'type' => 'span',
+                'value' => HTML::a($this->api->getWidgetUrl(Url::link() . 'loginza'), HTML::img($this->folder . '/img/sign_in_button_gray.gif', t('Log in via social services', 'Loginza')), array('class' => 'loginza')),
+            )
+        );
+        if ($connected_accounts = $this->db->where('uid', $Form->object->id)->get('users_loginza')->result()) {
             $tpl = new Template('Loginza.accounts');
             $tpl->accounts = $connected_accounts;
-            append('content', $tpl->render(), 100);
+            $data['loginza_accounts'] = array(
+                'type' => 'div',
+                'value' => $tpl->render(),
+            );
         }
+        $Form->elements->place($data,'submit',Form::BEFORE);
     }
 
     /**
