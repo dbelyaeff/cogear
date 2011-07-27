@@ -211,7 +211,32 @@ class Core_ArrayObject extends ArrayObject {
         }
         $this->exchangeArray($result);
     }
-
+    
+    /**
+     * Place a piece of array at position
+     * 
+     * @param array $array
+     * @param int/string $position
+     * @param int $order 
+     */
+    public function place($array,$position=0,$order = self::BEFORE){
+        $result = array();
+        $it = $this->getIterator();
+        is_string($position) OR $i = 0;
+        while($it->valid()){
+            $key = isset($i) ? $i++ : $it->key();
+            $order == self::AFTER && $result[$key] = $it->current();
+            if($position == $it->key()){
+                foreach($array as $k=>$value){
+                    $k = isset($i) ? $i++ : $k;
+                    $result[$k] = $value;
+                }
+            }
+            $order == self::BEFORE && $result[$key] = $it->current();
+            $it->next();
+        }
+        $this->exchangeArray($result);
+    }
     /**
      * Slice a piece of iterable
      * 
