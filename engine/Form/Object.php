@@ -24,6 +24,8 @@ class Form_Object extends Options {
     protected $is_ajaxed;
     protected $initialized;
     protected $object;
+    public $tab_opened;
+    public $code;
     /**
      * Elements config
      * @var array
@@ -43,6 +45,7 @@ class Form_Object extends Options {
         'image' => 'Form_Element_Image',
         'span' => 'Form_Element_Span',
         'div' => 'Form_Element_Div',
+        'tab' => 'Form_Element_Tab',
     );
     protected $callback;
     /**
@@ -74,7 +77,7 @@ class Form_Object extends Options {
         }
         parent::__construct($options,Options::SELF);
     }
-
+    
     /**
      * Add element
      * 
@@ -103,7 +106,7 @@ class Form_Object extends Options {
         if ($this->initialized)
             return;
         event('form.init', $this);
-        event('form.init.' . $this->name, $this);
+        event('form.' . $this->name.'.init', $this);
         $this->is_ajaxed = isset($_REQUEST['form']) && $_REQUEST['form'] == $this->name;
         $elements = array();
         foreach ($this->elements as $name => $config) {
@@ -213,9 +216,9 @@ class Form_Object extends Options {
             'class' => 'form' . ($this->ajax ? ' ajaxed' : ''),
         );
         $tpl->elements = $this->elements;
-        $output = $tpl->render();
-        event('form.render.after', $this, &$output);
-        event('form.' . $this->name . '.render.after', $this, &$output);
-        return $output;
+        $this->code = $tpl->render();
+        event('form.render.after', $this);
+        event('form.' . $this->name . '.render.after', $this);
+        return $this->code;
     }
 }
