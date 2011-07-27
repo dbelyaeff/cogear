@@ -25,7 +25,7 @@ class Menu_Item extends Core_ArrayObject{
      */
     public function __construct($path,$value = NULL,$order = 0,$base_uri = NULL) {
         $this->path = trim($path,'/');
-        $base_uri && $this->path = str_replace($base_uri,'',$this->path);
+        $base_uri && $this->path = str_replace(rtrim($base_uri,'/'),'',$this->path);
         $this->value = $value;
         $this->order = $order;
         $this->base_uri = $base_uri;
