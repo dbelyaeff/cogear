@@ -13,7 +13,7 @@
 class GoBack_Gear extends Gear {
 
     protected $name = 'GoBack';
-    protected $description = 'Show "← Go Back button where it is needed"';
+    protected $description = 'Show "← Go Back" button where it is needed';
     protected $type = Gear::MODULE;
     protected $package = 'Utilities';
 
