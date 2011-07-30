@@ -1,32 +1,21 @@
 .msg.success{
-    background-color: #9edf73;
     border-color: #3f9e00;
-    color: #000;
 }
 
 .msg.error{
-    background-color: #f0548b;
-    border-color:  #95103f;
-    color: #000;
-}
-#msgs-holder{
-    width: 450px;
-    height: 200px;
-    margin: -100px 0 0 -225px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
+    border-color:  red;
 }
 .msg{
     background: #000;
     padding: 10px;
     border-radius: 10px;
     color: #FFF;
-    opacity: 0.7;
+    opacity: 0.9;
     margin: 0 0 5px 0;
     position: relative;
     border: 1px solid #585858;
     box-shadow: 0px 0px 1px #000;
+    clear: both;
 }
 .msg .msg-title{
     font-size: 1.2em;
@@ -40,4 +29,10 @@
     text-decoration: none;
     font-weight: bold;
     font-size: 10px;
+}
+.msg input[type=submit]{
+    margin: 10px 5px 0;
+}
+.msg p.buttons{
+    margin: 0;
 }
