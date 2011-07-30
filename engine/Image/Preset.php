@@ -66,7 +66,7 @@ class Image_Preset extends Core_ArrayObject {
      * 
      * @return  boolean
      */
-    public function load($file) {
+    public function load() {
         if ($config = config('image.presets.' . $this->name)) {
             $config->size OR $config->size = config('image.preset.default_size', '32x32');
             $this->mix($config);
