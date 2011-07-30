@@ -1,15 +1,37 @@
 $(document).ready(function(){
-    $(window).hashchange(function(){
+    $(window).hashchange(function(e){
         if(location.hash.charAt(1) == '/' || location.hash.charAt(1) == '?'){
             url = location.hash.substr(1);
             $.getJSON(url,function(data){
-                $.each(data,function(key,item){
-                    switch(item.action){
-                        case 'replace':
-                            $('#'+item.id).replaceWith(item.code);
-                            break;
+                if(data.items){
+                    $.each(data.items,function(key){
+                        switch(this.action){
+                            case 'replace':
+                                $('#'+this.id).replaceWith(this.code);
+                                break;
+                            case 'delete':
+                                $('#'+this.id).remove();
+                                break;
+                        }
+                    });
+                }
+                if(data.message){
+                    if(data.message.title){
+                        var t = data.message.title;
                     }
-                });
+                    if(data.message.class){
+                        var c = data.message.class;  
+                    } 
+                    var b = data.message.body;
+                    message(b,t,c);
+                    console.log(data.message)
+                }
+                if(data.action){
+                    switch(data.action){
+                        case 'reload':
+                            window.location.reload();
+                    }
+                }
             })
             location.hash = '';
             return false;
