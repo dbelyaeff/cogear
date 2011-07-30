@@ -6,7 +6,7 @@
  *
  *
  * @author		Dmitriy Belyaev <admin@cogear.ru>
- * @copyright		Copyright (c) 2010, Dmitriy Belyaev
+ * @copyright		Copyright (c) 2011, Dmitriy Belyaev
  * @license		http://cogear.ru/license.html
  * @link		http://cogear.ru
  * @package		Core
@@ -119,7 +119,7 @@ final class Cogear implements Interface_Singleton {
      * Run event
      * @param string $name
      * @param mixed $arg_1
-     * …
+     * вЂ¦
      * @param mixed $arg_N
      * @return  boolean
      */
