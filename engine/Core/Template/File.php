@@ -18,7 +18,7 @@ class Template_File extends Template_Abstract {
      * @param string $name
      */
     public function __construct($name) {
-        $this->name = $name;
+        parent::__construct($name);
         $path = Gear::preparePath($this->name, 'templates') . EXT;
         if(file_exists($path)){
             $this->path = $path;
