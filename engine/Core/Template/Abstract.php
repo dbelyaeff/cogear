@@ -15,8 +15,8 @@ class Template_Abstract extends Options {
 
     protected $name = '';
     protected $path = '';
-    public $code = '';
-    public $vars = array();
+    protected $code = '';
+    protected $vars = array();
     protected static $global_vars = array();
 
     /**
@@ -25,7 +25,6 @@ class Template_Abstract extends Options {
      * @param string $name
      */
     public function __construct($name) {
-        $this->reset();
         $this->name = $name;
 //        $this->path = Gear::preparePath($this->name, 'templates') . EXT;
 //        if (file_exists($this->path)) {
@@ -42,7 +41,7 @@ class Template_Abstract extends Options {
      * @param mixed $value
      */
     public function __set($name, $value) {
-        $this->vars->$name = $value;
+        $this->set($name, $value);
     }
 
     /**
@@ -52,7 +51,14 @@ class Template_Abstract extends Options {
      * @param mixed $value
      */
     public function set($name, $value = NULL) {
-        $this->vars->$name = $value;
+        if (is_array($name) OR $name instanceof ArrayObject) {
+            foreach ($name as $key => $value) {
+                $this->set($key, $value);
+            }
+            return;
+        }
+        else
+            $this->vars[$name] = $value;
     }
 
     /**
@@ -73,7 +79,7 @@ class Template_Abstract extends Options {
      * @return mixed
      */
     public function __get($name) {
-        return $this->vars->$name;
+        return $name ? (isset($this->vars[$name]) ? $this->vars[$name] : NULL) : $this->vars;
     }
 
     /**
@@ -83,7 +89,7 @@ class Template_Abstract extends Options {
      * @return boolean
      */
     public function __isset($name) {
-        return isset($this->vars->$name);
+        return isset($this->vars[$name]);
     }
 
     /**
@@ -93,7 +99,7 @@ class Template_Abstract extends Options {
      * @return mixed
      */
     public function get($name = '') {
-        return $name ? $this->vars->$name : $this->vars;
+        return $name ? (isset($this->vars[$name]) ? $this->vars[$name] : NULL) : $this->vars;
     }
 
     /**
@@ -158,13 +164,6 @@ class Template_Abstract extends Options {
     }
 
     /**
-     * Reset vars
-     */
-    public function reset() {
-        $this->vars = new Core_ArrayObject();
-    }
-
-    /**
      * Clear global vars
      */
     public static function clear() {
@@ -177,16 +176,15 @@ class Template_Abstract extends Options {
      * @return  string
      */
     public function render() {
-        if (!file_exists($this->path)) {
+        if(!file_exists($this->path)){
             exit(t('Template <b>%s</b> is not found by path <u>%s</u>.', 'Errors', $this->name, $this->path));
         }
         event('template.render', $this);
         ob_start();
         self::$global_vars && extract(self::$global_vars);
-        $this->vars && extract($this->vars->getArrayCopy());
+        $this->vars && extract($this->vars);
         include $this->path;
         $output = ob_get_clean();
         return $output;
     }
-
 }
