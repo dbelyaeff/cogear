@@ -1,4 +1,5 @@
-.loginza{
+a.loginza{
     padding: 5px 3px;
-    float: left;
+    
+    display: block;
 }

@@ -35,6 +35,57 @@ class Loginza_Gear extends Gear {
     }
 
     /**
+     * Delete link
+     * 
+     * @param int $id 
+     */
+    public function delete_action($id) {
+        $loginza = new Db_ORM('users_loginza');
+        $loginza->id = $id;
+        if ($loginza->find() && ($this->user->id == $id OR access('loginza delete_all'))) {
+            $loginza->delete();
+            Ajax::json(array(
+                'items' => array(
+                    array(
+                        'id' => 'loginza-' . $id,
+                        'action' => 'delete',
+                    )
+                ),
+                'message' => array(
+                    'body' => t('Link between your profile and social service was successfully deleted.'),
+                ),
+            ));
+        } else {
+            Ajax::denied();
+        }
+    }
+
+    /**
+     * Set avatar from social account
+     * 
+     * @param type $id 
+     */
+    public function avatar_action($id) {
+        $loginza = new Db_ORM('users_loginza');
+        $loginza->id = $id;
+        if ($loginza->find() && ($this->user->id == $id OR access('loginza delete_all'))) {
+            if ($loginza->photo) {
+                $user = new User_Object();
+                $user->id = $this->user->id;
+                $path = UPLOADS.DS.'avatars'.DS.$this->user->id.DS.basename($loginza->photo);
+                copy($loginza->photo,$path);
+                $user->avatar = Url::toUri($path,UPLOADS);
+                $user->save();
+                Ajax::json(array(
+                    'action' => 'reload',
+                ));
+            }
+        } else {
+            Ajax::denied();
+        }
+    }
+
+    /**
      * Hooking user login and register forms
      * 
      * @param object $Form 
@@ -53,16 +104,13 @@ class Loginza_Gear extends Gear {
      * @param object $Form 
      */
     public function hookUserProfile($Form) {
-        js('http://loginza.ru/js/widget.js');
-        $data = array(
-            'social' => array(
-                'type' => 'tab',
-                'label' => t('Social')
-            ),
-            'loginza' => array(
-                'type' => 'span',
-                'value' => HTML::a($this->api->getWidgetUrl(Url::link() . 'loginza'), HTML::img($this->folder . '/img/sign_in_button_gray.gif', t('Log in via social services', 'Loginza')), array('class' => 'loginza')),
-            )
+        $data['social'] = array(
+            'type' => 'tab',
+            'label' => t('Social')
+        );
+        $data['social_info'] = array(
+            'type' => 'div',
+            'value' => t('<p>There you can attach social accounts to integrate with your profile. It will help you for quick login.</p>'),
         );
         if ($connected_accounts = $this->db->where('uid', $Form->object->id)->get('users_loginza')->result()) {
             $tpl = new Template('Loginza.accounts');
@@ -72,7 +120,12 @@ class Loginza_Gear extends Gear {
                 'value' => $tpl->render(),
             );
         }
-        $Form->elements->place($data,'submit',Form::BEFORE);
+        js('http://loginza.ru/js/widget.js');
+        $data['loginza'] = array(
+            'type' => 'div',
+            'value' => HTML::a($this->api->getWidgetUrl(Url::link() . 'loginza'), HTML::img($this->folder . '/img/sign_in_button_gray.gif', t('Log in via social services', 'Loginza')), array('class' => 'loginza')),
+        );
+        $Form->elements->place($data, 'submit', Form::BEFORE);
     }
 
     /**
@@ -80,8 +133,7 @@ class Loginza_Gear extends Gear {
      * 
      * @param string $action 
      */
-    public function index($action = '', $subaction = NULL) {
-        $cogear = getInstance();
+    public function index_action($action = '', $subaction = NULL) {
         if (!empty($_POST['token'])) {
             // Get the profile of authorized user
             $UserProfile = $this->api->getAuthInfo($_POST['token']);
@@ -92,10 +144,10 @@ class Loginza_Gear extends Gear {
             } elseif (empty($UserProfile)) {
                 error(t('Temporary error with Loginza authentification.'));
             } else {
-                $cogear->session->loginza = $UserProfile;
+                $this->session->loginza = $UserProfile;
             }
         }
-        if ($loginza = $cogear->session->loginza) {
+        if ($loginza = $this->session->loginza) {
             /**
              * There we have 3 ways of workflow
              * 
@@ -106,11 +158,11 @@ class Loginza_Gear extends Gear {
             $user = new Db_ORM('users_loginza');
             $user->identity = $loginza->identity;
             // If user is logged in
-            if ($cogear->user->id) {
+            if ($this->user->id) {
                 // If integration is found
                 if ($user->find()) {
                     // If integration belongs to the current user
-                    if ($user->uid == $cogear->user->id) {
+                    if ($user->uid == $this->user->id) {
                         $user->loginza->data = json_encode($loginza);
                         $user->update();
                         flash_info(t('Your integration with profile <b>%s</b> was updated successfully.', 'Loginza', $loginza->identity), t('Updated succeed.'));
@@ -123,7 +175,7 @@ class Loginza_Gear extends Gear {
                 // If integration is not found
                 else {
                     // Create new database record
-                    $user->uid = $cogear->user->id;
+                    $user->uid = $this->user->id;
                     $user->provider = $loginza->provider;
                     $UserProfile = new Loginza_UserProfile($loginza);
                     isset($loginza->photo) && $user->photo = $loginza->photo;
@@ -131,9 +183,9 @@ class Loginza_Gear extends Gear {
                     $user->data = json_encode($loginza);
                     $user->save();
                 }
-                $cogear->session->loginza = NULL;
+                $this->session->loginza = NULL;
                 // Redirect to user profile
-                redirect($cogear->user->getProfileLink());
+                redirect(Url::gear('user') . 'edit/#tab-social');
             }
             // If user is a guest he has to login or even to register
             else {
@@ -142,11 +194,11 @@ class Loginza_Gear extends Gear {
                     $search = new User_Object();
                     $search->id = $user->uid;
                     if ($search->find()) {
-                        $cogear->user->forceLogin($user->uid, 'id');
+                        $this->user->forceLogin($user->uid, 'id');
                     } else {
                         flash_error(t('Cannot find user with id <b>%s</b>.', 'Loginza', $user->uid));
                     }
-                    $cogear->session->loginza = NULL;
+                    $this->session->loginza = NULL;
                     // This tiny little redirect caused error by Loginza "Invalid / empty session data! Retry auth.:
                     // Left it where it is for memories.
                     // Important! Do not uncomment!
@@ -169,9 +221,9 @@ class Loginza_Gear extends Gear {
                     isset($loginza->email) && $data['email'] = $loginza->email;
                     $form->setValues($data);
                     if ($data = $form->result()) {
-                        $cogear->user->object($data);
-                        $cogear->user->hashPassword();
-                        if ($uid = $cogear->user->save()) {
+                        $this->user->object($data);
+                        $this->user->hashPassword();
+                        if ($uid = $this->user->save()) {
                             // Create new database record
                             $user->uid = $uid;
                             $user->provider = $loginza->provider;
@@ -181,7 +233,7 @@ class Loginza_Gear extends Gear {
                             $user->data = json_encode($loginza);
                             $user->save();
                         }
-                        $cogear->session->loginza = NULL;
+                        $this->session->loginza = NULL;
                         flash_success('User was successfully registered! Please, check your email for further instructions.', 'Registration succeed.');
                         redirect();
                     }
