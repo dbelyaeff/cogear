@@ -25,12 +25,15 @@ class Gears_Gear extends Gear {
                 $menu->{'gears/active'} = t('Gears');
                 break;
             case 'tabs_gears':
-                $menu->{'gears/active'} = t('Active');
-                $menu->{'gears/active'}->count = $active_count;
-                $menu->{'gears/all'} = t('All');
-                $menu->{'gears/all'}->count = $all_count;
-                $menu->{'gears/inactive'} = t('Inactive');
-                $menu->{'gears/inactive'}->count = $inactive_count;
+                $all_gears = $this->getAllGears();
+                $active_gears = $this->getActiveGears();
+                $inactive_gears = array_diff($all_gears, $active_gears);
+                $all_count = sizeof($all_gears);
+                $active_count = sizeof($active_gears);
+                $inactive_count = sizeof($inactive_gears);
+                $menu->{'gears/active'} = t('Active').' ('.$active_count.')';
+                $menu->{'gears/all'} = t('All').' ('.$all_count.')';
+                $menu->{'gears/inactive'} = t('Inactive').' ('.$inactive_count.')';
                 $menu->{'gears/new'} = t('New');
                 $menu->{'gears/updates'} = t('Updates');
                 $menu->{'gears/add'} = t('Add');
@@ -38,25 +41,12 @@ class Gears_Gear extends Gear {
         }
     }
 
-    /**
-     * Default dispatcher
-     * 
-     * @param string $type 
-     */
-    public function index($action = '', $subaction = NULL) {
-        
-    }
-
     public function admin($action = 'active') {
-        new Menu_Tabs('gears',Url::gear('admin'));
+        new Menu_Tabs('gears', Url::gear('admin'));
         d('Admin Gears');
-        $cogear = getInstance();
-        $all_gears = $cogear->getAllGears();
-        $active_gears = $cogear->getActiveGears();
+        $all_gears = $this->getAllGears();
+        $active_gears = $this->getActiveGears();
         $inactive_gears = array_diff($all_gears, $active_gears);
-        $all_count = sizeof($all_gears);
-        $active_count = sizeof($active_gears);
-        $inactive_count = sizeof($inactive_gears);
 
         $doaction = NULL;
         if (!empty($_REQUEST['action-top']))
@@ -149,10 +139,9 @@ class Gears_Gear extends Gear {
      * @param   array   $gears
      */
     private function activate_gears($gears) {
-        $cogear = getInstance();
         $result = array();
         foreach ($gears as $gear) {
-            $cogear->activate($gear);
+            $this->activate($gear);
             $result[] = t($gear, 'Gears');
         }
         $result && flash_success(t('Following gears were activated: ') . '<b>' . implode('</b>, <b>', $result) . '</b>.');
@@ -164,10 +153,9 @@ class Gears_Gear extends Gear {
      * @param   array   $gears
      */
     private function deactivate_gears($gears) {
-        $cogear = getInstance();
         $result = array();
         foreach ($gears as $gear) {
-            $cogear->deactivate($gear);
+            $this->deactivate($gear);
             $result[] = t($gear, 'Gears');
         }
         $result && flash_success(t('Following gears were deactivated: ') . '<b>' . implode('</b>, <b>', $result) . '</b>.');
@@ -179,10 +167,9 @@ class Gears_Gear extends Gear {
      * @param   array   $gears
      */
     private function update_gears($gears) {
-        $cogear = getInstance();
         $result = array();
         foreach ($gears as $gear) {
-            $cogear->update($gear);
+            $this->update($gear);
             $result[] = t($gear, 'Gears');
         }
         $result && flash_success(t('Following gears were updated: ') . '<b>' . implode('</b>, <b>', $result) . '</b>.');
