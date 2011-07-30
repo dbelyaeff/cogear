@@ -34,7 +34,9 @@ $(document).ready(function(){
                 }
             })
             location.hash = '';
+            $('#ajax-indicator').hide();
             return false;
         }
     });
+    $(window).hashchange();
 })

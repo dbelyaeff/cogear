@@ -93,5 +93,14 @@ class Ajax_Gear extends Gear {
         $cogear->save();
         exit();
     }
+    /**
+     * Send denied response
+     */
+    public static function denied(){
+        self::json(array('message'=>array(
+            'class' => 'error',
+            'body' => t('You don\'t have enough priveleges to execute this procedure.'),
+        )));
+    }
 
 }
