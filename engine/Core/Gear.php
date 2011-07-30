@@ -4,7 +4,7 @@
  * Gear
  *
  * @author		Dmitriy Belyaev <admin@cogear.ru>
- * @copyright		Copyright (c) 2010, Dmitriy Belyaev
+ * @copyright		Copyright (c) 2011, Dmitriy Belyaev
  * @license		http://cogear.ru/license.html
  * @link		http://cogear.ru
  * @package		Core
@@ -41,11 +41,6 @@ abstract class Gear extends Cogearable{
     protected $core = COGEAR;
     /**
      * Gear type
-     *
-     * 0 — Core
-     * 1 — Module
-     * 2 — Plugin
-     * 3 — Theme
      *
      * @var int
      */
@@ -108,6 +103,7 @@ abstract class Gear extends Cogearable{
      * @var ReflectionClass
      */
     protected $reflection;
+    
     /**
      * Gear name
      *
@@ -189,13 +185,12 @@ abstract class Gear extends Cogearable{
      * Initialize
      */
     public function init() {
-        $cogear = getInstance();
         $scripts = $this->dir . DS . 'js';
         $styles = $this->dir . DS . 'css';
-        is_dir($scripts) && $cogear->assets->addScriptsFolder($scripts);
-        is_dir($styles) && $cogear->assets->addStylesFolder($styles);
-        $cogear->router->addRoute($this->base . ':maybe', array($this, 'index'));
-        $cogear->event('gear.init', $this);
+        is_dir($scripts) && $this->assets->addScriptsFolder($scripts);
+        is_dir($styles) && $this->assets->addStylesFolder($styles);
+        $this->router->addRoute($this->base . ':maybe', array($this, 'index'));
+        $this->event('gear.init', $this);
     }
     /**
      * Magic __get method
@@ -217,7 +212,7 @@ abstract class Gear extends Cogearable{
             return isset($this->$var) ? $this->$var : NULL;
         }
         else
-            return array(
+            return new Core_ArrayObject(array(
                 'name' => $this->name,
                 'gear' => $this->gear,
                 'base' => $this->base,
@@ -231,7 +226,7 @@ abstract class Gear extends Cogearable{
                 'path' => $this->path,
                 'dir' => $this->dir,
                 'folder' => $this->folder,
-            );
+            ));
     }
 
     /**
@@ -420,7 +415,6 @@ abstract class Gear extends Cogearable{
      */
     public function request() {
         $this->is_requested = TRUE;
-        $cogear = getInstance();
         if(!event('gear.request',$this)){
             return;
         }
@@ -432,7 +426,9 @@ abstract class Gear extends Cogearable{
      * @param string $action
      */
     public function index() {
-        $args = func_get_args();
+        if(!$args = func_get_args()){
+            $args[] = 'index';
+        }
         method_exists($this, $args[0].'_action') && call_user_func_array(array($this,$args[0].'_action'),array_slice($args,1));
     }
 
