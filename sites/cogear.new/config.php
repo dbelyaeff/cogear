@@ -11,7 +11,7 @@ return array (
   ),
   'cron' => 
   array (
-    'last_run' => 1311711179,
+    'last_run' => 1312036559,
   ),
   'user' => 
   array (
@@ -22,6 +22,10 @@ return array (
         'size' => '32x32',
       ),
     ),
+  ),
+  'messages' => 
+  array (
+    'type' => 'pop',
   ),
   'image' => 
   array (
