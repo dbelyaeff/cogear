@@ -41,13 +41,13 @@ class Dev_Gear extends Gear {
      * @param object $cp 
      */
     public function menu($name, &$cp) {
-        if($this->user->id != 1) return;
-        switch ($name) {
-            case 'user':
-                $cp->{Url::gear('dev')} =  t('Developer');
-                $cp->{Url::gear('dev')}->order = 98;
-                break;
-        }
+//        if($this->user->id != 1) return;
+//        switch ($name) {
+//            case 'user':
+//                $cp->{Url::gear('dev')} =  t('Developer');
+//                $cp->{Url::gear('dev')}->order = 98;
+//                break;
+//        }
     }
 
     /**
