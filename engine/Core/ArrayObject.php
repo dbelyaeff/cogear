@@ -183,8 +183,9 @@ class Core_ArrayObject extends ArrayObject {
      * @param   int|string     $position
      * @param   int $order
      */
-    public function inject($value, $position=0, $order = self::BEFORE) {
-        $result = array();
+    public function inject($value, $position=0, $order = NULL) {
+        $order OR $order = self::BEFORE;
+		$result = array();
         $it = $this->getIterator();
         $i = 0;
         while ($it->valid()) {
@@ -219,7 +220,8 @@ class Core_ArrayObject extends ArrayObject {
      * @param int/string $position
      * @param int $order 
      */
-    public function place($array,$position=0,$order = self::BEFORE){
+    public function place($array,$position=0,$order = NULL){
+	    $order OR $order = self::BEFORE;
         $result = array();
         $it = $this->getIterator();
         is_string($position) OR $i = 0;
