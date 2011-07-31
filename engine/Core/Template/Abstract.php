@@ -60,6 +60,13 @@ class Template_Abstract extends Options {
         else
             $this->vars[$name] = $value;
     }
+    
+    /**
+     * Reset vaiables
+     */
+    public function reset(){
+        $this->vars = array();
+    }
 
     /**
      * Set variable

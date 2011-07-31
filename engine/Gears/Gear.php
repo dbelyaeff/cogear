@@ -22,7 +22,7 @@ class Gears_Gear extends Gear {
     public function menu($name, &$menu) {
         switch ($name) {
             case 'admin':
-                $menu->{'gears/active'} = t('Gears');
+                $menu->{'gears'} = t('Gears');
                 break;
             case 'tabs_gears':
                 $all_gears = $this->getAllGears();
@@ -31,18 +31,18 @@ class Gears_Gear extends Gear {
                 $all_count = sizeof($all_gears);
                 $active_count = sizeof($active_gears);
                 $inactive_count = sizeof($inactive_gears);
-                $menu->{'gears/active'} = t('Active').' ('.$active_count.')';
-                $menu->{'gears/all'} = t('All').' ('.$all_count.')';
-                $menu->{'gears/inactive'} = t('Inactive').' ('.$inactive_count.')';
-                $menu->{'gears/new'} = t('New');
-                $menu->{'gears/updates'} = t('Updates');
-                $menu->{'gears/add'} = t('Add');
+                $menu->{'/'} = t('Active') . ' (' . $active_count . ')';
+                $menu->{'all'} = t('All') . ' (' . $all_count . ')';
+                $menu->{'inactive'} = t('Inactive') . ' (' . $inactive_count . ')';
+                $menu->{'new'} = t('New');
+                $menu->{'updates'} = t('Updates');
+                $menu->{'add'} = t('Add');
                 break;
         }
     }
 
     public function admin($action = 'active') {
-        new Menu_Tabs('gears', Url::gear('admin'));
+        new Menu_Tabs('gears', Url::gear('admin') . 'gears');
         d('Admin Gears');
         $all_gears = $this->getAllGears();
         $active_gears = $this->getActiveGears();
@@ -129,6 +129,49 @@ class Gears_Gear extends Gear {
                 $tpl->packages = $gears;
                 $tpl->link = Url::gear('admin') . '/gears';
                 append('content', $tpl->render());
+                break;
+        }
+    }
+
+    /**
+     * Gears dispatcher
+     * 
+     * @param string $action
+     * @param string $gear 
+     */
+    public function index($action=NULL, $gear = NULL) {
+        if (!access('admin gears')) {
+            Ajax::denied();
+        }
+        switch ($action) {
+            case 'activate':
+                cogear()->activate($gear);
+                $tpl = new Template('Gears.item');
+                $tpl->assign($this->$gear->info());
+                Ajax::json(array(
+                    'items' => array(
+                        array(
+                            'id' => 'gear-' . $gear,
+                            'action' => 'replace',
+                            'code' => $tpl->render(),
+                        )
+                    )
+                ));
+                break;
+            case 'deactivate':
+                cogear()->deactivate($gear);
+                $tpl = new Template('Gears.item');
+                $name = strtolower($gear);
+                $tpl->assign($this->$name->info());
+                Ajax::json(array(
+                    'items' => array(
+                        array(
+                            'id' => 'gear-' . $gear,
+                            'action' => 'replace',
+                            'code' => $tpl->render(),
+                        )
+                    )
+                ));
                 break;
         }
     }

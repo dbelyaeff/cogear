@@ -11,4 +11,9 @@
             $(this).after($('#ajax-indicator').show());
         }
     }
+    $(document).ready(function(){
+        $('.ajaxed').click(function(){
+            $(this).loading();
+        })
+    });
 })(jQuery);

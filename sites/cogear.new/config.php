@@ -7,11 +7,11 @@ return array (
   ),
   'wysiwyg' => 
   array (
-    'editor' => 'editor',
+    'editor' => 'elRTE',
   ),
   'cron' => 
   array (
-    'last_run' => 1312036559,
+    'last_run' => 1312106703,
   ),
   'user' => 
   array (

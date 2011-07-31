@@ -14,12 +14,6 @@ return array (
        'gid' => '0',
        'uid' => NULL,
     )),
-     2 => 
-    Core_ArrayObject::__set_state(array(
-       'rid' => '19',
-       'gid' => '0',
-       'uid' => NULL,
-    )),
   )),
   'ttl' => NULL,
   'tags' => 

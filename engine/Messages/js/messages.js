@@ -14,7 +14,6 @@
             $container = this.container;
             $container.hide();
             this.stack = [];
-            console.log('Init');
             this.init_flag = true;
         },
         add: function(b,t,c){
@@ -51,15 +50,15 @@
                             $this.remove();
                     }
                 },
-            //                'click.msg-holder': function(e){
-            //                    var width = $container.width();
-            //                    var height = $container.height();
-            //                    var top = $container.offset().top;
-            //                    var left = $container.offset().left
-            //                    if(e.pageX < left || e.pageX > left+width || e.pageY < top || e.pageY > top+height){
-            //                        $this.remove();
-            //                    }
-            //                }
+                'click.msg-holder': function(e){
+                    var width = $container.width();
+                    var height = $container.height();
+                    var top = $container.offset().top;
+                    var left = $container.offset().left
+                    if(e.pageX < left || e.pageX > left+width || e.pageY < top || e.pageY > top+height){
+                        $this.remove();
+                    }
+                }
             });
         },
         unbind: function(){
@@ -67,7 +66,6 @@
             $(document.body).unbind('click.msg-holder');
         },
         render: function(){
-            console.log('render');
             $container = this.container;
             $.each(this.stack,function(index){
                 this.show();

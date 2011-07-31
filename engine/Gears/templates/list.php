@@ -1,13 +1,15 @@
 <? foreach ($packages as $package => $gears): ?>
-    <div class="package">
-        <h1><?= $package ?></h1>
-        <? $tpl = new Template('Gears.gear')?>
-        <? foreach ($gears as $name => $gear): ?>
-            <?  
-                $tpl->reset();    
-                $tpl->assign($gear->info()); 
+    <div class="package collapsible" id="package-<?= $package?>">
+        <h1><?= t($package,'Packages')?> <a href="#" class="edit handler">-</a></h1>
+        <div class="gears container">
+            <? $tpl = new Template('Gears.item') ?>
+            <? foreach ($gears as $name => $gear): ?>
+                <?
+                $tpl->reset();
+                $tpl->assign($gear->info());
                 echo $tpl->render();
-            ?>
-    <? endforeach; ?>
+                ?>
+            <? endforeach; ?>
+        </div>
     </div>
 <? endforeach; ?>

@@ -75,9 +75,9 @@ class Messages_Gear extends Gear {
             $this->session->destroy('messages');
         }
         if (config('messages.type', 'plain') == 'pop') {
-            inline_js('$(document).ready(function(){$(".msg").msg();})');
+            inline_js('$(document).ready(function(){$(".msg").message();})');
         }
-        inline_js("$(document).ready(function(){window.msg.render()});");
+        inline_js("$(document).ready(function(){window.Messenger.render()});");
     }
 
 }

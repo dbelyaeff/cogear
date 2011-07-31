@@ -13,10 +13,9 @@
  */
 class Theme_Gear extends Gear {
 
-    protected $name = 'Theme gear';
+    protected $name = 'Theme';
     protected $description = 'Manage themes';
     protected $type = Gear::CORE;
-    protected $package = '';
     protected $order = -1000;
     public $current;
     public $regions;
@@ -26,10 +25,9 @@ class Theme_Gear extends Gear {
      * Init
      */
     public function init() {
-        $cogear = getInstance();
         $this->regions = new Stack('theme.regions');
         hook('gear.request', array($this, 'handleGearRequest'));
-        if ($favicon = $cogear->get('theme.favicon')) {
+        if ($favicon = config('theme.favicon')) {
             hook('theme.head.meta.after', array($this, 'renderFavicon'));
         }
         parent::init();
@@ -70,8 +68,7 @@ class Theme_Gear extends Gear {
      * @param type $theme 
      */
     public function set($theme) {
-        $cogear = getInstance();
-        $cogear->set('theme.current', $theme);
+        cogear()->set('theme.current', $theme);
     }
 
     /**

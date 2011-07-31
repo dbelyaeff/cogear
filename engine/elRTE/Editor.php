@@ -15,16 +15,16 @@ class elRTE_Editor extends Wysiwyg_Abstract {
 
     protected $options = array(
         'styleWithCSS' => FALSE,
-        'width' => 600,
+        'width' => '100%',
         'height' => 400,
-        'toolbar' => 'normal',
+        'toolbar' => 'complete',
     );
 
     /**
      * Load editor
      */
     public function load() {
-        $path = Url::toUri(dirname(__FILE__)) . '/elrte-1.2/';
+        $path = Url::toUri(dirname(__FILE__)) . '/elrte-1.3/';
         css($path . 'css/elrte.full.css');
         js($path . 'js/elrte.full.js');
     }
@@ -36,21 +36,22 @@ class elRTE_Editor extends Wysiwyg_Abstract {
      */
     public function render() {
         $this->options['lang'] = config('site.locale', 'en');
-        extract($this->options);
-        cogear()->gears->elFinder->load();
+        extract((array)$this->options);
+        cogear()->elfinder->load();
         inline_js("$(document).ready(
 		function()
 		{
                   var opts = {
                     lang: '{$lang}',
                     styleWithCSS: ".($styleWithCSS ? 'true' : 'false').",
-                    width: {$width},
+                    width: '{$width}',
                     height: {$height},
                     toolbar: '{$toolbar}',
+                    cssfiles : ['".Url::gear('elrte')."/css/elrte-inner.css'],
                     fmAllow: true,
                     fmOpen: function(callback){
                         $(\"<div id='{$this->getId()}-elfinder'>\").elfinder({
-                            url: '" . Url::gear('elFinder') . "',
+                            url: '" . Url::gear('elfinder') . "connector/',
                             lang: '{$lang}',
                             dialog : { width : 900, modal : true, title : '".t('Files')."' }, // открываем в диалоговом окне
                             closeOnEditorCallback : true, // закрываем после выбора файла

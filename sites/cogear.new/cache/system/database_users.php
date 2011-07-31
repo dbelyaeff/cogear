@@ -3,7 +3,6 @@ return array (
   'value' => 
   array (
     'id' => 'int(11) unsigned',
-    'realname' => 'varchar(255)',
     'login' => 'varchar(255)',
     'password' => 'varchar(255)',
     'hash' => 'varchar(255)',

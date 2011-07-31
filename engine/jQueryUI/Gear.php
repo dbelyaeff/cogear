@@ -21,6 +21,6 @@ class jQueryUI_Gear extends Gear{
     
     public function init(){
         parent::init();
-        $this->assets->addStyle($this->dir.DS.'css'.DS.$this->settings->theme.DS.'jquery-ui-1.8.11.custom.css');
+        $this->assets->addStyle($this->dir.DS.'css'.DS.$this->settings->theme.DS.'jquery-ui-1.8.13.custom.css');
     }
 }

@@ -19,8 +19,6 @@ class Errors_Gear extends Gear {
      */
     public function init(){
         set_error_handler(array($this,'showError'));
-        $cogear = getInstance();
-        $cogear->errors = $this;
         parent::init();
     }
     /**

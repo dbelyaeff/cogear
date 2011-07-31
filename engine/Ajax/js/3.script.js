@@ -34,9 +34,11 @@ $(document).ready(function(){
                 }
             })
             location.hash = '';
+            document.location.href.replace('#','');
             $('#ajax-indicator').hide();
             return false;
         }
+        e.preventDefault();
     });
     $(window).hashchange();
 })
