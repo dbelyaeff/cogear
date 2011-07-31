@@ -1,5 +1,5 @@
 (function($){
-    $.fn.tabs = function(containers,options){
+    $.fn.cgTabs = function(containers,options){
         var settings = {
             handler: 'a',
             trigger: 'click',

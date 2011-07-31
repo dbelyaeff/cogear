@@ -53,7 +53,7 @@ class Form_Element_Tab extends Form_Element_Abstract{
         $prepend .= "</ul></div>";
         $form->code = preg_replace('(<form([^>]*)>)','$0'.$prepend,$form->code);
         inline_js('$(document).ready(function(){
-            $("div.tabs > ul").tabs("#'.$this->form->getId().' > .tab",{
+            $("div.tabs > ul").cgTabs("#'.$this->form->getId().' > .tab",{
                 handler: "li",
             });
         })');
