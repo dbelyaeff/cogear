@@ -1,0 +1,16 @@
+.comment{
+    padding: 10px;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    margin: 2px 0 5px;
+}
+.comment-body{
+    padding: 5px;
+}
+#form-addComment{
+    margin: 10px 0;
+}
+#form-addComment-info{
+    font-size: 16px;
+    margin: 3px 0 5px 0;
+}
