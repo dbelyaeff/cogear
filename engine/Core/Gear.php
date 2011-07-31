@@ -388,7 +388,7 @@ abstract class Gear extends Cogearable{
             if (sizeof($pieces) == 1) {
                 array_push($pieces, $default);
             }
-            $gear = ucfirst(array_shift($pieces));
+            $gear = strtolower(array_shift($pieces));
             $cogear = getInstance();
             if (isset($cogear->gears->$gear)) {
                 $gear_dir = $cogear->gears->$gear->dir;

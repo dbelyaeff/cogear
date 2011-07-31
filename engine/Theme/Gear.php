@@ -60,6 +60,7 @@ class Theme_Gear extends Gear {
         $this->current = new $class();
         $this->current->init();
         $this->current->activate();
+		$theme = strtolower($theme);
         cogear()->gears->$theme = $this->current;
     }
 

@@ -20,7 +20,7 @@ class Template_File extends Template_Abstract {
     public function __construct($name) {
         parent::__construct($name);
         $path = Gear::preparePath($this->name, 'templates') . EXT;
-        if(file_exists($path)){
+	        if(file_exists($path)){
             $this->path = $path;
             //$this->code = file_get_contents($this->path);
             ini_get('short_open_tag') OR $this->code = str_replace('<?=','<?php echo',$this->code);
