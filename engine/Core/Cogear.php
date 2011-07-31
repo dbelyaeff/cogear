@@ -232,6 +232,7 @@ final class Cogear implements Interface_Singleton {
                     }
                     $reflection = new ReflectionClass($class);
                     if (!$reflection->isAbstract() && $reflection->isSubclassOf(self::GEAR)) {
+                        $gear = strtolower($gear);
                         $this->all_gears[$gear] = $class;
                     }
                 }
@@ -242,12 +243,10 @@ final class Cogear implements Interface_Singleton {
         $this->active_gears = $this->system_cache->read('gears/active', TRUE);
         foreach ($this->all_gears as $gear => $class) {
             if (isset($this->active_gears[$gear])) {
-                $gear = strtolower($gear);
                 $this->gears->$gear instanceof Gear OR class_exists($class) && $this->gears->$gear = new $class;
             } elseif (DEVELOPMENT && class_exists($class)) {
                 $object = new $class;
                 if ($object->info('type') == Gear::CORE) {
-                    $gear = strtolower($gear);
                     $this->gears->$gear instanceof Gear OR $this->gears->$gear = $object;
                     $this->active_gears[$gear] = $class;
                     $this->write_gears = TRUE;
@@ -334,6 +333,8 @@ final class Cogear implements Interface_Singleton {
             }
             $object = new $this->all_gears[$gear];
             $object->activate();
+            $this->gears->$gear = $object;
+            $this->gears->$gear->active = TRUE;
             $this->active_gears[$gear] = $this->all_gears[$gear];
             $this->write_gears = TRUE;
         }
@@ -345,9 +346,9 @@ final class Cogear implements Interface_Singleton {
      * @param string $gear
      */
     public function deactivate($gear) {
-        if (isset($this->all_gears[$gear]) && class_exists($this->all_gears[$gear])) {
-            $object = new $this->all_gears[$gear];
-            $object->deactivate();
+        if ($this->gears->$gear) {
+            $this->gears->$gear->active = FALSE;
+            $this->gears->$gear->deactivate();
             if (isset($this->active_gears[$gear])) {
                 unset($this->active_gears[$gear]);
             }

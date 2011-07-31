@@ -172,15 +172,6 @@ abstract class Gear extends Cogearable{
         $this->getSettings();
         $this->file = new SplFileInfo($this->path);
     }
-    
-    public function __sleep(){
-        return array('name','description','version','core','type','package','email','author','site','path','dir','folder','order','base','settings');
-    }
-    
-    public function wakeup(){
-        $this->reflection = new ReflectionClass($this);
-        $this->file = new SplFileInfo($this->path);
-    }
     /**
      * Initialize
      */
@@ -212,21 +203,23 @@ abstract class Gear extends Cogearable{
             return isset($this->$var) ? $this->$var : NULL;
         }
         else
-            return new Core_ArrayObject(array(
-                'name' => $this->name,
-                'gear' => $this->gear,
+            return array(
+                'name' => t($this->name,'Gears'),
+                'gear' => strtolower($this->gear),
                 'base' => $this->base,
-                'description' => $this->description,
+                'description' => t($this->description,'Gears'),
                 'version' => $this->version,
                 'package' => $this->package,
                 'type' => $this->type,
                 'author' => $this->author,
                 'email' => $this->email,
-                'url' => $this->url,
+                'site' => $this->site,
+                'has_admin' => method_exists ($this, 'admin'),
                 'path' => $this->path,
                 'dir' => $this->dir,
                 'folder' => $this->folder,
-            ));
+                'active' => $this->active,
+            );
     }
 
     /**
