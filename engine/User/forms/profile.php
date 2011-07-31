@@ -18,7 +18,7 @@ return array(
             'label' => t('Real name','User'),
             'type' => 'text',
             'access' => access('user_edit_realname'),
-            'validators' => array(array('Length',5),'Name','Required'),
+            'validators' => array(array('Length',5),'Name'),
         ),
         'login' => array(
             'label' => t('Login', 'User'),
