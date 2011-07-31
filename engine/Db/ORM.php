@@ -73,10 +73,10 @@ class Db_ORM extends Options {
      * @param string $table
      * @param string $primary
      */
-    public function __construct($table, $primary = '') {
+    public function __construct($table = NULL, $primary = NULL) {
         $cogear = getInstance();
         $this->clear();
-        $this->table = $table;
+        $table && $this->table = $table;
         $this->fields = $cogear->db->getFields($table);
         $this->reflection = new ReflectionClass($this);
         $fields = array_keys((array)$this->fields);
