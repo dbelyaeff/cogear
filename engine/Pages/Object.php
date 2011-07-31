@@ -11,7 +11,7 @@
  * @subpackage          Pages
  * @version		$Id$
  */
-class Pages_Page extends Db_Item {
+class Pages_Object extends Db_Item {
     const PATH_DELIM = '.';
     protected $template = 'Pages.page';
 

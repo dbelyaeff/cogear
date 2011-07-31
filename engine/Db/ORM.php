@@ -11,7 +11,7 @@
  * @subpackage
  * @version		$Id$
  */
-class Db_ORM extends Options {
+class Db_ORM extends Object {
 
     /**
      * Table name
@@ -60,12 +60,6 @@ class Db_ORM extends Options {
     protected $filters_out = array();
     const FILTER_IN = 0;
     const FILTER_OUT = 1;
-    /**
-     * Current object
-     * 
-     * @var object
-     */
-    protected $object;
 
     /**
      * Constructir
@@ -74,10 +68,10 @@ class Db_ORM extends Options {
      * @param string $primary
      */
     public function __construct($table = NULL, $primary = NULL) {
-        $cogear = getInstance();
+        parent::__construct();
         $this->clear();
         $table && $this->table = $table;
-        $this->fields = $cogear->db->getFields($table);
+        $this->fields = cogear()->db->getFields($this->table);
         $this->reflection = new ReflectionClass($this);
         $fields = array_keys((array)$this->fields);
         $first = reset($fields);
@@ -148,14 +142,7 @@ class Db_ORM extends Options {
         }
         return NULL;
     }
-    /**
-     * Get or Set current object
-     *
-     * @param array|ArrayObject $data
-     */
-    public function object($data = NULL){
-        return $data ? $this->object->adopt($data) : $this->object;
-    }
+
     /**
      * Find row
      *

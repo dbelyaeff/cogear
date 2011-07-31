@@ -39,6 +39,7 @@ return array (
     'jquery' => 'jQuery_Gear',
     'upload_ajax' => 'Upload_Ajax_Gear',
     'loginza' => 'Loginza_Gear',
+    'comments' => 'Comments_Gear',
   ),
   'ttl' => NULL,
 );

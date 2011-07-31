@@ -49,17 +49,19 @@ class Pages_Gear extends Gear {
         switch ($name) {
             case 'user':
                 if ($this->user->id) {
-                    $menu->{Url::gear('pages')} = t('My pages', 'Pages');
+                    $menu->{Url::gear('pages')} = t('My Pages', 'Pages');
                 }
                 break;
             case 'admin':
                 $menu->{'pages'} = t('Pages');
                 break;
             case 'tabs_pages':
-                $menu->{'/'} = t('All');
-                $menu->{'create'} = t('Add new');
-                $menu->{'create'}->class = 'fl_r';
-                if($this->router->getSegments(1) == 'edit'){
+                if ($this->user->id) {
+                    $menu->{'/'} = t('All');
+                    $menu->{'create'} = t('Add new');
+                    $menu->{'create'}->class = 'fl_r';
+                }
+                if ($this->router->getSegments(1) == 'edit') {
                     $menu->{'edit'} = t('Edit', 'Pages');
                 }
                 break;
@@ -79,7 +81,7 @@ class Pages_Gear extends Gear {
                     return;
                 $form = new Form('Pages.createdit');
                 if ($result = $form->result()) {
-                    $page = new Pages_Page();
+                    $page = new Pages_Object();
                     $page->object($result);
                     $page->aid = cogear()->user->id;
                     $page->created_date = time();
@@ -94,7 +96,7 @@ class Pages_Gear extends Gear {
                 $this->showPage($subaction);
                 break;
             case 'edit':
-                $page = new Pages_Page();
+                $page = new Pages_Object();
                 $page->where('id', intval($subaction));
                 if ($page->find()) {
                     if (access('pages edit_all') OR $cogear->user->id == $page->aid) {
@@ -107,13 +109,14 @@ class Pages_Gear extends Gear {
                         if ($result = $form->result()) {
                             if ($result->delete) {
                                 $page->delete();
-                                redirect(Url::link());
+                                redirect(Url::gear('pages'));
                             }
                             $page->object()->mix($result);
                             $page->last_update = time();
                             $page->update();
-                            flash_success(t('Page has been update.', 'Pages'));
-                            redirect($page->getUrl());
+                            $link = $page->getUrl();
+                            success(t('Page has been update. You can visit it by link <a href="%s">%s</a>', 'Pages', $link, $link));
+                            //redirect($page->getUrl());
                         }
                         $form->elements->submit->setValue(t('Update'));
                         append('content', $form->render());
@@ -136,7 +139,7 @@ class Pages_Gear extends Gear {
      */
     public function showPages($page) {
         $grid = new Grid('Pages.my');
-        $pages = new Pages_Page();
+        $pages = new Pages_Object();
         $this->db->order('id', 'DESC');
         $grid->adopt($pages->findAll());
         $grid->show();
@@ -157,7 +160,7 @@ class Pages_Gear extends Gear {
      * @param   int $id
      */
     public function showPage($id) {
-        $page = new Pages_Page();
+        $page = new Pages_Object();
         $page->where('id', $id);
         if ($page->find()) {
             event('Pages.showPage.before', $page);

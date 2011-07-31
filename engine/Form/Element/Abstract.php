@@ -181,7 +181,6 @@ class Form_Element_Abstract extends Options {
         $this->attributes->class = $this->attributes->type . ' ' . $this->attributes->class;
         $this->attributes->required = $this->validators && $this->validators->findByValue('Required');
         $this->attributes->disabled OR $this->attributes->offsetUnset('disabled');
-        $this->attributes->checked OR $this->attributes->offsetUnset('checked');
         $this->attributes->form = $this->form;
         $this->attributes->element = $this;
         return $this->attributes;

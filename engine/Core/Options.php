@@ -27,7 +27,7 @@ abstract class Options extends Core_ArrayObject {
      * @param array|ArrayObject $options
      * @param string $storage
      */
-    public function __construct($options, $place = NULL) {
+    public function __construct($options = array(), $place = NULL) {
         $this->options = new Core_ArrayObject($this->options);
         if ($place == self::SELF) {
             $options instanceof Core_ArrayObject OR $options = new Core_ArrayObject($options);

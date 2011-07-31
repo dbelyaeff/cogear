@@ -74,6 +74,7 @@ class Session implements Interface_Factory {
      * @var     string
      */
     private $flash_key = 'flash';
+    const HISTORY_STEPS = 10;
 
     /**
      * Constructor
@@ -252,7 +253,7 @@ class Session implements Interface_Factory {
         $cogear = getInstance();
         event('session.init',$this);
         isset($_SESSION['user_agent']) OR $_SESSION['user_agent'] = $cogear->request->getUserAgent();
-        isset($_SESSION['ip_address']) OR $_SESSION['ip_address'] = $cogear->request->get('ip');
+        isset($_SESSION['ip_address']) OR $_SESSION['ip'] = $cogear->request->get('ip');
         if(!isset($_SESSION['history'])){
             $_SESSION['history'] = new Core_ArrayObject();
         }
@@ -263,7 +264,7 @@ class Session implements Interface_Factory {
         if(!isset($last) OR $last != $referer){
             $_SESSION['history'][] = $referer;
         }
-        sizeof($_SESSION['history']) > 10 && $_SESSION['history'] = new Core_ArrayObject(array_slice($_SESSION['history']->toArray(), sizeof($_SESSION['history']) - 10));
+        sizeof($_SESSION['history']) > self::HISTORY_STEPS && $_SESSION['history'] = new Core_ArrayObject(array_slice($_SESSION['history']->toArray(), sizeof($_SESSION['history']) - self::HISTORY_STEPS));
     }
     /**
      * Browsing history — last 10 pages

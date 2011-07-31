@@ -25,7 +25,7 @@ class Theme_Gear extends Gear {
      * Init
      */
     public function init() {
-        $this->regions = new Stack('theme.regions');
+        $this->regions = new Core_ArrayObject();
         hook('gear.request', array($this, 'handleGearRequest'));
         if ($favicon = config('theme.favicon')) {
             hook('theme.head.meta.after', array($this, 'renderFavicon'));

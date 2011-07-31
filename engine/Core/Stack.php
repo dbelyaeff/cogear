@@ -11,7 +11,7 @@
  * @subpackage
  * @version		$Id$
  */
-class Stack extends Core_ArrayObject {
+class Stack extends Object {
 
     /**
      * Stack name

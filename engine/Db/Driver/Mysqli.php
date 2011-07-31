@@ -44,7 +44,7 @@ class Db_Driver_Mysqli extends Db_Driver_Mysql {
         }
         self::start($query);
         if (!$this->result = mysqli_query($this->connection,$query)) {
-            $this->silent OR $this->errors[] = mysqli_errno($this->connecton);
+            $this->silent OR $this->errors[] = mysqli_errno($this->connection);
         }
         $this->clear();
         self::stop($query);

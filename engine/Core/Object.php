@@ -10,6 +10,23 @@
  * @subpackage
  * @version		$Id$
  */
-class Core_Object extends Core_ArrayObject {
-    
+abstract class Object extends Options {
+    protected $object;
+    /**
+     * Constructor
+     * 
+     * @param array $data
+     */
+    public function __construct($options = NULL,$place = NULL) {
+        $options && parent::__construct($options, $place);
+        $this->object = new Core_ArrayObject();
+    }
+    /**
+     * Get or Set current object
+     *
+     * @param array|ArrayObject $data
+     */
+    public function object($data = NULL){
+        return $data ? (!is_object($data) ? $this->object->adopt($data) : $this->object = $data) : $this->object;
+    }
 }

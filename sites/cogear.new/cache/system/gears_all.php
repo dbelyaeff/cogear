@@ -7,6 +7,7 @@ return array (
     'ajax' => 'Ajax_Gear',
     'ckeditor' => 'CKEditor_Gear',
     'cache' => 'Cache_Gear',
+    'comments' => 'Comments_Gear',
     'cron' => 'Cron_Gear',
     'db' => 'Db_Gear',
     'dev' => 'Dev_Gear',

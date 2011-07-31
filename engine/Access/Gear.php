@@ -16,17 +16,15 @@ class Access_Gear extends Gear {
     protected $name = 'Access';
     protected $description = 'Access control gear';
     protected $rules;
-    protected $refresh;
+    protected $refresh_flag;
     protected $order = -100;
 
     /**
-     * Desctructor
+     * Constructor
      */
-    public function __destruct() {
-        if ($this->refresh) {
-            $this->reset();
-            $this->clear();
-        }
+    public function __construct() {
+        parent::__construct();
+        $this->rules = new Core_ArrayObject();
     }
 
     /**
@@ -36,88 +34,159 @@ class Access_Gear extends Gear {
         parent::init();
         $this->setRules();
         $this->setRights();
+        hook('done', array($this, 'save'));
+    }
+
+    /**
+     * Reset access data
+     * 
+     * @param string $action 
+     */
+    public function index($action = NULL) {
+        if ($this->user->id != 1) {
+            back();
+        }
+        switch ($action) {
+            case 'reset':
+                $this->clear();
+                flash_success(t('Access rights have been reseted successfully!', 'Access'));
+                back();
+                break;
+        }
     }
 
     /**
      * Check rules
      *
      * @param string $rule
+     * @return boolean
      */
     public function check($rule) {
-        if (!in_array($rule, $this->rules)) {
-            $this->addRule($rule);
+        if (!$this->rules->offsetExists($rule)) {
+            $this->rules->offsetSet($rule, TRUE);
+            $this->refresh_flag = TRUE;
         }
-        if ($this->user->id == 1){
+        if ($this->user->id == 1) {
             return TRUE;
         }
-        return  !($this->session->access && $this->session->access->{$rule});
-    }
-
-    /**
-     * Add new rule
-     * 
-     * @param string $rule 
-     */
-    public function addRule($rule) {
-        $rule = preg_replace('[^a-z0-9_]', '', $rule);
-        $this->db->silent();
-        $this->db->insert('access_rules', array('rule' => $rule));
-        $this->db->silent();
-        $this->refresh = TRUE;
-    }
-
-    /**
-     * Set rules
-     */
-    public function setRules() {
-        if (!$this->rules = $this->system_cache->read('access/rules')) {
-            if ($rules = $this->db->order('rule')->get('access_rules')->result()) {
-                foreach ($rules as $rule) {
-                    $this->rules[$rule->id] = $rule->rule;
-                }
-                $this->system_cache->write('access/rules', $this->rules, array('access'));
-            }
+        if(!$this->session->access ){
+            return FALSE;
         }
+        return $this->session->access->{$rule};
+    }
+
+    /**
+     * Get rules
+     * 
+     * @return Core_ArrayObject
+     */
+    public function getRules() {
+        if ($rules = $this->system_cache->read('access/rules', TRUE)) {
+            $this->rules->mix($rules);
+        }
+        return $this->rules;
+    }
+
+    /**
+     * Get rights for user and his user_group
+     */
+    public function getRights() {
+//        DEVELOPMENT && $this->reset();
+        if ($this->session->access !== NULL) {
+            return;
+        }
+        $access = new Core_ArrayObject();
+        if ($group_access = $this->getUserGroupRights($this->user->user_group)) {
+            $access->mix($group_access);
+        }
+        if ($user_access = $this->getUserRights($this->user->id)) {
+            $access->mix($user_access);
+        }
+        $this->session->access = Core_ArrayObject::transform($access);
+    }
+
+    /**
+     * Get rights for user
+     * 
+     * @param int $uid
+     * @return mixed 
+     */
+    public function getUserRights($uid) {
+        return $this->system_cache->read('access/users/' . $uid, TRUE);
     }
 
     /**
      * Set rights for user
+     * 
+     * @param   int $uid
+     * @param   array   $rights
      */
-    public function setRights() {
-        DEVELOPMENT && $this->reset();
-        if ($this->session->access !== NULL) {
-            return;
+    public function addUserRights($rights, $uid=NULL) {
+        $uid OR $uid = $this->user->id;
+        !is_array($rights) && $rights = (array) $rights;
+        $access = $this->getUserRights($uid) OR $access = new Core_ArrayObject();
+        foreach ($rights as $right) {
+            $access->offsetExists($right) OR $access->offsetSet($right, TRUE);
         }
-        if (!$access = $this->system_cache->read('access/user_group/' . $this->user->user_group)) {
-            if ($access = $this->db->get_where('access', array('gid' => $this->user->user_group))->result()) {
-                $this->system_cache->write('access/user_group/' . $this->user->user_group, $access, array('access', 'user_groups', 'access/user_groups'));
-            }
-        }
-        if (!$user_access = $this->system_cache->read('access/users/' . $this->user->id)) {
-            if ($user_access = $this->db->get_where('access', array('uid' => $this->user->id))->result()) {
-                $this->system_cache->write('access/users/' . $this->user->id, $user_access, array('access', 'access/users', 'user/' . $this->user->id));
-            }
-        }
-        $user_access && $access->mix($user_access);
-        $this->session->access = Core_ArrayObject::transform($this->prepare($access));
+        $this->system_cache->write('access/users/' . $uid, $access);
     }
 
     /**
-     * Prepare database data to be saved as access rules
-     *
-     * @param mixed $access
-     * @return array
+     * Remove rights from user
+     * 
+     * @param   int $uid
+     * @param   array   $rights
      */
-    protected function prepare($access) {
-        if (!$access)
-            return $access;
-        $result = array();
-        foreach ($access as $rule) {
-            if (isset($this->rules[$rule->rid]) && $name = $this->rules[$rule->rid]) {
-                $result[$name] = $rule->rid;
-            }
+    public function removeUserRights($rights, $uid=NULL) {
+        $uid OR $uid = $this->user->id;
+        !is_array($rights) && $rights = (array) $rights;
+        $access = $this->getUserRights($uid) OR $access = new Core_ArrayObject();
+        foreach ($rights as $right) {
+            $access->offsetExists($right) && $access->offsetUnset($right);
         }
-        return $result;
+        $this->system_cache->write('access/users/' . $uid, $access);
+    }
+
+    /**
+     * Get rights for group
+     * 
+     * @param int $gid
+     * @return mixed 
+     */
+    public function getUserGroupRights($gid) {
+        return $this->system_cache->read('access/user_group/' . $gid, TRUE);
+    }
+
+    /**
+     * Set rights for user_group
+     * 
+     * @param   int $user_group
+     * @param   array   $rights
+     */
+    public function addUserGroupRights($rights, $user_group=NULL) {
+        $user_group OR $user_group = $this->user->user_group;
+        !is_array($rights) && $rights = (array) $rights;
+        $access = $this->getUserGroupRights($user_group) OR $access = new Core_ArrayObject();
+        foreach ($rights as $right) {
+            $access->offsetExists($right) OR $access->offsetSet($right, TRUE);
+        }
+        $this->system_cache->write('access/user_group/' . $user_group, $access);
+    }
+
+    /**
+     * Remove rights from user_group
+     * 
+     * @param   int $uid
+     * @param   array   $rights
+     */
+    public function removeUserGroupRights($rights, $uid=NULL) {
+        $uid OR $uid = $this->user_group->id;
+        !is_array($rights) && $rights = (array) $rights;
+        $access = $this->getUserGroupRights($user_group) OR $access = new Core_ArrayObject();
+        foreach ($rights as $right) {
+            $access->offsetExists($right) && $access->offsetUnset($right);
+        }
+        $this->system_cache->write('access/user_group/' . $user_group, $access);
     }
 
     /**
@@ -135,12 +204,22 @@ class Access_Gear extends Gear {
     }
 
     /**
+     * Save rules
+     */
+    public function save() {
+        if ($this->refresh_flag) {
+            $this->system_cache->write('access/rules', $this->rules, array('access'));
+        }
+    }
+
+    /**
      * 
      */
     public function _403() {
         $this->response->header('Status', '403 ' . Response::$codes[403]);
         exit(t('You don\'t have enought permissions to access this page.'));
     }
+
 }
 
 function access($rule) {

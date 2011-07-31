@@ -11,7 +11,7 @@
  * @subpackage
  * @version		$Id$
  */
-class Form_Object extends Options {
+class Form_Object extends Object {
 
     protected $name;
     protected $prefix = 'form';
@@ -23,7 +23,6 @@ class Form_Object extends Options {
     public $request;
     protected $is_ajaxed;
     protected $initialized;
-    protected $object;
     public $tab_opened;
     public $code;
     /**
@@ -75,6 +74,9 @@ class Form_Object extends Options {
                 $options = $config;
             }
         }
+        else {
+            $options = Core_ArrayObject::transform($options);
+        }
         parent::__construct($options,Options::SELF);
     }
     
@@ -90,7 +92,7 @@ class Form_Object extends Options {
         $config->name = $name;
         $config->form = $this;
         if ($config->access === FALSE) {
-            continue;
+            return;
         }
         if (isset(self::$types[$config->type]) && class_exists(self::$types[$config->type])) {
             $this->elements->$name = new self::$types[$config->type]($config);
@@ -130,12 +132,8 @@ class Form_Object extends Options {
      * @param object $data 
      */
     public function object($data = NULL) {
-        if ($data) {
-            $this->object = $data;
-            $this->setValues($this->object);
-        } else {
-            return $this->object;
-        }
+        $data && $this->setValues($data);
+        return parent::object($data);
     }
 
     /**
@@ -164,9 +162,10 @@ class Form_Object extends Options {
         $is_valid = TRUE;
         if (sizeof($this->request) > 0) {
             foreach ($this->elements as $name => $element) {
-                if ($value = $element->result()) {
+                $value = $element->result();
+                if ($value !== FALSE) {
                     $result[$name] = $value;
-                } elseif (FALSE === $value) {
+                } else {
                     $is_valid = FALSE;
                 }
             }

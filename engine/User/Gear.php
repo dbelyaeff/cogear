@@ -249,7 +249,7 @@ class User_Gear extends Gear {
             if ($this->find()) {
                 $data->saveme && $this->remember();
                 $this->login();
-                back();
+                redirect(Url::gear('user'));
             } else {
                 error('Login or password weren\'t found in the database', 'Authentification error');
             }

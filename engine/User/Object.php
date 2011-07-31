@@ -19,8 +19,12 @@ class User_Object extends Db_Item {
      * 
      * @param   boolean $autoinit
      */
-    public function __construct() {
+    public function __construct($id = NULL) {
         parent::__construct('users');
+        if($id){
+            cogear()->db->where('id',$id);
+            $this->find();
+        }
     }
 
     /**
@@ -174,6 +178,29 @@ class User_Object extends Db_Item {
             return Url::gear('user').$this->login;
         }
         return NULL;
+    }
+    /**
+     * Get HTML link to user profile
+     */
+    public function getLink(){
+        return HTML::a($this->getProfileLink(),$this->login);
+    }
+    /**
+     * Get HTML image avatar
+     *  
+     * @param string $preset
+     * @return string 
+     */
+    public function getAvatarImage($preset = 'avatar.small'){
+        return HTML::img(image_preset($preset,$this->getAvatar()->getFile(),TRUE),$this->login,array('class'=>'avatar'));
+    }
+    /**
+     * Get HTML avatar linked to profile
+     * 
+     * @return string
+     */
+    public function getAvatarLinked(){
+        return HTML::a($this->getProfileLink(),$this->getAvatarImage());
     }
     /**
      * Get user avatar

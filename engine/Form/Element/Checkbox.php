@@ -19,9 +19,15 @@ class Form_Element_Checkbox extends Form_Element_Abstract{
      * @return
      */
     public function result() {
-        $this->value = isset($this->form->request[$this->name]) ? TRUE : NULL;
+        $this->value = isset($this->form->request[$this->name]) ? 1 : 0;
         $this->is_fetched = TRUE;
-        $this->filter();
+//        $this->filter();
         return $this->validate() ? $this->value : FALSE;
+    }
+    public function getAttributes() {
+        $this->value && $this->attributes->checked = 'checked';
+        parent::getAttributes();
+        $this->attributes->offsetUnset('value');
+        return $this->attributes;
     }
 }

@@ -32,6 +32,10 @@
 .form div.checkbox label{
     display: inline;
 }
+.form div.checkbox input[type=checkbox]{
+    float: left;
+    margin: 0 5px 0 0;
+}
 .form div.form-element.inline label{
     display: inline;
 }

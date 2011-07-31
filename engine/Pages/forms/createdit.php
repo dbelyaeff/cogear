@@ -10,7 +10,7 @@ return array(
             'validators' => array(array('Length', 3), 'Required'),
         ),
         'body' => array(
-            'type' => 'textarea',
+            'type' => 'editor',
             'label' => t('Text'),
             'validators' => array(array('Length', 10),'Required'),
         ),

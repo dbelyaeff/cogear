@@ -8,8 +8,10 @@ return array (
     'url' => 'varchar(255)',
     'path' => 'varchar(255)',
     'body' => 'text',
-    'created_date' => 'int(255)',
-    'last_update' => 'int(255)',
+    'allow_comments' => 'tinyint(1) unsigned',
+    'comments' => 'int(11) unsigned',
+    'created_date' => 'int(11)',
+    'last_update' => 'int(11)',
   ),
   'ttl' => NULL,
 );
