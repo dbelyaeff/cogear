@@ -91,6 +91,6 @@ div.image-preview a.delete{
 div.image-preview a.delete:hover{
     color: #CCC;
 }
-form div.tab{
+form div.form-element.tab{
     display: none;
 }

@@ -25,7 +25,7 @@ class Form_Element_Tab extends Form_Element_Abstract{
             $this->form->tab_opened = TRUE;
         }
         //id="tab-'.$this->name.'"
-        $output .= '<div class="tab">';
+        $output .= '<div class="form-element tab">';
         self::$tabs[$this->name] = $this->label;
         return $output;
     }
