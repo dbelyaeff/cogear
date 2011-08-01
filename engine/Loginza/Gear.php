@@ -112,7 +112,7 @@ class Loginza_Gear extends Gear {
             'type' => 'div',
             'value' => t('<p>There you can attach social accounts to integrate with your profile. It will help you for quick login.</p>'),
         );
-        if ($connected_accounts = $this->db->where('uid', $Form->object->id)->get('users_loginza')->result()) {
+        if ($connected_accounts = $this->db->where('uid', $Form->object()->id)->get('users_loginza')->result()) {
             $tpl = new Template('Loginza.accounts');
             $tpl->accounts = $connected_accounts;
             $data['loginza_accounts'] = array(

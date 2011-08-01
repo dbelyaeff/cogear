@@ -115,7 +115,7 @@ class Menu_Object extends Stack {
      * @param string $name
      * @param string $place 
      */
-    public function mixWith(&$menu, $name, $place = NULL) {
+    public function mixWith($menu, $name, $place = NULL) {
         $this->uasort('Core_ArrayObject::sortByOrder');
         $i = 1;
         if ($place && $menu->{$place}) {

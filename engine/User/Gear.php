@@ -37,7 +37,7 @@ class User_Gear extends Gear {
      * @param string $name
      * @param object $menu 
      */
-    public function menu($name, &$menu) {
+    public function menu($name, $menu) {
         d('User_CP');
         switch ($name) {
             case 'user':

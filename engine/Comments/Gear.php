@@ -40,7 +40,11 @@ class Comments_Gear extends Gear {
         );
         $Form->elements->place($data, 'submit', Form::BEFORE);
     }
-
+    /**
+     * Extend page stack
+     * 
+     * @param object $Stack 
+     */
     public function extendPageInfo($Stack) {
         $Stack->object()->allow_comments && $Stack->comments = icon('comments') . ' ' . HTML::a($Stack->object()->getUrl() . '#comments', $Stack->object()->comments);
     }
@@ -63,24 +67,7 @@ class Comments_Gear extends Gear {
      */
     public function showForm($Page) {
         if (access('comments post')) {
-            $form = new Form(array(
-                        'name' => 'addComment',
-                        'elements' => array(
-                            'info' => array(
-                                'type' => 'div',
-                                'value' => t('Leave comment ').' '.$this->user->getAvatarLinked().' '.$this->user->getLink().' ↓ ',
-                            ),
-                            'body' => array(
-                                'type' => 'textarea',
-                                'validators' => array('Required', array('Length', 5)),
-                                'filters' => array(array('strip_tags', '<b><i><u>')),
-                            ),
-                            'submit' => array(
-                                'type' => 'submit',
-                                'label' => t('Post'),
-                            ),
-                        )
-                    ));
+            $form = new Form('Comments.add');
             if ($result = $form->result()) {
                 $comment = new Comments_Object();
                 $comment->pid = $Page->id;

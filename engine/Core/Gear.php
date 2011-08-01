@@ -181,7 +181,7 @@ abstract class Gear extends Cogearable{
         is_dir($scripts) && $this->assets->addScriptsFolder($scripts);
         is_dir($styles) && $this->assets->addStylesFolder($styles);
         $this->router->addRoute($this->base . ':maybe', array($this, 'index'));
-        $this->event('gear.init', $this);
+        event('gear.init', $this);
     }
     /**
      * Magic __get method
