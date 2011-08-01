@@ -128,5 +128,4 @@ $cogear->config->load(SITE.DS.'config'.EXT);
 $cogear->loadGears();
 event('ignite');
 event('done');
-$cogear->save();
 event('exit');

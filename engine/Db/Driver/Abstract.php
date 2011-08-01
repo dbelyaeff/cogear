@@ -507,13 +507,13 @@ abstract class Db_Driver_Abstract extends Cogearable{
      */
     public function getFields($table = ''){
         $table OR $table = reset($this->_query['from']);
-        if (DEVELOPMENT OR !$this->fields[$table] = $this->system_cache->read('database/' . $table)) {
+        if (!$this->fields[$table] = $this->system_cache->read('database/' . $table,TRUE)) {
             if($fields = $this->getFieldsQuery($table)){
                 $this->fields[$table] = array();
                 foreach ($fields as $field) {
                     $this->fields[$table][$field->Field] = $field->Type;
                 }
-                $this->system_cache->write('database/' . $table, $this->fields[$table]);
+                $this->system_cache->write('database/' . $table, $this->fields[$table],array('db.fields'));
             }
         }
         return $this->fields[$table];

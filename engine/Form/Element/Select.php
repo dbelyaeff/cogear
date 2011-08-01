@@ -25,8 +25,8 @@ class Form_Element_Select extends Form_Element_Abstract{
 
     public function render(){
         if($this->callback){
-            $callback = Cogear::prepareCallback($this->callback);
-            $this->setValues(call_user_func($callback));
+            $callback = Callback::prepare($this->callback);
+            is_callable($callback) && $this->setValues(call_user_func($callback));
         }
         $this->getAttributes();
         $code[] = HTML::open_tag('select', $this->attributes);

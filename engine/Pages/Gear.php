@@ -38,6 +38,7 @@ class Pages_Gear extends Gear {
                     '(?P<id>\d+)',
                     '.+'
                         ), $url), array($this, 'catchPage'), TRUE);
+        allow_role(array('pages create'),100);
     }
 
     /**

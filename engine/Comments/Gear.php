@@ -24,6 +24,7 @@ class Comments_Gear extends Gear {
         hook('form.page-createdit.init', array($this, 'extendPageForm'));
         hook('Pages.showPage.after', array($this, 'attachCommentsToPage'));
         hook('stack.Page.info', array($this, 'extendPageInfo'));
+        allow_role(array('comments post'),100);
     }
 
     /**

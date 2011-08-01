@@ -221,6 +221,7 @@ final class Cogear implements Interface_Singleton {
     public function loadGears() {
         if ($this->gears_are_loaded)
             return;
+        hook('exit',array($this,'save'));
         if (DEVELOPMENT OR !$this->all_gears = $this->system_cache->read('gears/all',TRUE)) {
             $this->all_gears = array();
             if ($gears_paths = array_merge(find('*' . DS . self::GEAR . EXT), find('*' . DS . '*' . DS . self::GEAR . EXT))) {

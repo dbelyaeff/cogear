@@ -89,8 +89,8 @@ class Ajax_Gear extends Gear {
      */
     public static function json($data) {
         echo json_encode($data);
-        $cogear = getInstance();
-        $cogear->save();
+        event('exit');
+        event('ajax.exit');
         exit();
     }
     /**

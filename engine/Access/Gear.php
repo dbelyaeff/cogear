@@ -16,8 +16,9 @@ class Access_Gear extends Gear {
     protected $name = 'Access';
     protected $description = 'Access control gear';
     protected $rules;
+    protected $roles;
     protected $refresh_flag;
-    protected $order = -100;
+    protected $order = -9;
 
     /**
      * Constructor
@@ -25,6 +26,7 @@ class Access_Gear extends Gear {
     public function __construct() {
         parent::__construct();
         $this->rules = new Core_ArrayObject();
+        $this->roles = new Core_ArrayObject();
     }
 
     /**
@@ -32,9 +34,14 @@ class Access_Gear extends Gear {
      */
     public function init() {
         parent::init();
-        $this->setRules();
-        $this->setRights();
-        hook('done', array($this, 'save'));
+        if ($rules = $this->system_cache->read('access/rules', TRUE)) {
+            $this->rules->adopt($rules);
+        }
+        if ($roles = $this->system_cache->read('access/roles', TRUE)) {
+            $this->roles->adopt($roles);
+        }
+        $this->getRights();
+        hook('exit', array($this, 'save'));
     }
 
     /**
@@ -69,7 +76,7 @@ class Access_Gear extends Gear {
         if ($this->user->id == 1) {
             return TRUE;
         }
-        if(!$this->session->access ){
+        if (!$this->session->access) {
             return FALSE;
         }
         return $this->session->access->{$rule};
@@ -81,28 +88,25 @@ class Access_Gear extends Gear {
      * @return Core_ArrayObject
      */
     public function getRules() {
-        if ($rules = $this->system_cache->read('access/rules', TRUE)) {
-            $this->rules->mix($rules);
-        }
         return $this->rules;
     }
 
     /**
-     * Get rights for user and his user_group
+     * Get rights for user and his role
      */
     public function getRights() {
-//        DEVELOPMENT && $this->reset();
+        DEVELOPMENT && $this->reset();
         if ($this->session->access !== NULL) {
             return;
         }
         $access = new Core_ArrayObject();
-        if ($group_access = $this->getUserGroupRights($this->user->user_group)) {
-            $access->mix($group_access);
+        if($role = $this->getRoleRights($this->user->role)){
+            $access->mix($role);
         }
-        if ($user_access = $this->getUserRights($this->user->id)) {
-            $access->mix($user_access);
+        if($user = $this->getUserRights($this->user->id)){
+            $access->mix($user);
         }
-        $this->session->access = Core_ArrayObject::transform($access);
+        $this->session->access = $access;
     }
 
     /**
@@ -126,7 +130,9 @@ class Access_Gear extends Gear {
         !is_array($rights) && $rights = (array) $rights;
         $access = $this->getUserRights($uid) OR $access = new Core_ArrayObject();
         foreach ($rights as $right) {
-            $access->offsetExists($right) OR $access->offsetSet($right, TRUE);
+            if (!$access->offsetExists($right)) {
+                $access->offsetSet($right, TRUE);
+            }
         }
         $this->system_cache->write('access/users/' . $uid, $access);
     }
@@ -142,7 +148,9 @@ class Access_Gear extends Gear {
         !is_array($rights) && $rights = (array) $rights;
         $access = $this->getUserRights($uid) OR $access = new Core_ArrayObject();
         foreach ($rights as $right) {
-            $access->offsetExists($right) && $access->offsetUnset($right);
+            if (!$access->offsetExists($right)) {
+                $access->offsetUnset($right);
+            }
         }
         $this->system_cache->write('access/users/' . $uid, $access);
     }
@@ -150,43 +158,44 @@ class Access_Gear extends Gear {
     /**
      * Get rights for group
      * 
-     * @param int $gid
+     * @param int $role
      * @return mixed 
      */
-    public function getUserGroupRights($gid) {
-        return $this->system_cache->read('access/user_group/' . $gid, TRUE);
+    public function getRoleRights($role) {
+        return $this->roles->$role;
     }
 
     /**
-     * Set rights for user_group
+     * Set rights for role
      * 
-     * @param   int $user_group
+     * @param   int $role
      * @param   array   $rights
      */
-    public function addUserGroupRights($rights, $user_group=NULL) {
-        $user_group OR $user_group = $this->user->user_group;
+    public function addRoleRights($rights, $role=NULL) {
+        $role OR $role = $this->user->role;
         !is_array($rights) && $rights = (array) $rights;
-        $access = $this->getUserGroupRights($user_group) OR $access = new Core_ArrayObject();
-        foreach ($rights as $right) {
-            $access->offsetExists($right) OR $access->offsetSet($right, TRUE);
+        if (!$this->roles->$role) {
+            $this->roles->$role = new Core_ArrayObject();
         }
-        $this->system_cache->write('access/user_group/' . $user_group, $access);
+        foreach ($rights as $right) {
+            $this->roles->$role->offsetExists($right) OR $this->roles->$role->offsetSet($right, TRUE);
+        }
+        $this->refresh_flag = TRUE;
     }
 
     /**
-     * Remove rights from user_group
+     * Remove rights from role
      * 
-     * @param   int $uid
+     * @param   int $role
      * @param   array   $rights
      */
-    public function removeUserGroupRights($rights, $uid=NULL) {
-        $uid OR $uid = $this->user_group->id;
+    public function removeRoleRights($rights, $role=NULL) {
+        $role OR $role = $this->user->role;
         !is_array($rights) && $rights = (array) $rights;
-        $access = $this->getUserGroupRights($user_group) OR $access = new Core_ArrayObject();
         foreach ($rights as $right) {
-            $access->offsetExists($right) && $access->offsetUnset($right);
+            $this->roles->$role && $this->roles->$role->offsetUnset($right);
         }
-        $this->system_cache->write('access/user_group/' . $user_group, $access);
+        $this->refresh_flag = TRUE;
     }
 
     /**
@@ -209,6 +218,7 @@ class Access_Gear extends Gear {
     public function save() {
         if ($this->refresh_flag) {
             $this->system_cache->write('access/rules', $this->rules, array('access'));
+            $this->system_cache->write('access/roles', $this->roles, array('access'));
         }
     }
 
@@ -217,6 +227,7 @@ class Access_Gear extends Gear {
      */
     public function _403() {
         $this->response->header('Status', '403 ' . Response::$codes[403]);
+        event('exit');  
         exit(t('You don\'t have enought permissions to access this page.'));
     }
 
@@ -238,4 +249,12 @@ function page_access($rule) {
 function _403() {
     $cogear = getInstance();
     $cogear->router->exec(array($cogear->access, '_403'));
+}
+
+function allow_role($rules, $role = NULL) {
+    cogear()->access->addRoleRights($rules, $role);
+}
+
+function allow_user($rules, $uid = NULL) {
+    cogear()->access->addUserRights($rules, $uid);
 }

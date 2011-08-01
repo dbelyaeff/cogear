@@ -15,8 +15,9 @@ class User_Gear extends Gear {
 
     protected $name = 'User';
     protected $description = 'Manage users.';
-    protected $order = 0;
+    protected $order = -10;
     protected $current;
+    protected $roles;
 
     /**
      * Init
@@ -27,6 +28,7 @@ class User_Gear extends Gear {
         $this->current = new User_Object();
         $this->current->init();
         new User_Menu();
+        $this->getRoles();
     }
 
     /**
@@ -262,7 +264,7 @@ class User_Gear extends Gear {
      */
     public function logout_action() {
         $this->logout();
-        back();
+        redirect(Url::link());
     }
 
     /**
@@ -286,8 +288,8 @@ class User_Gear extends Gear {
      * User registration
      */
     public function register_action() {
-        if (!access('user register')) {
-            return info('You don\'t have an access to registration');
+        if (!config('user.register',TRUE)) {
+            return info('Registration is turned off by site admin');
         }
         if ($this->isLogged()) {
             return info('You are already logged in!', 'Authorization');
@@ -295,6 +297,7 @@ class User_Gear extends Gear {
         $form = new Form('User.register');
         if ($data = $form->result()) {
             $this->object($data);
+            $this->role = config('user.default.user_group',100);
             $this->hashPassword();
             $this->save();
             info('User was successfully registered! Please, check your email for further instructions.', 'Registration succeed.');
@@ -302,7 +305,37 @@ class User_Gear extends Gear {
         else
             append('content', $form->render());
     }
-
+    /**
+     * Get user roles
+     * 
+     * @return  Core_ArrayObject
+     */
+    public function getRoles(){
+        if($this->roles){
+            return $this->roles;
+        }
+        $this->roles = new Core_ArrayObject(array(
+            0 => 'guest',
+            1 => 'admin',
+            100 => 'user'
+        ));
+        if($extra_groups = $this->system_cache->read('user_roles',TRUE)){
+            $this->roles->mix($extra_groups);
+        }
+        return $this->roles;
+    }
+    /**
+     * Get translated roles list
+     * 
+     * @return array
+     */
+    public function getRolesList(){
+        $roles = array();
+        foreach($this->roles as $id=>$role){
+            $roles[$id] = t($role,'User Roles');
+        }
+        return $roles;
+    }
     /**
      * Administrate users
      * 

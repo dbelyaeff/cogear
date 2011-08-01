@@ -19,7 +19,7 @@ final class HTML {
         'img' => array('width', 'height', 'alt', 'title','src'),
         'form' => array('action', 'method', 'enctype'),
         'input' => array('type', 'value', 'disabled', 'checked', 'name'),
-        'select' => array('type', 'value', 'disabled', 'name'),
+        'select' => array('type', 'disabled', 'name'),
         'option' => array('selected','value'),
         'textarea' => array('rows', 'cols', 'name', 'disabled'),
         'script' => array('src', 'type', 'charset'),
@@ -36,7 +36,7 @@ final class HTML {
     public static function attr(array $options) {
         $result = '';
         foreach ($options as $key => $value) {
-            is_string($value) && $result .= $key . '="' . addslashes($value) . '" ';
+            $result .= $key . '="' . addslashes($value) . '" ';
         }
         return $result ? ' ' . trim($result) : '';
     }

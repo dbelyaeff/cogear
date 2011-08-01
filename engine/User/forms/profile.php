@@ -4,7 +4,7 @@ return array(
     'name' => 'user-profile',
     'elements' => array(
         'personal' => array(
-          'label' => t('Personal','User'),
+            'label' => t('Personal', 'User'),
             'type' => 'tab',
         ),
         'avatar' => array(
@@ -15,10 +15,10 @@ return array(
         //'rename' => cogear()->user->id,
         ),
         'realname' => array(
-            'label' => t('Real name','User'),
+            'label' => t('Real name', 'User'),
             'type' => 'text',
             'access' => access('user_edit_realname'),
-            'validators' => array(array('Length',5),'Name'),
+            'validators' => array(array('Length', 5), 'Name'),
         ),
         'login' => array(
             'label' => t('Login', 'User'),
@@ -36,12 +36,12 @@ return array(
             'type' => 'password',
             'validators' => array(array('Length', 3), 'AlphaNum')
         ),
-//                'role' => array(
-//                    'label' => t('Role','User'),
-//                    'type' => 'select',
-//                    'validators' => array('Required'),
-//                    'callback' => 'User_Gear->getRoles',
-//                ),
+        'role' => array(
+            'label' => t('Role', 'User'),
+            'type' => 'select',
+            'validators' => array('Required'),
+            'callback' => 'User_Gear->getRolesList',
+        ),
 //                'options' => array(
 //                    'label' => t('Test','User'),
 //                    'type' => 'checkbox',
