@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 01, 2011 at 11:01 PM
+-- Generation Time: Aug 01, 2011 at 11:29 PM
 -- Server version: 5.1.40
 -- PHP Version: 5.3.3
 
@@ -103,8 +103,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `login`, `password`, `hash`, `email`, `name`, `role`, `avatar`, `validation_code`, `is_valid`) VALUES
-(1, 'admin', 'efc002c854ab0f77646a496dad4ec39c', '', 'admin@cogear.ru', '', 1, '/avatars/1/e_743b67d8.jpg', '', 1),
-(6, 'Дмитрий Беляев', '', '', 'usemac.ru@gmail.com', '', 100, '/avatars/1/1av.jpg', '', 1),
+(1, 'admin', 'efc002c854ab0f77646a496dad4ec39c', '', 'admin@cogear.ru', '', 1, '', '', 1),
+(6, 'Дмитрий Беляев', '', '', 'usemac.ru@gmail.com', '', 100, '', '', 1),
 (7, 'User', 'efc002c854ab0f77646a496dad4ec39c', '', 'admin@usemac.ru', '', 100, '', '', 0);
 
 -- --------------------------------------------------------

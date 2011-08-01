@@ -11,7 +11,7 @@
  * @subpackage
  * @version		$Id$
  */
-class User_Avatar{
+class User_Avatar extends Object{
 
     protected $file;
     protected $user;
@@ -25,25 +25,6 @@ class User_Avatar{
         $this->file = $file && file_exists(UPLOADS . DS . $file) ? $file : config('user.default_avatar', 'avatars/0/avatar.png');
     }
 
-    /**
-     * Set user
-     * 
-     * @param User_Object $user 
-     */
-    public function setUser(&$user) {
-        $this->user = & $user;
-    }
-
-    /**
-     * Get specific size avatar
-     * 
-     * @param   string
-     */
-    public function getSize($size){
-        $original = $this->getFile();
-        $thumb = new Image_Thumb($original,$size);
-        return (string)$thumb;
-    }
     /**
      * Get avatar file
      * 
@@ -59,7 +40,7 @@ class User_Avatar{
      */
     public function render($preset = 'avatar.small') {
         $file = UPLOADS.'/'.$this->file;
-        return HTML::img(Url::toUri(image_preset($preset, $file)), $this->user->login, array('class' => 'avatar'));
+        return HTML::img(Url::toUri(image_preset($preset, $file)), $this->object->login, array('class' => 'avatar'));
     }
 
     /**

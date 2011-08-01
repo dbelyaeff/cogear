@@ -210,7 +210,7 @@ class User_Object extends Db_Item {
     public function getAvatar(){
         if(!($this->avatar instanceof User_Avatar)){
             $this->avatar = new User_Avatar($this->avatar);
-            $this->avatar->setUser($this);
+            $this->avatar->object($this);
         }
         return $this->avatar;
     }
@@ -223,7 +223,7 @@ class User_Object extends Db_Item {
         $cogear = getInstance();
         $panel = new Stack('user.panel');
         $panel->avatar = $this->getAvatar();
-        $panel->login = HTML::a($this->getProfileLink(), $this->login, array('class'=>'implicit login   '));
+        $panel->login = HTML::a($this->getProfileLink(), $this->login, array('class'=>'implicit login'));
         if (access('user edit_all') OR $this->id == $cogear->user->id) {
             $panel->edit = HTML::a(Url::gear('user') . 'edit/'.$this->id, t('[edit]'),array('class'=>'edit'));
         }

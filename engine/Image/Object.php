@@ -18,7 +18,7 @@ class Image_Object extends Adapter {
      * @param string $file 
      */
     public function __construct($file) {
-        $this->file = $file;
+        $this->file = file_exists($file) ? $file : NULL;
         $driver = config('image.driver', 'Image_Adapter_GD');
         $this->adapter = file_exists($this->file) ? new $driver($this->file) : new Core_ArrayObject();
     }
