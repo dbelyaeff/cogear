@@ -105,7 +105,7 @@ class Callback extends Cogearable{
      * @return  object
      */
     public static function fetchObject($class) {
-        $element = lcfirst($class);
+        $element = ucfirst($class);
         $cogear = getInstance();
         if (strpos($class, '_Gear')) {
             $gear_name = strtolower(str_replace('_Gear', '', $class));
