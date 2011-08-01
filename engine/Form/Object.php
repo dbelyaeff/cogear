@@ -131,7 +131,7 @@ class Form_Object extends Object {
      * 
      * @param object $data 
      */
-    public function attach($data = NULL) {
+    public function attach($data) {
         $data && $this->setValues($data);
         parent::attach($data);
         event('form.attach',$this);
