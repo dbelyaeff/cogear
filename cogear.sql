@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 01, 2011 at 09:40 PM
+-- Generation Time: Aug 01, 2011 at 11:01 PM
 -- Server version: 5.1.40
 -- PHP Version: 5.3.3
 
@@ -76,7 +76,7 @@ INSERT INTO `pages` (`id`, `aid`, `name`, `url`, `path`, `body`, `allow_comments
 (1, 1, 'Проба пера', 'privet,-mir!', '                   1', 'Первое сообщение!  ', 0, 0, 1302619389, 1308985715),
 (2, 1, 'Привет, мир!', '', '                   2', '<br><div><img src="http://cogear.new/sites/cogear.new/uploads/files/1/Some%20folder/iAvatar-quadro.jpg" height="147" width="147"></div>Первая страница со своим содержимым!  ', 0, 0, 1302733674, 1308985672),
 (7, 1, 'Тестируем редактор', '', '                   7', '<h1><img style="width:138px;height:132px" src="/sites/cogear.new/uploads/users/1/photos/chain.jpg"></h1><h1>Первый</h1><br><h2>Второй</h2><br><h3>Третий</h3><br><h4>Четвертый</h4><hr style="width:100px;height:1px;background-color:#999999;border:1px dotted" noshade="noshade"><br><br><ol><li>Во-первых</li><li>Во-вторых</li><li>В-третьих</li><li>В-четвертых</li><li>В-пятых<br></li></ol>', 0, 0, 1312105511, 1312106515),
-(8, 1, 'Бета-версия cogear²', '', '                   8', '<img style="width:375px;height:116px" src="/sites/cogear.new/uploads/users/1/logos/cogear.jpg"><br>Привет, мир! Встречай, второй <span style="font-weight:bold">когир</span>!', 1, 7, 1312106701, 1312116432);
+(8, 1, 'Бета-версия cogear²', '', '                   8', '<br><div class="grid_16" id="header">\r\n                <a href="../../"><img src="../../sites/cogear.new/uploads/theme/logo/logo.png" alt="cogear"></a>            </div>Привет, мир! Встречай, второй <span style="font-weight:bold">когир</span>!', 1, 7, 1312106701, 1312222435);
 
 -- --------------------------------------------------------
 
@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`id`, `login`, `password`, `hash`, `email`, `name`, `role`, `avatar`, `validation_code`, `is_valid`) VALUES
 (1, 'admin', 'efc002c854ab0f77646a496dad4ec39c', '', 'admin@cogear.ru', '', 1, '/avatars/1/e_743b67d8.jpg', '', 1),
-(6, 'Дмитрий Беляев', '', '', 'usemac.ru@gmail.com', '', 100, '', '', 1),
+(6, 'Дмитрий Беляев', '', '', 'usemac.ru@gmail.com', '', 100, '/avatars/1/1av.jpg', '', 1),
 (7, 'User', 'efc002c854ab0f77646a496dad4ec39c', '', 'admin@usemac.ru', '', 100, '', '', 0);
 
 -- --------------------------------------------------------
@@ -122,11 +122,9 @@ CREATE TABLE IF NOT EXISTS `users_loginza` (
   `full_name` varchar(255) CHARACTER SET utf8 NOT NULL,
   `data` text CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=6 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
 
 --
 -- Dumping data for table `users_loginza`
 --
 
-INSERT INTO `users_loginza` (`id`, `uid`, `identity`, `provider`, `photo`, `full_name`, `data`) VALUES
-(5, 1, 'http://vkontakte.ru/id32018', 'http://vkontakte.ru/', 'http://cs5797.vkontakte.ru/u32018/e_743b67d8.jpg', 'Дима Беляев', '{"identity":"http:\\/\\/vkontakte.ru\\/id32018","provider":"http:\\/\\/vkontakte.ru\\/","uid":32018,"name":{"first_name":"\\u0414\\u0438\\u043c\\u0430","last_name":"\\u0411\\u0435\\u043b\\u044f\\u0435\\u0432"},"nickname":"","gender":"M","address":{"home":{"country":"1"}},"photo":"http:\\/\\/cs5797.vkontakte.ru\\/u32018\\/e_743b67d8.jpg"}');
