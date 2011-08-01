@@ -68,7 +68,7 @@ class Template extends Adapter{
      * Bind global variable
      */
     public static function bindGlobal($name,&$value) {
-        return Template_Abstract::bindGlobal($name, &$value);
+        return Template_Abstract::bindGlobal($name,$value);
     }
     /**
      * Clear template variables
