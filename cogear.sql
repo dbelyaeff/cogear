@@ -43,7 +43,7 @@ INSERT INTO `comments` (`id`, `aid`, `pid`, `body`, `ip`, `created_date`) VALUES
 (5, 1, 8, 'И тебе привет!', '', 0),
 (4, 1, 8, 'Привет, мир!', '', 0),
 (6, 1, 8, 'Всем привет!', '', 0),
-(7, 1, 8, 'Когир — лучше всех! Когир ждет <b>успех</b>!\r\n<img src="http://cogear.new/sites/cogear.new/uploads/users/1/logos/cogear.jpg">', '', 0),
+(7, 1, 8, 'Когир — лучше всех! Когир ждет <b>успех</b>!\r\n', '', 0),
 (8, 1, 8, 'Комменты!', '', 1312147667),
 (9, 1, 8, 'Ура!', '', 1312185157),
 (10, 7, 8, 'Ура, и я теперь могу комменты постить!', '', 1312216904);
@@ -74,8 +74,6 @@ CREATE TABLE IF NOT EXISTS `pages` (
 
 INSERT INTO `pages` (`id`, `aid`, `name`, `url`, `path`, `body`, `allow_comments`, `comments`, `created_date`, `last_update`) VALUES
 (1, 1, 'Проба пера', 'privet,-mir!', '                   1', 'Первое сообщение!  ', 0, 0, 1302619389, 1308985715),
-(2, 1, 'Привет, мир!', '', '                   2', '<br><div><img src="http://cogear.new/sites/cogear.new/uploads/files/1/Some%20folder/iAvatar-quadro.jpg" height="147" width="147"></div>Первая страница со своим содержимым!  ', 0, 0, 1302733674, 1308985672),
-(7, 1, 'Тестируем редактор', '', '                   7', '<h1><img style="width:138px;height:132px" src="/sites/cogear.new/uploads/users/1/photos/chain.jpg"></h1><h1>Первый</h1><br><h2>Второй</h2><br><h3>Третий</h3><br><h4>Четвертый</h4><hr style="width:100px;height:1px;background-color:#999999;border:1px dotted" noshade="noshade"><br><br><ol><li>Во-первых</li><li>Во-вторых</li><li>В-третьих</li><li>В-четвертых</li><li>В-пятых<br></li></ol>', 0, 0, 1312105511, 1312106515),
 (8, 1, 'Бета-версия cogear²', '', '                   8', '<br><div class="grid_16" id="header">\r\n                <a href="../../"><img src="../../sites/cogear.new/uploads/theme/logo/logo.png" alt="cogear"></a>            </div>Привет, мир! Встречай, второй <span style="font-weight:bold">когир</span>!', 1, 7, 1312106701, 1312222435);
 
 -- --------------------------------------------------------
@@ -105,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 INSERT INTO `users` (`id`, `login`, `password`, `hash`, `email`, `name`, `role`, `avatar`, `validation_code`, `is_valid`) VALUES
 (1, 'admin', 'efc002c854ab0f77646a496dad4ec39c', '', 'admin@cogear.ru', '', 1, '', '', 1),
 (6, 'Дмитрий Беляев', '', '', 'usemac.ru@gmail.com', '', 100, '', '', 1),
-(7, 'User', 'efc002c854ab0f77646a496dad4ec39c', '', 'admin@usemac.ru', '', 100, '', '', 0);
+(7, 'User', 'efc002c854ab0f77646a496dad4ec39c', '', 'admin@user.ru', '', 100, '', '', 0);
 
 -- --------------------------------------------------------
 
