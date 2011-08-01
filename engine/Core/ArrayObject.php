@@ -64,8 +64,9 @@ class Core_ArrayObject extends ArrayObject {
      * @param  array|self $data
      */
     public function mix($data) {
-        if(!$data) return;
-        $data instanceof self && $data = (array)$data;
+        if (!$data)
+            return;
+        $data instanceof self && $data = (array) $data;
         $data = self::transform(array_merge($this->toArray(), $data));
         /* Found some issue with PHP < 5.3
          * Object can't accept another instance of self for exchange
@@ -84,8 +85,10 @@ class Core_ArrayObject extends ArrayObject {
      */
     public function adopt($data) {
         $this->exchangeArray(array());
-        foreach ($data as $key => $value) {
-            $this->offsetSet($key, $value);
+        if ($data) {
+            foreach ($data as $key => $value) {
+                $this->offsetSet($key, $value);
+            }
         }
     }
 
@@ -136,12 +139,13 @@ class Core_ArrayObject extends ArrayObject {
     public function __isset($name) {
         return $this->offsetExists($name);
     }
+
     /**
      * Detelte by offset
      * 
      * @param string $name 
      */
-    public function __unset($name){
+    public function __unset($name) {
         $this->offsetUnset($name);
     }
 
@@ -185,7 +189,7 @@ class Core_ArrayObject extends ArrayObject {
      */
     public function inject($value, $position=0, $order = NULL) {
         $order OR $order = self::BEFORE;
-		$result = array();
+        $result = array();
         $it = $this->getIterator();
         $i = 0;
         while ($it->valid()) {
@@ -212,7 +216,7 @@ class Core_ArrayObject extends ArrayObject {
         }
         $this->exchangeArray($result);
     }
-    
+
     /**
      * Place a piece of array at position
      * 
@@ -220,16 +224,16 @@ class Core_ArrayObject extends ArrayObject {
      * @param int/string $position
      * @param int $order 
      */
-    public function place($array,$position=0,$order = NULL){
-	    $order OR $order = self::BEFORE;
+    public function place($array, $position=0, $order = NULL) {
+        $order OR $order = self::BEFORE;
         $result = array();
         $it = $this->getIterator();
         is_string($position) OR $i = 0;
-        while($it->valid()){
+        while ($it->valid()) {
             $key = isset($i) ? $i++ : $it->key();
             $order == self::AFTER && $result[$key] = $it->current();
-            if($position == $it->key()){
-                foreach($array as $k=>$value){
+            if ($position == $it->key()) {
+                foreach ($array as $k => $value) {
                     $k = isset($i) ? $i++ : $k;
                     $result[$k] = $value;
                 }
@@ -239,6 +243,7 @@ class Core_ArrayObject extends ArrayObject {
         }
         $this->exchangeArray($result);
     }
+
     /**
      * Slice a piece of iterable
      * 
@@ -278,22 +283,23 @@ class Core_ArrayObject extends ArrayObject {
     public function __toString() {
         return implode("\n", $this->getArrayCopy());
     }
-    
+
     /**
      * Render object
      * 
      * @return string
      */
-    public function render(){
+    public function render() {
         return $this->toString();
     }
+
     /**
      * 
      * 
      * @param int $position 
      */
-    public function show($position = 0,$where = 0){
-        $position ? inject('content',$this->render(),$position,$where) : append('content',$this->render());
+    public function show($position = 0, $where = 0) {
+        $position ? inject('content', $this->render(), $position, $where) : append('content', $this->render());
     }
 
     /**
