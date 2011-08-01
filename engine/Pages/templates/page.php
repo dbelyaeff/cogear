@@ -14,7 +14,7 @@
     </div>
     <div class="page-info">
         <? $info = new Stack('Page.info');
-           $info->object($item);
+           $info->attach($item);
            $info->created_date = '<span class="created_date">' . df($item->created_date) . '</span>' ?>
         <?
         $user = new User_Object($item->aid);

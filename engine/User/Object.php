@@ -69,7 +69,7 @@ class User_Object extends Db_Item {
     public function store($data = NULL) {
         $cogear = getInstance();
         $data OR $data = $cogear->session->user;
-        $this->object($data);
+        $this->attach($data);
         $cogear->session->user = $this->object;
     }
     
@@ -210,8 +210,8 @@ class User_Object extends Db_Item {
     public function getAvatar(){
         if(!($this->avatar instanceof User_Avatar)){
             $this->avatar = new User_Avatar($this->avatar);
-            $this->avatar->object($this);
         }
+        $this->avatar->object OR $this->avatar->attach($this);
         return $this->avatar;
     }
     /**
@@ -233,6 +233,6 @@ class User_Object extends Db_Item {
      * Get user upload directory
      */
     public function dir(){
-        return UPLOADS.DS.'users'.DS.$this->id.DS;
+        return UPLOADS.DS.'users'.DS.$this->id;
     }
 }

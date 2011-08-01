@@ -83,7 +83,7 @@ class Pages_Gear extends Gear {
                 $form = new Form('Pages.createdit');
                 if ($result = $form->result()) {
                     $page = new Pages_Object();
-                    $page->object($result);
+                    $page->attach($result);
                     $page->aid = cogear()->user->id;
                     $page->created_date = time();
                     $page->last_update = time();
@@ -106,13 +106,13 @@ class Pages_Gear extends Gear {
                         if (access('pages delete')) {
                             $form->addElement('delete', array('label' => t('Delete'), 'type' => 'submit'));
                         }
-                        $form->setValues($page->object());
+                        $form->setValues($page->object);
                         if ($result = $form->result()) {
                             if ($result->delete) {
                                 $page->delete();
                                 redirect(Url::gear('pages'));
                             }
-                            $page->object()->mix($result);
+                            $page->object->mix($result);
                             $page->last_update = time();
                             $page->update();
                             $link = $page->getUrl();

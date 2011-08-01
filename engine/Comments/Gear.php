@@ -46,7 +46,7 @@ class Comments_Gear extends Gear {
      * @param object $Stack 
      */
     public function extendPageInfo($Stack) {
-        $Stack->object()->allow_comments && $Stack->comments = icon('comments') . ' ' . HTML::a($Stack->object()->getUrl() . '#comments', $Stack->object()->comments);
+        $Stack->object->allow_comments && $Stack->comments = icon('comments') . ' ' . HTML::a($Stack->object->getUrl() . '#comments', $Stack->object->comments);
     }
 
     /**

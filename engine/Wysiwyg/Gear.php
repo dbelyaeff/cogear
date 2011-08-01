@@ -52,7 +52,7 @@ class Wysiwyg_Gear extends Gear {
         $options->editor = config('wysiwyg.editor');
         $form->init();
         $form->elements->type->setValues(self::$editors);
-        $form->object($options);
+        $form->attach($options);
         if($result = $form->result()){
             if(isset(self::$editors[$result['type']])){
                 cogear()->set('wysiwyg.editor', $result['type']);

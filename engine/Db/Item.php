@@ -12,7 +12,7 @@ class Db_Item extends Db_ORM implements Interface_Render {
             $class = $this->reflection->getName();
             foreach ($result as $key => $value) {
                 $item = new $class($this->table);
-                $item->object($value);
+                $item->attach($value);
                 $result->$key = $item;
             }
         }

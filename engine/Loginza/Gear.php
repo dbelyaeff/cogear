@@ -112,7 +112,7 @@ class Loginza_Gear extends Gear {
             'type' => 'div',
             'value' => t('<p>There you can attach social accounts to integrate with your profile. It will help you for quick login.</p>'),
         );
-        if ($connected_accounts = $this->db->where('uid', $Form->object()->id)->get('users_loginza')->result()) {
+        if ($connected_accounts = $this->db->where('uid', $Form->object->id)->get('users_loginza')->result()) {
             $tpl = new Template('Loginza.accounts');
             $tpl->accounts = $connected_accounts;
             $data['loginza_accounts'] = array(
@@ -189,7 +189,7 @@ class Loginza_Gear extends Gear {
             }
             // If user is a guest he has to login or even to register
             else {
-                // Record found → try to log in
+                // Record found в†’ try to log in
                 if ($user->find()) {
                     $search = new User_Object();
                     $search->id = $user->uid;
@@ -204,7 +204,7 @@ class Loginza_Gear extends Gear {
                     // Important! Do not uncomment!
                     //back();
                 }
-                // If record wasn't found → register user with special data
+                // If record wasn't found в†’ register user with special data
                 else {
                     if (!access('user register')) {
                         return info('You don\'t have an access to registration');
@@ -221,7 +221,7 @@ class Loginza_Gear extends Gear {
                     isset($loginza->email) && $data['email'] = $loginza->email;
                     $form->setValues($data);
                     if ($data = $form->result()) {
-                        $this->user->object($data);
+                        $this->user->attach($data);
                         $this->user->hashPassword();
                         if ($uid = $this->user->save()) {
                             // Create new database record

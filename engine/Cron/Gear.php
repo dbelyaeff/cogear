@@ -76,7 +76,7 @@ class Cron_Gear extends Gear {
                     $task->last_exec = $now;
                     $task->save();
                 } elseif ($now - $task->last_exec > $task->period) {
-                    $cron_task->object($task);
+                    $cron_task->attach($task);
                     $cron_task->run();
                 }
             }

@@ -131,9 +131,12 @@ class Form_Object extends Object {
      * 
      * @param object $data 
      */
-    public function object($data = NULL) {
+    public function attach($data = NULL) {
         $data && $this->setValues($data);
-        return parent::object($data);
+        parent::attach($data);
+        event('form.attach',$this);
+        event('form.'.$this->name.'.attach',$this);
+        $this->init();
     }
 
     /**
@@ -142,9 +145,8 @@ class Form_Object extends Object {
      * @param array $data 
      */
     public function setValues($data) {
-        $this->init();
         foreach ($data as $key => $value) {
-            $this->elements->$key && $this->elements->$key->setValue($value);
+            $this->elements->$key && $this->elements->$key->value = $value;
         }
     }
 

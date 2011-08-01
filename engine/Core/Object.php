@@ -11,7 +11,7 @@
  * @version		$Id$
  */
 abstract class Object extends Options {
-    protected $object;
+    public $object;
     /**
      * Constructor
      * 
@@ -22,11 +22,11 @@ abstract class Object extends Options {
         $this->object = new Core_ArrayObject();
     }
     /**
-     * Get or Set current object
+     * Set current object
      *
      * @param array|ArrayObject $data
      */
-    public function object($data = NULL){
-        return $data ? (!is_object($data) ? $this->object->adopt($data) : $this->object = $data) : $this->object;
+    public function attach($data){
+        $this->object = is_object($data) ? $data : Core_ArrayObject::transform($data);
     }
 }

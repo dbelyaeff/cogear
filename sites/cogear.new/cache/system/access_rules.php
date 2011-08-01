@@ -9,6 +9,7 @@ return array (
      'user_edit_realname' => true,
      'user edit_login' => true,
      'users delete_all' => true,
+     'pages edit_all' => true,
   )),
   'ttl' => NULL,
   'tags' => 

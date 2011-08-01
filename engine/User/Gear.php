@@ -204,7 +204,7 @@ class User_Gear extends Gear {
         $user->find();
         $form = new Form('User.profile');
         $user->password = '';
-        $form->object($user->object());
+        $form->attach($user->object);
         if ($form->elements->avatar->is_ajaxed && Ajax::get('action') == 'replace') {
             $user->avatar = '';
             $user->update();
@@ -229,7 +229,7 @@ class User_Gear extends Gear {
                 flash_success(t('User data saved!'), t('Success'));
                 d();
                 if ($user->id == $this->id) {
-                    $this->store($user->object()->toArray());
+                    $this->store($user->object->toArray());
                 }
                 redirect(Url::gear('user') . $user->login);
             }
@@ -246,7 +246,7 @@ class User_Gear extends Gear {
         }
         $form = new Form('User.login');
         if ($data = $form->result()) {
-            $this->object($data);
+            $this->attach($data);
             $this->hashPassword();
             if ($this->find()) {
                 $data->saveme && $this->remember();
@@ -273,7 +273,7 @@ class User_Gear extends Gear {
     public function lostpassword_action() {
         $form = new Form('User.lostpassword');
         if ($data = $form->result()) {
-            $this->object($data);
+            $this->attach($data);
             if ($this->find()) {
 
                 back();
@@ -296,7 +296,7 @@ class User_Gear extends Gear {
         }
         $form = new Form('User.register');
         if ($data = $form->result()) {
-            $this->object($data);
+            $this->attach($data);
             $this->role = config('user.default.user_group',100);
             $this->hashPassword();
             $this->save();
@@ -359,7 +359,7 @@ class User_Gear extends Gear {
         $form = new Form('User.register');
         if ($data = $form->result()) {
             $user = new User_Object(FALSE);
-            $user->object($data);
+            $user->attach($data);
             $user->hashPassword();
             $user->save();
             info('User was successfully registered!', 'Registration succeed.');
