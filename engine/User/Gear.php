@@ -53,8 +53,8 @@ class User_Gear extends Gear {
                 }
                 break;
             case 'admin':
-                $menu->{Url::gear('admin').'user'} = t('Users');
-                $menu->{Url::gear('admin').'user'}->order = 100;
+                $menu->{'user'} = t('Users');
+                $menu->{'user'}->order = 100;
                 break;
             case 'tabs_admin_user':
                 $menu->{'/'} = t('List');
