@@ -366,10 +366,10 @@ final class Cogear implements Interface_Singleton {
      */
     public static function pathToGear($path) {
         $paths = array(
-            'site' => SITE . DS . GEARS_FOLDER,
-            'gears' => GEARS,
+            'site' => SITE . DS . GEARS_FOLDER. DS,
+            'gears' => GEARS . DS,
             'engine' => ENGINE . DS,
-            'alt_engine' => ENGINE . DS . 'Core',
+            'alt_engine' => ENGINE . DS . 'Core' . DS,
         );
         foreach ($paths as $explicit_path) {
             if (strpos($path, $explicit_path) !== FALSE) {
