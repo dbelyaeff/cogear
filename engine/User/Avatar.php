@@ -11,18 +11,16 @@
  * @subpackage
  * @version		$Id$
  */
-class User_Avatar extends Object{
+class User_Avatar extends Core_Object{
 
     protected $file;
-    protected $user;
-
     /**
      * Constructor
      * 
      * @param string $file 
      */
     public function __construct($file = NULL) {
-        $this->file = $file && file_exists(UPLOADS . DS . $file) ? $file : config('user.default_avatar', 'avatars/0/avatar.png');
+        $this->file = $file && file_exists(UPLOADS . DS . $file) ? $file : config('user.avatar.default', 'avatars/0/avatar.png');
     }
 
     /**

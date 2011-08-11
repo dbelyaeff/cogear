@@ -11,7 +11,7 @@
  * @subpackage
  * @version		$Id$
  */
-class Db_ORM extends Object {
+class Db_ORM extends Core_Object {
 
     /**
      * Table name

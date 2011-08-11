@@ -11,7 +11,7 @@
  * @subpackage
  * @version		$Id$
  */
-class Form_Object extends Object {
+class Form_Object extends Core_Object {
 
     protected $name;
     protected $prefix = 'form';

@@ -38,7 +38,16 @@ class Core_ArrayObject extends ArrayObject {
         }
         return $object;
     }
-
+    /**
+     * Before serialization method
+     */
+    public function __sleep() {
+    }
+    /**
+     * Unserialization method
+     */
+    public function __invoke(){
+    }
     /**
      * Transform any array into self object recursively.
      * If argument is Zend_Config object it will be transformed into array.

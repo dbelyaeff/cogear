@@ -11,7 +11,7 @@
  * @subpackage
  * @version		$Id$
  */
-class Stack extends Object {
+class Stack extends Core_Object {
 
     /**
      * Stack name

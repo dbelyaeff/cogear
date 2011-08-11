@@ -67,5 +67,4 @@ abstract class Options extends Core_ArrayObject {
     public function __get($name) {
         return isset($this->$name) ? $this->$name : parent::__get($name);
     }
-
 }

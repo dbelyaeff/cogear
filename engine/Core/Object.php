@@ -10,8 +10,8 @@
  * @subpackage
  * @version		$Id$
  */
-abstract class Object extends Options {
-    protected $object;
+abstract class Core_Object extends Options {
+    public $object;
     /**
      * Constructor
      * 

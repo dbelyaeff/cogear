@@ -219,7 +219,7 @@ class Session implements Interface_Factory {
             foreach ($name as $key => $val) {
                 $this->set($key, $val);
             }
-        }
+        } 
     }
 
     /**
