@@ -25,7 +25,18 @@ class Core_ArrayObject extends ArrayObject {
     public function __construct($data = array()) {
         parent::__construct($data, parent::ARRAY_AS_PROPS & parent::STD_PROP_LIST);
     }
-
+    /**
+     * Sleep
+     */
+    public function __sleep() {
+        
+    }
+    /**
+     * Invoke
+     */
+    public function __invoke() {
+        
+    }
     /**
      * Wake from serialization
      *
