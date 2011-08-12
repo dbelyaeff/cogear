@@ -56,7 +56,7 @@ class User_Object extends Db_Item {
         } elseif ($id = Cookie::get('id') && $hash = Cookie::get('hash')) {
             $this->id = $id;
             if ($this->find() && $this->genHash() == $hash) {
-                $this->store();
+                $this->store($this->object);
                 return TRUE;
             }
         }
@@ -115,7 +115,7 @@ class User_Object extends Db_Item {
      */
     public function isLogged() {
         $cogear = getInstance();
-        return $cogear->session->user->id;
+        return $cogear->session->user ? $cogear->session->user->id : NULL;
     }
 
     /**

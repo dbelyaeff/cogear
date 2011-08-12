@@ -161,15 +161,19 @@ class User_Gear extends Gear {
     public function show_action($id = NULL) {
         if ($id) {
             $user = new User_Object();
-            $this->db->where('id',$id);
-            $this->db->or_where('login',$id);
+            $this->db->where('id', $id);
+            $this->db->or_where('login', $id);
             if (!$user->find()) {
                 return _404();
             }
         } else {
             $user = $this->current;
         }
-        $this->renderUserInfo($user);
+        if ($user->id) {
+            $this->renderUserInfo($user);
+        } else {
+            return _404();
+        }
     }
 
     /**
@@ -288,7 +292,7 @@ class User_Gear extends Gear {
      * User registration
      */
     public function register_action() {
-        if (!config('user.register',TRUE)) {
+        if (!config('user.register', TRUE)) {
             return info('Registration is turned off by site admin');
         }
         if ($this->isLogged()) {
@@ -297,7 +301,7 @@ class User_Gear extends Gear {
         $form = new Form('User.register');
         if ($data = $form->result()) {
             $this->attach($data);
-            $this->role = config('user.default.user_group',100);
+            $this->role = config('user.default.user_group', 100);
             $this->hashPassword();
             $this->save();
             info('User was successfully registered! Please, check your email for further instructions.', 'Registration succeed.');
@@ -305,44 +309,47 @@ class User_Gear extends Gear {
         else
             append('content', $form->render());
     }
+
     /**
      * Get user roles
      * 
      * @return  Core_ArrayObject
      */
-    public function getRoles(){
-        if($this->roles){
+    public function getRoles() {
+        if ($this->roles) {
             return $this->roles;
         }
         $this->roles = new Core_ArrayObject(array(
-            0 => 'guest',
-            1 => 'admin',
-            100 => 'user'
-        ));
-        if($extra_groups = $this->system_cache->read('user_roles',TRUE)){
+                    0 => 'guest',
+                    1 => 'admin',
+                    100 => 'user'
+                ));
+        if ($extra_groups = $this->system_cache->read('user_roles', TRUE)) {
             $this->roles->mix($extra_groups);
         }
         return $this->roles;
     }
+
     /**
      * Get translated roles list
      * 
      * @return array
      */
-    public function getRolesList(){
+    public function getRolesList() {
         $roles = array();
-        foreach($this->roles as $id=>$role){
-            $roles[$id] = t($role,'User Roles');
+        foreach ($this->roles as $id => $role) {
+            $roles[$id] = t($role, 'User Roles');
         }
         return $roles;
     }
+
     /**
      * Administrate users
      * 
      * @param string $action 
      */
     public function admin($action = '') {
-        new Menu_Tabs('admin_user', Url::gear('admin').'user');
+        new Menu_Tabs('admin_user', Url::gear('admin') . 'user');
         switch ($action) {
             case 'add':
                 $this->admin_add();
