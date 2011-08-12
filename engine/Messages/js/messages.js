@@ -81,8 +81,8 @@
         },
         repos: function(){
             this.container.css({    
-                width: 450,
-                height: 200,
+//                width: 450,
+//                height: 200,
                 margin: '-100px 0 0 -225px',
                 position: 'absolute',
                 left: '50%',
@@ -113,9 +113,9 @@
         });
     }
     $(document).ready(function(){
-        $('a.msg-close').live('click',function(){
-            $(this).parent().fadeOut();
-        });    
+        $('.msg-close').live('click',function(){
+            $(this).parents(".msg").fadeOut();
+        });
     })
     $.fn.confirm = function(question){
         $target = this;

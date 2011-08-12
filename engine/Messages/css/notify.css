@@ -1,12 +1,15 @@
 .msg{
+    position: relative;
+    clear: both;
+    z-index:9999;
+}
+
+.msg.popup {
 	border: 5px solid #EEEEEE;
     border-radius: 3px;
     background-color: #f9f7f7;
 	color: #000000;
 	padding: 5px;
-    position: relative;
-    clear: both;
-    z-index:9999;
 }
 
 .msg.success{
