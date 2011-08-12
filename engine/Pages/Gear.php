@@ -38,7 +38,7 @@ class Pages_Gear extends Gear {
                     '(?P<id>\d+)',
                     '.+'
                         ), $url), array($this, 'catchPage'), TRUE);
-        allow_role(array('pages create'),100);
+        allow_role(array('pages create'), 100);
     }
 
     /**
@@ -142,8 +142,18 @@ class Pages_Gear extends Gear {
         $grid = new Grid('Pages.my');
         $pages = new Pages_Object();
         $this->db->order('id', 'DESC');
+        $pager = new Pager_Pages(array(
+            'count' => $pages->count(),
+            'current' => $page,
+            'per_page' => config('pages.per_page',2),
+            'base_uri' => Url::gear('pages'),
+            'order' => 1,
+            'ajaxed' => TRUE,
+            'target' => 'content'
+        ));
         $grid->adopt($pages->findAll());
         $grid->show();
+        $pager->show();     
     }
 
     /**
