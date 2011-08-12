@@ -88,7 +88,14 @@ abstract class Db_Driver_Abstract extends Cogearable{
      * @var resource
      */
     protected $connection;
-
+    /**
+     * If this flag is off query elements will be saved after it's execution
+     * 
+     * Useful for count query rows
+     * 
+     * @var boolean 
+     */
+    protected $reset_query_flag = TRUE;
     /**
      * Constructor
      *
@@ -399,7 +406,9 @@ abstract class Db_Driver_Abstract extends Cogearable{
      */
     public function count($table,$field = '*'){
         $this->select('COUNT('.$field.') as count');
+        $this->reset_query_flag = FALSE;
         $row = $this->get($table)->row();
+        $this->reset_query_flag = TRUE;
         return $row->count;
     }
     /**
