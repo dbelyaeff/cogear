@@ -94,6 +94,16 @@ class Url {
         if(!$cogear->$gear) return self::link();
         return self::link($cogear->$gear->base . '/' . trim($suffix, '/'));
     }
+    /**
+     * Extend existins $_GET query
+     * 
+     * @param array $data 
+     * @return  string
+     */
+    public static function extendQuery($data){
+        $_GET = array_merge($_GET,$data);
+        return http_build_query($_GET);
+    }
 
 }
 
