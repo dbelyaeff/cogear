@@ -20,7 +20,7 @@ class Messages_Gear extends Gear {
     protected $name = 'Messages';
     protected $description = 'Handle with messages dialogs and windows.';
     protected $order = 100;
-    protected $template = 'Messages.window';
+    protected $template = 'Messages.notification';
     protected $version = '0.1';
     const INFO = 0;
     const DIALOG = 1;
@@ -79,6 +79,11 @@ class Messages_Gear extends Gear {
         }
         inline_js("$(document).ready(function(){window.Messenger.render()});");
     }
+
+	public function set_template($template)
+	{
+		if($template!="") $this->template = $template;
+	}
 
 }
 
@@ -142,7 +147,8 @@ function flash_info($content=NULL, $title=NULL, $class='info') {
  * @param string $class 
  */
 function error($content=NULL, $title=NULL, $class='error') {
-    $content OR $content = t('Operation failed.');
+    cogear()->messages->set_template("Messages.dialog-close");
+	$content OR $content = t('Operation failed.');
     $title OR $title = t('Failure');
     cogear()->messages->show($content, $title, $class);
 }
