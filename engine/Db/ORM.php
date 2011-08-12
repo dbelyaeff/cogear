@@ -179,6 +179,16 @@ class Db_ORM extends Object {
     }
     
     /**
+     * Count matched elements
+     * 
+     * @return  int
+     */
+    public function count(){
+        $cogear = getInstance();
+        return $cogear->db->count($this->table);
+    }
+    
+    /**
      * Filter data
      * 
      * @param object $data

@@ -48,7 +48,7 @@ class Db_Driver_Mysql extends Db_Driver_Abstract {
         if (!$this->result = mysql_query($query, $this->connection)) {
             $this->silent OR $this->errors[] = mysql_errno();
         }
-        $this->reset_query_flag && $this->clear();
+        $this->clear();
         self::stop($query);
         return $this->errors ? FALSE : $this;
     }

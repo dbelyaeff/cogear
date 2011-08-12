@@ -11,7 +11,7 @@
  * @subpackage          Db
  * @version		$Id$
  */
-abstract class Db_Driver_Abstract extends Cogearable{
+abstract class Db_Driver_Abstract extends Cogearable {
 
     /**
      * Query builder
@@ -33,41 +33,55 @@ abstract class Db_Driver_Abstract extends Cogearable{
         'order' => array(),
         'limit' => array(),
     );
+
+    /**
+     * Swap query
+     * 
+     * @var array
+     */
+    protected $_swap = array();
+
     /**
      * Compiled query
      *
      * @var string
      */
     protected $query;
+
     /**
      * Queries
      *
      * @var array
      */
     public static $queries = array();
+
     /**
      * Result
      *
      * @var object
      */
     protected $result;
+
     /**
      * Database fields
      *
      * @var array
      */
     protected $fields = array();
+
     /**
      * Output errors or not
      * @var boolean
      */
     protected $silent;
+
     /**
      * Errors
      * 
      * @var array
      */
     protected $errors = array();
+
     /**
      * Configuration
      *
@@ -82,12 +96,14 @@ abstract class Db_Driver_Abstract extends Cogearable{
         'prefix' => '',
         'socket' => NULL,
     );
+
     /**
      * Database connection
      *
      * @var resource
      */
     protected $connection;
+
     /**
      * If this flag is off query elements will be saved after it's execution
      * 
@@ -95,19 +111,21 @@ abstract class Db_Driver_Abstract extends Cogearable{
      * 
      * @var boolean 
      */
-    protected $reset_query_flag = TRUE;
+    protected $qr_flag = TRUE;
+
     /**
      * Constructor
      *
      * @param array $config
      */
     public function __construct(array $config) {
-        $this->config = array_merge($this->config,$config);
+        $this->config = array_merge($this->config, $config);
         try {
             $this->open();
         } catch (Db_Exception $e) {
             Message::error($e->getMessage());
         }
+        $this->_swap = $this->_query;
     }
 
     /**
@@ -156,7 +174,7 @@ abstract class Db_Driver_Abstract extends Cogearable{
      *
      * @return Db_Driver_Abstract
      */
-    public function silent(){
+    public function silent() {
         $this->silent = $this->silent ? NULL : TRUE;
         return $this;
     }
@@ -256,6 +274,7 @@ abstract class Db_Driver_Abstract extends Cogearable{
         }
         return $this;
     }
+
     /**
      * OR WHERE subquery
      *
@@ -302,8 +321,8 @@ abstract class Db_Driver_Abstract extends Cogearable{
      * @param   string|array  $name
      * @return object   Self intsance.
      */
-    public function order($name,$type = 'ASC') {
-        $this->addQuery('order', $name.' '.$type);
+    public function order($name, $type = 'ASC') {
+        $this->addQuery('order', $name . ' ' . $type);
         return $this;
     }
 
@@ -398,19 +417,23 @@ abstract class Db_Driver_Abstract extends Cogearable{
         $this->get($table, $limit, $offset);
         return $this;
     }
+
     /**
      * Count rows
      * 
      * @param   string  $table
      * @param   string  $field
      */
-    public function count($table,$field = '*'){
-        $this->select('COUNT('.$field.') as count');
-        $this->reset_query_flag = FALSE;
+    public function count($table, $field = '*', $reset = FALSE) {
+        $this->swap('select');
+        $this->qr_flag = $reset;
+        $this->select('COUNT(' . $field . ') as count');
         $row = $this->get($table)->row();
-        $this->reset_query_flag = TRUE;
+        $this->swap('select');
+        $this->qr_flag = TRUE;
         return $row->count;
     }
+
     /**
      * INSERT statement
      *
@@ -514,15 +537,15 @@ abstract class Db_Driver_Abstract extends Cogearable{
      * @param string $table
      * @return array 
      */
-    public function getFields($table = ''){
+    public function getFields($table = '') {
         $table OR $table = reset($this->_query['from']);
-        if (!$this->fields[$table] = $this->system_cache->read('database/' . $table,TRUE)) {
-            if($fields = $this->getFieldsQuery($table)){
+        if (!$this->fields[$table] = $this->system_cache->read('database/' . $table, TRUE)) {
+            if ($fields = $this->getFieldsQuery($table)) {
                 $this->fields[$table] = array();
                 foreach ($fields as $field) {
                     $this->fields[$table][$field->Field] = $field->Type;
                 }
-                $this->system_cache->write('database/' . $table, $this->fields[$table],array('db.fields'));
+                $this->system_cache->write('database/' . $table, $this->fields[$table], array('db.fields'));
             }
         }
         return $this->fields[$table];
@@ -538,7 +561,7 @@ abstract class Db_Driver_Abstract extends Cogearable{
         $result = array();
         $fields = isset($this->fields[$table]) ? $this->fields[$table] : $this->fields[$table] = $this->getFields($table);
         foreach ($values as $key => $value) {
-            $key = preg_replace('/[^\w_-]/','',$key);
+            $key = preg_replace('/[^\w_-]/', '', $key);
             if (isset($fields[$key])) {
                 $type = preg_replace('/[^a-z]/', '', $fields[$key]);
                 switch ($type) {
@@ -598,25 +621,45 @@ abstract class Db_Driver_Abstract extends Cogearable{
     public function close() {
         $this->disconnect();
     }
+
+    /**
+     * Swap query
+     * 
+     * @param string $type 
+     */
+    public function swap($type = NULL) {
+        if (!$type) {
+            $buffer = $this->_query;
+            $this->_query = $this->_swap;
+            $this->_swap = $buffer;
+        } elseif (isset($this->_query[$type])) {
+            $buffer = $this->_query[$type];
+            $this->_query[$type] = $this->_swap[$type];
+            $this->_swap[$type] = $buffer;
+        }
+    }
+
     /**
      * Clear query
      */
     public function clear() {
-        $this->_query = array(
-            'select' => array(),
-            'insert' => array(),
-            'update' => array(),
-            'delete' => NULL,
-            'from' => array(),
-            'join' => array(),
-            'where' => array(),
-            'or_where' => array(),
-            'where_in' => array(),
-            'group' => array(),
-            'having' => array(),
-            'order' => array(),
-            'limit' => array(),
-        );
+        if ($this->qr_flag) {
+            $this->_query = array(
+                'select' => array(),
+                'insert' => array(),
+                'update' => array(),
+                'delete' => NULL,
+                'from' => array(),
+                'join' => array(),
+                'where' => array(),
+                'or_where' => array(),
+                'where_in' => array(),
+                'group' => array(),
+                'having' => array(),
+                'order' => array(),
+                'limit' => array(),
+            );
+        }
     }
 
     /**
@@ -662,18 +705,20 @@ abstract class Db_Driver_Abstract extends Cogearable{
     public function getQueries() {
         return array_keys(self::$queries);
     }
+
     /**
      * Get queries
      *
      * @return array
      */
-    public function getBenchmark(){
+    public function getBenchmark() {
         $queries = array();
-        foreach(self::$queries as $query=>$time){
+        foreach (self::$queries as $query => $time) {
             $queries[$query] = $time['stop'] - $time['start'];
         }
         return $queries;
     }
+
     public function createTable($table, $fields) {
 //CREATE TABLE IF NOT EXISTS `cron` (
 //  `id` int(3) unsigned NOT NULL AUTO_INCREMENT,
@@ -687,15 +732,15 @@ abstract class Db_Driver_Abstract extends Cogearable{
     }
 
     public function dropTable($table, $if_exists) {
-
+        
     }
 
     public function createFields($fields) {
-
+        
     }
 
     public function alterTable($table, $fields) {
-
+        
     }
 
     public function alterFields($fields) {
