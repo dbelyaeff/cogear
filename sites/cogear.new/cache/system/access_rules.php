@@ -10,6 +10,8 @@ return array (
      'user edit_login' => true,
      'users delete_all' => true,
      'pages edit_all' => true,
+     'pages delete' => true,
+     'pages create' => true,
   )),
   'ttl' => NULL,
   'tags' => 

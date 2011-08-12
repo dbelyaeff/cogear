@@ -2,6 +2,7 @@
 return array (
   'value' => 
   array (
+    'test' => 'Test_Gear',
     'access' => 'Access_Gear',
     'admin' => 'Admin_Gear',
     'ajax' => 'Ajax_Gear',
@@ -24,11 +25,11 @@ return array (
     'messages' => 'Messages_Gear',
     'meta' => 'Meta_Gear',
     'modal' => 'Modal_Gear',
+    'pager' => 'Pager_Gear',
     'pages' => 'Pages_Gear',
     'redactor' => 'Redactor_Gear',
     'secure' => 'Secure_Gear',
     'structure' => 'Structure_Gear',
-    'test' => 'Test_Gear',
     'theme' => 'Theme_Gear',
     'upload' => 'Upload_Gear',
     'user' => 'User_Gear',

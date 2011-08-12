@@ -40,6 +40,7 @@ return array (
     'upload_ajax' => 'Upload_Ajax_Gear',
     'loginza' => 'Loginza_Gear',
     'comments' => 'Comments_Gear',
+    'pager' => 'Pager_Gear',
   ),
   'ttl' => NULL,
 );

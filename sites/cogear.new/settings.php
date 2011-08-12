@@ -1,7 +1,7 @@
 <?php
 return array(
     'database' => array(
-        'dsn' => 'mysqli://root@localhost/cogear',
+        'dsn' => 'mysql://root@localhost/cogear',
     ),
     'permitted_uri_chars' => 'а-яa-z0-9\s_\.',
     'cache' => array(
