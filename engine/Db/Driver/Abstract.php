@@ -397,7 +397,7 @@ abstract class Db_Driver_Abstract extends Cogearable {
      */
     public function get($table, $limit=0, $offset=0) {
         $this->from($table);
-        $this->limit($limit, $offset);
+        $limit && $this->limit($limit, $offset);
         $this->buildQuery();
         $this->query($this->query);
         return $this;
