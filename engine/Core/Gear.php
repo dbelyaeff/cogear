@@ -384,7 +384,7 @@ abstract class Gear extends Cogearable{
      * @return	string  Path without file extension
      */
     public static function preparePath($name, $dir = '', $default = 'index') {
-        if ($pieces = preg_split('#[\s><.-]#', $name, -1, PREG_SPLIT_NO_EMPTY)) {
+        if ($pieces = preg_split('#[\s><.]#', $name, -1, PREG_SPLIT_NO_EMPTY)) {
             if (sizeof($pieces) == 1) {
                 array_push($pieces, $default);
             }
