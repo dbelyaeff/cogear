@@ -40,36 +40,6 @@ class Pages_Object extends Db_Item {
     }
 
     /**
-     * Generate materialized path
-     */
-    private function genPath() {
-        // If parent page id is defined
-        if ($this->pid) {
-            $page = new self();
-            // If parent page is found
-            if ($page->where('id', $this->pid)->find()) {
-                $this->path = $this->makePath($page->id . self::PATH_DELIM . $this->pid);
-            }
-            // Otherwise
-            else {
-                $this->path = $this->makePath($this->id);
-            }
-        } else {
-            $this->path = $this->makePath($this->id);
-        }
-    }
-
-    /**
-     * Make path
-     * 
-     * @param string $path 
-     * @return  string
-     */
-    private function makePath($path) {
-        return str_pad($path, 20, ' ', STR_PAD_LEFT);
-    }
-
-    /**
      * Get url
      * 
      * @return  string
