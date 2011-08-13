@@ -51,6 +51,28 @@ class Messages_Gear extends Gear {
         prepend('content', $tpl->render());
     }
 
+	/*
+	 * Show dialog window
+	 */
+	public function show_dialog_close($content = NULL, $title = NULL, $class='info') {
+		$tpl = new Template("Messages.dialog_close");
+		$tpl->title = $title;
+        $tpl->content = $content;
+        $tpl->class = $class;
+		prepend('content', $tpl->render());
+	}
+
+	/*
+	 * Show dialog window with confirmation
+	 */
+	public function show_dialog_confirmation($content = NULL, $title = NULL, $class='info') {
+		$tpl = new Template("Messages.dialog_confirmation");
+		$tpl->title = $title;
+        $tpl->content = $content;
+        $tpl->class = $class;
+		prepend('content', $tpl->render());
+	}
+
     /**
      * Set flash message
      * 
@@ -147,7 +169,6 @@ function flash_info($content=NULL, $title=NULL, $class='info') {
  */
 function error($content=NULL, $title=NULL, $class='error') {
 	$content OR $content = t('Operation failed.');
-	$title OR $title = t('Failure');
     cogear()->messages->show_notification($content, $title, $class);
 }
 
@@ -162,4 +183,26 @@ function flash_error($content=NULL, $title=NULL, $class='error') {
     $content OR $content = t('Operation failed.');
     $title OR $title = t('Failure');
     cogear()->messages->flash($content, $title, $class);
+}
+
+/**
+ * Show dialog with button 'Close'
+ *
+ * @param string $title
+ * @param string $content
+ * @param string $class
+ */
+function dialog_close($title=NULL, $content=NULL, $class='info') {
+	cogear()->messages->show_dialog_close($content, $title, $class);
+}
+
+/**
+ * Show dialog with buttons 'Ok' and 'Cancel'
+ *
+ * @param string $title
+ * @param string $content
+ * @param string $class
+ */
+function dialog_confirmation($title=NULL, $content=NULL, $class='info') {
+	cogear()->messages->show_dialog_confirmation($content, $title, $class);
 }

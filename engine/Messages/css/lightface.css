@@ -79,6 +79,11 @@
     padding: 5px 10px;
 }
 
+.lightface .lightfaceContent .lightfaceTitle.error{
+	background-color: #E25151 !important;
+    border: 1px solid #660000 !important;
+}
+
 .lightface .lightfaceContent .lightfaceDraggable {
     cursor:move;
 }

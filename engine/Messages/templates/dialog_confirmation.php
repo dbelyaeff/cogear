@@ -21,7 +21,8 @@ $(function() {
 					<?php echo $content?>
 				</div>
 				<div class="lightfaceFooter" style="display: block; ">
-					<input type="button" class="close" value="<?=t("Close");?>">
+					<input type="button" value="<?=t("Ok");?>">
+					<input type="button" class="close" value="<?=t("Cancel");?>">
 				</div>
 			</div>
 		</td><td class="centerRight" style="visibility: visible; zoom: 1; opacity: 0.4; "></td></tr><tr><td class="bottomLeft" style="visibility: visible; zoom: 1; opacity: 0.4; "></td><td class="bottomCenter" style="visibility: visible; zoom: 1; opacity: 0.4; "></td><td class="bottomRight" style="visibility: visible; zoom: 1; opacity: 0.4; "></td>
