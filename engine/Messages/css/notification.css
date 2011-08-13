@@ -56,3 +56,8 @@ div.jGrowl div.info {
 	background-color: #444 !important;
 	color: #FFF;
 }
+
+div.jGrowl div.jGrowl-closer {
+	background-color: #FFF !important;
+	color: #222;
+}
