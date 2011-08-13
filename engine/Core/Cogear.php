@@ -79,7 +79,13 @@ final class Cogear implements Interface_Singleton {
         $this->gears = new Core_ArrayObject();
         $this->events = new Core_ArrayObject();
     }
-
+    
+    /**
+     * After gears are loaded
+     */
+    public function afterLoad(){
+       inline_js('site = "http://'.SITE_URL.'/";','head');
+    }
     /**
      * Clone
      */
@@ -260,6 +266,7 @@ final class Cogear implements Interface_Singleton {
         }
         Template::bindGlobal('cogear', $this);
         event('gears.loaded', $this);
+        $this->afterLoad();
         $this->gears_are_loaded = TRUE;
     }
 
