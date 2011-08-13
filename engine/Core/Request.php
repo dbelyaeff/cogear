@@ -122,7 +122,7 @@ class Request {
      * @return mixed
      */
     public function get($name,$default = '') {
-        return isset($this->name) ? $this->name : (isset($this->server[$name]) ? $this->server[$name] : ($default ? $default : NULL));
+        return isset($this->$name) ? $this->$name : (isset($this->server[$name]) ? $this->server[$name] : ($default ? $default : NULL));
     }
 
     /**

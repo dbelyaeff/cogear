@@ -253,7 +253,7 @@ class Session implements Interface_Factory {
         $cogear = getInstance();
         event('session.init',$this);
         isset($_SESSION['user_agent']) OR $_SESSION['user_agent'] = $cogear->request->getUserAgent();
-        isset($_SESSION['ip_address']) OR $_SESSION['ip'] = $cogear->request->get('ip');
+        $_SESSION['ip'] = $cogear->request->get('ip');
         if(!isset($_SESSION['history'])){
             $_SESSION['history'] = new Core_ArrayObject();
         }
