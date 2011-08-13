@@ -20,7 +20,7 @@ class Messages_Gear extends Gear {
     protected $name = 'Messages';
     protected $description = 'Handle with messages dialogs and windows.';
     protected $order = 100;
-    protected $template = 'Messages.notification';
+    protected $template = 'Messages.notification_jgrowl';
     protected $version = '0.1';
     const INFO = 0;
     const DIALOG = 1;
@@ -34,19 +34,20 @@ class Messages_Gear extends Gear {
     }
 
     /**
-     * Show messages window
+     * Show notification
      * 
      * @param string $content
      * @param string $title
      * @param string $class
-     * @param int $type 
+     * @param int $type
      */
-    public function show($content = NULL, $title = NULL, $class = 'info', $type = NULL) {
+    public function show_notification($content = NULL, $title = NULL, $class = 'info', $type = NULL) {
         $tpl = new Template($this->template);
-        $tpl->title = $title OR t('Info');
+        $tpl->title = $title;
         $tpl->content = $content;
         $tpl->class = $class;
-        $tpl->type = $type ? $type : self::INFO;
+	    $tpl->type = $type ? $type : self::INFO;
+	    if($class=="error") $tpl->sticky = 'true';
         prepend('content', $tpl->render());
     }
 
@@ -96,8 +97,7 @@ class Messages_Gear extends Gear {
  */
 function success($content=NULL, $title=NULL, $class='success') {
     $content OR $content = t('Operation is successfully completed.');
-    $title OR $title = t('Success');
-    cogear()->messages->show($content, $title, $class);
+    cogear()->messages->show_notification($content, $title, $class);
 }
 
 /**
@@ -122,8 +122,7 @@ function flash_success($content=NULL, $title=NULL, $class='success') {
  */
 function info($content=NULL, $title=NULL, $class='info') {
     $content OR $content = t('Please pay attetion to this notification.');
-    $title OR $title = t('Info');
-    cogear()->messages->show($content, $title, $class);
+    cogear()->messages->show_notification($content, $title, $class);
 }
 
 /**
@@ -147,10 +146,9 @@ function flash_info($content=NULL, $title=NULL, $class='info') {
  * @param string $class 
  */
 function error($content=NULL, $title=NULL, $class='error') {
-    cogear()->messages->set_template("Messages.dialog-close");
 	$content OR $content = t('Operation failed.');
-    $title OR $title = t('Failure');
-    cogear()->messages->show($content, $title, $class);
+	$title OR $title = t('Failure');
+    cogear()->messages->show_notification($content, $title, $class);
 }
 
 /**

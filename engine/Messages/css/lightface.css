@@ -20,7 +20,7 @@
 .lightface .centerLeft, .lightface .centerRight {
     width: 10px;
     height: auto;
-    background-image: url(b.png);
+    background-image: url(img/lightface/b.png);
     background-repeat: repeat-y;
 }
 
@@ -31,29 +31,29 @@
 }
 
 .lightface .topLeft {
-    background-image: url(tl.png);
+    background-image: url(img/lightface/tl.png);
     background-position: top left;
 }
 
 .lightface .topRight {
-    background-image: url(tr.png);
+    background-image: url(img/lightface/tr.png);
     background-position: top right;
 }
 
 .lightface .bottomLeft {
-    background-image: url(bl.png);
+    background-image: url(img/lightface/bl.png);
     background-position: bottom left;
 }
 
 .lightface .bottomRight {
-    background-image: url(br.png);
+    background-image: url(img/lightface/br.png);
     background-position: bottom right;
 }
 
 .lightface .topCenter, .lightface .bottomCenter {
     width: auto;
     height: 10px;
-    background-image: url(b.png);
+    background-image: url(img/lightface/b.png);
     background-repeat: repeat-x;
 }
 
@@ -137,7 +137,7 @@
 .lightface .lightfaceFooter label {
     font-size: 13px;
     border-style: solid;
-    background-image:url(button.png);
+    background-image:url(img/lightface/button.png);
     cursor:pointer;
     font-weight:bold;
     padding:2px 6px 2px 6px;
@@ -208,7 +208,7 @@
     background-repeat: no-repeat;
     background-color: #fff;
     */
-    background:url(fbloader.gif) center center no-repeat #fff;
+    background:url(img/lightface/fbloader.gif) center center no-repeat #fff;
 }
 
 .lightface .lightfaceMessageBox {
@@ -221,7 +221,7 @@
 .lightface .lightFaceMessageBoxImage {
     overflow: hidden;
     padding: 0;
-    background:url(fbloader.gif) center center no-repeat #fff;
+    background:url(img/lightface/fbloader.gif) center center no-repeat #fff;
 }
 
 .lightface .lightFaceMessageBoxImage img {
