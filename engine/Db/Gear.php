@@ -62,10 +62,10 @@ class Db_Gear extends Gear {
      * Flush database tables cache
      */
     public function index($action = NULL){
-        if(!access_page('db debug')) return;
+        if(!page_access('db debug')) return;
         switch($action){
             case 'flush':
-                $this->system_cache->removeTags('db.fields');
+                $this->system_cache->removeTags('db_fields');
                 break;
         }
     }

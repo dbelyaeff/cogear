@@ -545,7 +545,7 @@ abstract class Db_Driver_Abstract extends Cogearable {
                 foreach ($fields as $field) {
                     $this->fields[$table][$field->Field] = $field->Type;
                 }
-                $this->system_cache->write('database/' . $table, $this->fields[$table], array('db.fields'));
+                $this->system_cache->write('database/' . $table, $this->fields[$table], array('db_fields'));
             }
         }
         return $this->fields[$table];
