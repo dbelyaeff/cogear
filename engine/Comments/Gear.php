@@ -75,13 +75,16 @@ class Comments_Gear extends Gear {
                 $comment->created_date = time();
                 $comment->body = $result->body;
                 $comment->ip = $this->session->ip;
+                $result->reply && $comment->reply = $result->reply;
                 if ($comment->save()) {
                     $Page->comments = $this->db->where('pid',$Page->id)->count('comments');
                     $Page->save();
                     flash_success(t('Your comment has been successfully posted!'));
-                    redirect($Page->getUrl());
+                    redirect($Page->getUrl().'#'.$comment->id);
                 }
             }
+            $tpl = new Template('Comments.postform-info');
+            append('content',$tpl->render());
             $form->show();
         }
     }
@@ -94,7 +97,6 @@ class Comments_Gear extends Gear {
     public function showComments($Page) {
         $comments = new Comments_Object();
         $this->db->where('pid', $Page->id);
-        $this->db->order('id', 'ASC');
         $grid = new Grid('comments');
         $grid->adopt($comments->findAll());
         $grid->show();
