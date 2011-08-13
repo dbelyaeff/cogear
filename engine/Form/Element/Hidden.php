@@ -10,7 +10,7 @@
  * @subpackage          Form
  * @version		$Id$
  */
-class Form_Element_Password extends Form_Element_Input {
-    protected $type = 'password';
+class Form_Element_Hidden extends Form_Element_Input {
+    protected $type = 'hidden';
 }
 
