@@ -35,6 +35,7 @@ class Form_Object extends Object {
         'text' => 'Form_Element_Input',
         'password' => 'Form_Element_Password',
         'textarea' => 'Form_Element_Textarea',
+        'hidden' => 'Form_Element_Hidden',
         'radio' => 'Form_Element_Radio',
         'checkbox' => 'Form_Element_Checkbox',
         'select' => 'Form_Element_Select',
