@@ -25,28 +25,21 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Table structure for table `comments`
 --
 
+DROP TABLE IF EXISTS `comments`;
 CREATE TABLE IF NOT EXISTS `comments` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `reply` int(11) unsigned NOT NULL,
+  `path` varchar(255) NOT NULL,
+  `level` tinyint(2) NOT NULL,
   `aid` int(11) unsigned NOT NULL,
   `pid` int(11) unsigned NOT NULL,
   `body` text NOT NULL,
   `ip` varchar(15) NOT NULL,
   `created_date` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `comments`
---
 
-INSERT INTO `comments` (`id`, `aid`, `pid`, `body`, `ip`, `created_date`) VALUES
-(5, 1, 8, 'И тебе привет!', '', 0),
-(4, 1, 8, 'Привет, мир!', '', 0),
-(6, 1, 8, 'Всем привет!', '', 0),
-(7, 1, 8, 'Когир — лучше всех! Когир ждет <b>успех</b>!\r\n', '', 0),
-(8, 1, 8, 'Комменты!', '', 1312147667),
-(9, 1, 8, 'Ура!', '', 1312185157),
-(10, 7, 8, 'Ура, и я теперь могу комменты постить!', '', 1312216904);
 
 -- --------------------------------------------------------
 
