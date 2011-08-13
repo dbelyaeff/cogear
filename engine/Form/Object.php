@@ -98,7 +98,7 @@ class Form_Object extends Object {
         if (isset(self::$types[$config->type]) && class_exists(self::$types[$config->type])) {
             $this->elements->$name = new self::$types[$config->type]($config);
         } else {
-            unset($this->elements->$name);
+            $this->elements->offsetUnset($name);
         }
     }
 
