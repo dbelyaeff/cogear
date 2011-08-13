@@ -33,10 +33,9 @@ class Errors_Gear extends Gear {
         error(t('Error in file <b>%s</b> was found at line <b>%d</b>: <blockquote>%s</blockquote>','Errors',$file,$line,$error),t('Error'));
     }
     public function _404(){
-        $this->request();
-        $cogear = getInstance();
-        $cogear->response->header('Status', '404 '. Response::$codes[404]);
-        error(t('Page you are looking for was not found on the server.'),t('Page not found'));
+        $this->response->header('Status', '404 '. Response::$codes[404]);
+        $tpl = new Template('Errors.404');
+        $tpl->show();
     }
 }
 
