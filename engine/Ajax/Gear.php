@@ -22,27 +22,6 @@ class Ajax_Gear extends Gear {
     const PATH = '/';
     
     /**
-     * Init
-     */
-    public function init(){
-        parent::init();
-        hook('after',array($this,'appendAjaxIndicator'));
-    }
-    /**
-     * Append hidden ajax indicator to document body
-     */
-    public function appendAjaxIndicator(){
-        echo self::loader();
-    }
-    /**
-     * Return ajax loader image
-     *  
-     * @return type 
-     */
-    public static function loader(){
-        return HTML::img(cogear()->ajax->folder.'/img/ajax-loader.gif',t('Loading…'),array('class'=>'ajax-indicator','id'=>'ajax-indicator'));
-    }
-    /**
      * Form ajax request via params
      * 
      * @param array $params 

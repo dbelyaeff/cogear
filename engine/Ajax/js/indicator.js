@@ -4,6 +4,9 @@
             'type': 'after'
         }
         $.extend(settings,options);
+        if(!$('#ajax-indicator').length){
+            $('<div/>').attr('id','ajax-indicator').addClass('ajax-indicator').prependTo($('body'));
+        }
         if(this.next().attr('id') == 'ajax-indicator'){
             $('#ajax-indicator').hide().appendTo($('body'));
         }
@@ -12,7 +15,7 @@
         }
     }
     $(document).ready(function(){
-        $('.ajaxed').click(function(){
+        $('.ajaxed').live('click',function(){
             $(this).loading();
         })
     });
