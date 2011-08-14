@@ -143,13 +143,22 @@ class User_Gear extends Gear {
     /**
      * Users list
      */
-    public function users($action = NULL) {
+    public function users($action = NULL,$subaction = NULL) {
         switch ($action) {
             default:
                 $grid = new Grid('users');
                 $users = new User_Object();
+                $this->db->order('id', 'ASC');
+                $pager = new Pager_Pages(array(
+                            'count' => $users->count(),
+                            'current' => $subaction,
+                            'per_page' => config('pages.per_page', 5),
+                            'base_uri' => '/users/page/',
+                            'target' => 'content',
+                        ));
                 $grid->adopt($users->findAll());
                 $grid->show();
+                $pager->show();
         }
     }
 
