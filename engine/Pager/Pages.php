@@ -39,7 +39,7 @@ class Pager_Pages extends Pager_Abstract {
         }
         $this->current OR $this->current = $this->first;
         if ($this->order == self::FORWARD) {
-            $start = $this->current * $this->per_page - 1;
+            $start = $this->per_page*($this->current-1);
             $this->prev = $this->current - 1;
             $this->next = $this->current + 1;
         } else {
