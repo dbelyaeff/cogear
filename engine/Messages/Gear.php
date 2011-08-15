@@ -20,7 +20,7 @@ class Messages_Gear extends Gear {
     protected $name = 'Messages';
     protected $description = 'Handle with messages dialogs and windows.';
     protected $order = 100;
-    protected $template = 'Messages.notification_jgrowl';
+    protected $template = 'Messages.message';
     protected $version = '0.1';
     const INFO = 0;
     const DIALOG = 1;
@@ -41,13 +41,29 @@ class Messages_Gear extends Gear {
      * @param string $class
      * @param int $type
      */
-    public function show_notification($content = NULL, $title = NULL, $class = 'info', $type = NULL) {
-        $tpl = new Template($this->template);
+    public function show_notification($content = NULL, $class = 'info', $type = NULL) {
+        $tpl = new Template("Messages.notification_jgrowl");
+        $tpl->content = $content;
+        $tpl->class = $class;
+	    $tpl->type = $type ? $type : self::INFO;
+//	    if($class=="error") $tpl->sticky = 'true';
+        prepend('content', $tpl->render());
+    }
+
+	/**
+     * Show message
+     *
+     * @param string $content
+     * @param string $title
+     * @param string $class
+     * @param int $type
+     */
+    public function show_message($content = NULL, $title = NULL, $class = 'info', $type = NULL) {
+        $tpl = new Template("Messages.message");
         $tpl->title = $title;
         $tpl->content = $content;
         $tpl->class = $class;
 	    $tpl->type = $type ? $type : self::INFO;
-	    if($class=="error") $tpl->sticky = 'true';
         prepend('content', $tpl->render());
     }
 
@@ -115,11 +131,11 @@ class Messages_Gear extends Gear {
  * 
  * @param string $content
  * @param string $title
- * @param string $class 
  */
-function success($content=NULL, $title=NULL, $class='success') {
-    $content OR $content = t('Operation is successfully completed.');
-    cogear()->messages->show_notification($content, $title, $class);
+function success($content=NULL, $title=NULL) {
+	$class='success';
+	$content OR $content = t('Operation is successfully completed.');
+    cogear()->messages->show_message($content, $title, $class);
 }
 
 /**
@@ -127,7 +143,6 @@ function success($content=NULL, $title=NULL, $class='success') {
  * 
  * @param string $content
  * @param string $title
- * @param string $class 
  */
 function flash_success($content=NULL, $title=NULL, $class='success') {
     $content OR $content = t('Operation is successfully completed.');
@@ -144,7 +159,7 @@ function flash_success($content=NULL, $title=NULL, $class='success') {
  */
 function info($content=NULL, $title=NULL, $class='info') {
     $content OR $content = t('Please pay attetion to this notification.');
-    cogear()->messages->show_notification($content, $title, $class);
+    cogear()->messages->show_message($content, $title, $class);
 }
 
 /**
@@ -167,9 +182,10 @@ function flash_info($content=NULL, $title=NULL, $class='info') {
  * @param string $title
  * @param string $class 
  */
-function error($content=NULL, $title=NULL, $class='error') {
+function error($content=NULL, $title=NULL) {
+	$class='error';
 	$content OR $content = t('Operation failed.');
-    cogear()->messages->show_notification($content, $title, $class);
+    cogear()->messages->show_message($content, $title, $class);
 }
 
 /**
@@ -205,4 +221,16 @@ function dialog_close($title=NULL, $content=NULL, $class='info') {
  */
 function dialog_confirmation($title=NULL, $content=NULL, $class='info') {
 	cogear()->messages->show_dialog_confirmation($content, $title, $class);
+}
+
+/**
+ * Show notification
+ *
+ * @param string $content
+ * @param string $class
+ * @return void
+ */
+function notify($content=NULL, $class="info") {
+	$content OR $content = t('Please pay attetion to this notification.');
+    cogear()->messages->show_notification($content, $class);
 }
