@@ -30,7 +30,26 @@ class Theme_Gear extends Gear {
         if ($favicon = config('theme.favicon')) {
             hook('theme.head.meta.after', array($this, 'renderFavicon'));
         }
+        hook('callback.before',array($this,'catchOutput'),NULL,'start');
+        hook('callback.after',array($this,'catchOutput'),NULL,'finish');
         parent::init();
+    }
+    /**
+     * Catch output
+     * 
+     * @param string $mode 
+     */
+    public function catchOutput($Router,$mode){
+        switch($mode){
+            case 'start':
+            default:
+                ob_start();
+                break;
+            case 'finish':
+                append('content', ob_get_contents());
+                ob_end_clean();
+                break;
+        }
     }
 
     /**
