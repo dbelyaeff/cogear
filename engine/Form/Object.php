@@ -38,6 +38,7 @@ class Form_Object extends Object {
         'radio' => 'Form_Element_Radio',
         'checkbox' => 'Form_Element_Checkbox',
         'select' => 'Form_Element_Select',
+        'hidden' => 'Form_Element_Hidden',
         'submit' => 'Form_Element_Submit',
         'button' => 'Form_Element_Button',
         'file' => 'Form_Element_File',
