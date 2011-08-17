@@ -67,8 +67,8 @@ class User_Object extends Db_Item {
     /**
      * Store — save user to session
      */
-    public function store() {
-        cogear()->session->user = $this->object;
+    public function store($data = array()) {
+        cogear()->session->user = $data ? Core_ArrayObject::transform($data) : $this->object;
         return TRUE;
     }
 
