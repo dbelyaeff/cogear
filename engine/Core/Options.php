@@ -35,7 +35,7 @@ abstract class Options extends Core_ArrayObject {
                 $this->$key = $value;
             }
         } else {
-            $this->set($options);
+            $this->setOption($options);
         }
     }
 
@@ -45,7 +45,7 @@ abstract class Options extends Core_ArrayObject {
      * @param array|ArrayObject $name
      * @param string $value
      */
-    public function set($name, $value = NULL) {
+    public function setOption($name, $value = NULL) {
         if (!$name)
             return;
         if (is_array($name) OR $name instanceof ArrayObject) {
