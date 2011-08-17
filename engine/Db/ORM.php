@@ -26,12 +26,6 @@ class Db_ORM extends Object {
      */
     protected $primary;
     /**
-     * Reflection object
-     * 
-     * @var object 
-     */
-    protected $refleciton;
-    /**
      * Fields
      *
      * @var array
@@ -58,6 +52,7 @@ class Db_ORM extends Object {
      * @var array
      */
     protected $filters_out = array();
+    protected $reflection;
     const FILTER_IN = 0;
     const FILTER_OUT = 1;
 
