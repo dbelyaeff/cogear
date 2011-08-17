@@ -9,6 +9,13 @@ return array(
         'enabled' => TRUE,
         'path' => SITE . DS . 'cache',
     ),
+    'session' => array(
+        'adapter' => 'Session_Adapter_File',
+        'enabled' => TRUE,
+        'path' => SITE.DS.'cache'.DS.'sessions',
+        'use_cookies' => 'on',
+        'session_expire' => 86400,
+    ),
     // Secret key
     'key' => 'asdlmk1;2u3192y23uhsdhhabgkjahsdgkjghasd',
     'development' => TRUE,
