@@ -56,6 +56,7 @@ class Session_Object extends Cache_Object {
         'hash_function' => NULL,
         'hash_bits_per_character' => NULL
     );
+	private $options;
     const HISTORY_STEPS = 10;
 
     /**
@@ -67,18 +68,19 @@ class Session_Object extends Cache_Object {
         hook('exit', array($this, 'close'));
         $this->name = $name;
         $this->options = config('session');
+		$this->options->name = $this->name;
         $this->options->save_path = $this->options->path;
         $this->options->cookie_domain = '.' . SITE_URL;
         foreach (self::$iniOptions as $key => $option) {
             if ($this->options->$key) {
                 if ($value = $this->options[$key] ? $this->options[$key] : $option) {
-                    @ini_set('session.' . $key, $value);
-                }
+                    ini_set('session.' . $key, $value);
+			    }
+                $option && ini_set('session.' . $key, $option);
             } else {
-                $option && @ini_set('session.' . $key, $option);
             }
         }
-        parent::__construct($this->options);
+		parent::__construct($this->options);
         $this->setHandler();
         $this->run();
     }
@@ -96,9 +98,12 @@ class Session_Object extends Cache_Object {
      */
     private function run() {
         session_name($this->name);
-        session_start();
+		if(empty($_SESSION)){
+			session_start();
+		}
         $session_id_ttl = $this->options['session_expire'];
         $this->init();
+
         // check if session id needs regeneration
         if ($this->sessionIdExpired()) {
             // regenerate session id (session data stays the
