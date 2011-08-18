@@ -12,8 +12,11 @@
  * @version		$Id$
  */
 class User_Object extends Db_Item {
+
     public $dir;
     protected $template = 'User.list';
+    public  $avatar;
+
     /**
      * Constructor
      * 
@@ -21,8 +24,8 @@ class User_Object extends Db_Item {
      */
     public function __construct($id = NULL) {
         parent::__construct('users');
-        if($id){
-            cogear()->db->where('id',$id);
+        if ($id) {
+            cogear()->db->where('id', $id);
             $this->find();
         }
     }
@@ -34,14 +37,12 @@ class User_Object extends Db_Item {
         if ($this->autologin()) {
             event('user.autologin', $this);
             $this->dir = $this->dir();
+            $this->avatar = $this->getAvatar();
         }
         // Set data for guest
         else {
-            $this->object(array(
-                'id' => 0,
-                'user_group' => 0,
-            ));
-            $this->store();
+            $this->id = 0;
+            $this->role = 0;
         }
     }
 
@@ -51,12 +52,12 @@ class User_Object extends Db_Item {
     public function autologin() {
         $cogear = getInstance();
         if ($cogear->session->user) {
-            $this->store();
+            $this->attach($cogear->session->user);
             return TRUE;
         } elseif ($id = Cookie::get('id') && $hash = Cookie::get('hash')) {
             $this->id = $id;
             if ($this->find() && $this->genHash() == $hash) {
-                $this->store($this->object);
+                $this->store();
                 return TRUE;
             }
         }
@@ -66,21 +67,16 @@ class User_Object extends Db_Item {
     /**
      * Store — save user to session
      */
-    public function store($data = NULL) {
-        $cogear = getInstance();
-        $data OR $data = $cogear->session->user;
-        $this->attach($data);
-        $cogear->session->user = $this->object;
+    public function store($data = array()) {
+        cogear()->session->user = $data ? Core_ArrayObject::transform($data) : $this->object;
+        return TRUE;
     }
-    
+
     /**
      * Activate user
      */
     public function login() {
-        if (!$this->object)
-            return;
-        $cogear = getInstance();
-        $cogear->session->user = $this->object;
+        return $this->find() && $this->store();
     }
 
     /**
@@ -92,9 +88,7 @@ class User_Object extends Db_Item {
     public function forceLogin($value, $param = 'login') {
         $this->clear();
         $this->where($param, $value);
-        if ($this->find()) {
-            $this->login();
-        }
+        return $this->login();
     }
 
     /**
@@ -114,8 +108,7 @@ class User_Object extends Db_Item {
      * @return boolean
      */
     public function isLogged() {
-        $cogear = getInstance();
-        return $cogear->session->user ? $cogear->session->user->id : NULL;
+        return cogear()->session->user;
     }
 
     /**
@@ -170,50 +163,56 @@ class User_Object extends Db_Item {
         }
         return NULL;
     }
+
     /**
      * Get user profile link
      */
-    public function getProfileLink(){
-        if($this->id){
-            return Url::gear('user').$this->login;
+    public function getProfileLink() {
+        if ($this->id) {
+            return Url::gear('user') . $this->login;
         }
         return NULL;
     }
+
     /**
      * Get HTML link to user profile
      */
-    public function getLink(){
-        return HTML::a($this->getProfileLink(),$this->login);
+    public function getLink() {
+        return HTML::a($this->getProfileLink(), $this->login);
     }
+
     /**
      * Get HTML image avatar
      *  
      * @param string $preset
      * @return string 
      */
-    public function getAvatarImage($preset = 'avatar.small'){
-        return HTML::img(image_preset($preset,$this->getAvatar()->getFile(),TRUE),$this->login,array('class'=>'avatar'));
+    public function getAvatarImage($preset = 'avatar.small') {
+        return HTML::img(image_preset($preset, $this->getAvatar()->getFile(), TRUE), $this->login, array('class' => 'avatar'));
     }
+
     /**
      * Get HTML avatar linked to profile
      * 
      * @return string
      */
-    public function getAvatarLinked(){
-        return HTML::a($this->getProfileLink(),$this->getAvatarImage());
+    public function getAvatarLinked() {
+        return HTML::a($this->getProfileLink(), $this->getAvatarImage());
     }
+
     /**
      * Get user avatar
      * 
      * @return  User_Avatar
      */
-    public function getAvatar(){
-        if(!($this->avatar instanceof User_Avatar)){
-            $this->avatar = new User_Avatar($this->avatar);
+    public function getAvatar() {
+        if (!($this->avatar instanceof User_Avatar)) {
+            $this->avatar = new User_Avatar($this->object->avatar);
         }
-        $this->avatar->object OR $this->avatar->attach($this);
+        $this->avatar->attach($this);
         return $this->avatar;
     }
+
     /**
      * Get user panel — for profile and other pages
      * 
@@ -223,16 +222,18 @@ class User_Object extends Db_Item {
         $cogear = getInstance();
         $panel = new Stack('user.panel');
         $panel->avatar = $this->getAvatar();
-        $panel->login = HTML::a($this->getProfileLink(), $this->login, array('class'=>'implicit login'));
+        $panel->login = HTML::a($this->getProfileLink(), $this->login, array('class' => 'implicit login'));
         if (access('user edit_all') OR $this->id == $cogear->user->id) {
-            $panel->edit = HTML::a(Url::gear('user') . 'edit/'.$this->id, t('[edit]'),array('class'=>'edit'));
+            $panel->edit = HTML::a(Url::gear('user') . 'edit/' . $this->id, t('[edit]'), array('class' => 'edit'));
         }
         return $panel->render();
     }
+
     /**
      * Get user upload directory
      */
-    public function dir(){
-        return UPLOADS.DS.'users'.DS.$this->id;
+    public function dir() {
+        return UPLOADS . DS . 'users' . DS . $this->id;
     }
+
 }
