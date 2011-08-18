@@ -1,0 +1,39 @@
+#robo-video, #robo-ipcam{
+    width: 100%;
+    height: 400px;
+    background: #FEFEFE;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    position: relative;
+}
+#robo-controls ul{
+    margin: 10px 0;
+    padding: 0 0 0 20px;
+}
+#robo-controls ul li{
+    float: left;
+    list-style: none;
+    padding: 5px;
+    margin: 0;
+}
+#robo-controls ul li a {
+    color: #454545;
+    text-decoration: none;
+    font-weight: bold;
+    text-shadow: 1px 1px 0px #F9F9F9;
+}
+#robo-controls ul li a:hover{
+    text-shadow: 1px 1px 5px #0a8fff;
+}
+#robo-ipcam{
+    height: 200px;
+}
+#robo-video h1,
+#robo-ipcam h1{
+    color: #e5e6e4;
+    font: 3em 'Century Gothic';
+    font-weight: bold;
+    text-align: center;
+    margin-top: 25%;
+    text-shadow: 1px 1px 1px #0a8fff;
+}

@@ -125,7 +125,7 @@ class Access_Gear extends Gear {
      * @param   int $uid
      * @param   array   $rights
      */
-    public function addUserRights($rights, $uid=NULL) {
+    public function addUserRights($rights, $uid=NULL, $refresh = TRUE) {
         $uid OR $uid = $this->user->id;
         !is_array($rights) && $rights = (array) $rights;
         $access = $this->getUserRights($uid) OR $access = new Core_ArrayObject();
@@ -134,7 +134,7 @@ class Access_Gear extends Gear {
                 $access->offsetSet($right, TRUE);
             }
         }
-        $this->system_cache->write('access/users/' . $uid, $access);
+        $refresh && $this->system_cache->write('access/users/' . $uid, $access);
     }
 
     /**
@@ -170,8 +170,9 @@ class Access_Gear extends Gear {
      * 
      * @param   int $role
      * @param   array   $rights
+     * @param   boolean $refresh
      */
-    public function addRoleRights($rights, $role=NULL) {
+    public function addRoleRights($rights, $role=NULL, $refresh = TRUE) {
         $role OR $role = $this->user->role;
         !is_array($rights) && $rights = (array) $rights;
         if (!$this->roles->$role) {
@@ -180,7 +181,7 @@ class Access_Gear extends Gear {
         foreach ($rights as $right) {
             $this->roles->$role->offsetExists($right) OR $this->roles->$role->offsetSet($right, TRUE);
         }
-        $this->refresh_flag = TRUE;
+        $this->refresh_flag = $refresh;
     }
 
     /**
