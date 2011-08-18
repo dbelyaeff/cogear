@@ -63,7 +63,7 @@ class Robo_Gear extends Gear {
             case 'command':
                 // Check user for access rights
                 $response = $this->adapter->command($command);
-                Ajax::response($response);
+                Ajax::json($response);
                 break;
             default:
                 $tpl = new Template('Robo.ip_cam');

@@ -1,6 +1,5 @@
 <div id="robo" class="grid_8 alpha">
     <div id="robo-video">
-        <h1>Video</h1>
         <?= $video ?>
     </div>
     <?if(access('Robo control')):?>

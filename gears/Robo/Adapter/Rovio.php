@@ -66,18 +66,22 @@ class Robo_Adapter_Rovio extends Robo_Adapter_Abstract{
      * @param string $cmd 
      */
     public function sendCommand($action,$drive=NULL,$speed = NULL,$cmd = 'nav'){
+        $query['Cmd'] = $cmd;
         $query['action'] = $action;
         $drive && $query['drive'] = $drive;
         ($speed OR $speed = config('robo.adapter.speed','1')) && $query['speed'] = $speed;
-        $query['cmd'] = $cmd;
-        $request = 'http://'.$this->ip.'/'.$this->control_uri.'?'.http_build_query($query);
-        return $response = file_get_contents($request);
+        $url =  parse_url($this->ip);   
+        $host = 'http://'.$url['host'].'/'.$this->control_uri;
+        $options = array();
+        isset($url['port']) && $options['port'] = $url['port'];
+        $curl = new Curl($options);
+        return $curl->post($host,$query);
     }
     /**
      * Get video stream from robot
      */
     public function getVideoStream(){
-        return '';
+        return HTML::img('http://' .$this->ip.'/GetData.cgi','',array('width'=>480));
     }
     /**
      * Render robo interface
