@@ -143,13 +143,22 @@ class User_Gear extends Gear {
     /**
      * Users list
      */
-    public function users($action = NULL) {
+    public function users($action = NULL, $subaction = NULL) {
         switch ($action) {
             default:
                 $grid = new Grid('users');
                 $users = new User_Object();
+                $this->db->order('id', 'ASC');
+                $pager = new Pager_Pages(array(
+                            'count' => $users->count(),
+                            'current' => $subaction,
+                            'per_page' => config('pages.per_page', 5),
+                            'base_uri' => '/users/page/',
+                            'target' => 'content',
+                        ));
                 $grid->adopt($users->findAll());
                 $grid->show();
+                $pager->show();
         }
     }
 
@@ -238,7 +247,7 @@ class User_Gear extends Gear {
                 redirect(Url::gear('user') . $user->login);
             }
         }
-        append('content', $form->render());
+        $form->show();
     }
 
     /**
@@ -252,15 +261,14 @@ class User_Gear extends Gear {
         if ($data = $form->result()) {
             $this->attach($data);
             $this->hashPassword();
-            if ($this->find()) {
+            if ($this->login()) {
                 $data->saveme && $this->remember();
-                $this->login();
                 redirect(Url::gear('user'));
             } else {
                 error('Login or password weren\'t found in the database', 'Authentification error');
             }
         }
-        append('content', $form->render());
+        $form->show();
     }
 
     /**
@@ -285,7 +293,7 @@ class User_Gear extends Gear {
                 error('Login or password weren\'t found in the database', 'Authentification error');
             }
         }
-        append('content', $form->render());
+        $form->show();
     }
 
     /**
@@ -307,7 +315,7 @@ class User_Gear extends Gear {
             info('User was successfully registered! Please, check your email for further instructions.', 'Registration succeed.');
         }
         else
-            append('content', $form->render());
+           $form->show();
     }
 
     /**
@@ -372,7 +380,7 @@ class User_Gear extends Gear {
             info('User was successfully registered!', 'Registration succeed.');
         }
         else
-            append('content', $form->render());
+            $form->show();
     }
 
 }
