@@ -26,6 +26,6 @@ class User_Validate_Email extends Form_Validate_Abstract{
         }        
         $user = new Db_ORM('users');
         $user->email = $value;
-        return $user->find() && $this->element->addError(t('Email is already taken!')) ? FALSE : TRUE;
+        return !($user->find() && $this->element->addError(t('Email is already taken!'))) ? FALSE : TRUE;
     }
 }
