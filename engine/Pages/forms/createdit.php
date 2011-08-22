@@ -6,7 +6,7 @@ return array(
         'name' => array(
             'type' => 'text',
             'label' => t('Name'),
-            'description' => t('Provide name of the page.'),
+            'description' => t('Provide title of the page.'),
             'validators' => array(array('Length', 3), 'Required'),
         ),
         'body' => array(
