@@ -26,6 +26,9 @@ class User_Validate_Login extends Form_Validate_Abstract{
         }        
         $user = new Db_ORM('users');
         $user->login = $value;
-        return !($user->find() && $this->element->addError(t('Login is already taken!'))) ? FALSE : TRUE;
+        
+	    $finded = (boolean) $user->find();
+        if ($finded) $this->element->addError(t('Email is already taken!'));
+        return !$finded;
     }
 }
