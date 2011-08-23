@@ -5,7 +5,7 @@ return array(
     'elements' => array(
         'name' => array(
             'type' => 'text',
-            'label' => t('Name'),
+            'label' => t('Title'),
             'description' => t('Provide title of the page.'),
             'validators' => array(array('Length', 3), 'Required'),
         ),
