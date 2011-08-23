@@ -1,9 +1,14 @@
 .tabs ul{
     margin:0 0 20px;
     padding:0 3px;
-    float: left;
+    /*float: left;*/
     width: 100%;
     border-bottom: 1px solid #ccc;
+}
+.tabs ul:after{
+	clear: both;
+	display: table;
+    content: "";
 }
 .tabs ul li{
     list-style: none;
