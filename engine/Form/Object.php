@@ -135,10 +135,10 @@ class Form_Object extends Object {
      */
     public function attach($data) {
         parent::attach($data);
-        $this->setValues($data);
-        event('form.attach',$this);
         event('form.'.$this->name.'.attach',$this);
+        event('form.attach',$this);
         $this->init();
+        $this->setValues($data);
     }
 
     /**
