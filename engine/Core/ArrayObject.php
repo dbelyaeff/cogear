@@ -67,7 +67,7 @@ class Core_ArrayObject extends ArrayObject {
         if (!$data)
             return;
         $data instanceof self && $data = (array) $data;
-        $data = self::transform(array_merge($this->toArray(), $data));
+        $data = self::transform(array_merge_recursive($this->toArray(), $data));
         /* Found some issue with PHP < 5.3
          * Object can't accept another instance of self for exchange
          * 
@@ -177,7 +177,7 @@ class Core_ArrayObject extends ArrayObject {
     public function differ($data) {
         $data instanceof self && $data = $data->toArray();
         $storage = $this->toArray();
-        $this->exchangeArray(array_diff_key($storage, $data));
+        $this->exchangeArray(array_diff_key_recursive($storage, $data));
     }
 
     /**
@@ -310,6 +310,17 @@ class Core_ArrayObject extends ArrayObject {
      * @return	int
      */
     public static function sortByOrder($a, $b) {
+        return self::sortBy('order',$a,$b);
+    }
+    /**
+     * Sort by param
+     * 
+     * @param string $param
+     * @param object $a
+     * @param object $b
+     * @return int 
+     */
+    public static function sortBy($param,$a, $b) {
         if ($a->order == $b->order) {
             return 0;
         }
@@ -318,3 +329,26 @@ class Core_ArrayObject extends ArrayObject {
 
 }
 
+/**
+ * Diff keys recursive
+ * 
+ * @param array $a1
+ * @param array $a2
+ * @return array 
+ */
+function array_diff_key_recursive($a, $b) {
+    foreach($a as $key=>$value){
+        if(is_array($value) && isset($b[$key])){
+            if($result  = array_diff_key_recursive($value, $b[$key])){
+                $a[$key] = $result;
+            }
+            else{
+                unset($a[$key]);
+            }
+        }
+        elseif(isset($b[$key])){
+            unset($a[$key]);
+        }
+    }
+    return sizeof($a) ? $a : NULL;
+}
