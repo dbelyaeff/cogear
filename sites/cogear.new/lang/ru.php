@@ -12,6 +12,19 @@ return array (
   array (
     'Dmitriy Belyaev' => 'Беляев Дмитрий',
   ),
+  '#Database Debug' => 
+  array (
+    '<b>Database queries:</b>' => '<b>Запросов в базу данных:</b>',
+    'Time: ' => 'Время:',
+    '<b>Database Time:</b>' => '<b>Общее время работы с базой:</b>',
+  ),
+  '#Dev' => 
+  array (
+    'Dev info' => 'Отладочная информация',
+    '<b>Generated in:</b> %.3f (second|seconds)' => '<b>Временя отработки страницы:</b> %.3f (секунда|секунды|секунды)',
+    '<b>Потребление памяти:</b> %s' => '',
+    '<b>Memory consumption:</b> %s' => '',
+  ),
   '#Forms' => 
   array (
     'Internacionalization settings' => 'Языковые настройки.',
@@ -93,6 +106,8 @@ return array (
     'Public serivce to login and register on site via variety of social services.' => 'Интеграция с сервисом для авторизации через социальные сети.',
     'Pager' => 'Пейджер',
     'Pagination system for grid view.' => 'Добавляет постраничную навигацию',
+    'Robotic Control' => '',
+    'Make world a bit more better with the help of robots.' => '',
   ),
   '#I18n' => 
   array (
@@ -113,6 +128,7 @@ return array (
     'jQuery' => '',
     'Ajax' => '',
     'Social' => 'Социальные',
+    'Robo' => '',
   ),
   '#Pager' => 
   array (
