@@ -11,7 +11,7 @@ return array (
   ),
   'cron' => 
   array (
-    'last_run' => 1313660466,
+    'last_run' => 1314443859,
   ),
   'user' => 
   array (
@@ -62,14 +62,6 @@ return array (
           ),
         ),
       ),
-    ),
-  ),
-  'robo' => 
-  array (
-    'adapter' => 
-    array (
-      'IP' => '77.234.220.163:8172',
-      'default' => 'rovio',
     ),
   ),
 );

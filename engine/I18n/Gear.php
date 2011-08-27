@@ -21,6 +21,7 @@ class I18n_Gear extends Gear {
     protected $order = -1000;
     protected $domains = array();
     protected $date_format;
+    public $adapter;
     /**
      * Locale
      * 
@@ -32,9 +33,15 @@ class I18n_Gear extends Gear {
      * Constructor
      */
     public function __construct(){
-        $this->locale = config('site.locale','en');
+        $this->lang = config('site.locale','en');
         $this->date_format = config('site.date_format','Y-m-d H:i');
         date_default_timezone_set(config('site.timezone','Europe/Moscow'));
+        $adapter = config('i18n.adapter','I18n_Adapter_File');
+        $this->adapter = new $adapter(config('i18n',array(
+            'lang' => 'en',
+            'path' => SITE.DS.'lang',
+        )));
+        hook('done',array($this->adapter,'save'));
         parent::__construct();
     }
 
@@ -45,8 +52,8 @@ class I18n_Gear extends Gear {
      * @return   string
      */
     public function transliterate($text){
-        if(function_exists('transliterate_'.$this->locale)){
-            $text = call_user_func_array('transliterate_'.$this->locale, array($text));
+        if(function_exists('transliterate_'.$this->lang)){
+            $text = call_user_func_array('transliterate_'.$this->lang, array($text));
         }
         return $text;
     }
@@ -60,7 +67,7 @@ class I18n_Gear extends Gear {
      */
     public function translate($text,$domain = ''){
         $domain OR $this->domains && $domain = reset($this->domains);
-        return $text;
+        return $this->adapter->get($text,$domain);
     }
     /**
      * Format date
