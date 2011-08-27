@@ -14,7 +14,7 @@ return array (
   ),
   '#Forms' => 
   array (
-    'Internacionalization settings' => '',
+    'Internacionalization settings' => 'Языковые настройки.',
   ),
   '#Gears' => 
   array (
