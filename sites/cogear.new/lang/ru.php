@@ -125,4 +125,17 @@ return array (
   array (
     'Dmitriy Belyaev' => 'Беляев Дмитрий',
   ),
+  'Add new' => 'Создать',
+  '[edit]' => '',
+  'Icons' => 
+  array (
+    'comments' => 'комментарии',
+  ),
+  'Pager' => 
+  array (
+    'next' => 'вперед',
+    '→' => '',
+    'previous' => 'назад',
+    '←' => '',
+  ),
 );

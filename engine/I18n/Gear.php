@@ -41,6 +41,7 @@ class I18n_Gear extends Gear {
             'lang' => 'en',
             'path' => SITE.DS.'lang',
         )));
+        $this->adapter->load();
         hook('done',array($this->adapter,'save'));
         parent::__construct();
     }
