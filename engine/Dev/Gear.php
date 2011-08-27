@@ -31,7 +31,7 @@ class Dev_Gear extends Gear {
     public function init() {
         parent::init();
         $this->addPoint('system.begin');
-        hook('done', array($this, 'finalPoint'));
+        hook('done', array($this, 'finalPoint'),0);
     }
 
     /**
