@@ -24,6 +24,7 @@ class I18n_Adapter_File extends I18n_Adapter_Abstract {
      */
     public function save(){
         if($this->update_flag){
+            $this->ksort();
             Config::write($this->options->path.DS.$this->options->lang.EXT,$this->export());
         }
     }

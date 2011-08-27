@@ -1,22 +1,22 @@
 <?php 
 return array (
-  'cogear' => '',
-  'User_CP' => 
+  '#Admin Gears' => 
   array (
-    'My Profile' => 'Мой профиль',
-    'Find users' => 'Список пользователей',
-    'Logout' => 'Выйти',
-    'Users' => 'Пользователи',
+    'Author: ' => 'Автор:',
+    'Site: ' => 'Сайт:',
+    'Control panel' => 'Панель управления',
+    'deactivate' => 'отключить',
+    'activate' => 'включить',
   ),
-  'Pages' => 
+  '#Authors' => 
   array (
-    'My Pages' => 'Мои страницы',
+    'Dmitriy Belyaev' => 'Беляев Дмитрий',
   ),
-  'My Files' => 'Мои файлы',
-  'Control Panel' => 'Панель управления',
-  'Editor' => 'Редактор',
-  'Dashboard' => 'Рабочий стол',
-  'Gears' => 
+  '#Forms' => 
+  array (
+    'Internacionalization settings' => '',
+  ),
+  '#Gears' => 
   array (
     'Access' => 'Права доступа',
     'Access control gear' => 'Управления правами доступа',
@@ -94,14 +94,15 @@ return array (
     'Pager' => 'Пейджер',
     'Pagination system for grid view.' => 'Добавляет постраничную навигацию',
   ),
-  'Gears manager' => 'Шестеренки',
-  'Active' => 'Активные',
-  'All' => 'Все',
-  'Inactive' => 'Неактивные',
-  'New' => 'Новые',
-  'Updates' => 'Обновления',
-  'Add' => 'Добавить',
-  'Packages' => 
+  '#I18n' => 
+  array (
+    'Please, choose site interface language:' => 'Пожалуйста, выберите язык интерфейса',
+  ),
+  '#Icons' => 
+  array (
+    'comments' => 'комментарии',
+  ),
+  '#Packages' => 
   array (
     'Core' => 'Ядро',
     'Performance' => 'Производительность',
@@ -113,29 +114,43 @@ return array (
     'Ajax' => '',
     'Social' => 'Социальные',
   ),
-  'Admin Gears' => 
-  array (
-    'Author: ' => 'Автор:',
-    'Site: ' => 'Сайт:',
-    'Control panel' => 'Панель управления',
-    'deactivate' => 'отключить',
-    'activate' => 'включить',
-  ),
-  'Authors' => 
-  array (
-    'Dmitriy Belyaev' => 'Беляев Дмитрий',
-  ),
-  'Add new' => 'Создать',
-  '[edit]' => '',
-  'Icons' => 
-  array (
-    'comments' => 'комментарии',
-  ),
-  'Pager' => 
+  '#Pager' => 
   array (
     'next' => 'вперед',
     '→' => '',
     'previous' => 'назад',
     '←' => '',
   ),
+  '#Pages' => 
+  array (
+    'My Pages' => 'Мои страницы',
+  ),
+  '#User_CP' => 
+  array (
+    'My Profile' => 'Мой профиль',
+    'Find users' => 'Список пользователей',
+    'Logout' => 'Выйти',
+    'Users' => 'Пользователи',
+  ),
+  'Active' => 'Активные',
+  'Add' => 'Добавить',
+  'Add new' => 'Создать',
+  'All' => 'Все',
+  'Control Panel' => 'Панель управления',
+  'Dashboard' => 'Рабочий стол',
+  'Data is saved successfully!' => 'Информация сохранена успешно!',
+  'Editor' => 'Редактор',
+  'Gears' => 'Шестеренки',
+  'Gears manager' => 'Шестеренки',
+  'Inactive' => 'Неактивные',
+  'Internacionalization' => 'Интернационализация',
+  'Language' => 'Язык',
+  'My Files' => 'Мои файлы',
+  'New' => 'Новые',
+  'Pages' => 'Страницы',
+  'Robo' => '',
+  'Save' => 'Сохранить',
+  'Updates' => 'Обновления',
+  '[edit]' => '[ред.]',
+  'cogear' => '',
 );

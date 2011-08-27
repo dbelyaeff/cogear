@@ -45,7 +45,19 @@ class I18n_Gear extends Gear {
         hook('done',array($this->adapter,'save'));
         parent::__construct();
     }
-
+    /**
+     * Menu
+     * 
+     * @param string $name
+     * @param object $menu 
+     */
+    public function menu($name, &$menu) {
+        switch ($name) {
+            case 'admin':
+                $menu->{'i18n'} = t('Language');
+                break;
+        }
+    }
     /**
      * Transliteration
      *
@@ -92,6 +104,21 @@ class I18n_Gear extends Gear {
         }
         else {
             array_pop($this->domains);
+        }
+    }
+    
+    /**
+     * Control Panel
+     */
+    public function admin($action = NULL){
+        switch($action){
+            default:
+                $form = new Form('I18n.admin');
+                if($data = $form->result()){
+                    $data->lang && $this->set('i18n.lang',$data->lang);
+                    success(t('Data is saved successfully!'));
+                }
+                $form->show();
         }
     }
 

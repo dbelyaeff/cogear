@@ -17,6 +17,7 @@ abstract class I18n_Adapter_Abstract extends Options {
         'lang' => 'en',
     );
     protected $update_flag;
+    const SECTION_PREFIX = '#';
 
     /**
      * Get text
@@ -26,6 +27,7 @@ abstract class I18n_Adapter_Abstract extends Options {
      */
     public function get($text, $section = NULL) {
         if ($section) {
+            $section = self::SECTION_PREFIX.$section;
             if ($this->$section) {
                 if ($this->$section->$text) {
                     return $this->$section->$text;
@@ -55,6 +57,7 @@ abstract class I18n_Adapter_Abstract extends Options {
     public function set($text, $value, $section = NULL) {
         $args = func_get_args();
         if ($section) {
+            $section[0] == self::SECTION_PREFIX OR $section = self::SECTION_PREFIX.$section;
             $this->$section OR $this->$section = new Core_ArrayObject();
             $this->$section->$text = $value;
         } else {

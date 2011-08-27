@@ -23,7 +23,6 @@ return array(
         'name' => 'cogear',
     ),
     'i18n' => array(
-        'lang' => 'en',
         'adapter' => 'I18n_Adapter_File',
         'path' => SITE.DS.'lang',
     ),

@@ -1,14 +1,14 @@
 <?php 
 return array (
   'cogear' => '',
-  'User_CP' => 
+  '#User_CP' => 
   array (
     'My Profile' => '',
     'Find users' => '',
     'Logout' => '',
     'Users' => '',
   ),
-  'Pages' => 
+  '#Pages' => 
   array (
     'My Pages' => '',
   ),
@@ -17,7 +17,7 @@ return array (
   'Control Panel' => '',
   'Editor' => '',
   'Dashboard' => '',
-  'Gears' => 
+  '#Gears' => 
   array (
     'Access' => '',
     'Access control gear' => '',
@@ -104,7 +104,7 @@ return array (
   'New' => '',
   'Updates' => '',
   'Add' => '',
-  'Packages' => 
+  '#Packages' => 
   array (
     'Core' => '',
     'Performance' => '',
@@ -117,15 +117,40 @@ return array (
     'Social' => '',
     'Robo' => '',
   ),
-  'Admin Gears' => 
+  '#Admin Gears' => 
   array (
     'Author: ' => '',
     'Site: ' => '',
     'Control panel' => '',
     'deactivate' => '',
   ),
-  'Authors' => 
+  '#Authors' => 
   array (
     'Dmitriy Belyaev' => '',
+  ),
+  'Add new' => '',
+  '[edit]' => '',
+  'Icons' => 
+  array (
+    'comments' => '',
+  ),
+  '#Pager' => 
+  array (
+    'next' => '',
+    '→' => '',
+  ),
+  'Pages' => '',
+  'Gears' => '',
+  'Language' => '',
+  'Internacionalization' => '',
+  '#Forms' => 
+  array (
+    'Internacionalization settings' => '',
+  ),
+  'Save' => '',
+  'Data is saved successfully!' => '',
+  '#I18n' => 
+  array (
+    'Please, choose site interface language:' => '',
   ),
 );
