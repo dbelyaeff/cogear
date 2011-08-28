@@ -1,5 +1,9 @@
 <?php 
 return array (
+  'i18n' => 
+  array (
+    'lang' => 'ru',
+  ),
   'theme' => 
   array (
     'logo' => '/theme/logo/logo.png',
@@ -11,7 +15,7 @@ return array (
   ),
   'cron' => 
   array (
-    'last_run' => 1313660466,
+    'last_run' => 1314449280,
   ),
   'user' => 
   array (
@@ -62,14 +66,6 @@ return array (
           ),
         ),
       ),
-    ),
-  ),
-  'robo' => 
-  array (
-    'adapter' => 
-    array (
-      'IP' => '77.234.220.163:8172',
-      'default' => 'rovio',
     ),
   ),
 );

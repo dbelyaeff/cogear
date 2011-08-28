@@ -408,14 +408,14 @@ final class Cogear implements Interface_Singleton {
      */
     public function save() {
         if ($this->write_gears) {
-            $this->system_cache->write('gears/all', $this->all_gears);
-            $this->system_cache->write('gears/installed', $this->installed_gears);
-            $this->system_cache->write('gears/active', $this->active_gears);
+            $this->system_cache->store('gears/all', $this->all_gears);
+            $this->system_cache->store('gears/installed', $this->installed_gears);
+            $this->system_cache->store('gears/active', $this->active_gears);
         }
         if ($this->write_config) {
             $settings = new Config(SITE . DS . 'settings' . EXT);
             $this->config->differ($settings);
-            $this->config->write(SITE . DS . 'config' . EXT);
+            $this->config->store(SITE . DS . 'config' . EXT);
         }
         event('clear');
     }
