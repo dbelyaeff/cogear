@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `pages` (
   `created_date` int(11) NOT NULL,
   `last_update` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `pages`
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `pages` (
 
 INSERT INTO `pages` (`id`, `aid`, `name`, `url`, `path`, `body`, `allow_comments`, `comments`, `created_date`, `last_update`) VALUES
 (1, 1, 'Проба пера', 'privet,-mir!', '                   1', 'Первое сообщение!  ', 0, 0, 1302619389, 1308985715),
-(8, 1, 'Бета-версия cogear²', '', '                   8', '<br><div class="grid_16" id="header">\r\n                <a href="../../"><img src="../../sites/cogear.new/uploads/theme/logo/logo.png" alt="cogear"></a>            </div>Привет, мир! Встречай, второй <span style="font-weight:bold">когир</span>!', 1, 7, 1312106701, 1312222435);
+(2, 1, 'Бета-версия cogear²', '', '                   8', 'Привет, мир! Встречай, второй <span style="font-weight:bold">когир</span>!', 1, 7, 1312106701, 1312222435);
 
 -- --------------------------------------------------------
 
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `validation_code` varchar(255) NOT NULL,
   `is_valid` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `users`
@@ -95,8 +95,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`id`, `login`, `password`, `hash`, `email`, `name`, `role`, `avatar`, `validation_code`, `is_valid`) VALUES
 (1, 'admin', 'efc002c854ab0f77646a496dad4ec39c', '', 'admin@cogear.ru', '', 1, '', '', 1),
-(6, 'Дмитрий Беляев', '', '', 'usemac.ru@gmail.com', '', 100, '', '', 1),
-(7, 'User', 'efc002c854ab0f77646a496dad4ec39c', '', 'admin@user.ru', '', 100, '', '', 0);
+(2, 'user', 'efc002c854ab0f77646a496dad4ec39c', '', 'admin@user.ru', '', 100, '', '', 0);
 
 -- --------------------------------------------------------
 

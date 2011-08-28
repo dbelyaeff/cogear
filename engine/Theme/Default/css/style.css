@@ -1,17 +1,3 @@
-a {
-    color: #2B587A;
-}
-a.edit{
-    text-decoration: none;
-    color: #ccc;
-    font-size: 12px;
-}
-a.edit:hover{
-    color: #959595;
-}
-.fl_r{
-    float: right;
-}
-.fl_l{
-    float: left;
+body{
+	color: #222;
 }

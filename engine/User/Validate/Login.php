@@ -28,7 +28,7 @@ class User_Validate_Login extends Form_Validate_Abstract{
         $user->login = $value;
         
 	    $finded = (boolean) $user->find();
-        if ($finded) $this->element->addError(t('Email is already taken!'));
+        if ($finded) $this->element->addError(t('Login name already in use!'));
         return !$finded;
     }
 }

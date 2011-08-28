@@ -67,8 +67,8 @@ class Session_Object extends Cache_Object {
     public function __construct($name) {
         hook('exit', array($this, 'close'));
         $this->name = $name;
-        $this->options = config('session');
-		$this->options->name = $this->name;
+        $this->options = clone config('session');
+        $this->options->name = $this->name;
         $this->options->save_path = $this->options->path;
         $this->options->cookie_domain = '.' . SITE_URL;
         foreach (self::$iniOptions as $key => $option) {
