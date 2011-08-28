@@ -1,14 +1,45 @@
 .form {
-    font: 1em Trebuchet MS,Myriad Pro;
+    /*font: 1em Trebuchet MS,Myriad Pro;*/
 }
 .form select, .form input[type="text"],.form input[type="password"],.form input[type="search"]{
-    border: 1px solid #DFDFDF;
-    padding: 3px 4px;
-    font-size: 1.7em;
-    border-radius: 6px;
+    display: inline-block;
+	margin: 0;
+    padding: 4px;
+    font-size: 13px;
+    line-height: 18px;
+    height: 18px;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
 }
+.form :-moz-placeholder {
+  color: #bfbfbf;
+}
+.form ::-webkit-input-placeholder {
+  color: #bfbfbf;
+}
+.form input[type=text],
+.form input[type=password],
+.form select,
+.form textarea {
+  -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
+  -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+  transition: border linear 0.2s, box-shadow linear 0.2s;
+  -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+.form input[type=text]:focus, .form input[type=password]:focus, .form textarea:focus {
+  outline: none;
+  border-color: rgba(82, 168, 236, 0.8);
+  -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
+  -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
+}
+
 .form input[type="text"],.form input[type="password"],.form input[type="search"],textarea{
-    width: 600px;
+    width: 100%;
 }
 .form input[type="text"]:focus,.form input[type="password"]:focus,.form input[type="search"]:focus,textarea:focus{
     outline: medium none;
@@ -17,17 +48,18 @@
     cursor: pointer;
 }
 .form div.errors{
-    font-size: 0.9em;
+    /*font-size: 0.7em;*/
     color: #9E2323;
 }
 
 .form label{
-    color: #090909;
     cursor: pointer;
 }
 .form div.form-element label{
     display: block;
     font-size: 1.2em;
+	margin-top: 10px;
+	margin-bottom: 3px;
 }
 .form div.checkbox label{
     display: inline;
@@ -58,14 +90,25 @@
 .form .error{
     border: 1px solid #FF8181;
 }
+.form .error input[type=text], .form .error input[type=password], .form .error textarea {
+  border-color: #c87872;
+  -webkit-box-shadow: 0 0 3px rgba(171, 41, 32, 0.25);
+  -moz-box-shadow: 0 0 3px rgba(171, 41, 32, 0.25);
+  box-shadow: 0 0 3px rgba(171, 41, 32, 0.25);
+}
+.form .error input[type=text]:focus, .form .error input[type=password]:focus, .form .error textarea:focus {
+  border-color: #b9554d !important;
+  -webkit-box-shadow: 0 0 6px rgba(171, 41, 32, 0.5);
+  -moz-box-shadow: 0 0 6px rgba(171, 41, 32, 0.5);
+  box-shadow: 0 0 6px rgba(171, 41, 32, 0.5);
+}
 .form div.errors{
     padding: 5px;
-    color: #;
-    max-width: 300px;
+    /*max-width: 300px;*/
     position: relative;
     display: none;
     padding: 5px 10px;
-    font-size: 123%;
+    /*font-size: 123%;*/
     
 }
 

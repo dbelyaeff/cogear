@@ -13,7 +13,7 @@ return array(
                     'validators' => array(array('Length',3),'AlphaNum','Required')
                 ),
                 'saveme' => array(
-                    'label' => t('Save me!'),
+                    'label' => t('remember me'),
                     'type' => 'checkbox',
                 ),
                 'submit' => array(
