@@ -12,10 +12,10 @@
 				</div>
 		    </div>
             <div class="row">
-				<div class="span3 columns" id="content">
+				<div class="span3 columns" id="sidebar">
 					<?=theme('sidebar')?>
 				</div>
-				<div class="span13 columns" id="sidebar">
+				<div class="span13 columns" id="content">
 					<?=theme('content')?>
 				</div>
 	        </div>
