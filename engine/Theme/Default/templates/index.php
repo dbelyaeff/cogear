@@ -4,6 +4,7 @@
 	<?=theme('head')?>
     </head>
     <body>
+        <?=theme('before')?>
         <div class="container">
 	        <div class="row">
 				<div class="span16" id="header">
