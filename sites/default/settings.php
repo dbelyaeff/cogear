@@ -21,7 +21,10 @@ return array(
     'development' => TRUE,
     'site' => array(
         'name' => 'cogear',
-        'locale' => 'ru',
+    ),
+    'i18n' => array(
+        'adapter' => 'I18n_Adapter_File',
+        'path' => SITE.DS.'lang',
     ),
 );
 
