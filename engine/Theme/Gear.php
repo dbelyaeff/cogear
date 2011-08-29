@@ -20,12 +20,18 @@ class Theme_Gear extends Gear {
     public $current;
     public $regions;
     const SUFFIX = '_Theme';
-
+	/**
+	 * Constructor
+	 */
+	public function __construct(){
+        $this->regions = new Core_ArrayObject();
+		parent::__construct();
+	}	
     /**
      * Init
      */
     public function init() {
-        $this->regions = new Core_ArrayObject();
+
         hook('gear.request', array($this, 'handleGearRequest'));
         if ($favicon = config('theme.favicon')) {
             hook('theme.head.meta.after', array($this, 'renderFavicon'));
