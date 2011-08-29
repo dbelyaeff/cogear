@@ -102,7 +102,6 @@ define('DEVELOPMENT', $cogear->config->development);
 $folder = basename(ROOT);
 if (!in_array($folder, array($host,'www', 'public_html', 'htdocs', SITE))) {
     define('SUBDIR', $folder);
-    $host .= '/' . SUBDIR;
 }
 if (($port = $cogear->request->get('SERVER_PORT')) != 80) {
     $host .= ':' . $port;
