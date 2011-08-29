@@ -29,9 +29,14 @@ class Cron_Gear extends Gear {
     public function init() {
         parent::init();
         hook('ignite', array($this, 'check'));
-        $this->key = md5(date('Y-m-d H').cogear()->key());
+        $this->key = $this->keyGen();
     }
-
+    /**
+     * Generate key
+     */
+    private function keyGen(){
+        return md5(date('Y-m-d H').cogear()->key());
+    }
     /**
      * Check cron
      */
@@ -81,6 +86,10 @@ class Cron_Gear extends Gear {
                 }
             }
         }
+        $px = new Image(ENGINE.DS.'Core'.DS.'img'.DS.'1x1.gif');
+        $px->render();
+        cogear()->save();
+        exit();
     }
 
     /**
