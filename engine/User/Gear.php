@@ -234,7 +234,7 @@ class User_Gear extends Gear {
                 flash_success(t('User <b>%s</b> was deleted!'));
                 redirect(Url::link('/users'));
             }
-            $user->merge($result);
+            $user->adopt($result);
             if ($result->password) {
                 $user->hashPassword();
             } else {
