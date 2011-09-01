@@ -46,14 +46,14 @@ class Form_Element_Tab extends Form_Element_Abstract{
      * @param string $code 
      */
     public function initTabs($form){
-        $prepend = '<ul class="tabs">'."\n";
+        $prepend = '<ul class="pills">'."\n";
         foreach(self::$tabs as $id=>$label){
             $prepend .= "\t".'<li id="tab-'.$id.'"><a href="#tab-'.$id.'">'.$label.'</a></li>'."\n";
         }
         $prepend .= "</ul>";
         $form->code = preg_replace('(<form([^>]*)>)','$0'.$prepend,$form->code);
         inline_js('$(document).ready(function(){
-            $("ul.tabs").cgTabs("#'.$this->form->getId().' > .tab",{
+            $("ul.pills").cgTabs("#'.$this->form->getId().' > .tab",{
                 handler: "li",
             });
         })');
