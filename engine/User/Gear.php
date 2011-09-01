@@ -222,6 +222,9 @@ class User_Gear extends Gear {
             $user->avatar = '';
             $user->update();
         }
+        if($this->user->id == $user->id){
+            unset($form->elements->delete);
+        }
         if ($result = $form->result()) {
             if ($user->login != $result['login']) {
                 $redirect = Url::gear('user') . $result['login'];

@@ -41,6 +41,7 @@ return array(
             'type' => 'select',
             'validators' => array('Required'),
             'callback' => 'User_Gear->getRolesList',
+            'access' => access('users change_role'),
         ),
 //                'options' => array(
 //                    'label' => t('Test','User'),
