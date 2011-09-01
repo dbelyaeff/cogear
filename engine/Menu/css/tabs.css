@@ -49,7 +49,7 @@
 /*}*/
 
 ul.tabs, ul.pills {
-  margin: 0 0 20px;
+  margin: 5px 0 20px;
   padding: 0;
   zoom: 1;
 }
@@ -104,13 +104,17 @@ ul.pills li a {
   border-radius: 15px;
 }
 ul.pills li a:hover {
-  background: #0050a3;
+  /*background: #0050a3;*/
+  background: #6fa5dd;
+	/*background-color: #e6e6e6;*/
+    /*border: 1px solid #bfbfbf;*/
   color: #fff;
   text-decoration: none;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
 }
 ul.pills li.active a {
-  background: #0069d6;
+  /*background: #0069d6;*/
+  background: #3482d2;
   color: #fff;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
 }
