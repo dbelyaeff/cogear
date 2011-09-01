@@ -67,7 +67,7 @@ class Core_ArrayObject extends ArrayObject {
         if (!$data)
             return;
         $data instanceof self && $data = (array) $data;
-        $data = self::transform(array_merge($this->toArray(), $data));
+        $data = self::transform(array_merge_recursive($this->toArray(), $data));
         /* Found some issue with PHP < 5.3
          * Object can't accept another instance of self for exchange
          * 
