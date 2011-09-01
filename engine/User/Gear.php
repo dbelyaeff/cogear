@@ -222,6 +222,9 @@ class User_Gear extends Gear {
             $user->avatar = '';
             $user->update();
         }
+        if($this->user->id == $user->id){
+            unset($form->elements->delete);
+        }
         if ($result = $form->result()) {
             if ($user->login != $result['login']) {
                 $redirect = Url::gear('user') . $result['login'];
@@ -231,7 +234,7 @@ class User_Gear extends Gear {
                 flash_success(t('User <b>%s</b> was deleted!'));
                 redirect(Url::link('/users'));
             }
-            $user->merge($result);
+            $user->adopt($result);
             if ($result->password) {
                 $user->hashPassword();
             } else {
