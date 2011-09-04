@@ -42,7 +42,7 @@ return array (
     'Database' => 'База данных',
     'Database operations management' => 'Работает с базой данных',
     'Developer' => 'Инструменты разработчика',
-    'Calculate cogear performance at current system configuration.' => 'Вычистляет производительность текущей конфигурации.',
+    'Calculate cogear performance at current system configuration.' => 'Вычисляет производительность текущей конфигурации.',
     'Errors gear' => 'Обработчик ошибок.',
     'Handle errors' => 'Управляет отображением ошибок.',
     'Form' => 'Форма',
