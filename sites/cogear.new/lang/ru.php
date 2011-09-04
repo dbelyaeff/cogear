@@ -21,7 +21,7 @@ return array (
   '#Dev' => 
   array (
     'Dev info' => 'Отладочная информация',
-    '<b>Generated in:</b> %.3f (second|seconds)' => '<b>Временя отработки страницы:</b> %.3f (секунда|секунды|секунды)',
+    '<b>Generated in:</b> %.3f (second|seconds)' => '<b>Время отработки страницы:</b> %.3f (секунда|секунды|секунды)',
     '<b>Потребление памяти:</b> %s' => '',
     '<b>Memory consumption:</b> %s' => '',
   ),
@@ -42,7 +42,7 @@ return array (
     'Database' => 'База данных',
     'Database operations management' => 'Работает с базой данных',
     'Developer' => 'Инструменты разработчика',
-    'Calculate cogear performance at current system configuration.' => 'Вычистляет производительность текущей конфигурации.',
+    'Calculate cogear performance at current system configuration.' => 'Вычисляет производительность текущей конфигурации.',
     'Errors gear' => 'Обработчик ошибок.',
     'Handle errors' => 'Управляет отображением ошибок.',
     'Form' => 'Форма',
