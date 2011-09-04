@@ -21,7 +21,7 @@ return array (
   '#Dev' => 
   array (
     'Dev info' => 'Отладочная информация',
-    '<b>Generated in:</b> %.3f (second|seconds)' => '<b>Временя отработки страницы:</b> %.3f (секунда|секунды|секунды)',
+    '<b>Generated in:</b> %.3f (second|seconds)' => '<b>Время отработки страницы:</b> %.3f (секунда|секунды|секунды)',
     '<b>Потребление памяти:</b> %s' => '',
     '<b>Memory consumption:</b> %s' => '',
   ),
