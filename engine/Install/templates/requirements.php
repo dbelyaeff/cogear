@@ -1,0 +1,1 @@
+<?=t('Before start system must check your server for requirements. <br/>Just look at the table below and follow the instructions.')?>

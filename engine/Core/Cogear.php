@@ -21,50 +21,58 @@ final class Cogear implements Interface_Singleton {
      * @var object
      */
     private static $_instance;
+
     /**
      * Events
      */
     public $events = array();
+
     /**
      * Instances of active gears
      *
      * @var ArrayObject
      */
     public $gears;
+
     /**
      * Active gears
      *
      * @var array
      */
     private $active_gears = array();
+
     /**
      * All gears in folders
      * @var array
      */
     private $all_gears = array();
+
     /**
      * Installed gears
      * @var array
      */
     private $installed_gears = array();
+
     /**
      * Flag inditcates gears state
      * 
      * @var boolean 
      */
     private $gears_are_loaded;
+
     /**
      * Flag to update gears system caches
      * @var boolean
      */
     private $write_gears = FALSE;
+
     /**
      * Flag to update config file
      * 
      * @var boolean 
      */
     private $write_config = FALSE;
-    
+
     /**
      * Stop current event executrion flag
      */
@@ -129,10 +137,11 @@ final class Cogear implements Interface_Singleton {
         $args = array_slice($args, 1);
         if ($this->events->$name) {
             foreach ($this->events->$name as $callback) {
-                 if($this->events->$name->is_stopped()) continue;
-                 if($data = $callback->call($args)){
-                     $result->append($data);
-                 }
+                if ($this->events->$name->is_stopped())
+                    continue;
+                if ($data = $callback->call($args)) {
+                    $result->append($data);
+                }
             }
         }
         return $result;
@@ -163,7 +172,7 @@ final class Cogear implements Interface_Singleton {
      * @return  string
      */
     public function get($name = NULL, $default = NULL) {
-        if($name === NULL){
+        if ($name === NULL) {
             return $this->config;
         }
         $pieces = explode('.', $name);
@@ -172,7 +181,7 @@ final class Cogear implements Interface_Singleton {
         $depth = 1;
         foreach ($pieces as $piece) {
             if ($current->$piece) {
-                if($depth < $size && $current->$piece instanceof Core_ArrayObject){
+                if ($depth < $size && $current->$piece instanceof Core_ArrayObject) {
                     $current = $current->$piece;
                     $depth++;
                     continue;
@@ -221,8 +230,8 @@ final class Cogear implements Interface_Singleton {
     public function loadGears() {
         if ($this->gears_are_loaded)
             return;
-        hook('exit',array($this,'save'));
-        if (DEVELOPMENT OR !$this->all_gears = $this->system_cache->read('gears/all',TRUE)) {
+        hook('exit', array($this, 'save'));
+        if (DEVELOPMENT OR !$this->all_gears = $this->system_cache->read('gears/all', TRUE)) {
             $this->all_gears = array();
             if ($gears_paths = array_merge(find('*' . DS . self::GEAR . EXT), find('*' . DS . '*' . DS . self::GEAR . EXT))) {
                 foreach ($gears_paths as $path) {
@@ -367,7 +376,7 @@ final class Cogear implements Interface_Singleton {
     public static function pathToGear($path) {
         $paths = array(
             'site' => SITE . DS . GEARS_FOLDER,
-            'gears' => GEARS,
+            'gears' => GEARS . DS,
             'engine' => ENGINE . DS,
             'alt_engine' => ENGINE . DS . 'Core',
         );

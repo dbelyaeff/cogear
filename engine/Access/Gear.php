@@ -17,6 +17,7 @@ class Access_Gear extends Gear {
     protected $description = 'Access control gear';
     protected $rules;
     protected $roles;
+    protected $type = Gear::MODULE;
     protected $refresh_flag;
     protected $order = -9;
 
@@ -234,7 +235,7 @@ class Access_Gear extends Gear {
 }
 
 function access($rule) {
-    return cogear()->access->check($rule);
+    return cogear()->access ? cogear()->access->check($rule) : TRUE;
 }
 
 function page_access($rule) {

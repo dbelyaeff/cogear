@@ -110,6 +110,7 @@ if (($port = $cogear->request->get('SERVER_PORT')) != 80) {
 define('SITE_URL', $host);
 // Define uploads folder
 defined('UPLOADS') OR define('UPLOADS', SITE . DS . 'uploads');
+// Set caches
 $cogear->system_cache = new Cache(array('adapter' => 'Cache_Adapter_File', 'path' => SITE . DS . 'cache' . DS . 'system', 'enabled' => !DEVELOPMENT));
 $cogear->cache = $cogear->config->cache ? new Cache($cogear->config->cache) : $cogear->system_cache;
 if (!$options = $cogear->config->cookies) {

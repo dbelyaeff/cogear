@@ -13,6 +13,7 @@
 class Db_Gear extends Gear {
     protected $name = 'Database';
     protected $description = 'Database operations management';
+    protected $type = Gear::MODULE;
     protected $order = -1000;
     protected $driver;
     public static $error_codes = array(
