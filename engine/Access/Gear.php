@@ -235,7 +235,7 @@ class Access_Gear extends Gear {
 }
 
 function access($rule) {
-    return cogear()->access->check($rule);
+    return cogear()->access ? cogear()->access->check($rule) : TRUE;
 }
 
 function page_access($rule) {
