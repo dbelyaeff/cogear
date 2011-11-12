@@ -163,7 +163,7 @@ class Router extends Options {
      * @return array|string
      */
     public function getSegments($num = NULL){
-        return $num ? (isset($this->segments[$num]) ? $this->segments[$num] : NULL) : $this->segments;
+        return $num !== NULL ? (isset($this->segments[$num]) ? $this->segments[$num] : NULL) : $this->segments;
     }
     /**
      * Run dispatched request
