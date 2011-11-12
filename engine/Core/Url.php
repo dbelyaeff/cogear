@@ -107,3 +107,7 @@ class Url {
 
 }
 
+function l($url='', $absolute_flag = FALSE, $protocol = 'http'){
+    return Url::link($url, $absolute_flag, $protocol);
+}
+
