@@ -17,7 +17,9 @@ class Dev_Gear extends Gear {
 
     protected $name = 'Developer';
     protected $description = 'Calculate cogear performance at current system configuration.';
+    protected $type = Gear::MODULE;
     protected $order = 0;
+
     /**
      * Benchmark points
      *
@@ -31,7 +33,7 @@ class Dev_Gear extends Gear {
     public function init() {
         parent::init();
         $this->addPoint('system.begin');
-        hook('done', array($this, 'finalPoint'),0);
+        hook('done', array($this, 'finalPoint'), 0);
     }
 
     /**

@@ -15,6 +15,7 @@ class Icons_Gear extends Gear {
 
     protected $name = 'Icons';
     protected $description = 'Icons manager.';
+    protected $type = Gear::MODULE;
     protected $order = -100;
     protected $sets;
     const DEFAULT_SET = 'famfamfam';
@@ -50,10 +51,10 @@ class Icons_Gear extends Gear {
         $this->sets->$set OR $this->addSet($set, $this->dir . DS . 'sets' . DS . $set);
         if ($src = $this->sets->$set->get($name)) {
             $size = explode('x', $this->sets->$set->size);
-            return HTML::img($src,t($name, 'Icons'),array(
-                'width' => $size[0],
-                'height' => $size[1],
-            ));
+            return HTML::img($src, t($name, 'Icons'), array(
+                        'width' => $size[0],
+                        'height' => $size[1],
+                    ));
         }
     }
 

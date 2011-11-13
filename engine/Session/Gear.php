@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Sessions gear
  *
@@ -14,6 +15,7 @@ class Session_Gear extends Gear {
 
     protected $name = 'Sessions';
     protected $description = 'Handle sessions.';
+    protected $type = Gear::MODULE;
     protected $order = -1000;
 
     /**
@@ -23,4 +25,5 @@ class Session_Gear extends Gear {
         parent::init();
         cogear()->session = new Session_Object('session');
     }
+
 }

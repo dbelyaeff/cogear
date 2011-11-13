@@ -17,6 +17,7 @@ class Cron_Gear extends Gear {
 
     protected $name = 'Cron';
     protected $description = 'Perform periodial tasks.';
+    protected $type = Gear::MODULE;
     protected $order = 0;
     protected $version = '0.1';
     // Cron won't be start up for often than STEP value in seconds
@@ -31,12 +32,14 @@ class Cron_Gear extends Gear {
         hook('ignite', array($this, 'check'));
         $this->key = $this->keyGen();
     }
+
     /**
      * Generate key
      */
-    private function keyGen(){
-        return md5(date('Y-m-d H').cogear()->key());
+    private function keyGen() {
+        return md5(date('Y-m-d H') . cogear()->key());
     }
+
     /**
      * Check cron
      */
@@ -45,26 +48,28 @@ class Cron_Gear extends Gear {
             // Set cron execute time
             $this->set('cron.last_run', time());
             // It's highly important to run cron after server response will be sent to user
-            hook('after',array($this,'poorMansCron'));
+            hook('after', array($this, 'poorMansCron'));
         }
     }
-    
+
     /**
      * Poor man's cron
      * 
      * Call cron process via image tag
      */
-    public function poorMansCron(){
-        echo '<img src="'.Url::gear('cron').'run/'.encrypt($this->key).'">';
+    public function poorMansCron() {
+        echo '<img src="' . Url::gear('cron') . 'run/' . encrypt($this->key) . '">';
     }
+
     /**
      * Run cron via special url
      *  
      * @param type $key 
      */
-    public function run_action($key = NULL){
+    public function run_action($key = NULL) {
         $this->key == decrypt($key) && $this->run();
     }
+
     /**
      * Run cron
      */
@@ -86,7 +91,7 @@ class Cron_Gear extends Gear {
                 }
             }
         }
-        $px = new Image(ENGINE.DS.'Core'.DS.'img'.DS.'1x1.gif');
+        $px = new Image(ENGINE . DS . 'Core' . DS . 'img' . DS . '1x1.gif');
         $px->render();
         cogear()->save();
         exit();
@@ -107,4 +112,5 @@ class Cron_Gear extends Gear {
         $task->type = $type;
         $task->save();
     }
+
 }

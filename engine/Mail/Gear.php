@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Mail gear
  *
@@ -11,11 +12,14 @@
  * @version		$Id$
  */
 class Mail_Gear extends Gear {
+
     protected $name = 'Mail';
     protected $description = 'Helps to send emails.';
-    
-    public function test_action(){
-        $mail = new Mail('root@localhost','admin',array('admin@cogear.ru'),'Test','Body');
+    protected $type = Gear::MODULE;
+
+    public function test_action() {
+        $mail = new Mail('root@localhost', 'admin', array('admin@cogear.ru'), 'Test', 'Body');
         $mail->send();
     }
+
 }

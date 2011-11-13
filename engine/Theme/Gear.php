@@ -15,18 +15,19 @@ class Theme_Gear extends Gear {
 
     protected $name = 'Theme';
     protected $description = 'Manage themes';
-    protected $type = Gear::CORE;
     protected $order = -1000;
     public $current;
     public $regions;
     const SUFFIX = '_Theme';
-	/**
-	 * Constructor
-	 */
-	public function __construct(){
+
+    /**
+     * Constructor
+     */
+    public function __construct() {
         $this->regions = new Core_ArrayObject();
-		parent::__construct();
-	}	
+        parent::__construct();
+    }
+
     /**
      * Init
      */
@@ -36,17 +37,18 @@ class Theme_Gear extends Gear {
         if ($favicon = config('theme.favicon')) {
             hook('theme.head.meta.after', array($this, 'renderFavicon'));
         }
-        hook('callback.before',array($this,'catchOutput'),NULL,'start');
-        hook('callback.after',array($this,'catchOutput'),NULL,'finish');
+        hook('callback.before', array($this, 'catchOutput'), NULL, 'start');
+        hook('callback.after', array($this, 'catchOutput'), NULL, 'finish');
         parent::init();
     }
+
     /**
      * Catch output
      * 
      * @param string $mode 
      */
-    public function catchOutput($Router,$mode){
-        switch($mode){
+    public function catchOutput($Router, $mode) {
+        switch ($mode) {
             case 'start':
             default:
                 ob_start();
@@ -85,7 +87,7 @@ class Theme_Gear extends Gear {
         $this->current = new $class();
         $this->current->init();
         $this->current->activate();
-		$theme = strtolower($theme);
+        $theme = strtolower($theme);
         cogear()->gears->$theme = $this->current;
     }
 
@@ -121,7 +123,7 @@ class Theme_Gear extends Gear {
     public function renderFavicon() {
         echo '<link rel="shortcut icon" href="' . Url::toUri(UPLOADS) . cogear()->get('theme.favicon') . '" />' . "\n";
     }
-    
+
     /**
      * Render region
      * 
@@ -129,12 +131,12 @@ class Theme_Gear extends Gear {
      * 
      * @param string $name 
      */
-    public function renderRegion($name){
-            $this->regions->$name OR $this->regions->$name = new Theme_Region();
-            hook($name,array($this,'showRegion'),NULL,$name);
-            return event($name);
+    public function renderRegion($name) {
+        $this->regions->$name OR $this->regions->$name = new Theme_Region();
+        hook($name, array($this, 'showRegion'), NULL, $name);
+        return event($name);
     }
-    
+
     /**
      * Show region 
      * 
@@ -142,10 +144,11 @@ class Theme_Gear extends Gear {
      * 
      * @param string $name 
      */
-    public function showRegion($name){
+    public function showRegion($name) {
         $this->regions->$name === NULL && $this->regions->$name = new Theme_Region();
         echo $this->regions->$name->render();
     }
+
 }
 
 function append($name, $value) {
