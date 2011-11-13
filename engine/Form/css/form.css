@@ -53,6 +53,7 @@
 
 .form label{
     cursor: pointer;
+    text-align: left;
 }
 .form div.form-element label{
     display: block;
