@@ -12,3 +12,6 @@
 #install_menu ul li a{
     text-decoration: none;
 }
+#requirements tr td:last-child{
+    text-align: center;
+}

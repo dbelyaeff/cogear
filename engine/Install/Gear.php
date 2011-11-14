@@ -56,10 +56,26 @@ class Install_Gear extends Gear {
                 $tpl = new Template('install.requirements');
                 $tpl->show();
                 break;
+            case 'site':
+                $tpl = new Template('install.site');
+                $tpl->show();
+                $form = new Form('install.site');
+                if($result = $form->result()){
+                    $config = new Config(SITE. DS .'settings'.EXT);
+                    $config->site->name = $result->sitename;
+                    $config->key = $result->key;
+                    $config->store();
+                    if($result->database){
+                        
+                    }
+                }
+                $form->show();
+                break;
             default:
             case 'welcome':
                 $tpl = new Template('install.welcome');
                 $tpl->show();
         }
     }
+
 }
