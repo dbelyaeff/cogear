@@ -120,6 +120,16 @@ class Harvester {
      * @return string
      */
     public function getStyles() {
+        // Sort styles. Theme styles must be on the top.
+        $styles = $this->styles->screen->toArray();
+        $theme_styles = array();
+        foreach($styles as $key=>$value){
+            if(strpos($key,'Theme') !== FALSE){
+                $theme_styles[$key] = $value;
+                unset($styles[$key]);
+            }
+        }
+        $this->styles->screen->exchangeArray(array_merge($theme_styles,$styles));
         return $this->styles->__toString() . "\n";
     }
 
