@@ -8,6 +8,7 @@ return array (
   array (
     'logo' => '/theme/logo/logo.png',
     'favicon' => '/theme/icon/favicon.ico',
+    'current' => 'Default',
   ),
   'wysiwyg' => 
   array (
@@ -68,4 +69,5 @@ return array (
       ),
     ),
   ),
+  'installed' => true,
 );

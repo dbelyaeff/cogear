@@ -13,11 +13,11 @@
 class Form_Option_Abstract {
     protected $element;
     /**
-     * Set element
+     * Initialization
      *
      * @param Form_Element_Abstract $element
      */
-    public function setElement(Form_Element_Abstract $element) {
+    public function init(Form_Element_Abstract $element) {
         $this->element = $element;
     }
 }

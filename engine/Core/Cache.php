@@ -13,20 +13,6 @@
  * @subpackage
  * @version		$Id$
  */
-class Cache extends Adapter {
-
-    /**
-     * Initiate cache
-     *
-     * @param array $options
-     */
-    public function __construct($options = array()) {
-        isset($options['adapter']) OR exit('Cache adapter is not defined.');
-        if (class_exists($options['adapter'])) {
-            $this->adapter = new $options['adapter']($options);
-        } else {
-            exit('No cache adapter is defined or class doesn\'t exists.');
-        }
-    }
+class Cache extends Cache_Object {
 
 }

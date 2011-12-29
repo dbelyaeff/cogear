@@ -15,10 +15,12 @@ define('PS', PATH_SEPARATOR);
 define('EXT', '.php');
 define('ROOT', realpath(dirname(__FILE__)));
 define('GEARS_FOLDER', 'gears');
+define('THEMES_FOLDER','themes');
 // Core gears
 define('ENGINE', ROOT . DS . 'engine');
 // Gears for all sites
-define('GEARS', ROOT . DS . 'gears');
+define('GEARS', ROOT . DS . GEARS_FOLDER);
+define('THEMES', ROOT . DS . THEMES_FOLDER);
 define('SITES', ROOT . DS . 'sites');
 define('DEFAULT_SITE', SITES . DS . 'default');
 define('PHP_FILE_PREFIX', '<?php ' . "\n");
@@ -37,8 +39,12 @@ function find($file) {
         ENGINE . DS . $file,
         ENGINE . DS . 'Core' . DS . $file,
         GEARS . DS . $file,
+        THEMES . DS . $file,
     );
-    defined('SITE') && $paths[] = SITE . DS . GEARS_FOLDER . DS . $file;
+    if(defined('SITE')){
+        $paths[] = SITE . DS . GEARS_FOLDER . DS . $file;
+        $paths[] = SITE . DS . THEMES_FOLDER . DS . $file;
+    }
     $result = array();
     while ($path = array_pop($paths)) {
         if (strpos($path, '*') !== FALSE && $files = glob($path)) {

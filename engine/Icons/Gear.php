@@ -15,7 +15,6 @@ class Icons_Gear extends Gear {
 
     protected $name = 'Icons';
     protected $description = 'Icons manager.';
-    protected $type = Gear::MODULE;
     protected $order = -100;
     protected $sets;
     const DEFAULT_SET = 'famfamfam';

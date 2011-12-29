@@ -18,6 +18,7 @@ abstract class Theme_Object extends Gear {
     protected $type = Gear::THEME;
     protected $order = 100;
     protected $package = 'Themes';
+    protected $screenshot = '/img/screenshot.png';
     private static $is_rendered = FALSE;
     public $layout = 'index';
     public $theme;
@@ -79,7 +80,14 @@ abstract class Theme_Object extends Gear {
         Template::bindGlobal('theme', $this);
         hook('done', array($this, 'render'));
     }
-
+    /**
+     * Get theme screenshot
+     * 
+     * @return type 
+     */
+    public function getScreenshot(){
+        return file_exists($this->dir.$this->screenshot) ? $this->folder.$this->screenshot : '/'.THEMES_FOLDER.'/Default/images/screenshot.png';
+    }
     /**
      * Render theme
      */
@@ -90,6 +98,33 @@ abstract class Theme_Object extends Gear {
         $this->template = new Template($this->theme . '.' . $this->layout);
         $cogear->response->append($this->template->render());
         $this->is_rendered = TRUE;
+    }
+
+    /**
+     * Get theme name by path
+     *
+     * @param   string  $path
+     * @return  string|boolean  Gear name or FALSE if path is not correct.
+     */
+    public static function getNameFromPath($path) {
+        foreach (array(SITE . DS . THEMES_FOLDER, THEMES) as $dir) {
+            if (strpos($path, $dir) !== FALSE) {
+                is_file($path) && $path = dirname($path);
+                $path = str_replace($dir, '', $path);
+                $path = trim($path, DS);
+                $pieces = explode(DS, $path);
+                $gear_folder = '';
+                foreach ($pieces as $piece) {
+                    $gear_folder .= $piece . DS;
+                    $gear_name = str_replace(DS, '_', trim($gear_folder, DS));
+                    $gear_class = $gear_name . '_Theme';
+                    if (file_exists($dir . DS . $gear_folder . DS . 'Theme' . EXT) && class_exists($gear_class)) {
+                        return $gear_name;
+                    }
+                }
+            }
+        }
+        return FALSE;
     }
 
 }

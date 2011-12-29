@@ -3,6 +3,7 @@ return array (
   'value' => 
   array (
     'test' => 'Test_Gear',
+    'vizitcard' => 'VizitCard_Gear',
     'admin' => 'Admin_Gear',
     'chat' => 'Chat_Gear',
     'comments' => 'Comments_Gear',
@@ -20,6 +21,7 @@ return array (
     'cache' => 'Cache_Gear',
     'cron' => 'Cron_Gear',
     'db' => 'Db_Gear',
+    'default' => 'Default_Gear',
     'dev' => 'Dev_Gear',
     'errors' => 'Errors_Gear',
     'form' => 'Form_Gear',

@@ -18,12 +18,34 @@ return array (
     'Time: ' => 'Время:',
     '<b>Database Time:</b>' => '<b>Общее время работы с базой:</b>',
   ),
+  '#Database errors' => 
+  array (
+    'Database driver <b>%s</b> not found.' => '',
+  ),
+  '#Db.errors' => 
+  array (
+    'Database <b>%s</b> doesn\'t exists.' => '',
+    'Couldn\'t connect to the database.' => '',
+    'Look at the database errors and fix them.' => '',
+  ),
+  '#Default' => 
+  array (
+    'Simple default gear' => '',
+  ),
   '#Dev' => 
   array (
     'Dev info' => 'Отладочная информация',
     '<b>Generated in:</b> %.3f (second|seconds)' => '<b>Временя отработки страницы:</b> %.3f (секунда|секунды|секунды)',
     '<b>Потребление памяти:</b> %s' => '',
     '<b>Memory consumption:</b> %s' => '',
+  ),
+  '#Errors' => 
+  array (
+    'Error in file <b>%s</b> was found at line <b>%d</b>: <blockquote>%s</blockquote>' => '',
+  ),
+  '#Form' => 
+  array (
+    'Try again' => '',
   ),
   '#Forms' => 
   array (
@@ -117,6 +139,16 @@ return array (
   array (
     'comments' => 'комментарии',
   ),
+  '#Install' => 
+  array (
+    '1. Welcome.' => '',
+    '2. Requirements.' => '',
+    '3. Site info.' => '',
+    '4. Theme.' => '',
+    '10. Finish.' => '',
+    'Define basic settings for your site.' => '',
+    'It\'s now time to choose site theme.' => '',
+  ),
   '#Packages' => 
   array (
     'Core' => 'Ядро',
@@ -141,6 +173,10 @@ return array (
   array (
     'My Pages' => 'Мои страницы',
   ),
+  '#Theme' => 
+  array (
+    'Theme <b>%s</b> doesn\'t exist.' => '',
+  ),
   '#User_CP' => 
   array (
     'My Profile' => 'Мой профиль',
@@ -148,25 +184,66 @@ return array (
     'Logout' => 'Выйти',
     'Users' => 'Пользователи',
   ),
+  '1. Welcome.' => '',
+  '10. Finish.' => '',
+  '2. Requirements.' => '',
+  '3. Site info.' => '',
   'Active' => 'Активные',
   'Add' => 'Добавить',
   'Add new' => 'Создать',
   'All' => 'Все',
+  'Before start system must check your server for requirements. <br/>Just look at the table below and follow the instructions.' => '',
+  'Cannot read form config <b>%s</b>.' => '',
+  'Choose theme' => '',
+  'Continue' => '',
   'Control Panel' => 'Панель управления',
+  'Current' => '',
   'Dashboard' => 'Рабочий стол',
   'Data is saved successfully!' => 'Информация сохранена успешно!',
+  'Database' => '',
+  'Database connection' => '',
+  'Database?' => '',
+  'Define basic settings for your site.' => '',
   'Editor' => 'Редактор',
+  'Error' => '',
+  'Example: mysql://root:password@localhost/database' => '',
+  'Example: mysql://root:password@localhost/database.<br/>You can leave this field blank if you don\'t want to use Database gear.' => '',
+  'Filters' => '',
+  'Finish!' => '',
   'Gears' => 'Шестеренки',
   'Gears manager' => 'Шестеренки',
+  'Great, you\'ve just configured your site! Congratulations!' => '',
+  'Iconv extension' => '',
   'Inactive' => 'Неактивные',
   'Internacionalization' => 'Интернационализация',
+  'It\'s now time to choose site theme.' => '',
   'Language' => 'Язык',
   'My Files' => 'Мои файлы',
+  'Name' => '',
   'New' => 'Новые',
+  'Next' => '',
+  'PHP Version' => '',
+  'Page is not found' => '',
   'Pages' => 'Страницы',
+  'Passed' => '',
+  'Reflections' => '',
+  'Required' => '',
   'Robo' => '',
+  'SPL Library' => '',
   'Save' => 'Сохранить',
+  'Secret key' => '',
+  'Site name' => '',
+  'Start!' => '',
+  'Test' => '',
+  'The page you are currently looking for wasn\'t found on the server.' => '',
+  'This field is required.' => '',
+  'URL rewrite' => '',
   'Updates' => 'Обновления',
+  'Welcome to <b>Cogear framework</b>! Thank you for choosing this product. It\'s a small and fast PHP-framework which provides wide functionality and flexibiliry for your work.
+    <br/> <b>Cogear framework</b> is developed by a group of enthusiasts, so we try to do our best. If you want to enhance this system and improve your programming and team-working skills, we offer you to join our community. It\'s easy, just visit oficial site — <a href="http://cogear.org">http://cogear.org</a>.
+    <br/>Right now you are one step to go. Just press the button below and ignite your site engine.' => '',
   '[edit]' => '[ред.]',
+  'asdagsdgfasdhjfaghsdfghasdfhfashagfsdhgf' => '',
+  'asdasd' => '',
   'cogear' => '',
 );

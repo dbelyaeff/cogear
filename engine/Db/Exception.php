@@ -11,7 +11,7 @@
  * @version		$Id$
  */
 class Db_Exception extends Exception {
-    public function  __construct($message, $code, $previous = NULL) {
-        parent::__construct($message, $code, $previous);
+    public function  __construct($message, $code = 101) {
+        parent::__construct(t($message,'Db.errors'), $code);
     }
 }

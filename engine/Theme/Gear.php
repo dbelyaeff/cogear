@@ -15,7 +15,7 @@ class Theme_Gear extends Gear {
 
     protected $name = 'Theme';
     protected $description = 'Manage themes';
-    protected $order = -1000;
+    protected $order = -100;
     public $current;
     public $regions;
     const SUFFIX = '_Theme';
@@ -32,7 +32,6 @@ class Theme_Gear extends Gear {
      * Init
      */
     public function init() {
-
         hook('gear.request', array($this, 'handleGearRequest'));
         if ($favicon = config('theme.favicon')) {
             hook('theme.head.meta.after', array($this, 'renderFavicon'));
@@ -59,6 +58,23 @@ class Theme_Gear extends Gear {
                 break;
         }
     }
+    
+    /**
+     * Scan folders for themes
+     * 
+     * return array;
+     */
+    public function searchThemes(){
+        $themes = array();
+        $root_themes = glob(THEMES.DS.'*'.DS.'Theme'.EXT);
+        $site_themes = glob(SITE.DS.THEMES_FOLDER.'*'.DS.'Theme'.EXT);
+        foreach(array_merge($root_themes,$site_themes) as $theme){
+            $theme = basename(dirname($theme));
+            $class = $theme.'_Theme';
+            $themes[$theme] = new $class;
+        }
+        return $themes;
+    }
 
     /**
      * Handle gear request
@@ -78,11 +94,12 @@ class Theme_Gear extends Gear {
      * @param boolean $final
      */
     public function choose($theme = NULL) {
-        $theme OR $theme = config('theme.current', 'Theme_Default');
+        $theme OR $theme = config('theme.current', 'Default');
+        //set('theme.current','Your_Theme');
         $class = self::themeToClass($theme);
         if (!class_exists($class)) {
             error(t('Theme <b>%s</b> doesn\'t exist.', 'Theme', $theme));
-            $class = 'Theme_Default_Theme';
+            $class = 'Default_Theme';
         }
         $this->current = new $class();
         $this->current->init();

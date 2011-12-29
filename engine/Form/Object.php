@@ -81,7 +81,14 @@ class Form_Object extends Object {
         }
         parent::__construct($options,Options::SELF);
     }
-    
+    /**
+     * Magic method to get form element
+     * 
+     * @param string $name 
+     */
+    public function __get($name){
+        return $this->elements->$name;
+    }
     /**
      * Add element
      * 

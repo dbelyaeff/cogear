@@ -20,7 +20,10 @@ class Db_Driver_Mysql extends Db_Driver_Abstract {
      */
     public function connect() {
         $this->connection = mysql_connect($this->config['host'] . ':' . $this->config['port'], $this->config['user'], $this->config['pass']);
-        mysql_select_db($this->config['database']);
+        if(!$database_exists = mysql_select_db($this->config['database'])){
+            error(t('Database <b>%s</b> doesn\'t exists.','Db.errors',$this->config['database']));
+            return FALSE;
+        }
         $this->query('SET NAMES utf8;');
         return $this->connection ? TRUE : FALSE;
     }

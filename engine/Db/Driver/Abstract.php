@@ -120,14 +120,33 @@ abstract class Db_Driver_Abstract extends Cogearable {
      */
     public function __construct(array $config) {
         $this->config = array_merge($this->config, $config);
-        try {
-            $this->open();
-        } catch (Db_Exception $e) {
-            Message::error($e->getMessage());
-        }
         $this->_swap = $this->_query;
     }
+    
+    /**
+     * Init driver
+     */
+    public function init(){
+        return $this->open();
+    }
 
+    /**
+     * Open database connection
+     */
+    public function open() {
+        if (!$this->connect()) {
+              error(t(Db_Gear::$error_codes[101],'Db.errors'));
+              return FALSE;
+        }
+        return TRUE;
+    }
+
+    /**
+     * Connect to database
+     *
+     * @return  resource
+     */
+    abstract protected function connect();
     /**
      * Desctructor
      */
@@ -218,21 +237,6 @@ abstract class Db_Driver_Abstract extends Cogearable {
         return implode(', ', $result);
     }
 
-    /**
-     * Open database connection
-     */
-    public function open() {
-        if (!$this->connect()) {
-            throw new Db_Exception(Db_Gear::$error_codes[101], 101);
-        }
-    }
-
-    /**
-     * Connect to database
-     *
-     * @return  resource
-     */
-    abstract protected function connect();
 
     /**
      * SELECT subquery

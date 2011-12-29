@@ -66,17 +66,41 @@ class Config extends Core_ArrayObject {
     public function store($file = NULL, $data = NULL) {
         $file OR $file = $this->file;
         $data OR $data = $this->toArray();
-        self::write($file,$data);
+//        debug($data);
+//        die();
+        if(self::write($file,$data)){
+            return TRUE;
+        }
+        else {
+            error(t('Cannot write file:<br/>
+                <b>%s</b><br/>
+                Please, check the permissions (must be 0755 at least.',NULL,$file));
+            return FALSE;
+        }
     }
     /**
      * Write data
      * 
      * @param string $file
-     * @param mixed $data 
+     * @param mixed $data
+     * @return  mixed 
      */
     public static function write($file, $data) {
         Filesystem::makeDir(dirname($file));
-        file_put_contents($file, PHP_FILE_PREFIX . "return " . var_export($data, TRUE) . ';');
+        $data = var_export($data,TRUE);
+        // Now we need to replace paths with constants
+        $constants = get_defined_constants(true);
+        $paths = array();
+        foreach($constants['user'] as $key=>$value){
+            if(is_string($value) && is_dir($value) && strlen($value) > 5){
+                $paths["'".$value] = $key.'.\'';
+            }
+        }
+        $paths = array_reverse($paths);
+        $data = str_replace(DS.DS,DS,$data);
+        $data = str_replace(array_keys($paths), array_values($paths), $data);
+        // Done
+        return file_put_contents($file, PHP_FILE_PREFIX . "return " . $data . ';');
     }
 
 }

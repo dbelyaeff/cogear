@@ -352,7 +352,7 @@ abstract class Gear extends Cogearable{
      * @param   string  $path
      * @return  string|boolean  Gear name or FALSE if path is not correct.
      */
-    public static function getGearNameFromPath($path) {
+    public static function getNameFromPath($path) {
         foreach (array(SITE . DS . GEARS_FOLDER, GEARS, ENGINE) as $dir) {
             if (strpos($path, $dir) !== FALSE) {
                 is_file($path) && $path = dirname($path);

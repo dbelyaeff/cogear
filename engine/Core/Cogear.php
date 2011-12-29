@@ -290,6 +290,7 @@ final class Cogear implements Interface_Singleton {
 
     /**
      * Install gear
+     * 
      * @param string $gear
      */
     public function install($gear) {
@@ -304,6 +305,7 @@ final class Cogear implements Interface_Singleton {
 
     /**
      * Uninstall gear
+     * 
      * @param string $gear
      */
     public function uninstall($gear) {
@@ -320,6 +322,7 @@ final class Cogear implements Interface_Singleton {
 
     /**
      * Update gear
+     * 
      * @param string $gear
      */
     public function update($gear) {
@@ -332,6 +335,7 @@ final class Cogear implements Interface_Singleton {
 
     /**
      * Activate gear
+     * 
      * @param string $gear
      */
     public function activate($gear) {
@@ -408,9 +412,9 @@ final class Cogear implements Interface_Singleton {
      */
     public function save() {
         if ($this->write_gears) {
-            $this->system_cache->store('gears/all', $this->all_gears);
-            $this->system_cache->store('gears/installed', $this->installed_gears);
-            $this->system_cache->store('gears/active', $this->active_gears);
+            $this->system_cache->write('gears/all', $this->all_gears);
+            $this->system_cache->write('gears/installed', $this->installed_gears);
+            $this->system_cache->write('gears/active', $this->active_gears);
         }
         if ($this->write_config) {
             $settings = new Config(SITE . DS . 'settings' . EXT);

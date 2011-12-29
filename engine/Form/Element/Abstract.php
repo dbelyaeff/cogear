@@ -14,8 +14,8 @@
 class Form_Element_Abstract extends Options {
 
     protected $name;
-    protected $description;
-    protected $label;
+    public $description;
+    public $label;
     protected $value;
     protected $disabled;
     protected $checked;
@@ -118,7 +118,7 @@ class Form_Element_Abstract extends Options {
             if ($callback = $this->isCallable($filter, 'Filter')) {
                 array_unshift($callback[1], $this->value);
                 $filter = new $callback[0]();
-                $filter->setElement($this);
+                $filter->init($this);
                 $this->value = call_user_func_array(array($filter, 'filter'), $callback[1]);
             }
         }
@@ -135,7 +135,7 @@ class Form_Element_Abstract extends Options {
             if ($callback = $this->isCallable($validator, 'Validate')) {
                 array_unshift($callback[1], $this->value);
                 $validator = new $callback[0];
-                $validator->setElement($this);
+                $validator->init($this);
                 if (!call_user_func_array(array($validator, 'validate'), $callback[1])) {
                     $is_valid = FALSE;
                 }
