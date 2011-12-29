@@ -114,10 +114,10 @@ input[type="submit"].error,{
   color: #333;
   text-decoration: none;
 }
-.button:focus, input[type="submit"]:focus {
+.button:focus/*, input[type="submit"]:focus*/ {
   outline: 1px dotted #666;
 }
-.button.primary, input[type="submit"].primary {
+.button.primary/*, input[type="submit"].primary*/ {
   color: #ffffff;
   background-color: #0064cd;
   background-repeat: repeat-x;
@@ -133,12 +133,12 @@ input[type="submit"].error,{
   border-color: #0064cd #0064cd #003f81;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 }
-.button.active, .button:active, input[type="submit"].active, input[type="submit"]:active {
+.button.active, .button:active/*, input[type="submit"].active, input[type="submit"]:active*/ {
   -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25), 0 1px 2px rgba(0, 0, 0, 0.05);
   -moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25), 0 1px 2px rgba(0, 0, 0, 0.05);
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25), 0 1px 2px rgba(0, 0, 0, 0.05);
 }
-.button.disabled, input[type="submit"].disabled {
+.button.disabled/*, input[type="submit"].disabled*/ {
   cursor: default;
   background-image: none;
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
@@ -162,7 +162,7 @@ input[type="submit"].error,{
   -moz-box-shadow: none;
   box-shadow: none;
 }
-.button.large, input[type="submit"].large {
+.button.large/*, input[type="submit"].large*/ {
   font-size: 15px;
   line-height: normal;
   padding: 9px 14px 9px;
@@ -170,11 +170,11 @@ input[type="submit"].error,{
   -moz-border-radius: 6px;
   border-radius: 6px;
 }
-.button.small, input[type="submit"].small {
+.button.small/*, input[type="submit"].small*/ {
   padding: 7px 9px 7px;
   font-size: 11px;
 }
-:root .alert-message, :root .button, :root input[type="submit"] {
+:root .alert-message, :root .button/*, :root input[type="submit"]*/ {
   border-radius: 0 \0;
 }
 button.button::-moz-focus-inner, input[type=submit].button::-moz-focus-inner {

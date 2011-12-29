@@ -39,6 +39,7 @@ class Meta_Gear extends Gear {
         Template::bindGlobal('meta', $this->info);
         title(t(config('site.name',SITE_URL)));
         hook('head',array($this,'head'),0);
+        hook('head',array($this,'renderHTML5'),1);
         hook('menu.setActive',array($this,'menuTitleHook'));
         hook('Pages.showPage.before',array($this,'showObjectTitle'));
         hook('admin.gear.request',array($this,'showObjectTitle'));
@@ -67,7 +68,13 @@ class Meta_Gear extends Gear {
         echo HTML::tag('meta', array('type'=>'keywords','content'=>$this->info->keywords->toString(', ')))."\n";
         echo HTML::tag('meta', array('type'=>'description','content'=>$this->info->description->toString('. ')))."\n";
         event('theme.head.meta.after');
-    }
+    }       
+	/**
+     * The inclusion HTML5 for IE6-8
+     */
+    public function renderHTML5() {
+        echo '<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->'."\n";
+    }  
 }
 function title($text) {
     $cogear = getInstance();
