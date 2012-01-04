@@ -110,8 +110,8 @@ class Harvester {
      *
      * @return string
      */
-    public function getScripts() {
-        return $this->scripts->__toString() . "\n";
+    public function getScripts($group = 'default') {
+        return $this->scripts->$group->__toString() . "\n";
     }
 
     /**
@@ -119,18 +119,18 @@ class Harvester {
      *
      * @return string
      */
-    public function getStyles() {
+    public function getStyles($media = 'screen') {
         // Sort styles. Theme styles must be on the top.
-        $styles = $this->styles->screen->toArray();
+        $styles = $this->styles->$media->toArray();
         $theme_styles = array();
         foreach($styles as $key=>$value){
-            if(strpos($key,'Theme') !== FALSE){
+            if(strpos($key,'themes') !== FALSE){
                 $theme_styles[$key] = $value;
                 unset($styles[$key]);
             }
         }
-        $this->styles->screen->exchangeArray(array_merge($theme_styles,$styles));
-        return $this->styles->__toString() . "\n";
+        $this->styles->$media->exchangeArray(array_merge($theme_styles,$styles));
+        return $this->styles->$media->__toString() . "\n";
     }
 
     /**
