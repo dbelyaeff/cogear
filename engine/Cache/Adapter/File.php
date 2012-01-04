@@ -84,6 +84,7 @@ class Cache_Adapter_File extends Cache_Adapter_Abstract{
                 $this->write('tags/'.$tag,'',array(),$ttl);
             }
         }
+        Filesystem::makeDir($this->options->path);
         file_put_contents($this->options->path.DS.$name, PHP_FILE_PREFIX.'return '.var_export($data,TRUE).';');
     }
     /**
