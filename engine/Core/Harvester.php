@@ -146,19 +146,19 @@ class Harvester {
             $types = array();
             foreach ($conditions as $condition) {
                 $subconditions = explode('+', $condition);
-                $result = FALSE;
+                $result = array();
                 foreach ($subconditions as $subcondition) {
                     if ($subcondition == $ua['browser'] OR
                             $subcondition == $ua['browser'] . $ua['version'] OR
                             $subcondition == $ua['os'] OR
                             $subcondition == 'mobile' && !is_null($ua['is_mobile']) OR
                             $subcondition == $ua['locale']) {
-                        $result = TRUE;
+                        $result[] = TRUE;
                     } else {
-                        $result = FALSE;
+                        $result[] = FALSE;
                     }
                 }
-                if ($result) {
+                if (!in_array(FALSE,$result)) {
                     $types[] = $condition;
                 }
             }
