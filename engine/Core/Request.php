@@ -21,12 +21,12 @@ class Request {
     protected $server = array();
     protected $ip = '';
     protected $user_agents = array(
-        'Firefox' => 'firefox/(?<version>.*+)',
-        'Internet Explorer' => 'msie\s(?<version>[\d.]+)',
-        'Opera' => 'opera.*version/(?<version>[\d.]+)',
-        'Chrome' => 'chrome/(?<version>[\d.]+)',
-        'Safari' => 'safari/(?<version>[\d.]+).*',
-        'Mobile Safari' => 'version/(?<version>[\d.]+).*safari',
+        'firefox' => 'firefox/(?<version>.*+)',
+        'ie' => 'msie\s(?<version>[\d.]+)',
+        'opera' => 'opera.*version/(?<version>[\d.]+)',
+        'chrome' => 'chrome/(?<version>[\d.]+)',
+        'safari' => 'safari/(?<version>[\d.]+).*',
+        'mobilesafari' => 'version/(?<version>[\d.]+).*safari',
     );
 
     /**
@@ -149,25 +149,25 @@ class Request {
         $os = NULL;
         $is_mobile = NULL;
         foreach ($this->user_agents as $name => $pattern) {
-            if (preg_match('#' . $pattern . '#is', $user_agent, $matches)) {
+            if (!$browser && preg_match('#' . $pattern . '#is', $user_agent, $matches)) {
                 $browser = $name;
-                $version = $matches['version'];
-                continue;
+                $full_version = $matches['version'];
+                $version = intval($full_version);
             }
         }
         if (preg_match('/mobile/', $user_agent)) {
             $is_mobile = TRUE;
         }
         if (preg_match('/win/', $user_agent)) {
-            $os = 'Windows';
+            $os = 'windows';
         } elseif (preg_match('/linux/', $user_agent)) {
-            $os = 'Linux';
+            $os = 'linux';
         } elseif (preg_match('/android/', $user_agent)) {
-            $os = 'Android';
+            $os = 'android';
         } elseif (preg_match('/iphone os/', $user_agent)) {
-            $os = 'iOS';
+            $os = 'ios';
         } elseif (preg_match('/mac/', $user_agent)) {
-            $os = 'Mac';
+            $os = 'mac';
         }
 
         if (preg_match('#(\s|;)(?<locale>\w{2}(-\w{2})?)(\)|;)#', $user_agent, $matches)) {
