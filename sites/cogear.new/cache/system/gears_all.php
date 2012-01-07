@@ -3,7 +3,6 @@ return array (
   'value' => 
   array (
     'test' => 'Test_Gear',
-    'vizitcard' => 'VizitCard_Gear',
     'admin' => 'Admin_Gear',
     'chat' => 'Chat_Gear',
     'comments' => 'Comments_Gear',
@@ -37,6 +36,7 @@ return array (
     'pager' => 'Pager_Gear',
     'secure' => 'Secure_Gear',
     'session' => 'Session_Gear',
+    'tables' => 'Tables_Gear',
     'theme' => 'Theme_Gear',
     'upload' => 'Upload_Gear',
     'jquery' => 'jQuery_Gear',

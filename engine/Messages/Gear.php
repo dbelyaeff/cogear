@@ -20,6 +20,7 @@ class Messages_Gear extends Gear {
     protected $name = 'Messages';
     protected $description = 'Handle with messages dialogs and windows.';
     protected $order = 100;
+    protected $type = Gear::MODULE;
     protected $template = 'Messages.message';
     protected $version = '0.1';
     const INFO = 0;
@@ -116,7 +117,7 @@ class Messages_Gear extends Gear {
         if (config('messages.type', 'plain') == 'pop') {
             inline_js('$(document).ready(function(){$(".msg").message();})');
         }
-        inline_js("$(document).ready(function(){window.Messenger.render()});");
+//        inline_js("$(document).ready(function(){window.Messenger.render()});");
     }
 
 	public function set_template($template)

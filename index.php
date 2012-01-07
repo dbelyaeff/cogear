@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Cogear — simple and fast site management system.
  *

@@ -184,6 +184,18 @@ abstract class Gear extends Cogearable{
         event('gear.init', $this);
     }
     /**
+     * Check required gears
+     * 
+     * @return boolean
+     */
+    public function checkRequiredGears(){
+        if($this->required){
+            foreach($this->required as $required_gear){
+                preg_match('#([\w_-]+)\s?([<>=]{1}?)\s([\f]+)?#', $subject,$mathces);
+            }
+        }
+    }
+    /**
      * Magic __get method
      *
      * @param string $name

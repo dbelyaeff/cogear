@@ -15,7 +15,6 @@ return array (
     'image' => 'Image_Gear',
     'install' => 'Install_Gear',
     'menu' => 'Menu_Gear',
-    'messages' => 'Messages_Gear',
     'meta' => 'Meta_Gear',
     'secure' => 'Secure_Gear',
     'theme' => 'Theme_Gear',
@@ -24,6 +23,8 @@ return array (
     'upload_ajax' => 'Upload_Ajax_Gear',
     'db' => 'Db_Gear',
     'default' => 'Default_Gear',
+    'tables' => 'Tables_Gear',
+    'user' => 'User_Gear',
   ),
   'ttl' => NULL,
 );

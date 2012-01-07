@@ -16,7 +16,7 @@ class jQuery_Gear extends Gear {
     protected $name = 'jQuery';
     protected $description = 'Add jQuery support to Cogear';
     protected $package = 'jQuery';
-    protected $order = -100;
+    protected $order = -1000;
 
     public function admin($action = NULL) {
         if ($files = glob($this->dir . DS . 'js/jquery*')) {

@@ -1,1 +1,0 @@
-<?=t('Define basic settings for your site.')?>

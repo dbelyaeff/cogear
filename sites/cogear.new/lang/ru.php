@@ -130,6 +130,12 @@ return array (
     'Pagination system for grid view.' => 'Добавляет постраничную навигацию',
     'Robotic Control' => '',
     'Make world a bit more better with the help of robots.' => '',
+    'Install' => '',
+    'Help to install system.' => '',
+    'Default Gear' => '',
+    'Simple example of Gear' => '',
+    'Tables' => '',
+    'Tables for the data.' => '',
   ),
   '#I18n' => 
   array (
@@ -177,12 +183,24 @@ return array (
   array (
     'Theme <b>%s</b> doesn\'t exist.' => '',
   ),
+  '#User' => 
+  array (
+    'Login' => '',
+    'Password' => '',
+    'E-Mail' => '',
+  ),
   '#User_CP' => 
   array (
     'My Profile' => 'Мой профиль',
     'Find users' => 'Список пользователей',
     'Logout' => 'Выйти',
     'Users' => 'Пользователи',
+    'Login' => '',
+    'Register' => '',
+    'Log in' => '',
+    'Lost password?' => '',
+    'List' => '',
+    'Add' => '',
   ),
   '1. Welcome.' => '',
   '10. Finish.' => '',
@@ -218,6 +236,7 @@ return array (
   'Internacionalization' => 'Интернационализация',
   'It\'s now time to choose site theme.' => '',
   'Language' => 'Язык',
+  'Login' => '',
   'My Files' => 'Мои файлы',
   'Name' => '',
   'New' => 'Новые',
@@ -227,6 +246,7 @@ return array (
   'Pages' => 'Страницы',
   'Passed' => '',
   'Reflections' => '',
+  'Register' => '',
   'Required' => '',
   'Robo' => '',
   'SPL Library' => '',
@@ -239,6 +259,7 @@ return array (
   'This field is required.' => '',
   'URL rewrite' => '',
   'Updates' => 'Обновления',
+  'User' => '',
   'Welcome to <b>Cogear framework</b>! Thank you for choosing this product. It\'s a small and fast PHP-framework which provides wide functionality and flexibiliry for your work.
     <br/> <b>Cogear framework</b> is developed by a group of enthusiasts, so we try to do our best. If you want to enhance this system and improve your programming and team-working skills, we offer you to join our community. It\'s easy, just visit oficial site — <a href="http://cogear.org">http://cogear.org</a>.
     <br/>Right now you are one step to go. Just press the button below and ignite your site engine.' => '',
@@ -246,4 +267,5 @@ return array (
   'asdagsdgfasdhjfaghsdfghasdfhfashagfsdhgf' => '',
   'asdasd' => '',
   'cogear' => '',
+  'remember me' => '',
 );
