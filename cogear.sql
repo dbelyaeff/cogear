@@ -94,8 +94,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `login`, `password`, `hash`, `email`, `name`, `role`, `avatar`, `validation_code`, `is_valid`) VALUES
-(1, 'admin', 'efc002c854ab0f77646a496dad4ec39c', '', 'admin@cogear.ru', '', 1, '', '', 1),
-(2, 'user', 'efc002c854ab0f77646a496dad4ec39c', '', 'admin@user.ru', '', 100, '', '', 0);
+(1, 'admin', 'bd42842bce58feac3b237dc19fe9ff89', '', 'admin@cogear.ru', '', 1, '', '', 1),
+(2, 'user', 'bd42842bce58feac3b237dc19fe9ff89', '', 'admin@user.ru', '', 100, '', '', 0);
 
 -- --------------------------------------------------------
 
