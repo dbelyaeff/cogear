@@ -15,7 +15,6 @@ class User_Gear extends Gear {
 
     protected $name = 'User';
     protected $description = 'Manage users.';
-    protected $type = Gear::MODULE;
     protected $order = -10;
     protected $current;
     protected $roles;
