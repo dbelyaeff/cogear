@@ -136,6 +136,12 @@ return array (
     'Simple example of Gear' => '',
     'Tables' => '',
     'Tables for the data.' => '',
+    'Chat' => '',
+    'Provide chat to communication.' => '',
+    'Mail' => '',
+    'Helps to send emails.' => '',
+    'GoBack' => '',
+    'Show "← Go Back" button where it is needed' => '',
   ),
   '#I18n' => 
   array (
@@ -167,6 +173,8 @@ return array (
     'Ajax' => '',
     'Social' => 'Социальные',
     'Robo' => '',
+    'Chat' => '',
+    'Utilities' => '',
   ),
   '#Pager' => 
   array (
@@ -178,6 +186,7 @@ return array (
   '#Pages' => 
   array (
     'My Pages' => 'Мои страницы',
+    'Edit' => '',
   ),
   '#Theme' => 
   array (
@@ -222,6 +231,7 @@ return array (
   'Database connection' => '',
   'Database?' => '',
   'Define basic settings for your site.' => '',
+  'Delete' => '',
   'Editor' => 'Редактор',
   'Error' => '',
   'Example: mysql://root:password@localhost/database' => '',
@@ -245,8 +255,10 @@ return array (
   'Page is not found' => '',
   'Pages' => 'Страницы',
   'Passed' => '',
+  'Provide title of the page.' => '',
   'Reflections' => '',
   'Register' => '',
+  'Renew password' => '',
   'Required' => '',
   'Robo' => '',
   'SPL Library' => '',
@@ -255,9 +267,12 @@ return array (
   'Site name' => '',
   'Start!' => '',
   'Test' => '',
+  'Text' => '',
   'The page you are currently looking for wasn\'t found on the server.' => '',
   'This field is required.' => '',
+  'Title' => '',
   'URL rewrite' => '',
+  'Update' => '',
   'Updates' => 'Обновления',
   'User' => '',
   'Welcome to <b>Cogear framework</b>! Thank you for choosing this product. It\'s a small and fast PHP-framework which provides wide functionality and flexibiliry for your work.

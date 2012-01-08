@@ -184,16 +184,29 @@ abstract class Gear extends Cogearable{
         event('gear.init', $this);
     }
     /**
+     * Check gear to be ready for charge in chain
+     * 
+     * @return  boolean
+     */
+    public function checkGear(){
+        $result = TRUE;
+        if(!$this->checkRequiredGears()){
+            $result = FALSE;
+        }
+        return $result;
+    }
+    /**
      * Check required gears
      * 
      * @return boolean
      */
-    public function checkRequiredGears(){
+    private function checkRequiredGears(){
         if($this->required){
             foreach($this->required as $required_gear){
-                preg_match('#([\w_-]+)\s?([<>=]{1}?)\s([\f]+)?#', $subject,$mathces);
+                preg_match('#([\w_-]+)\s?([<>=]{1}?)\s([\f]+)?#', $required_gear,$matches);
             }
         }
+        return TRUE;
     }
     /**
      * Magic __get method

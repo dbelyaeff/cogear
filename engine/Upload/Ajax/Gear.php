@@ -14,6 +14,7 @@ class Upload_Ajax_Gear extends Gear {
 
     protected $name = 'Ajax FileUpload';
     protected $description = 'Handle ajax fileupload.';
+    protected $type = Gear::MODULE;
     protected $package = 'Ajax';
     protected $order = 0;
 

@@ -48,8 +48,8 @@ class Harvester {
         $this->clear();
         Template::bindGlobal('scripts', $this->scripts);
         Template::bindGlobal('styles', $this->styles);
-        hook('head', array($this, 'output'), NULL);
-//        hook('after', array($this, 'output'), NULL, 'js');
+        hook('head', array($this, 'output'), NULL, 'css');
+        hook('after', array($this, 'output'), NULL, 'js');
     }
 
     /**

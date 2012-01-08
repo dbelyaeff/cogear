@@ -15,7 +15,6 @@ class Access_Gear extends Gear {
 
     protected $name = 'Access';
     protected $description = 'Access control gear';
-    protected $type = Gear::MODULE;
     protected $rules;
     protected $roles;
     protected $refresh_flag;

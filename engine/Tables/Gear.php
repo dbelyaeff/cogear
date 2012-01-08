@@ -15,7 +15,7 @@ class Tables_Gear extends Gear {
 
     protected $name = 'Tables';
     protected $description = 'Tables for the data.';
-    protected $type = Gear::CORE;
+    protected $type = Gear::MODULE;
     protected $order = 0;
 
     const PARAMS = '?';
