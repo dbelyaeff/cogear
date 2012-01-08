@@ -9,7 +9,7 @@
      </div>
      <div class="gear-description"><?= $description?></div>
      <div class="gear-info">
-         <b><?=t('Author: ')?></b><?=HTML::a('mailto:'.$email,t($author,'Authors'))?>
-         <b><?=t('Site: ')?></b><?=HTML::a($site,$site)?>
+         <b><?=t('Author: ')?></b> <?=HTML::a('mailto:'.$email,t($author,'Authors'))?>
+         <b><?=t('Site: ')?></b> <?=HTML::a($site,$site)?>
      </div>
 </div>
