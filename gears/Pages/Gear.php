@@ -53,9 +53,9 @@ class Pages_Gear extends Gear {
                     $menu->{Url::gear('pages')} = t('My Pages', 'Pages');
                 }
                 break;
-            case 'admin':
-                $menu->{'pages'} = t('Pages');
-                break;
+//            case 'admin':
+//                $menu->{'pages'} = t('Pages');
+//                break;
             case 'tabs_pages':
                 if ($this->user->id) {
                     $menu->{'/'} = t('All');
