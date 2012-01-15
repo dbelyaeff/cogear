@@ -1,34 +1,43 @@
-.pager{
-    text-align: center;
-    margin: 10px;
-    font-family: Tahoma;
+.pagination {
+  height: 36px;
+  margin: 18px 0;
 }
-.pager ul.pages li{
-    display: inline;
-    list-style: none;
-    margin: 0;
-    padding: 10px;
-    font-size: 1.4em;
+.pagination ul {
+  float: left;
+  margin: 0;
+  border: 1px solid #ddd;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
-.pager ul.pages li.current{
-     background: none repeat scroll 0 0 #CFE2FD;
-    border: 1px solid #8FC6F8;
-    color: #3E3E3E;
-    padding: 2px 6px;
+.pagination li {
+  display: inline;
 }
-.pager .controls{
-    padding: 10px;
+.pagination a {
+  float: left;
+  padding: 0 14px;
+  line-height: 34px;
+  border-right: 1px solid;
+  border-right-color: #ddd;
+  border-right-color: rgba(0, 0, 0, 0.15);
+  *border-right-color: #ddd;
+  /* IE6-7 */
+
+  text-decoration: none;
 }
-.pager .controls a{
-    color: #98C1FD;
-    font-size: 1.5em;
+.pagination a:hover, .pagination .active a {
+  background-color: #c7eefe;
 }
-.pager ul.pages li a{
-    text-decoration: none;
-    color: #98C1FD;
+.pagination .disabled a, .pagination .disabled a:hover {
+  background-color: transparent;
+  color: #bfbfbf;
 }
-.pager ul.pages{
-    margin: 0;
-    padding: 0;
-    display: inline;
+.turn-pages {
+    font-family: Georgia,serif;
+    font-size: 29px;
+    font-weight: 300;
 }
